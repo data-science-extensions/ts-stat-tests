@@ -1,3 +1,20 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Scripts Utility                                                   #
+#     Purpose: Collection of utility functions for scripting tasks such as     #
+#         linting, checking, git operations, and documentation management.     #
+#     Usage:                                                                   #
+#         uv run ./src/utils/scripts.py <command> [args...]                    #
+#     Examples:                                                                #
+#         uv run ./src/utils/scripts.py lint                                   #
+#         uv run ./src/utils/scripts.py check                                  #
+#         uv run ./src/utils/scripts.py lint-check                             #
+#     Notes: This script is designed to be run from the command line with      #
+#         various commands to perform different tasks.                         #
+#                                                                              #
+# ============================================================================ #
+
+
 ## --------------------------------------------------------------------------- #
 ##  Setup                                                                   ####
 ## --------------------------------------------------------------------------- #
@@ -17,7 +34,7 @@ from typing import Union
 ## --------------------------------------------------------------------------- #
 
 
-PACKAGE_NAME: str = "docstring-format-checker"
+PACKAGE_NAME: str = "ts-stat-tests"
 DIRECTORY_NAME: str = PACKAGE_NAME.replace("-", "_")
 
 
