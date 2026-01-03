@@ -174,10 +174,10 @@ def acf(
             Returned if `alpha` is not `None`.
         qstat (Optional[np.ndarray]):
             The Ljung-Box Q-Statistic for lags `1, 2, ..., nlags` (excludes lag zero).<br>
-            Returned if `q_stat` is `True`.
+            Returned if `qstat` is `True`.
         pvalues (Optional[np.ndarray]):
             The p-values associated with the Q-statistics for lags `1, 2, ..., nlags` (excludes lag zero).<br>
-            Returned if `q_stat` is `True`.
+            Returned if `qstat` is `True`.
 
     !!! success "Credit"
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
