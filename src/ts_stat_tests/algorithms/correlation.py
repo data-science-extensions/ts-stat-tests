@@ -121,7 +121,13 @@ def acf(
         - $Var(Y_t)$ and $Var(Y_{t-k})$ are the variances of the two values.
 
         ```
-        ACF(k) = Cov(Y_t, Y_{t-k}) / (Var(Y_t) * Var(Y_{t-k}))
+        ACF(k) = Cov(Y_t, Y_{t-k}) / (sqrt(Var(Y_t)) * sqrt(Var(Y_{t-k})))
+        ```
+
+        For a stationary series, this simplifies to:
+
+        ```
+        ACF(k) = Cov(Y_t, Y_{t-k}) / Var(Y_t)
         ```
 
         If the ACF shows a strong positive correlation at lag $k$, this means that values in the time series at time $t$ and time $t-k$ are strongly related. This can be useful in forecasting, as it suggests that past values can be used to predict future values. If the ACF shows a strong negative correlation at lag $k$, this means that values at time $t$ and time $t-k$ are strongly inversely related, which can also be useful in forecasting.
