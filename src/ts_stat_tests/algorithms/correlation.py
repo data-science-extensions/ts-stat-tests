@@ -859,7 +859,7 @@ def lm(
         fval (float):
             The `f-statistic` of the F test, alternative version of the same test based on F test for the parameter restriction.
         fpval (float):
-            The `pvalue` of the F test.
+            The `p-value` of the F test.
         res_store (Optional[ResultsStore]):
             Intermediate results. Only returned if `store=True`.
 
