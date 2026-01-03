@@ -650,7 +650,7 @@ def lb(
 
     ???+ info "Details"
 
-        Ljung-Box and Box-Pierce statistic differ in their scaling of the autocorrelation function. Ljung-Box test is has better finite-sample properties.
+        The Ljung-Box and Box-Pierce statistics differ in how they scale the autocorrelation function; the Ljung-Box test has better finite-sample properties.
 
         The test statistic is calculated as:
 
