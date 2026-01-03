@@ -983,7 +983,7 @@ def bglm(
         fval (float):
             The value of the `f-statistic` for F test, alternative version of the same test based on F test for the parameter restriction.
         fpval (float):
-            The `pvalue` of the F test.
+            The `p-value` of the F test.
         res_store (Optional[ResultsStore]):
             A class instance that holds intermediate results. Only returned if `store=True`.
 
