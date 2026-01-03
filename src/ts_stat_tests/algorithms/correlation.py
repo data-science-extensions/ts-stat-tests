@@ -310,7 +310,7 @@ def pacf(
         The PACF at lag $k$ is defined as:
 
         $$
-        PACF(k) = Corr \left( \frac{ Y_t, Y_{t-k} } { Y_{t-1}, Y_{t-2}, ..., Y_{t-k+1} } \right)
+        PACF(k) = Corr \left( Y_t, Y_{t-k} \mid Y_{t-1}, Y_{t-2}, ..., Y_{t-k+1} \right)
         $$
 
         where:
