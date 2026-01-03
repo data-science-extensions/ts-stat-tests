@@ -142,7 +142,7 @@ def acf(
             Number of lags to return autocorrelation for. If not provided, uses $\min(10 \times \text{log10}(nobs),nobs-1)$ (calculated with: `min(int(10 * np.log10(nobs)), nobs - 1)`). The returned value includes $lag 0$ (ie., $1$) so size of the acf vector is $(nlags + 1,)$.<br>
             Defaults to `None`.
         qstat (bool, optional):
-            If `True`, returns the Ljung-Box $q$ statistic for each autocorrelation coefficient. See `q_stat` for more information.<br>
+            If `True`, also returns the Ljung-Box $q$ statistic and corresponding p-values for each autocorrelation coefficient; see the *Returns* section for details.<br>
             Defaults to `False`.
         fft (bool, optional):
             If `True`, computes the ACF via FFT.<br>
@@ -174,10 +174,10 @@ def acf(
             Returned if `alpha` is not `None`.
         qstat (Optional[np.ndarray]):
             The Ljung-Box Q-Statistic for lags `1, 2, ..., nlags` (excludes lag zero).<br>
-            Returned if `q_stat` is `True`.
+            Returned if `qstat` is `True`.
         pvalues (Optional[np.ndarray]):
             The p-values associated with the Q-statistics for lags `1, 2, ..., nlags` (excludes lag zero).<br>
-            Returned if `q_stat` is `True`.
+            Returned if `qstat` is `True`.
 
     !!! success "Credit"
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
@@ -650,7 +650,7 @@ def lb(
 
     ???+ info "Details"
 
-        Ljung-Box and Box-Pierce statistic differ in their scaling of the autocorrelation function. Ljung-Box test is has better finite-sample properties.
+        The Ljung-Box and Box-Pierce statistics differ in how they scale the autocorrelation function; the Ljung-Box test has better finite-sample properties.
 
         The test statistic is calculated as:
 
@@ -875,7 +875,7 @@ def lm(
         fval (float):
             The `f-statistic` of the F test, alternative version of the same test based on F test for the parameter restriction.
         fpval (float):
-            The `pvalue` of the F test.
+            The `p-value` of the F test.
         res_store (Optional[ResultsStore]):
             Intermediate results. Only returned if `store=True`.
 
@@ -999,7 +999,7 @@ def bglm(
         fval (float):
             The value of the `f-statistic` for F test, alternative version of the same test based on F test for the parameter restriction.
         fpval (float):
-            The `pvalue` of the F test.
+            The `p-value` of the F test.
         res_store (Optional[ResultsStore]):
             A class instance that holds intermediate results. Only returned if `store=True`.
 
