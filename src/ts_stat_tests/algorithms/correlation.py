@@ -297,7 +297,7 @@ def pacf(
 
     ???+ info "Details"
 
-        Based on simulation evidence across a range of low-order ARMA models, the best methods based on root MSE are Yule-Walker (MLW), Levinson-Durbin (MLE) and Burg, respectively. The estimators with the lowest bias included included these three in addition to OLS and OLS-adjusted. Yule-Walker (adjusted) and Levinson-Durbin (adjusted) performed consistently worse than the other options.
+        Based on simulation evidence across a range of low-order ARMA models, the best methods based on root MSE are Yule-Walker (MLW), Levinson-Durbin (MLE) and Burg, respectively. The estimators with the lowest bias included these three in addition to OLS and OLS-adjusted. Yule-Walker (adjusted) and Levinson-Durbin (adjusted) performed consistently worse than the other options.
 
         The PACF is a plot of the correlation between a time series and its lagged values, controlling for the effect of other lags. The PACF is useful for identifying the order of an autoregressive (AR) model, which is a type of model used in time series forecasting. The order of an AR model is the number of lags that are used to predict future values.
 
