@@ -792,13 +792,21 @@ def lm(
 
     ???+ info "Details"
 
-        This is a generic Lagrange Multiplier test for autocorrelation. Returns Engle's ARCH test if resid is the squared residual array. Breusch-Godfrey is a variation on this test with additional exogenous variables.
+        This is a generic Lagrange Multiplier (LM) test for autocorrelation. It returns Engle's ARCH test if `resid` is the squared residual array. The Breusch-Godfrey test is a variation on this LM test with additional exogenous variables in the auxiliary regression.
 
-        The test statistic is computed as $(nobs - ddof) \\times r2$ where $r2$ is the R-squared from a regression on the residual on `nlags` lags of the residual.
+        The LM test statistic is computed as
 
-        The Lagrange Multiplier test is performed by fitting a time series model to the data and then calculating the RSS of the model. The residuals from the model are then used to estimate the autocorrelation function (ACF), and the ACF values are squared to form the test statistic. The test statistic is compared to a chi-squared distribution with degrees of freedom equal to the number of lags tested.
+        $$
+        LM = (n_{obs} - ddof) \\times R^2,
+        $$
 
-        The test statistic is calculated as:
+        ```
+        LM = (n_obs - ddof) * R^2
+        ```
+
+        where $R^2$ is the coefficient of determination from the **auxiliary regression** of the residuals on their own `nlags` lags (and any additional regressors included in the model), $n_{obs}$ is the number of observations, and $ddof$ is the model degrees of freedom lost due to parameter estimation.
+
+        <!-- Previous algorithm included below
 
         $$
         LM = n \\times (n+2) \\times \\sum_{k=1}^m \\left( \\frac { r_k^2 }{ n-k } \\right) - 2 \\times (n-1) \\times (n-2) \\times \\sum_{k=1}^m \\left( r_k \\times \\frac { r_{k+1} }{ n-k } \\right)
@@ -815,17 +823,25 @@ def lm(
         LM = n * (n+2) * Sum(r_k^2 / (n-k)) - 2 * (n-1) * (n-2) * Sum(r_k * r_(k+1) / (n-k))
         ```
 
-        Under the null hypothesis that the autocorrelations up to a certain lag are zero, the test statistic follows a chi-squared distribution with degrees of freedom equal to $m-p$, where $p$ is the number of parameters estimated in fitting the time series model.
+        -->
 
-        If the test statistic is greater than the critical value from the chi-squared distribution, then the null hypothesis of no autocorrelation is rejected, indicating that there is evidence of autocorrelation in the residuals. This suggests that the time series model is inadequate, and that additional terms may need to be added to the model to account for the remaining autocorrelation.
+        In practice, the LM test proceeds by:
 
-        If the test statistic is less than the critical value from the chi-squared distribution, then the null hypothesis of no autocorrelation is not rejected, indicating that there is no evidence of autocorrelation in the residuals. This suggests that the time series model is adequate, and that no further improvements are needed.
+        - Fitting a time series model to the data and obtaining the residuals.
+        - Running an auxiliary regression of these residuals on their past `nlags` values (and any relevant exogenous variables).
+        - Computing the LM statistic as $(n_{obs} - ddof) \\times R^2$ from this auxiliary regression.
+
+        Under the null hypothesis that the autocorrelations up to the specified lag are zero (no serial correlation in the residuals), the LM statistic is asymptotically distributed as a chi-squared random variable with degrees of freedom equal to the number of lagged residual terms included in the auxiliary regression (i.e. the number of lags being tested, adjusted for any restrictions implied by the model).
+
+        If the test statistic is greater than the critical value from the chi-squared distribution (or equivalently, if the p-value is less than a chosen significance level such as $0.05$), then the null hypothesis of no autocorrelation is rejected, indicating that there is evidence of autocorrelation in the residuals. This suggests that the time series model may be inadequate and that additional terms may need to be added to the model to account for the remaining autocorrelation.
+
+        If the test statistic is less than the critical value from the chi-squared distribution, then the null hypothesis of no autocorrelation is not rejected, indicating that there is no evidence of autocorrelation in the residuals. This suggests that the time series model is adequate and that no further improvements are needed with respect to serial correlation.
 
         The LM test is a generalization of the Durbin-Watson test, which is a simpler test that only tests for first-order autocorrelation. The LM test can be used to test for higher-order autocorrelation and is more powerful than the Durbin-Watson test.
 
         Overall, the Lagrange Multiplier test is a valuable tool in time series forecasting, as it helps to assess the adequacy of a time series model and to identify areas for improvement. By testing for autocorrelation in the residuals, the test helps to ensure that the model is accurately capturing the underlying patterns in the time series data.
 
-        The LM test can be calculated using the `acorr_lm()` function in the `statsmodels` package in Python. The function takes a time series array and the maximum lag m as input, and returns the LM test statistic and associated p-value. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant autocorrelation in the time series up to the specified lag.
+        The LM test can be calculated using the `acorr_lm()` function in the `statsmodels` package in Python. The function takes a time series array and the maximum lag `m` as input, and returns the LM test statistic and associated p-value. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant autocorrelation in the time series up to the specified lag.
 
     Params:
         resid (array_like):
