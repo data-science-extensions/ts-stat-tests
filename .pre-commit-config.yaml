@@ -1,0 +1,124 @@
+# See https://pre-commit.com for more info
+# See https://pre-commit.com/hooks.html for more hooks
+# See https://www.youtube.com/watch?v=psjz6rwzMdk for how-to on pre-commits
+
+repos:
+  # Fixes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v6.0.0"
+    hooks:
+
+      # File name fixes
+      - id: check-case-conflict
+
+      # Generic file fixes
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: end-of-file-fixer
+
+      # File-type specific fixes
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+        args:
+          - "--unsafe"
+
+      # Python-specific fixes
+      - id: debug-statements
+        language_version: python3
+
+      # Git fixes
+      - id: no-commit-to-branch
+        args:
+          - "--branch=main"
+
+  # Linter
+  - repo: https://github.com/psf/black
+    rev: "25.12.0"
+    hooks:
+      - id: black
+        language_version: python3.13
+        args:
+          - "--config=pyproject.toml"
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: "1.20.0"
+    hooks:
+      - id: blacken-docs
+        additional_dependencies:
+          - "black>=23.3"
+
+  # - repo: https://github.com/astral-sh/ty
+  #   rev: "v0.0.4"
+  #   hooks:
+  #     - id: ty
+  #       name: ty (python)
+  #       entry: ty check ./src/docstring_format_checker
+
+  # Reorder Python imports
+  - repo: https://github.com/pycqa/isort
+    rev: "7.0.0"
+    hooks:
+      - id: isort
+        name: isort (python)
+        args:
+          - "--settings-file=pyproject.toml"
+
+  # Find any outdated syntax and replace with modern equivalents
+  - repo: https://github.com/asottile/pyupgrade
+    rev: "v3.21.2"
+    hooks:
+      - id: pyupgrade
+        name: Upgrade Python features
+        args:
+          - "--py37-plus"
+
+  # Check spelling
+  - repo: https://github.com/codespell-project/codespell
+    rev: "v2.4.1"
+    hooks:
+    - id: codespell
+      additional_dependencies:
+        - tomli
+      args:
+        - "--toml=pyproject.toml"
+        - "--skip=*.js,*.html,*.css,./docs/assets/coverage/*"
+
+  # Remove unused import statements
+  - repo: https://github.com/hadialqattan/pycln
+    rev: "v2.6.0"
+    hooks:
+      - id: pycln
+        args:
+          - "--all"
+
+  # Check uv configs
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: "0.9.21"
+    hooks:
+      - id: uv-lock
+      - id: uv-sync
+        # args:
+        #   - "--all-groups"
+
+  # Everything run locally
+  - repo: local
+    hooks:
+
+    - id: ty
+      name: ty-check
+      entry: uv run ty check ./src/ts_stat_tests
+      language: python
+      types: [python]
+      pass_filenames: true
+      exclude: ^src/tests/.*$
+
+  #     # Run Pylint
+  #     - id: pylint
+  #       name: pylint
+  #       entry: pipenv run pylint
+  #       language: system
+  #       types: [python]
+  #       args:
+  #         - "--rcfile=pyproject.toml"
+  #         - "-rn" # Only display messages
+  #         - "-sn" # Don't display the score
