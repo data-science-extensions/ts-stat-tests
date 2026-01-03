@@ -142,7 +142,7 @@ def acf(
             Number of lags to return autocorrelation for. If not provided, uses $\min(10 \times \text{log10}(nobs),nobs-1)$ (calculated with: `min(int(10 * np.log10(nobs)), nobs - 1)`). The returned value includes $lag 0$ (ie., $1$) so size of the acf vector is $(nlags + 1,)$.<br>
             Defaults to `None`.
         qstat (bool, optional):
-            If `True`, returns the Ljung-Box $q$ statistic for each autocorrelation coefficient. See `q_stat` for more information.<br>
+            If `True`, also returns the Ljung-Box $q$ statistic and corresponding p-values for each autocorrelation coefficient; see the *Returns* section for details.<br>
             Defaults to `False`.
         fft (bool, optional):
             If `True`, computes the ACF via FFT.<br>
