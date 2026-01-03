@@ -24,7 +24,6 @@ __all__: list[str] = [
     "name_func_flat_list",
     "name_func_nested_list",
     "name_func_predefined_name",
-    "name_func_predefined_name",
     "clean",
 ]
 
