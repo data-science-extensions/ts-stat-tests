@@ -159,10 +159,6 @@ def correlation(
         "bglm": ("bglm", "breusch_godfrey", "bg"),
     }
 
-    # options_r = dict_reverse_keys_and_values(options)
-    # if algorithm in options_r.keys():
-    #     return locals()[options_r[algorithm]](x=x, **kwargs)
-
     if algorithm in options["acf"]:
         return _acf(x=x, **kwargs)  # type: ignore
 
@@ -198,6 +194,4 @@ def is_correlated() -> None:
     !!! note "Summary"
         A placeholder function for checking if a time series is correlated.
     """
-    raise NotImplementedError(
-        "is_correlated is a placeholder and has not been implemented yet."
-    )
+    return None
