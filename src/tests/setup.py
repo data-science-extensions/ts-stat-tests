@@ -1,9 +1,16 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Test Setup                                                        #
+#     Purpose: Setup class and utilities for unit tests.                       #
+#                                                                              #
+# ============================================================================ #
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #     Setup                                                                 ####
 #                                                                              #
 # ---------------------------------------------------------------------------- #
-
 
 ## --------------------------------------------------------------------------- #
 ##  Imports                                                                 ####
@@ -12,7 +19,19 @@
 
 # ## Python StdLib Imports ----
 import re
+import unittest
+from functools import lru_cache
 from typing import Any, Callable, Union
+
+# ## Python Third Party Imports ----
+import numpy as np
+import pandas as pd
+from numpy.random._generator import Generator as RandomGenerator
+from pandas import Series
+from stochastic.processes.noise import FractionalGaussianNoise
+
+# ## Local First Party Imports ----
+from ts_stat_tests.utils.data import load_airline
 
 
 ## --------------------------------------------------------------------------- #
@@ -24,8 +43,28 @@ __all__: list[str] = [
     "name_func_flat_list",
     "name_func_nested_list",
     "name_func_predefined_name",
+    "strip_ansi_codes",
     "clean",
+    "get_random_generator",
+    "data_airline",
+    "data_dict",
+    "data_random",
+    "data_sine",
+    "data_line",
+    "data_basic",
+    "data_noise",
+    "data_2d",
+    "BaseTester",
 ]
+
+
+# ---------------------------------------------------------------------------- #
+# Constants                                                                 ####
+# ---------------------------------------------------------------------------- #
+
+
+### Seed ----
+SEED = 42
 
 
 ## --------------------------------------------------------------------------- #
@@ -117,4 +156,86 @@ def strip_ansi_codes(text: str) -> str:
     return ansi_escape.sub("", text)
 
 
-clean = strip_ansi_codes
+clean: Callable[[str], str] = strip_ansi_codes
+
+
+# ---------------------------------------------------------------------------- #
+# Data                                                                      ####
+# ---------------------------------------------------------------------------- #
+
+
+@lru_cache
+def get_random_generator(seed: int = SEED) -> RandomGenerator:
+    return np.random.default_rng(seed=seed)
+
+
+def data_airline() -> Series:
+    return load_airline()
+
+
+@lru_cache
+def data_dict() -> dict[str, int | list[int] | str]:
+    return {"first": 1, "second": 2, "third": [3, 4, 5], "four": "6"}
+
+
+@lru_cache
+def data_random(seed: int = SEED) -> np.ndarray:
+    # Random data with shape (1000,)
+    rng: RandomGenerator = get_random_generator(seed=seed)
+    return rng.random(size=1000)
+
+
+@lru_cache
+def data_sine() -> np.ndarray:
+    # Sine wave with shape (3000,) and wavelengths of 100
+    return np.sin(2 * np.pi * 1 * np.arange(3000) / 100)
+
+
+@lru_cache
+def data_line() -> np.ndarray:
+    # A straight line with values from 1 to 1000 and shape (1000,)
+    return np.arange(1000)
+
+
+@lru_cache
+def data_basic() -> list[int]:
+    # Some super basic data
+    return [4, 7, 9, 10, 6, 11, 3]
+
+
+@lru_cache
+def data_noise(seed: int = SEED) -> np.ndarray:
+    # Gaussian noise with shape (10000,)
+    rng: RandomGenerator = get_random_generator(seed=seed)
+    return FractionalGaussianNoise(hurst=0.5, rng=rng).sample(10000)
+
+
+@lru_cache
+def data_2d(seed: int = SEED) -> np.ndarray:
+    # Random data with shape (4,3000)
+    rng: RandomGenerator = get_random_generator(seed=seed)
+    return rng.random(size=(4, 3000))
+
+
+# ---------------------------------------------------------------------------- #
+# Classes                                                                   ####
+# ---------------------------------------------------------------------------- #
+
+
+class BaseTester(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.data_airline: pd.Series = data_airline()
+        cls.data_dict: dict[str, int | list[int] | str] = data_dict()
+        cls.data_random: np.ndarray = data_random()
+        cls.data_sine: np.ndarray = data_sine()
+        cls.data_line: np.ndarray = data_line()
+        cls.data_basic: list[int] = data_basic()
+        cls.data_noise: np.ndarray = data_noise()
+        cls.data_2d: np.ndarray = data_2d()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        super().tearDownClass()
