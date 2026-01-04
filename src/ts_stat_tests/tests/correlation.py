@@ -198,4 +198,6 @@ def is_correlated() -> None:
     !!! note "Summary"
         A placeholder function for checking if a time series is correlated.
     """
-    return None
+    raise NotImplementedError(
+        "is_correlated is a placeholder and has not been implemented yet."
+    )
