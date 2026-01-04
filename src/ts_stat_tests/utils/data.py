@@ -64,7 +64,10 @@ def load_airline() -> pd.Series:
           forecasting and control. John Wiley & Sons.
     """
     data_source = "https://raw.githubusercontent.com/sktime/sktime/main/sktime/datasets/data/Airline/Airline.csv"
-    data: pd.Series = pd.read_csv(data_source, index_col=0, dtype={1: float}).squeeze("columns")
+    _data = pd.read_csv(data_source, index_col=0, dtype={1: float}).squeeze("columns")
+    if not isinstance(_data, pd.Series):
+        raise TypeError("Expected a pandas Series from the data source.")
+    data: pd.Series = _data
     data.index = pd.PeriodIndex(data.index, freq="M", name="Period")
     data.name = "Number of airline passengers"
     return data
