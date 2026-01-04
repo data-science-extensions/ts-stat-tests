@@ -37,7 +37,8 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Dict, List, Optional, Union, overload
+from collections.abc import Collection, Mapping
+from typing import Any, Optional, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -65,9 +66,8 @@ def generate_error_message(
     parameter_name: str,
     value_parsed: Any,
     options: Union[
-        Dict[str, str],
-        Dict[str, List[str]],
-        Dict[str, List[Union[str, int, float]]],
+        Mapping[str, str],
+        Mapping[str, Collection[Union[str, int, float]]],
     ],
 ) -> str:
     """
@@ -79,7 +79,7 @@ def generate_error_message(
             The name of the parameter.
         value_parsed (Any):
             The invalid value provided.
-        options (Union[Dict[str, str], Dict[str, List[str]], Dict[str, List[Union[str, int, float]]]]):
+        options (Union[Mapping[str, str], Mapping[str, Collection[Union[str, int, float]]]]):
             A dictionary mapping valid option keys to their acceptable values.
 
     Returns:
@@ -180,7 +180,7 @@ def assert_almost_equal(
         Inspiration from Python's UnitTest function `assertAlmostEqual`.
         See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
     """
-    params: Dict[str, float | int | None] = {
+    params: dict[str, float | int | None] = {
         "first": first,
         "second": second,
         "places": places,
