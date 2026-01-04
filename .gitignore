@@ -2,6 +2,7 @@
 uv.lock
 .vscode/
 git_output/
+.complexipy_cache/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
