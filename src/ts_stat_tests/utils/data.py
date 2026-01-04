@@ -1,10 +1,68 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Data Utilities                                                    #
+#     Purpose: Functions to load classic time series datasets.                 #
+#                                                                              #
+# ============================================================================ #
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Overview                                                              ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------------------------------------------------- #
+#  Description                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+"""
+!!! note "Summary"
+    This module contains utility functions to load classic time series datasets for testing and demonstration purposes.
+"""
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Setup                                                                 ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+## --------------------------------------------------------------------------- #
+##  Imports                                                                 ####
+## --------------------------------------------------------------------------- #
+
+
 # ## Python Third Party Imports ----
-import numpy as np
 import pandas as pd
 
 
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Data Loaders                                                          ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
 def load_airline() -> pd.Series:
-    # Inspiration from: sktime.datasets.load_airline()
+    """
+    !!! note "Summary"
+        Loads the classic Airline Passengers dataset as a pandas Series.
+
+    Returns:
+        (pd.Series):
+            The Airline Passengers dataset.
+
+    ??? success "Credit":
+        Inspiration from: `sktime.datasets.load_airline()`
+
+    ??? question "References":
+        - Box, G. E. P., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). Time series analysis:
+          forecasting and control. John Wiley & Sons.
+    """
     data_source = "https://raw.githubusercontent.com/sktime/sktime/main/sktime/datasets/data/Airline/Airline.csv"
     data: pd.Series = pd.read_csv(data_source, index_col=0, dtype={1: float}).squeeze("columns")
     data.index = pd.PeriodIndex(data.index, freq="M", name="Period")
