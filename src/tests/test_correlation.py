@@ -57,8 +57,15 @@ class TestCorrelation(BaseTester):
         X = sm.add_constant(X)
         cls.result_abg = bglm(sm.OLS(y, X).fit())
 
+    @classmethod
+    def tearDownClass(cls) -> None:
+        super().tearDownClass()
+
     def setUp(self) -> None:
-        pass
+        super().setUp()
+
+    def tearDown(self) -> None:
+        super().tearDown()
 
     def test_acf_results(self) -> None:
         np.testing.assert_almost_equal(

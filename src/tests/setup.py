@@ -226,6 +226,7 @@ class BaseTester(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        super().setUpClass()
         cls.data_airline: pd.Series = data_airline()
         cls.data_dict: dict[str, int | list[int] | str] = data_dict()
         cls.data_random: np.ndarray = data_random()
@@ -237,4 +238,4 @@ class BaseTester(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
-        pass
+        super().tearDownClass()
