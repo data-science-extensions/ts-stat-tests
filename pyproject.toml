@@ -148,6 +148,15 @@ split_on_trailing_comma = true
 combine_as_imports = true
 lines_after_imports = 2
 
+[tool.pylint.main]
+disable = [
+    "C0301",  # line-too-long
+    "C0302",  # too-many-lines
+    "R0913",  # too-many-arguments
+    "R0917",  # too-many-positional-arguments
+    "W0622",  # redefined-builtin
+]
+
 [tool.complexipy]
 paths = "src/ts_stat_tests"
 max-complexity-allowed = 15
