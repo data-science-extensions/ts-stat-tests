@@ -12,8 +12,6 @@
 
 # ## Python Third Party Imports ----
 import numpy as np
-import pandas as pd
-from pytest import fixture, mark
 from statsmodels import api as sm
 from statsmodels.stats.api import (
     acorr_breusch_godfrey,
@@ -28,14 +26,7 @@ from statsmodels.tsa.stattools import (
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.correlation import (
-    acf,
-    bglm,
-    ccf,
-    lb,
-    lm,
-    pacf,
-)
+from ts_stat_tests.algorithms.correlation import acf, bglm, ccf, lb, lm, pacf
 from ts_stat_tests.tests.correlation import correlation, is_correlated
 
 

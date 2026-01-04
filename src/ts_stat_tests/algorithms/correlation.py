@@ -41,10 +41,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Literal, Optional, Union, overload
+from typing import Literal, Optional, Union, overload
 
 # ## Python Third Party Imports ----
 import numpy as np
+import pandas as pd
 from numpy.typing import ArrayLike
 from statsmodels.regression.linear_model import (
     RegressionResults,
@@ -78,7 +79,10 @@ __all__: list[str] = ["acf", "pacf", "ccf", "lb", "lm", "bglm"]
 ## --------------------------------------------------------------------------- #
 
 
-VALID_PACF_METHODS = Literal[
+VALID_ACF_MISSING_OPTIONS = Literal["none", "raise", "conservative", "drop"]
+
+
+VALID_PACF_METHOD_OPTIONS = Literal[
     "yw",
     "ywadjusted",
     "ols",
@@ -94,6 +98,9 @@ VALID_PACF_METHODS = Literal[
 ]
 
 
+VALID_LM_COV_TYPE_OPTIONS = Literal["HC0", "HC1", "HC2", "HC3"]
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Algorithms                                                             ####
@@ -101,17 +108,71 @@ VALID_PACF_METHODS = Literal[
 # ---------------------------------------------------------------------------- #
 
 
+@overload
+def acf(
+    x: ArrayLike,
+    adjusted: bool = False,
+    nlags: Optional[int] = None,
+    fft: bool = True,
+    bartlett_confint: bool = True,
+    missing: VALID_ACF_MISSING_OPTIONS = "none",
+    *,
+    qstat: Literal[False] = False,
+    alpha: None = None,
+) -> np.ndarray: ...
+@overload
+def acf(
+    x: ArrayLike,
+    adjusted: bool = False,
+    nlags: Optional[int] = None,
+    fft: bool = True,
+    bartlett_confint: bool = True,
+    missing: VALID_ACF_MISSING_OPTIONS = "none",
+    *,
+    qstat: Literal[False] = False,
+    alpha: float,
+) -> tuple[np.ndarray, np.ndarray]: ...
+@overload
+def acf(
+    x: ArrayLike,
+    adjusted: bool = False,
+    nlags: Optional[int] = None,
+    fft: bool = True,
+    bartlett_confint: bool = True,
+    missing: VALID_ACF_MISSING_OPTIONS = "none",
+    *,
+    qstat: Literal[True],
+    alpha: None = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]: ...
+@overload
+def acf(
+    x: ArrayLike,
+    adjusted: bool = False,
+    nlags: Optional[int] = None,
+    fft: bool = True,
+    bartlett_confint: bool = True,
+    missing: VALID_ACF_MISSING_OPTIONS = "none",
+    *,
+    qstat: Literal[True],
+    alpha: float,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]: ...
 @typechecked
 def acf(
     x: ArrayLike,
     adjusted: bool = False,
     nlags: Optional[int] = None,
-    qstat: bool = False,
     fft: bool = True,
-    alpha: Optional[float] = None,
     bartlett_confint: bool = True,
-    missing: str = "none",
-) -> Union[np.ndarray, tuple[np.ndarray, ...]]:
+    missing: VALID_ACF_MISSING_OPTIONS = "none",
+    *,
+    qstat: bool = False,
+    alpha: Optional[float] = None,
+) -> Union[
+    np.ndarray,
+    tuple[np.ndarray, np.ndarray],
+    tuple[np.ndarray, np.ndarray, np.ndarray],
+    tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
+]:
     r"""
     !!! note "Summary"
 
@@ -180,7 +241,7 @@ def acf(
         bartlett_confint (bool, optional):
             Confidence intervals for ACF values are generally placed at 2 standard errors around $r_k$. The formula used for standard error depends upon the situation. If the autocorrelations are being used to test for randomness of residuals as part of the ARIMA routine, the standard errors are determined assuming the residuals are white noise. The approximate formula for any lag is that standard error of each $r_k = \frac{1}{\sqrt{N}}$. See section 9.4 of [2] for more details on the $\frac{1}{\sqrt{N}}$ result. For more elementary discussion, see section 5.3.2 in [3]. For the ACF of raw data, the standard error at a lag $k$ is found as if the right model was an $\text{MA}(k-1)$. This allows the possible interpretation that if all autocorrelations past a certain lag are within the limits, the model might be an $\text{MA}$ of order defined by the last significant autocorrelation. In this case, a moving average model is assumed for the data and the standard errors for the confidence intervals should be generated using Bartlett's formula. For more details on Bartlett formula result, see section 7.2 in [2].<br>
             Defaults to `True`.
-        missing (str, optional):
+        missing (VALID_ACF_MISSING_OPTIONS, optional):
             A string in `["none", "raise", "conservative", "drop"]` specifying how the `NaN`'s are to be treated.
 
             - `"none"` performs no checks.
@@ -301,13 +362,30 @@ def acf(
     )
 
 
+@overload
+def pacf(
+    x: ArrayLike1D,
+    nlags: Optional[int] = None,
+    method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
+    *,
+    alpha: None = None,
+) -> np.ndarray: ...
+@overload
+def pacf(
+    x: ArrayLike1D,
+    nlags: Optional[int] = None,
+    method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
+    *,
+    alpha: float,
+) -> tuple[np.ndarray, np.ndarray]: ...
 @typechecked
 def pacf(
     x: ArrayLike1D,
     nlags: Optional[int] = None,
-    method: VALID_PACF_METHODS = "ywadjusted",
+    method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
+    *,
     alpha: Optional[float] = None,
-) -> Union[np.ndarray, tuple[np.ndarray, ...]]:
+) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
     r"""
     !!! note "Summary"
 
@@ -351,7 +429,7 @@ def pacf(
         nlags (Optional[int], optional):
             Number of lags to return autocorrelation for. If not provided, uses $min(10 \times log10(nobs) , (\frac{nobs}{2}-1))$ (calculated with: `min(int(10*np.log10(nobs)), nobs // 2 - 1)`). The returned value includes lag `0` (ie., `1`) so size of the pacf vector is $(nlags + 1,)$.<br>
             Defaults to `None`.
-        method (VALID_PACF_METHODS, optional):
+        method (VALID_PACF_METHOD_OPTIONS, optional):
             Specifies which method for the calculations to use.
 
             - `"yw"` or `"ywadjusted"`: Yule-Walker with sample-size adjustment in denominator for acovf. Default.
@@ -558,12 +636,35 @@ def pacf(
     )
 
 
+@overload
+def ccf(
+    x: ArrayLike,
+    y: ArrayLike,
+    adjusted: bool = True,
+    fft: bool = True,
+    *,
+    nlags: Optional[int] = None,
+    alpha: None = None,
+) -> np.ndarray: ...
+@overload
+def ccf(
+    x: ArrayLike,
+    y: ArrayLike,
+    adjusted: bool = True,
+    fft: bool = True,
+    *,
+    nlags: Optional[int] = None,
+    alpha: float,
+) -> tuple[np.ndarray, np.ndarray]: ...
 @typechecked
 def ccf(
     x: ArrayLike,
     y: ArrayLike,
     adjusted: bool = True,
     fft: bool = True,
+    *,
+    nlags: Optional[int] = None,
+    alpha: Optional[float] = None,
 ) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
     """
     !!! note "Summary"
@@ -612,6 +713,12 @@ def ccf(
         fft (bool, optional):
             If `True`, use FFT convolution. This method should be preferred for long time series.<br>
             Defaults to `True`.
+        nlags (Optional[int], optional):
+            Number of lags to return cross-correlations for. If not provided, the number of lags equals len(x).
+            Defaults to `None`.
+        alpha (Optional[float], optional):
+            If a number is given, the confidence intervals for the given level are returned. For instance if `alpha=.05`, 95% confidence intervals are returned where the standard deviation is computed according to `1/sqrt(len(x))`.
+            Defaults to `None`.
 
     Returns:
         ccf (np.ndarray):
@@ -657,6 +764,8 @@ def ccf(
         y=y,
         adjusted=adjusted,
         fft=fft,
+        nlags=nlags,
+        alpha=alpha,
     )
 
 
@@ -669,7 +778,7 @@ def lb(
     period: Optional[int] = None,
     return_df: bool = True,
     auto_lag: bool = False,
-) -> Union[Any, tuple[Union[float, np.ndarray], ...], np.ndarray]:
+) -> pd.DataFrame:
     r"""
     !!! note "Summary"
 
@@ -800,36 +909,59 @@ def lb(
 def lm(
     resid: ArrayLike,
     nlags: Optional[int] = None,
-    store: Literal[False] = False,
     *,
+    store: Literal[False] = False,
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: str = "nonrobust",
+    cov_type: Literal["nonrobust"] = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> tuple[float, float, float, float]: ...
 @overload
 def lm(
     resid: ArrayLike,
     nlags: Optional[int] = None,
-    store: Literal[True] = True,
     *,
+    store: Literal[True],
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: str = "nonrobust",
+    cov_type: Literal["nonrobust"] = "nonrobust",
+    cov_kwargs: Optional[dict] = None,
+) -> tuple[np.ndarray, np.ndarray, float, float, ResultsStore]: ...
+@overload
+def lm(
+    resid: ArrayLike,
+    nlags: Optional[int] = None,
+    *,
+    store: Literal[False] = False,
+    period: Optional[int] = None,
+    ddof: int = 0,
+    cov_type: VALID_LM_COV_TYPE_OPTIONS,
+    cov_kwargs: Optional[dict] = None,
+) -> tuple[np.ndarray, np.ndarray, float, float]: ...
+@overload
+def lm(
+    resid: ArrayLike,
+    nlags: Optional[int] = None,
+    *,
+    store: Literal[True],
+    period: Optional[int] = None,
+    ddof: int = 0,
+    cov_type: VALID_LM_COV_TYPE_OPTIONS,
     cov_kwargs: Optional[dict] = None,
 ) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
 def lm(
     resid: ArrayLike,
     nlags: Optional[int] = None,
-    # autolag: Optional[str] = None,
-    store: bool = False,
     *,
+    store: bool = False,
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: str = "nonrobust",
+    cov_type: Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS] = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> Union[
+    tuple[np.ndarray, np.ndarray, float, float],
+    tuple[np.ndarray, np.ndarray, float, float, ResultsStore],
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
 ]:
@@ -910,7 +1042,7 @@ def lm(
         ddof (int, optional):
             The number of degrees of freedom consumed by the model used to produce resid<br>
             Defaults to `0`.
-        cov_type (str, optional):
+        cov_type (Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS], optional):
             Covariance type. The default is `"nonrobust"` which uses the classic OLS covariance estimator. Specify one of `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"` to use White's covariance estimator. All covariance types supported by `OLS.fit` are accepted.<br>
             Defaults to `"nonrobust"`.
         cov_kwargs (Optional[dict], optional):
@@ -961,10 +1093,9 @@ def lm(
         - [`ts_stat_tests.algorithms.correlation.lm`][src.ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
         - [`ts_stat_tests.algorithms.correlation.bglm`][src.ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
-    return acorr_lm(
+    return acorr_lm(  # type: ignore
         resid=resid,
         nlags=nlags,
-        # autolag=autolag,
         store=store,
         period=period,
         ddof=ddof,
@@ -977,18 +1108,21 @@ def lm(
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
+    *,
     store: Literal[False] = False,
 ) -> tuple[float, float, float, float]: ...
 @overload
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
-    store: Literal[True] = True,
+    *,
+    store: Literal[True],
 ) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
+    *,
     store: bool = False,
 ) -> Union[
     tuple[float, float, float, float],
@@ -1090,7 +1224,7 @@ def bglm(
         - [`ts_stat_tests.algorithms.correlation.lm`][src.ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
         - [`ts_stat_tests.algorithms.correlation.bglm`][src.ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
-    return acorr_breusch_godfrey(
+    return acorr_breusch_godfrey(  # type: ignore
         res=res,
         nlags=nlags,
         store=store,
