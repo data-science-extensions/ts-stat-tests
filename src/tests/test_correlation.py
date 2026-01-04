@@ -28,10 +28,15 @@ from statsmodels.tsa.stattools import (
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.correlation import acf, bglm, ccf, lb, lm, pacf
-
-
-# from ts_stat_tests.tests.correlation import correlation, is_correlated
+from ts_stat_tests.algorithms.correlation import (
+    acf,
+    bglm,
+    ccf,
+    lb,
+    lm,
+    pacf,
+)
+from ts_stat_tests.tests.correlation import correlation, is_correlated
 
 
 # ---------------------------------------------------------------------------- #
@@ -51,15 +56,15 @@ class TestCorrelation(BaseTester):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.result_acf: np.ndarray = acf(cls.data_airline)
-        cls.result_pacf: np.ndarray = pacf(cls.data_airline)
-        cls.result_ccf: np.ndarray = ccf(cls.data_airline, np.array(cls.data_airline) + 1)
-        cls.result_alb: np.ndarray = lb(cls.data_airline)
-        cls.result_alm: np.ndarray = lm(cls.data_airline)
-        y: pd.DataFrame = sm.datasets.longley.load_pandas().endog
-        X: pd.DataFrame = sm.datasets.longley.load_pandas().exog
-        X: np.ndarray = sm.add_constant(X)
-        cls.result_abg: np.ndarray = bglm(sm.OLS(y, X).fit())
+        cls.result_acf = acf(cls.data_airline)
+        cls.result_pacf = pacf(cls.data_airline)
+        cls.result_ccf = ccf(cls.data_airline, np.array(cls.data_airline) + 1)
+        cls.result_alb = lb(cls.data_airline)
+        cls.result_alm = lm(cls.data_airline)
+        y = sm.datasets.longley.load_pandas().endog
+        X = sm.datasets.longley.load_pandas().exog
+        X = sm.add_constant(X)
+        cls.result_abg = bglm(sm.OLS(y, X).fit())
 
     def setUp(self) -> None:
         pass
@@ -140,6 +145,20 @@ class TestCorrelation(BaseTester):
     def test_correlation_raises(self) -> None:
         with self.assertRaises(ValueError):
             correlation(x=self.data_airline, algorithm="xxxx")
+
+    def test_correlation_ccf_raises(self) -> None:
+        with self.assertRaises(ValueError):
+            correlation(x=self.data_airline, algorithm="ccf")
+
+    def test_correlation_bglm(self) -> None:
+        y = sm.datasets.longley.load_pandas().endog
+        X = sm.datasets.longley.load_pandas().exog
+        X = sm.add_constant(X)
+        res = sm.OLS(y, X).fit()
+        np.testing.assert_almost_equal(
+            correlation(res, algorithm="bglm"),
+            self.result_abg,
+        )
 
     def test_is_correlated(self) -> None:
         self.assertIsNone(is_correlated())
