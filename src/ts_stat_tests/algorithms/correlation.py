@@ -73,6 +73,27 @@ from typeguard import typechecked
 __all__: list[str] = ["acf", "pacf", "ccf", "lb", "lm", "bglm"]
 
 
+## --------------------------------------------------------------------------- #
+##  Constants                                                               ####
+## --------------------------------------------------------------------------- #
+
+
+VALID_PACF_METHODS = Literal[
+    "yw",
+    "ywadjusted",
+    "ols",
+    "ols-inefficient",
+    "ols-adjusted",
+    "ywm",
+    "ywmle",
+    "ld",
+    "ldadjusted",
+    "ldb",
+    "ldbiased",
+    "burg",
+]
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Algorithms                                                             ####
@@ -92,13 +113,13 @@ def acf(
     missing: str = "none",
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]:
     r"""
-    !!! summary "Summary"
+    !!! note "Summary"
 
         The autocorrelation function (ACF) is a statistical tool used to study the correlation between a time series and its lagged values. In time series forecasting, the ACF is used to identify patterns and relationships between values in a time series at different lags, which can then be used to make predictions about future values.
 
         This function will implement the [`acf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The acf at lag `0` (ie., `1`) is returned.
 
@@ -139,12 +160,12 @@ def acf(
         The ACF can be calculated using the `acf()` function in the `statsmodels` package in Python. The function takes a time series array as input and returns an array of autocorrelation coefficients at different lags. The significance of the autocorrelation coefficients can be tested using the Ljung-Box test, which tests the null hypothesis that the autocorrelation coefficients are zero up to a certain lag. The Ljung-Box test can be performed using the `acorr_ljungbox()` function in the `statsmodels` package. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant autocorrelation in the time series up to the specified lag.
 
     Params:
-        x (array_like):
+        x (ArrayLike):
             The time series data.
         adjusted (bool, optional):
             If `True`, then denominators for auto-covariance are $n-k$, otherwise $n$.<br>
             Defaults to `False`.
-        nlags (int, optional):
+        nlags (Optional[int], optional):
             Number of lags to return autocorrelation for. If not provided, uses $\min(10 \times \text{log10}(nobs),nobs-1)$ (calculated with: `min(int(10 * np.log10(nobs)), nobs - 1)`). The returned value includes $lag 0$ (ie., $1$) so size of the acf vector is $(nlags + 1,)$.<br>
             Defaults to `None`.
         qstat (bool, optional):
@@ -153,7 +174,7 @@ def acf(
         fft (bool, optional):
             If `True`, computes the ACF via FFT.<br>
             Defaults to `True`.
-        alpha (float, optional):
+        alpha (Optional[float], optional):
             If a number is given, the confidence intervals for the given level are returned. For instance if `alpha=0.05`, a $95\%$ confidence intervals are returned where the standard deviation is computed according to Bartlett"s formula.<br>
             Defaults to `None`.
         bartlett_confint (bool, optional):
@@ -189,13 +210,16 @@ def acf(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     !!! example "Examples"
-        ```python linenums="1" title="Test ACF without FFT"
+
+        ```pycon {.py .python linenums="1" title="Test ACF without FFT"}
         >>> from pprint import pprint
         >>> from statsmodels.datasets import macrodata
         >>> from ts_stat_tests.algorithms.correlation import acf
         >>> data = macrodata.load_pandas()
         >>> x = data.data["realgdp"]
-        >>> res_acf, res_confint, res_qstat, res_pvalues = acf(x, nlags=40, qstat=True, alpha=0.05, fft=False)
+        >>> res_acf, res_confint, res_qstat, res_pvalues = acf(
+        ...     x, nlags=40, qstat=True, alpha=0.05, fft=False
+        ... )
         >>> pprint(res_acf[1:11])
         array([0.94804734, 0.87557484, 0.80668116, 0.75262542, 0.71376997,
                0.6817336 , 0.66290439, 0.65561048, 0.67094833, 0.70271992])
@@ -219,12 +243,15 @@ def acf(
                7.36019524e-107, 4.26400770e-121, 1.30546283e-134, 6.49627091e-148,
                5.24937010e-162, 1.10078935e-177])
         ```
-        ```python linenums="1" title="Test ACF with FFT"
+
+        ```pycon {.py .python linenums="1" title="Test ACF with FFT"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import acf
         >>> data = load_airline()
-        >>> res_acf, res_confint, res_qstat, res_pvalues = acf(data, nlags=40, qstat=True, alpha=0.05, fft=True)
+        >>> res_acf, res_confint, res_qstat, res_pvalues = acf(
+        ...     data, nlags=40, qstat=True, alpha=0.05, fft=True
+        ... )
         >>> pprint(res_acf[1:11])
         array([0.94804734, 0.87557484, 0.80668116, 0.75262542, 0.71376997,
                0.6817336 , 0.66290439, 0.65561048, 0.67094833, 0.70271992])
@@ -278,30 +305,17 @@ def acf(
 def pacf(
     x: ArrayLike1D,
     nlags: Optional[int] = None,
-    method: Literal[
-        "yw",
-        "ywadjusted",
-        "ols",
-        "ols-inefficient",
-        "ols-adjusted",
-        "ywm",
-        "ywmle",
-        "ld",
-        "ldadjusted",
-        "ldb",
-        "ldbiased",
-        "burg",
-    ] = "ywadjusted",
+    method: VALID_PACF_METHODS = "ywadjusted",
     alpha: Optional[float] = None,
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]:
     r"""
-    !!! summary "Summary"
+    !!! note "Summary"
 
         The partial autocorrelation function (PACF) is a statistical tool used in time series forecasting to identify the direct relationship between two variables, controlling for the effect of the other variables in the time series. In other words, the PACF measures the correlation between a time series and its lagged values, while controlling for the effects of other intermediate lags.
 
         This function will implement the [`pacf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         Based on simulation evidence across a range of low-order ARMA models, the best methods based on root MSE are Yule-Walker (MLW), Levinson-Durbin (MLE) and Burg, respectively. The estimators with the lowest bias included these three in addition to OLS and OLS-adjusted. Yule-Walker (adjusted) and Levinson-Durbin (adjusted) performed consistently worse than the other options.
 
@@ -332,12 +346,12 @@ def pacf(
         The PACF can be calculated using the pacf() function in the statsmodels package in Python. The function takes a time series array as input and returns an array of partial autocorrelation coefficients at different lags. The significance of the partial autocorrelation coefficients can be tested using the same Ljung-Box test as for the ACF. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant partial autocorrelation in the time series up to the specified lag.
 
     Params:
-        x (array_like):
+        x (ArrayLike1D):
             Observations of time series for which pacf is calculated.
-        nlags (int, optional):
+        nlags (Optional[int], optional):
             Number of lags to return autocorrelation for. If not provided, uses $min(10 \times log10(nobs) , (\frac{nobs}{2}-1))$ (calculated with: `min(int(10*np.log10(nobs)), nobs // 2 - 1)`). The returned value includes lag `0` (ie., `1`) so size of the pacf vector is $(nlags + 1,)$.<br>
             Defaults to `None`.
-        method (str, optional):
+        method (VALID_PACF_METHODS, optional):
             Specifies which method for the calculations to use.
 
             - `"yw"` or `"ywadjusted"`: Yule-Walker with sample-size adjustment in denominator for acovf. Default.
@@ -349,7 +363,7 @@ def pacf(
             - `"ldb"` or `"ldbiased"`: Levinson-Durbin recursion without bias correction.<br>
 
             Defaults to `"ywadjusted"`.
-        alpha (float, optional):
+        alpha (Optional[float], optional):
             If a number is given, the confidence intervals for the given level are returned. For instance if `alpha=.05`, $95\%$ confidence intervals are returned where the standard deviation is computed according to $\frac{1}{\sqrt{len(x)}}$.<br>
             Defaults to `None`.
 
@@ -366,7 +380,8 @@ def pacf(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     !!! example "Examples"
-        ```python linenums="1" title="Test PACF using Yule-Walker method with sample-size adjustment"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using Yule-Walker method with sample-size adjustment"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -387,7 +402,8 @@ def pacf(
                [ 0.12545111,  0.45211177],
                [ 0.04358772,  0.37024838]])
         ```
-        ```python linenums="1" title="Test PACF using Yule-Walker method without adjustment"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using Yule-Walker method without adjustment"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -408,7 +424,8 @@ def pacf(
                [ 0.06915821,  0.39581887],
                [ 0.00272093,  0.32938159]])
         ```
-        ```python linenums="1" title="Test PACF using regression of time series"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using regression of time series"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -429,7 +446,8 @@ def pacf(
                [ 0.40527808,  0.73193874],
                [ 0.12923325,  0.45589391]])
         ```
-        ```python linenums="1" title="Test PACF using regression of time series on lags with inefficient optimisation"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using regression of time series on lags with inefficient optimisation"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -450,7 +468,8 @@ def pacf(
                [ 0.39024632,  0.71690698],
                [ 0.05748558,  0.38414625]])
         ```
-        ```python linenums="1" title="Test PACF using regression of time series on lags with a bias adjustment"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using regression of time series on lags with a bias adjustment"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -471,7 +490,8 @@ def pacf(
                [ 0.4431853 ,  0.76984597],
                [ 0.15106635,  0.47772701]])
         ```
-        ```python linenums="1" title="Test PACF using Levinson-Durbin recursion with bias correction"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using Levinson-Durbin recursion with bias correction"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -492,7 +512,8 @@ def pacf(
                [ 0.12545111,  0.45211177],
                [ 0.04358772,  0.37024838]])
         ```
-        ```python linenums="1" title="Test PACF using Levinson-Durbin recursion without bias correction"
+
+        ```pycon {.py .python linenums="1" title="Test PACF using Levinson-Durbin recursion without bias correction"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
@@ -545,13 +566,13 @@ def ccf(
     fft: bool = True,
 ) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
 
         The cross-correlation function (CCF) is a statistical tool used in time series forecasting to measure the correlation between two time series at different lags. It is used to study the relationship between two time series, and can help to identify lead-lag relationships and causal effects.
 
         This function will implement the [`ccf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         If `adjusted` is `True`, the denominator for the autocovariance is adjusted.
 
@@ -581,9 +602,9 @@ def ccf(
         The CCF can be calculated using the `ccf()` function in the `statsmodels` package in Python. The function takes two time series arrays as input and returns an array of cross-correlation coefficients at different lags. The significance of the cross-correlation coefficients can be tested using a similar test to the Ljung-Box test, such as the Box-Pierce test or the Breusch-Godfrey test. These tests can be performed using the `boxpierce()` and `lm()` functions in the `statsmodels` package, respectively. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant cross-correlation between the two time series at the specified lag.
 
     Params:
-        x (array_like):
+        x (ArrayLike):
             The time series data to use in the calculation.
-        y (array_like):
+        y (ArrayLike):
             The time series data to use in the calculation.
         adjusted (bool, optional):
             If `True`, then denominators for cross-correlation is $n-k$, otherwise $n$.<br>
@@ -600,22 +621,24 @@ def ccf(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     !!! example "Examples"
-        ```python linenums="1" title="Test CCF without FFT"
+
+        ```pycon {.py .python linenums="1" title="Test CCF without FFT"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import ccf
         >>> data = load_airline()
-        >>> res_ccf = ccf(data, data+1, adjusted=True, fft=False)
+        >>> res_ccf = ccf(data, data + 1, adjusted=True, fft=False)
         >>> pprint(res_ccf[1:11])
         array([0.95467704, 0.88790688, 0.82384458, 0.774129  , 0.73944515,
                0.71137419, 0.69677541, 0.69417581, 0.71567822, 0.75516171])
         ```
-        ```python linenums="1" title="Test CCF with FFT"
+
+        ```pycon {.py .python linenums="1" title="Test CCF with FFT"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import ccf
         >>> data = load_airline()
-        >>> res_ccf = ccf(data, data+1, adjusted=True, fft=True)
+        >>> res_ccf = ccf(data, data + 1, adjusted=True, fft=True)
         >>> pprint(res_ccf[1:11])
         array([0.95467704, 0.88790688, 0.82384458, 0.774129  , 0.73944515,
                0.71137419, 0.69677541, 0.69417581, 0.71567822, 0.75516171])
@@ -640,7 +663,7 @@ def ccf(
 @typechecked
 def lb(
     x: ArrayLike,
-    lags: Union[int, ArrayLike, None] = None,
+    lags: Optional[Union[int, ArrayLike]] = None,
     boxpierce: bool = False,
     model_df: int = 0,
     period: Optional[int] = None,
@@ -648,13 +671,13 @@ def lb(
     auto_lag: bool = False,
 ) -> Union[Any, tuple[Union[float, np.ndarray], ...], np.ndarray]:
     r"""
-    !!! summary "Summary"
+    !!! note "Summary"
 
         The Ljung-Box test is a statistical test used in time series forecasting to test for the presence of autocorrelation in the residuals of a model. The test is based on the autocorrelation function (ACF) of the residuals, and can be used to assess the adequacy of a time series model and to identify areas for improvement.
 
         This function will implement the [`acorr_ljungbox()`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Ljung-Box and Box-Pierce statistics differ in how they scale the autocorrelation function; the Ljung-Box test has better finite-sample properties.
 
@@ -688,11 +711,11 @@ def lb(
         The Ljung-Box test can be calculated using the `acorr_ljungbox()` function in the `statsmodels` package in Python. The function takes a time series array and the maximum lag $m$ as input, and returns an array of Q-statistics and associated p-values for each lag up to $m$. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant autocorrelation in the time series up to the specified lag.
 
     Params:
-        x (array_like):
+        x (ArrayLike):
             The data series. The data is demeaned before the test statistic is computed.
-        lags (Union[int, array_like], optional):
+        lags (Optional[Union[int, ArrayLike]], optional):
             If lags is an integer (`int`) then this is taken to be the largest lag that is included, the test result is reported for all smaller lag length. If lags is a list or array, then all lags are included up to the largest lag in the list, however only the tests for the lags in the list are reported. If lags is `None`, then the default maxlag is currently $\min(\frac{nobs}{2}-2,40)$ (calculated with: `min(nobs // 2 - 2, 40)`). The default number of `lags` changes if `period` is set.<br>
-            !!! deprecation "Deprecation Warning"
+            !!! deprecation "Deprecation"
                 After `statsmodels` version `0.12`, this will calculation change from
 
                 $$
@@ -711,12 +734,12 @@ def lb(
         model_df (int, optional):
             Number of degrees of freedom consumed by the model. In an ARMA model, this value is usually $p+q$ where $p$ is the AR order and $q$ is the MA order. This value is subtracted from the degrees-of-freedom used in the test so that the adjusted dof for the statistics are $lags - model_df$. If $lags - model_df <= 0$, then `NaN` is returned.<br>
             Defaults to `0`.
-        period (int, optional):
+        period (Optional[int], optional):
             The period of a Seasonal time series. Used to compute the max lag for seasonal data which uses $\min(2 \times period, \frac{nobs}{5})$ (calculated with: `min(2*period,nobs//5)`) if set. If `None`, then the default rule is used to set the number of lags. When set, must be $>= 2$.<br>
             Defaults to `None`.
         return_df (bool, optional):
             Flag indicating whether to return the result as a single DataFrame with columns `lb_stat`, `lb_pvalue`, and optionally `bp_stat` and `bp_pvalue`. Set to `True` to return the DataFrame or `False` to continue returning the $2-4$ output. If `None` (the default), a warning is raised.
-            !!! deprecation "Deprecation Warning"
+            !!! deprecation "Deprecation"
                 After `statsmodels` version `0.12`, this will become the only return method.
             Defaults to `True`.
         auto_lag (bool, optional):
@@ -737,11 +760,12 @@ def lb(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     !!! example "Examples"
-        ```python linenums="1" title="Python"
+
+        ```pycon {.py .python linenums="1" title="Python"}
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.algorithms.correlation import lb
         >>> data = sm.datasets.sunspots.load_pandas().data
-        >>> res = sm.tsa.ARIMA(data["SUNACTIVITY"], order=(1,0,1)).fit()
+        >>> res = sm.tsa.ARIMA(data["SUNACTIVITY"], order=(1, 0, 1)).fit()
         >>> lb(res.resid, lags=[10], return_df=True)
             lb_stat     lb_pvalue
         10  214.106992  1.827374e-40
@@ -790,13 +814,13 @@ def lm(
     tuple[Union[float, np.ndarray, Any, Any], ...],
 ]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
 
         The Lagrange Multiplier (LM) test is a statistical test used in time series forecasting to test for the presence of autocorrelation in a model. The test is based on the residual sum of squares (RSS) of a time series model, and can be used to assess the adequacy of the model and to identify areas for improvement.
 
         This function will implement the [`acorr_lm()`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         This is a generic Lagrange Multiplier (LM) test for autocorrelation. It returns Engle's ARCH test if `resid` is the squared residual array. The Breusch-Godfrey test is a variation on this LM test with additional exogenous variables in the auxiliary regression.
 
@@ -850,17 +874,17 @@ def lm(
         The LM test can be calculated using the `acorr_lm()` function in the `statsmodels` package in Python. The function takes a time series array and the maximum lag `m` as input, and returns the LM test statistic and associated p-value. If the p-value of the test is less than a certain significance level (e.g. $0.05$), then there is evidence of significant autocorrelation in the time series up to the specified lag.
 
     Params:
-        resid (array_like):
+        resid (ArrayLike):
             Time series to test.
-        nlags (int, optional):
+        nlags (Optional[int], optional):
             Highest lag to use.<br>
             Defaults to `None`.
-            !!! deprecation "Deprecation Warning"
+            !!! deprecation "Deprecation"
                 The behavior of this parameter will change after `statsmodels` version `0.12`.
         store (bool, optional):
             If `True` then the intermediate results are also returned.<br>
             Defaults to `False`.
-        period (int, optional):
+        period (Optional[int], optional):
             The period of a Seasonal time series. Used to compute the max lag for seasonal data which uses $\\min(2 \\times period, \\frac{nobs}{5})$ (calculated with: `min(2*period,nobs//5)`) if set. If `None`, then the default rule is used to set the number of lags. When set, must be $>=$ `2`.<br>
             Defaults to `None`.
         ddof (int, optional):
@@ -869,7 +893,7 @@ def lm(
         cov_type (str, optional):
             Covariance type. The default is `"nonrobust"` which uses the classic OLS covariance estimator. Specify one of `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"` to use White's covariance estimator. All covariance types supported by `OLS.fit` are accepted.<br>
             Defaults to `"nonrobust"`.
-        cov_kwargs (dict, optional):
+        cov_kwargs (Optional[dict], optional):
             Dictionary of covariance options passed to `OLS.fit`. See [`OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html) for more details.<br>
             Defaults to `None`.
 
@@ -889,7 +913,8 @@ def lm(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     !!! example "Examples"
-        ```python linenums="1" title="Test Lagrange Multiplier for autocorrelation"
+
+        ```pycon {.py .python linenums="1" title="Test Lagrange Multiplier for autocorrelation"}
         >>> from pprint import pprint
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import lm
@@ -950,13 +975,13 @@ def bglm(
     tuple[np.float64, np.ndarray, float, float, ResultsStore],
 ]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
 
         The Breusch-Godfrey Lagrange Multiplier (BGLM) test is a statistical test used in time series forecasting to test for the presence of autocorrelation in the residuals of a model. The test is a generalization of the LM test and can be used to test for autocorrelation up to a specified order.
 
         This function will implement the [`acorr_breusch_godfrey()`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         BG adds lags of residual to exog in the design matrix for the auxiliary regression with residuals as endog. See Greene (2002), section 12.7.1.
 
@@ -990,7 +1015,7 @@ def bglm(
     Params:
         res (Union[RegressionResults, RegressionResultsWrapper]):
             Estimation results for which the residuals are tested for serial correlation.
-        nlags (int, optional):
+        nlags (Optional[int], optional):
             Number of lags to include in the auxiliary regression. (`nlags` is highest lag).<br>
             Defaults to `None`.
         store (bool, optional):
@@ -1013,7 +1038,8 @@ def bglm(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     !!! example "Examples"
-        ```python linenums="1" title="Test for Breusch-Godfrey Lagrange Multiplier in residual autocorrelation"
+
+        ```pycon {.py .python linenums="1" title="Test for Breusch-Godfrey Lagrange Multiplier in residual autocorrelation"}
         >>> from statsmodels import api as sm
         >>> from ts_stat_tests.algorithms.correlation import bglm
         >>> y = sm.datasets.longley.load_pandas().endog
