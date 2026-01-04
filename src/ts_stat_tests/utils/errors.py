@@ -99,7 +99,7 @@ def generate_error_message(
 
 
 @overload
-def is_almost_equal(first: float, second: float, *, places: int) -> bool: ...
+def is_almost_equal(first: float, second: float, *, places: int = 7) -> bool: ...
 @overload
 def is_almost_equal(first: float, second: float, *, delta: float) -> bool: ...
 @typechecked
@@ -128,24 +128,23 @@ def is_almost_equal(
         Inspiration from Python's UnitTest function `assertAlmostEqual`.
         See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
     """
-    if first == second:
-        return True
     if places is not None and delta is not None:
         raise ValueError(f"Specify `delta` or `places`, not both.")
+    if first == second:
+        return True
     diff: float = abs(first - second)
     if delta is not None:
         if diff <= delta:
             return True
     else:
-        if places is None:
-            places = 7
+        places = places or 7
         if round(diff, places) == 0:
             return True
     return False
 
 
 @overload
-def assert_almost_equal(first: float, second: float, msg: Optional[str] = None, *, places: int) -> None: ...
+def assert_almost_equal(first: float, second: float, msg: Optional[str] = None, *, places: int = 7) -> None: ...
 @overload
 def assert_almost_equal(first: float, second: float, msg: Optional[str] = None, *, delta: float) -> None: ...
 @typechecked
@@ -181,7 +180,7 @@ def assert_almost_equal(
         Inspiration from Python's UnitTest function `assertAlmostEqual`.
         See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
     """
-    params: dict[str, float | int | None] = {
+    params: dict[str, Optional[Union[float, int]]] = {
         "first": first,
         "second": second,
         "places": places,
@@ -192,9 +191,8 @@ def assert_almost_equal(
     diff: float = abs(first - second)
     if delta is not None:
         standard_msg: str = f"{first} != {second} within {delta} delta ({diff} difference)"
-    elif places is not None:
-        standard_msg = f"{first} != {second} within {places} places ({diff} difference)"
     else:
-        raise ValueError("Must specify `delta` or `places`")
+        places = places or 7
+        standard_msg = f"{first} != {second} within {places} places ({diff} difference)"
     msg = msg or standard_msg
     raise AssertionError(msg)
