@@ -796,6 +796,28 @@ def lb(
     )
 
 
+@overload
+def lm(
+    resid: ArrayLike,
+    nlags: Optional[int] = None,
+    store: Literal[False] = False,
+    *,
+    period: Optional[int] = None,
+    ddof: int = 0,
+    cov_type: str = "nonrobust",
+    cov_kwargs: Optional[dict] = None,
+) -> tuple[float, float, float, float]: ...
+@overload
+def lm(
+    resid: ArrayLike,
+    nlags: Optional[int] = None,
+    store: Literal[True] = True,
+    *,
+    period: Optional[int] = None,
+    ddof: int = 0,
+    cov_type: str = "nonrobust",
+    cov_kwargs: Optional[dict] = None,
+) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
 def lm(
     resid: ArrayLike,
@@ -808,10 +830,8 @@ def lm(
     cov_type: str = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> Union[
-    tuple[float, ...],
-    tuple[np.ndarray, ...],
-    tuple[Union[float, np.ndarray, ResultsStore, Any], ...],
-    tuple[Union[float, np.ndarray, Any, Any], ...],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float, ResultsStore],
 ]:
     """
     !!! note "Summary"
@@ -958,21 +978,21 @@ def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
     store: Literal[False] = False,
-) -> tuple[np.float64, np.ndarray, float, float]: ...
+) -> tuple[float, float, float, float]: ...
 @overload
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
     store: Literal[True] = True,
-) -> tuple[np.float64, np.ndarray, float, float, ResultsStore]: ...
+) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
     store: bool = False,
 ) -> Union[
-    tuple[np.float64, np.ndarray, float, float],
-    tuple[np.float64, np.ndarray, float, float, ResultsStore],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float, ResultsStore],
 ]:
     """
     !!! note "Summary"
