@@ -36,6 +36,9 @@
 ## --------------------------------------------------------------------------- #
 
 
+# ## Python StdLib Imports ----
+from functools import lru_cache
+
 # ## Python Third Party Imports ----
 import pandas as pd
 
@@ -47,6 +50,7 @@ import pandas as pd
 # ---------------------------------------------------------------------------- #
 
 
+@lru_cache
 def load_airline() -> pd.Series:
     """
     !!! note "Summary"

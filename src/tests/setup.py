@@ -12,6 +12,7 @@
 # ## Python StdLib Imports ----
 import re
 import unittest
+from functools import lru_cache
 from typing import Any, Callable, Union
 
 # ## Python Third Party Imports ----
@@ -56,7 +57,6 @@ __all__: list[str] = [
 
 ### Seed ----
 SEED = 42
-np.random.seed(SEED)
 
 
 ## --------------------------------------------------------------------------- #
@@ -156,6 +156,7 @@ clean: Callable[[str], str] = strip_ansi_codes
 # ---------------------------------------------------------------------------- #
 
 
+@lru_cache
 def get_random_generator(seed: int = SEED) -> RandomGenerator:
     return np.random.default_rng(seed=seed)
 
@@ -164,37 +165,44 @@ def data_airline() -> Series:
     return load_airline()
 
 
+@lru_cache
 def data_dict() -> dict[str, int | list[int] | str]:
     return {"first": 1, "second": 2, "third": [3, 4, 5], "four": "6"}
 
 
+@lru_cache
 def data_random(seed: int = SEED) -> np.ndarray:
     # Random data with shape (1000,)
     rng: RandomGenerator = get_random_generator(seed=seed)
     return rng.random(size=1000)
 
 
+@lru_cache
 def data_sine() -> np.ndarray:
     # Sine wave with shape (3000,) and wavelengths of 100
     return np.sin(2 * np.pi * 1 * np.arange(3000) / 100)
 
 
+@lru_cache
 def data_line() -> np.ndarray:
     # A straight line with values from 1 to 1000 and shape (1000,)
     return np.arange(1000)
 
 
+@lru_cache
 def data_basic() -> list[int]:
     # Some super basic data
     return [4, 7, 9, 10, 6, 11, 3]
 
 
+@lru_cache
 def data_noise(seed: int = SEED) -> np.ndarray:
     # Gaussian noise with shape (10000,)
     rng: RandomGenerator = get_random_generator(seed=seed)
     return FractionalGaussianNoise(hurst=0.5, rng=rng).sample(10000)
 
 
+@lru_cache
 def data_2d(seed: int = SEED) -> np.ndarray:
     # Random data with shape (4,3000)
     rng: RandomGenerator = get_random_generator(seed=seed)
