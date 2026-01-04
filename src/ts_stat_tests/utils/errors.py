@@ -1,7 +1,8 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Title                                                             #
-#     Purpose: Purpose                                                         #
+#     Title: Error Utilities                                                   #
+#     Purpose: Functions for generating standardized error messages and        #
+#         performing data equality checks.                                     #
 #                                                                              #
 # ============================================================================ #
 
@@ -20,7 +21,7 @@
 
 """
 !!! note "Summary"
-
+    This module contains utility functions for generating standardized error messages and performing data equality checks.
 """
 
 
