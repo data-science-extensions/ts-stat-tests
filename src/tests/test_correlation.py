@@ -12,6 +12,7 @@
 
 # ## Python Third Party Imports ----
 import numpy as np
+from pytest import raises
 from statsmodels import api as sm
 from statsmodels.stats.api import (
     acorr_breusch_godfrey,
@@ -141,11 +142,11 @@ class TestCorrelation(BaseTester):
         )
 
     def test_correlation_raises(self) -> None:
-        with self.assertRaises(ValueError):
+        with raises(ValueError):
             correlation(x=self.data_airline, algorithm="xxxx")
 
     def test_correlation_ccf_raises(self) -> None:
-        with self.assertRaises(ValueError):
+        with raises(ValueError):
             correlation(x=self.data_airline, algorithm="ccf")
 
     def test_correlation_bglm(self) -> None:
@@ -159,4 +160,5 @@ class TestCorrelation(BaseTester):
         )
 
     def test_is_correlated(self) -> None:
-        self.assertIsNone(is_correlated())
+        with raises(NotImplementedError):
+            is_correlated()
