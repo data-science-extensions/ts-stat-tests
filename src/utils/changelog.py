@@ -169,11 +169,22 @@ def add_commit_info(commit: Commit) -> str:
     commit_message_str: str = "\n".join(commit_message_list)
     commit_message_str: str = commit_message_str.replace(NEW_LINE, f"{LINE_BREAK}{NEW_LINE}{TAB * 3}")
 
+    # Determine author display information, avoiding empty markdown links when author is unavailable.
+    if commit.author:
+        author_name: str = commit.author.login or "Unknown"
+        author_link: str = getattr(commit.author, "html_url", "") or ""
+    else:
+        author_name = "Unknown"
+        author_link = ""
+    if author_link:
+        author_info: str = f"[{author_name}]({author_link})"
+    else:
+        author_info = author_name
+
     return (
         f"{TAB * 2}* [`{commit.sha[:7]}`]({commit.html_url}): {commit_message_str}"
         f"{NEW_LINE}"
-        f"{TAB * 3}(by [{commit.author.login if commit.author else ''}]({commit.author.html_url if commit.author else ''}))"
-        f"{NEW_LINE}"
+        f"{TAB * 3}(by {author_info})"
     )
 
 
