@@ -26,13 +26,11 @@ from __future__ import annotations
 # ## Python StdLib Imports ----
 import posixpath
 import re
-from re import Match
 
 # ## Python Third Party Imports ----
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File, Files
 from mkdocs.structure.pages import Page
-from toolbox_python.collection_types import str_list
 
 
 ## --------------------------------------------------------------------------- #
@@ -40,7 +38,7 @@ from toolbox_python.collection_types import str_list
 ## --------------------------------------------------------------------------- #
 
 
-__all__: str_list = ["on_page_markdown", "flag", "option", "setting"]
+__all__: list[str] = ["on_page_markdown", "flag", "option", "setting"]
 
 
 ## --------------------------------------------------------------------------- #
@@ -65,7 +63,7 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
                 markdown = f.read()
 
     # Replace callback
-    def replace(match: Match):
+    def replace(match: re.Match):
         type, args = match.groups()
         args = args.strip()
         if type == "folder":
