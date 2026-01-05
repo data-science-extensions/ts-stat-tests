@@ -258,7 +258,7 @@ jobs:
 
       - name: Install Dependencies
         id: install-dependencies
-        run: uv sync --no-cache --upgrade --group=docs --reinstall-package=${{ env.PACKAGE_NAME}}
+        run: uv sync --no-cache --upgrade --group=docs --reinstall-package=${{ env.PACKAGE_NAME }}
 
       - name: Set up Git
         id: setup-git
