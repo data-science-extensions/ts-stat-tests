@@ -213,17 +213,17 @@ def main() -> None:
     with Github(auth=AUTH) as g, open(OUTPUT_FILENAME, "w") as f:
 
         ### Get the repository ----
-        REPO: Repository = g.get_repo(REPOSITORY_NAME)  # type: ignore
+        repo: Repository = g.get_repo(REPOSITORY_NAME)  # type: ignore
 
         ### Write the header to the output file ----
-        f.write(add_header(REPO))
+        f.write(add_header(repo))
 
         ### Prepare the output file ----
         f.write(add_page_styling())
 
         ### Fetch the releases for the repository, sorted by reverse creation date ----
         releases: list[GitRelease] = sorted(
-            REPO.get_releases(),
+            repo.get_releases(),
             key=lambda r: r.created_at,
             reverse=True,
         )
@@ -241,7 +241,7 @@ def main() -> None:
             previous_tag: str = releases[index + 1].tag_name if index + 1 < len(releases) else "0"
 
             ### Write the release information to the output file ----
-            f.write(add_release_info(release, REPO))
+            f.write(add_release_info(release, repo))
 
             ### Add a section for release notes ----
             f.write(add_release_notes(release))
@@ -255,7 +255,7 @@ def main() -> None:
 
             ### Fetch the commits for the current release ----
             commits: list[Commit] = sorted(
-                REPO.get_commits(
+                repo.get_commits(
                     since=(releases[index + 1].created_at if previous_tag != "0" else NotSet),
                     until=release.created_at,
                 ),
