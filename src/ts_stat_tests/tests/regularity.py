@@ -79,7 +79,7 @@ def entropy(
     normalize: bool = True,
 ) -> float:
     """
-    !!! note "Summary" "Summary"
+    !!! note "Summary"
         Test for the entropy of a given data set.
 
     ???+ abstract "Details"
@@ -101,7 +101,7 @@ def entropy(
             Embedding dimension.<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `2`.
-        metric (str, optional):
+        metric (VALID_KDTREE_METRIC_OPTIONS):
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `"chebyshev"`.
@@ -223,7 +223,7 @@ def regularity(
             Embedding dimension.<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `2`.
-        metric (str, optional):
+        metric (VALID_KDTREE_METRIC_OPTIONS):
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `"chebyshev"`.
@@ -333,7 +333,7 @@ def is_regular(
             Embedding dimension.<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `2`.
-        metric (str, optional):
+        metric (VALID_KDTREE_METRIC_OPTIONS):
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `"chebyshev"`.

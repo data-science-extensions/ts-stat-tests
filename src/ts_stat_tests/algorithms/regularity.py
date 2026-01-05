@@ -714,7 +714,7 @@ def svd_entropy(
     normalize: bool = False,
 ) -> float:
     """
-    !!! note "Summary" "Summary"
+    !!! note "Summary"
         SVD entropy is a measure of the complexity or randomness of a time series based on Singular Value Decomposition (SVD).
 
     ???+ abstract "Details"

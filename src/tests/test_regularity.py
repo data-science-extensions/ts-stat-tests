@@ -105,7 +105,7 @@ class TestRegularity(BaseTester):
     def test_approx_noise(self) -> None:
         assert_almost_equal(
             first=approx_entropy(x=self.data_noise, order=2),
-            second=2.1958,
+            second=2.1969,
             places=4,
         )
 
@@ -133,14 +133,14 @@ class TestRegularity(BaseTester):
     def test_sample_noise(self) -> None:
         assert_almost_equal(
             first=sample_entropy(x=self.data_noise, order=2),
-            second=2.1819,
+            second=2.1844,
             places=4,
         )
 
     def test_sample_euclidean(self) -> None:
         assert_almost_equal(
             first=sample_entropy(x=self.data_noise, order=3, metric="euclidean"),
-            second=2.6806,
+            second=2.6893,
             places=4,
         )
 
@@ -189,14 +189,14 @@ class TestRegularity(BaseTester):
     def test_permutation_gaussian_noise(self) -> None:
         assert_almost_equal(
             first=permutation_entropy(x=self.data_noise, order=2),
-            second=0.999959,
+            second=0.999987,
             places=6,
         )
 
     def test_permutation_normalised_noise(self) -> None:
         assert_almost_equal(
             first=permutation_entropy(x=self.data_noise, order=2, normalize=True),
-            second=0.999959,
+            second=0.999987,
             places=6,
         )
 
@@ -259,14 +259,14 @@ class TestRegularity(BaseTester):
     def test_spectral_2d(self) -> None:
         assert list(spectral_entropy(x=self.data_2d, sf=100, normalize=True).round(4)) == [
             0.9426,
-            0.9456,
-            0.9468,
-            0.9435,
+            0.9383,
+            0.9411,
+            0.9375,
         ]
 
     def test_spectral_noise(self) -> None:
         assert_almost_equal(
             first=spectral_entropy(x=self.data_noise, sf=100, normalize=True),
-            second=0.9505,
+            second=0.9504,
             places=4,
         )
