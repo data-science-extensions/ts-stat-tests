@@ -151,6 +151,7 @@ disable = [
     "C0103",  # invalid-name
     "C0301",  # line-too-long
     "C0302",  # too-many-lines
+    "R0801",  # duplicate-code
     "R0913",  # too-many-arguments
     "R0917",  # too-many-positional-arguments
     "W0622",  # redefined-builtin
