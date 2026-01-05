@@ -206,6 +206,9 @@ def main() -> None:
     # NOTE: The reason why we use a context manager here is to ensure that the GitHub connection is properly terminated and the file is properly closed after we are finished processing; even if an error occurs during the process.
     # Also, here we can also open both contexts in the same line; which is syntactically cleaner and more efficient.
 
+    ### Prepare the output file ----
+    prepare_output_file()
+
     ### Open the contexts ----
     with Github(auth=AUTH) as g, open(OUTPUT_FILENAME, "w") as f:
 
