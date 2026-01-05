@@ -346,9 +346,9 @@ def acf(
         - [`statsmodels.tsa.stattools.acf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html): Estimate the autocorrelation function.
         - [`statsmodels.tsa.stattools.pacf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html): Partial autocorrelation estimation.
         - [`statsmodels.tsa.stattools.ccf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html): The cross-correlation function.
-        - [`ts_stat_tests.algorithms.correlation.acf`][src.ts_stat_tests.algorithms.correlation.acf]: Estimate the autocorrelation function
-        - [`ts_stat_tests.algorithms.correlation.pacf`][src.ts_stat_tests.algorithms.correlation.pacf]: Partial autocorrelation estimate.
-        - [`ts_stat_tests.algorithms.correlation.ccf`][src.ts_stat_tests.algorithms.correlation.ccf]: The cross-correlation function.
+        - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Estimate the autocorrelation function
+        - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial autocorrelation estimate.
+        - [`ts_stat_tests.algorithms.correlation.ccf`][ts_stat_tests.algorithms.correlation.ccf]: The cross-correlation function.
     """
     return st_acf(
         x=x,
@@ -624,9 +624,9 @@ def pacf(
         - [`statsmodels.tsa.stattools.pacf_yw`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf_yw.html): Partial autocorrelation estimation using Yule-Walker.
         - [`statsmodels.tsa.stattools.pacf_ols`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf_ols.html): Partial autocorrelation estimation using OLS.
         - [`statsmodels.tsa.stattools.pacf_burg`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf_burg.html): Partial autocorrelation estimation using Burg's method.
-        - [`ts_stat_tests.algorithms.correlation.acf`][src.ts_stat_tests.algorithms.correlation.acf]: Estimate the autocorrelation function
-        - [`ts_stat_tests.algorithms.correlation.pacf`][src.ts_stat_tests.algorithms.correlation.pacf]: Partial autocorrelation estimate.
-        - [`ts_stat_tests.algorithms.correlation.ccf`][src.ts_stat_tests.algorithms.correlation.ccf]: The cross-correlation function.
+        - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Estimate the autocorrelation function
+        - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial autocorrelation estimate.
+        - [`ts_stat_tests.algorithms.correlation.ccf`][ts_stat_tests.algorithms.correlation.ccf]: The cross-correlation function.
     """
     return st_pacf(
         x=x,
@@ -755,9 +755,9 @@ def ccf(
         - [`statsmodels.tsa.stattools.acf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html): Estimate the autocorrelation function.
         - [`statsmodels.tsa.stattools.pacf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html): Partial autocorrelation estimation.
         - [`statsmodels.tsa.stattools.ccf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html): The cross-correlation function.
-        - [`ts_stat_tests.algorithms.correlation.acf`][src.ts_stat_tests.algorithms.correlation.acf]: Estimate the autocorrelation function
-        - [`ts_stat_tests.algorithms.correlation.pacf`][src.ts_stat_tests.algorithms.correlation.pacf]: Partial autocorrelation estimate.
-        - [`ts_stat_tests.algorithms.correlation.ccf`][src.ts_stat_tests.algorithms.correlation.ccf]: The cross-correlation function.
+        - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Estimate the autocorrelation function
+        - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial autocorrelation estimate.
+        - [`ts_stat_tests.algorithms.correlation.ccf`][ts_stat_tests.algorithms.correlation.ccf]: The cross-correlation function.
     """
     return st_ccf(
         x=x,
@@ -890,9 +890,9 @@ def lb(
         - [`statsmodels.stats.diagnostic.acorr_ljungbox`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html): Ljung-Box test for serial correlation.
         - [`statsmodels.stats.diagnostic.acorr_lm`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html): Lagrange Multiplier tests for autocorrelation.
         - [`statsmodels.stats.diagnostic.acorr_breusch_godfrey`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html): Breusch-Godfrey test for serial correlation.
-        - [`ts_stat_tests.algorithms.correlation.lb`][src.ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
-        - [`ts_stat_tests.algorithms.correlation.lm`][src.ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
-        - [`ts_stat_tests.algorithms.correlation.bglm`][src.ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
+        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
+        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
+        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
     return acorr_ljungbox(
         x=x,
@@ -1089,9 +1089,9 @@ def lm(
         - [`statsmodels.stats.diagnostic.acorr_ljungbox`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html): Ljung-Box test for serial correlation.
         - [`statsmodels.stats.diagnostic.acorr_lm`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html): Lagrange Multiplier tests for autocorrelation.
         - [`statsmodels.stats.diagnostic.acorr_breusch_godfrey`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html): Breusch-Godfrey test for serial correlation.
-        - [`ts_stat_tests.algorithms.correlation.lb`][src.ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
-        - [`ts_stat_tests.algorithms.correlation.lm`][src.ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
-        - [`ts_stat_tests.algorithms.correlation.bglm`][src.ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
+        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
+        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
+        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
     return acorr_lm(  # type: ignore  # statsmodels' acorr_lm has incomplete type hints for these arguments
         resid=resid,
@@ -1220,9 +1220,9 @@ def bglm(
         - [`statsmodels.stats.diagnostic.acorr_ljungbox`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html): Ljung-Box test for serial correlation.
         - [`statsmodels.stats.diagnostic.acorr_lm`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html): Lagrange Multiplier tests for autocorrelation.
         - [`statsmodels.stats.diagnostic.acorr_breusch_godfrey`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html): Breusch-Godfrey test for serial correlation.
-        - [`ts_stat_tests.algorithms.correlation.lb`][src.ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
-        - [`ts_stat_tests.algorithms.correlation.lm`][src.ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
-        - [`ts_stat_tests.algorithms.correlation.bglm`][src.ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
+        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
+        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
+        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
     return acorr_breusch_godfrey(  # type: ignore  # statsmodels typing for acorr_breusch_godfrey is incomplete/incompatible with our RegressionResults types
         res=res,
