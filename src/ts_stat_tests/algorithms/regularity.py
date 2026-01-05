@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Optional, Union
+from typing import Any, Literal, Optional, Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -95,10 +95,10 @@ def approx_entropy(
     metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
 ) -> float:
     """
-    !!! Summary
+    !!! note "Summary"
         Approximate entropy is a measure of the amount of regularity or predictability in a time series. It is used to quantify the degree of self-similarity of a signal over different time scales, and can be useful for detecting underlying patterns or trends in data
 
-    ???+ Info "Details"
+    ???+ abstract "Details"
         Approximate entropy is a technique used to quantify the amount of regularity and the unpredictability of fluctuations over time-series data. Smaller values indicates that the data is more regular and predictable.
 
         The tolerance value ($r$) is set to $0.2 \\times std(x)$.
@@ -149,7 +149,10 @@ def approx_entropy(
         order (int, optional):
             Embedding dimension.<br>
             Defaults to `2`.
-        metric (str, optional):
+        tolerance (Optional[float]):
+            Tolerance level or similarity criterion. If `None` (default), it is set to $0.2 \times std(x)$.<br>
+            Defaults to `None`.
+        metric (VALID_KDTREE_METRIC_OPTIONS):
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance). For a full list of all available metrics, see [`sklearn.metrics.pairwise.distance_metrics`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html) and [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)<br>
             Defaults to `"chebyshev"`.
 
@@ -157,7 +160,7 @@ def approx_entropy(
         (float):
             Approximate Entropy score.
 
-    ???+ abstract "Notes"
+    ???+ note "Notes"
 
         **Inputs**:
 
@@ -256,10 +259,10 @@ def sample_entropy(
     metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
 ) -> float:
     """
-    !!! Summary
+    !!! note "Summary"
         Sample entropy is a measure of the amount of regularity or predictability in a time series. It is used to quantify the degree of self-similarity of a signal over different time scales, and can be useful for detecting underlying patterns or trends in data.
 
-    ???+ Info "Details"
+    ???+ abstract "Details"
         Sample entropy is a modification of approximate entropy, used for assessing the complexity of physiological time-series signals. It has two advantages over approximate entropy: data length independence and a relatively trouble-free implementation. Large values indicate high complexity whereas smaller values characterize more self-similar and regular signals.
 
         The equation for sample entropy (SampEn) is as follows:
@@ -305,7 +308,10 @@ def sample_entropy(
         order (int, optional):
             Embedding dimension.<br>
             Defaults to `2`.
-        metric (str, optional):
+        tolerance (Optional[float]):
+            Tolerance level or similarity criterion. If `None` (default), it is set to $0.2 \times std(x)$.<br>
+            Defaults to `None`.
+        metric (VALID_KDTREE_METRIC_OPTIONS):
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance). For a full list of all available metrics, see [`sklearn.metrics.pairwise.distance_metrics`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html) and [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)<br>
             Defaults to `"chebyshev"`.
 
@@ -394,10 +400,10 @@ def permutation_entropy(
     normalize: bool = False,
 ) -> float:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Permutation entropy is a measure of the complexity or randomness of a time series. It is based on the idea of permuting the order of the values in the time series and calculating the entropy of the resulting permutation patterns.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         The permutation entropy is a complexity measure for time-series first introduced by Bandt and Pompe in 2002.
 
         The formula for permutation entropy is as follows:
@@ -538,11 +544,14 @@ def permutation_entropy(
         - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
-    return a_perm_entropy(
-        x=x,
-        order=order,
-        delay=delay,
-        normalize=normalize,
+    return cast(
+        float,
+        a_perm_entropy(
+            x=x,
+            order=order,
+            delay=cast(Any, delay),
+            normalize=normalize,
+        ),
     )
 
 
@@ -556,12 +565,12 @@ def spectral_entropy(
     axis: int = -1,
 ) -> Union[float, np.ndarray]:
     """
-    !!! Summary
+    !!! note "Summary"
 
         Spectral entropy is a measure of the amount of complexity or unpredictability in a signal's frequency domain representation. It is used to quantify the degree of randomness or regularity in the power spectrum of a signal, which is a graphical representation of the distribution of power across different frequencies.
 
 
-    ???+ Info "Details"
+    ???+ abstract "Details"
 
         Spectral Entropy is also a measure of the distribution of power or energy in the frequency domain of a time series. It is based on the Shannon entropy, which is a measure of the uncertainty or information content of a probability distribution
 
@@ -604,12 +613,12 @@ def spectral_entropy(
         sf (float, optional):
             Sampling frequency, in Hz.<br>
             Defaults to `1`.
-        method (str, optional):
+        method (VALID_SPECTRAL_ENTROPY_METHOD_OPTIONS):
             Spectral estimation method:<br>
             - `'fft'`: Fourier Transformation ([`scipy.signal.periodogram()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.periodogram.html#scipy.signal.periodogram))<br>
             - `'welch'`: Welch periodogram ([`scipy.signal.welch()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch))<br>
             Defaults to `"fft"`.
-        nperseg (int, optional):
+        nperseg (Optional[int]):
             Length of each FFT segment for Welch method. If `None`, uses `scipy`'s default of 256 samples.<br>
             Defaults to `None`.
         normalize (bool, optional):
@@ -704,6 +713,40 @@ def svd_entropy(
     delay: int = 1,
     normalize: bool = False,
 ) -> float:
+    """
+    !!! note "Summary" "Summary"
+        SVD entropy is a measure of the complexity or randomness of a time series based on Singular Value Decomposition (SVD).
+
+    ???+ abstract "Details"
+        SVD entropy is calculated by first embedding the time series into a matrix, then performing SVD on that matrix to obtain the singular values. The entropy is then calculated from the normalized singular values.
+
+    Params:
+        x (ArrayLike):
+            One-dimensional time series of shape (n_times).
+        order (int, optional):
+            Order of the SVD entropy (embedding dimension).<br>
+            Defaults to `3`.
+        delay (int, optional):
+            Time delay (lag).<br>
+            Defaults to `1`.
+        normalize (bool, optional):
+            If True, divide by $log2(order!)$ to normalize the entropy between $0$ and $1$.<br>
+            Defaults to `False`.
+
+    Returns:
+        (float):
+            The SVD entropy of the data set.
+
+    !!! Success "Credit"
+        All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
+
+    ??? Tip "See Also"
+        - [`antropy.svd_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.svd_entropy.html)
+        - [`ts_stat_tests.algorithms.approx_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.sample_entropy`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+    """
     return a_svd_entropy(
         x=x,
         order=order,

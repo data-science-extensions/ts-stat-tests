@@ -1,3 +1,29 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Regularity Tests                                                  #
+#     Purpose: Convenience functions for regularity algorithms.                #
+#                                                                              #
+# ============================================================================ #
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Overview                                                              ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------------------------------------------------- #
+#  Description                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+"""
+!!! note "Summary"
+    This module contains convenience functions and tests for regularity measures, allowing for easy access to different entropy algorithms.
+"""
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Setup                                                                  ####
@@ -11,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Union
+from typing import Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -20,6 +46,7 @@ from typeguard import typechecked
 
 # ## Local First Party Imports ----
 from ts_stat_tests.algorithms.regularity import (
+    VALID_KDTREE_METRIC_OPTIONS,
     approx_entropy,
     sample_entropy,
     spectral_entropy,
@@ -47,27 +74,27 @@ def entropy(
     x: ArrayLike,
     algorithm: str = "sample",
     order: int = 2,
-    metric: str = "chebyshev",
+    metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
     sf: float = 1,
     normalize: bool = True,
 ) -> float:
     """
-    !!! Summary "Summary"
+    !!! note "Summary" "Summary"
         Test for the entropy of a given data set.
 
-    ???+ Info "Details"
+    ???+ abstract "Details"
         This function is a convenience wrapper around the three underlying algorithms:<br>
         - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]<br>
         - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]<br>
         - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
 
     Params:
-        x (array_like):
+        x (ArrayLike):
             The data to be checked. Should be a `1-D` or `N-D` data array.
         algorithm (str, optional):
             Which entropy algorithm to use.<br>
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
-            - `approx_entropy()`: `["app", "aprox", "approx"]`<br>
+            - `approx_entropy()`: `["app", "approx", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
@@ -75,7 +102,7 @@ def entropy(
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `2`.
         metric (str, optional):
-            Name of the distance metric function used with [`sklearn.neighors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
+            Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `"chebyshev"`.
         sf (float, optional):
@@ -149,23 +176,22 @@ def entropy(
     """
     options: dict[str, tuple[str, ...]] = {
         "sampl": ("sample", "sampl", "samp"),
-        "aprox": ("app", "aprox", "approx"),
+        "approx": ("app", "approx"),
         "spect": ("spec", "spect", "spectral"),
     }
     if algorithm in options["sampl"]:
         return sample_entropy(x=x, order=order, metric=metric)
-    elif algorithm in options["aprox"]:
+    if algorithm in options["approx"]:
         return approx_entropy(x=x, order=order, metric=metric)
-    elif algorithm in options["spect"]:
-        return spectral_entropy(x=x, sf=sf, normalize=normalize)
-    else:
-        raise ValueError(
-            generate_error_message(
-                parameter_name="algorithm",
-                value_parsed=algorithm,
-                options=options,
-            )
+    if algorithm in options["spect"]:
+        return cast(float, spectral_entropy(x=x, sf=sf, normalize=normalize))
+    raise ValueError(
+        generate_error_message(
+            parameter_name="algorithm",
+            value_parsed=algorithm,
+            options=options,
         )
+    )
 
 
 @typechecked
@@ -173,24 +199,24 @@ def regularity(
     x: ArrayLike,
     algorithm: str = "sample",
     order: int = 2,
-    metric: str = "chebyshev",
+    metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
     sf: float = 1,
     normalize: bool = True,
 ) -> float:
     """
-    !!! Summary "Summary"
+    !!! note "Summary" "Summary"
         Test for the regularity of a given data set.
 
-    ???+ Info "Details"
+    ???+ abstract "Details"
         This is a pass-through, convenience wrapper around the [`entropy()`][src.ts_stat_tests.tests.regularity.entropy] function.
 
     Params:
-        x (array_like):
+        x (ArrayLike):
             The data to be checked. Should be a `1-D` or `N-D` data array.
         algorithm (str, optional):
             Which entropy algorithm to use.<br>
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
-            - `approx_entropy()`: `["app", "aprox", "approx"]`<br>
+            - `approx_entropy()`: `["app", "approx", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
@@ -198,7 +224,7 @@ def regularity(
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `2`.
         metric (str, optional):
-            Name of the distance metric function used with [`sklearn.neighors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
+            Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `"chebyshev"`.
         sf (float, optional):
@@ -276,15 +302,15 @@ def is_regular(
     algorithm: str = "sample",
     order: int = 2,
     sf: float = 1,
-    metric: str = "chebyshev",
+    metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
     normalize: bool = True,
     tolerance: Union[str, float, int, None] = "default",
 ) -> dict[str, Union[str, float, bool]]:
     """
-    !!! Summary "Summary"
+    !!! note "Summary" "Summary"
         Test whether a given data set is `regular` or not.
 
-    ???+ Info "Details"
+    ???+ abstract "Details"
         This function implements the given algorithm (defined in the parameter `algorithm`), and returns a dictionary containing the relevant data:
         ```python
         {
@@ -295,12 +321,12 @@ def is_regular(
         ```
 
     Params:
-        x (array_like):
+        x (ArrayLike):
             The data to be checked. Should be a `1-D` or `N-D` data array.
         algorithm (str, optional):
             Which entropy algorithm to use.<br>
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
-            - `approx_entropy()`: `["app", "aprox", "approx"]`<br>
+            - `approx_entropy()`: `["app", "approx", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
@@ -308,7 +334,7 @@ def is_regular(
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `2`.
         metric (str, optional):
-            Name of the distance metric function used with [`sklearn.neighors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
+            Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance).<br>
             Only relevant when `algorithm=sample` or `algorithm=approx`.<br>
             Defaults to `"chebyshev"`.
         sf (float, optional):
@@ -322,7 +348,7 @@ def is_regular(
         tolerance (Union[str, float, int, None], optional):
             The tolerance value used to determine whether or not the result is `regular` or not.<br>
             - If `tolerance` is either type `int` or `float`, then this value will be used.<br>
-            - If `tolerance` is either `"default"` or `None`, then `tolerance` will be derrived from `x` using the calculation:
+            - If `tolerance` is either `"default"` or `None`, then `tolerance` will be derived from `x` using the calculation:
                 ```python
                 tolerance = 0.2 * np.std(a=x)
                 ```
@@ -392,7 +418,7 @@ def is_regular(
     if isinstance(tolerance, (float, int)):
         tol = tolerance
     elif tolerance in ["default", None]:
-        tol = 0.2 * np.std(a=x)
+        tol = 0.2 * np.std(a=cast(np.ndarray, x))
     else:
         raise ValueError(
             f"Invalid option for `tolerance` parameter: {tolerance}.\n"
@@ -402,5 +428,9 @@ def is_regular(
             f"- The value `None`."
         )
     value = regularity(x=x, order=order, sf=sf, metric=metric, algorithm=algorithm, normalize=normalize)
-    result = True if value < tol else False
-    return {"result": result, "entropy": value, "tolerance": tol}
+    result = value < tol
+    return {
+        "result": bool(result),
+        "entropy": float(value),
+        "tolerance": float(tol),
+    }
