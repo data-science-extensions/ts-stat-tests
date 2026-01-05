@@ -241,7 +241,7 @@ def check() -> None:
     check_docstrings()
     check_pytest()
     check_build()
-    # check_mkdocs()
+    check_mkdocs()
 
 
 ## --------------------------------------------------------------------------- #
