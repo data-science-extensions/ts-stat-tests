@@ -34,7 +34,7 @@
 
     !!! question "Source Library"
 
-        The [`statsmodels`](https://www.statsmodels.org/) package was chosen because **REASONS**.
+        The [`statsmodels`](https://www.statsmodels.org/) package was chosen because it provides mature, well-tested implementations of core time-series tools (such as ACF, PACF, and correlograms), integrates seamlessly with NumPy and pandas data structures, and offers a comprehensive suite of statistical tests that align closely with the methods demonstrated in this project.
 
     !!! example "Source Module"
 
