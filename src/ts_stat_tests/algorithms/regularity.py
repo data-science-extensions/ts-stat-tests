@@ -46,6 +46,7 @@ from antropy import (
     perm_entropy as a_perm_entropy,
     sample_entropy as a_sample_entropy,
     spectral_entropy as a_spectral_entropy,
+    svd_entropy as a_svd_entropy,
 )
 from numpy.typing import ArrayLike
 from typeguard import typechecked
@@ -61,6 +62,7 @@ __all__: list[str] = [
     "sample_entropy",
     "spectral_entropy",
     "permutation_entropy",
+    "svd_entropy",
 ]
 
 
@@ -107,4 +109,19 @@ def spectral_entropy(
         nperseg=nperseg,
         normalize=normalize,
         axis=axis,
+    )
+
+
+@typechecked
+def svd_entropy(
+    x: ArrayLike,
+    order: int = 3,
+    delay: int = 1,
+    normalize: bool = False,
+) -> float:
+    return a_svd_entropy(
+        x=x,
+        order=order,
+        delay=delay,
+        normalize=normalize,
     )
