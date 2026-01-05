@@ -56,6 +56,7 @@ NEW_LINE: Literal["\n"] = "\n"
 BLANK_LINE: Literal["\n\n"] = "\n\n"
 LINE_BREAK: Literal["<br>"] = "<br>"
 TAB: Literal["    "] = "    "
+SHORT_SHA_LENGTH: int = 7
 
 
 # ---------------------------------------------------------------------------- #
@@ -182,7 +183,7 @@ def add_commit_info(commit: Commit) -> str:
         author_info = author_name
 
     return (
-        f"{TAB * 2}* [`{commit.sha[:7]}`]({commit.html_url}): {commit_message_str}"
+        f"{TAB * 2}* [`{commit.sha[:SHORT_SHA_LENGTH]}`]({commit.html_url}): {commit_message_str}"
         f"{NEW_LINE}"
         f"{TAB * 3}(by {author_info})"
     )
