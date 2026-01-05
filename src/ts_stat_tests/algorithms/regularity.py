@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -66,6 +66,20 @@ __all__: list[str] = [
 ]
 
 
+## --------------------------------------------------------------------------- #
+##  Constants                                                               ####
+## --------------------------------------------------------------------------- #
+
+
+VALID_KDTREE_METRIC_OPTIONS = Literal[
+    "euclidean", "l2", "minkowski", "p", "manhattan", "cityblock", "l1", "chebyshev", "infinity"
+]
+# from sklearn.neighbors import KDTree; print(KDTree.valid_metrics);
+
+
+VALID_SPECTRAL_ENTROPY_METHOD_OPTIONS = Literal["fft", "welch"]
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Algorithms                                                             ####
@@ -74,13 +88,33 @@ __all__: list[str] = [
 
 
 @typechecked
-def approx_entropy(x: ArrayLike, order: int = 2, metric: str = "chebyshev") -> float:
-    return a_app_entropy(x=x, order=order, metric=metric)
+def approx_entropy(
+    x: ArrayLike,
+    order: int = 2,
+    tolerance: Optional[float] = None,
+    metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
+) -> float:
+    return a_app_entropy(
+        x=x,
+        order=order,
+        tolerance=tolerance,
+        metric=metric,
+    )
 
 
 @typechecked
-def sample_entropy(x: ArrayLike, order: int = 2, metric: str = "chebyshev") -> float:
-    return a_sample_entropy(x=x, order=order, metric=metric)
+def sample_entropy(
+    x: ArrayLike,
+    order: int = 2,
+    tolerance: Optional[float] = None,
+    metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
+) -> float:
+    return a_sample_entropy(
+        x=x,
+        order=order,
+        tolerance=tolerance,
+        metric=metric,
+    )
 
 
 @typechecked
@@ -89,15 +123,20 @@ def permutation_entropy(
     order: int = 3,
     delay: Union[int, list, np.ndarray] = 1,
     normalize: bool = False,
-):
-    return a_perm_entropy(x=x, order=order, delay=delay, normalize=normalize)
+) -> float:
+    return a_perm_entropy(
+        x=x,
+        order=order,
+        delay=delay,
+        normalize=normalize,
+    )
 
 
 @typechecked
 def spectral_entropy(
     x: ArrayLike,
     sf: float = 1,
-    method: str = "fft",
+    method: VALID_SPECTRAL_ENTROPY_METHOD_OPTIONS = "fft",
     nperseg: Optional[int] = None,
     normalize: bool = False,
     axis: int = -1,
