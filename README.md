@@ -8,7 +8,7 @@
 [![Released](https://img.shields.io/github/release-date/chrimaho/ts-stat-tests?label=released&color=blue&logo=google-calendar&logoColor=FF7143)](https://pypi.org/project/ts-stat-tests/#history)
 [![Python](https://img.shields.io/pypi/pyversions/ts-stat-tests.svg?style=flat&logo=python&logoColor=FFDE50&color=blue)](https://pypi.org/project/ts-stat-tests/)
 [![OS](https://img.shields.io/static/v1?label=os&message=ubuntu+|+macos+|+windows&color=blue&logo=ubuntu&logoColor=green)](https://pypi.org/project/ts-stat-tests/)<br>
-[![Build Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-build-package.yml?logo=github&logoColor=white&label=build+tests)](https://github.com/chrimaho/ts-stat-tests/actiona/workflows/ci-build-package.yml)
+[![Build Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-build-package.yml?logo=github&logoColor=white&label=build+tests)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-build-package.yml)
 [![MyPy Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-mypy-tests.yml?logo=github&logoColor=white&label=mypy+tests)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-mypy-tests.yml)
 [![Unit Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-unit-tests.yml?logo=github&logoColor=white&label=unit+tests)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-unit-tests.yml)
 [![codecov](https://codecov.io/gh/chrimaho/ts-stat-tests/branch/main/graph/badge.svg)](https://codecov.io/gh/chrimaho/ts-stat-tests)<br>
