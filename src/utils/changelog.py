@@ -272,8 +272,9 @@ def main() -> None:
 
                 ### Skip irrelevant commits ----
                 if re.search(
-                    r"Merge|Bump|Update coverage report|Update changelog",
-                    commit.commit.message,
+                    pattern=r"Merge|Bump|Update coverage report|Update changelog",
+                    string=commit.commit.message,
+                    flags=re.IGNORECASE,
                 ):
                     continue
 
