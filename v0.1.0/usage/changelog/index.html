@@ -1,0 +1,1341 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python library for performing statistical tests on time series data.">
+      
+      
+        <meta name="author" content="[Chris Mahoney](mailto:chris@mahoneyconsultingservices.com)">
+      
+      
+      
+        <link rel="prev" href="../contributing/">
+      
+      
+        <link rel="next" href="../../code/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/icons/1205526.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Change Log - Time Series Statistical Tests</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/style.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/admonitions.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/code_chunks.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/shortcodes.css">
+    
+      <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#v010-initial-release-of-time-series-statistical-tests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../../..">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Time Series Statistical Tests" class="md-header__button md-logo" aria-label="Time Series Statistical Tests" data-md-component="logo">
+      
+  <img src="../../assets/icons/1205526.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Time Series Statistical Tests
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Change Log
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/data-science-extensions/ts-stat-tests" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ts-stat-tests
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../code/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Time Series Statistical Tests" class="md-nav__button md-logo" aria-label="Time Series Statistical Tests" data-md-component="logo">
+      
+  <img src="../../assets/icons/1205526.svg" alt="logo">
+
+    </a>
+    Time Series Statistical Tests
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/data-science-extensions/ts-stat-tests" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ts-stat-tests
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Change Log
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Change Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#v010-initial-release-of-time-series-statistical-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.0 - Initial release of Time Series Statistical Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.1.0 - Initial release of Time Series Statistical Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Implementation details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Implementation details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-correlation-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core correlation algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-infrastructure-and-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project infrastructure and automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-and-presentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation and presentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-safety-and-quality-assurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type safety and quality assurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💪 Pull Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🆕 New Contributors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../code/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code/correlation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#v010-initial-release-of-time-series-statistical-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.1.0 - Initial release of Time Series Statistical Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="v0.1.0 - Initial release of Time Series Statistical Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Implementation details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Implementation details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-correlation-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core correlation algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-infrastructure-and-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project infrastructure and automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-and-presentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation and presentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-safety-and-quality-assurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type safety and quality assurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💪 Pull Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🆕 New Contributors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/data-science-extensions/ts-stat-tests/edit/main/docs/usage/changelog.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/data-science-extensions/ts-stat-tests/raw/main/docs/usage/changelog.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+  <h1>Change Log</h1>
+
+<!-- !This file is auto-generated. Do not edit this file manually! -->
+
+<!-- repo='data-science-extensions/ts-stat-tests' -->
+<!-- origin_url='https://github.com/data-science-extensions/ts-stat-tests' -->
+<!-- api_url='https://api.github.com/repos/data-science-extensions/ts-stat-tests' -->
+
+<style>
+.md-nav--secondary .md-nav__list .md-nav__item { display: block; padding-bottom: 0.5em; }
+.md-nav--secondary .md-nav__list .md-nav__list { display: none; }
+</style>
+
+<div class="admonition info">
+<p class="admonition-title">v0.1.0</p>
+<h2 id="v010-initial-release-of-time-series-statistical-tests"><strong>v0.1.0 - Initial release of Time Series Statistical Tests</strong><a class="headerlink" href="#v010-initial-release-of-time-series-statistical-tests" title="Permanent link">🔗</a></h2>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><img alt="🏷" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3f7.svg" title=":label:" /></span><span class="mdx-badge__text"><code>v0.1.0</code></span></span><br>
+<span class="mdx-badge"><span class="mdx-badge__icon"><img alt="📆" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4c6.svg" title=":calendar:" /></span><span class="mdx-badge__text"><code>2026-01-05</code></span></span><br>
+<span class="mdx-badge"><span class="mdx-badge__icon"><img alt="🔗" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f517.svg" title=":link:" /></span><span class="mdx-badge__text"><a href="https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.1.0">data-science-extensions/ts-stat-tests/releases/v0.1.0</a></span></span></p>
+<details class="note">
+<summary>Release Notes</summary>
+<h3 id="overview">🚀 Overview<a class="headerlink" href="#overview" title="Permanent link">🔗</a></h3>
+<p>This is the initial release of <code>ts-stat-tests</code>, a Python package dedicated to providing a unified and standardised interface for time series statistical testing. This release establishes the foundational project infrastructure, implements a comprehensive suite of correlation algorithms, and provides extensive documentation and automated CI/CD pipelines. It aims to bridge the gap between R and Python for time series analysis by offering a single, robust library for standard time series statistical tests.</p>
+<h3 id="implementation-details">🛠️ Implementation details<a class="headerlink" href="#implementation-details" title="Permanent link">🔗</a></h3>
+<h4 id="core-correlation-algorithms">Core correlation algorithms<a class="headerlink" href="#core-correlation-algorithms" title="Permanent link">🔗</a></h4>
+<ul>
+<li>Introduce the <code>acf()</code> function, <code>pacf()</code> function, and <code>ccf()</code> function to estimate autocorrelation, partial autocorrelation, and cross-correlation functions.</li>
+<li>Implement residual diagnostic tests including the <code>lb()</code> function for Ljung-Box testing, the <code>lm()</code> function for Lagrange Multiplier tests, and the <code>bglm()</code> function for Breusch-Godfrey tests.</li>
+<li>Provide a unified <code>correlation()</code> dispatcher function to simplify algorithm selection via string aliases.</li>
+<li>Utilise the <code>statsmodels</code> library as the underlying engine to ensure robust and standardised statistical results.</li>
+<li>Include detailed docstrings for all algorithms, featuring mathematical definitions, parameter details, and practical usage examples.</li>
+</ul>
+<h4 id="project-infrastructure-and-automation">Project infrastructure and automation<a class="headerlink" href="#project-infrastructure-and-automation" title="Permanent link">🔗</a></h4>
+<ul>
+<li>Initialise the project structure using <code>uv</code> for efficient dependency management and build orchestration.</li>
+<li>Implement a centralised <code>scripts.py</code> module to provide a suite of automation utilities for linting, checking, and maintenance.</li>
+<li>Configure pre-commit hooks to enforce code quality, standardise formatting, and prevent direct commits to the <code>main</code> branch.</li>
+<li>Establish GitHub Actions workflows for continuous integration (<code>ci.yml</code>) and continuous delivery (<code>cd.yml</code>) to automate testing and releases.</li>
+<li>Integrate Dependabot to automate updates for GitHub Actions dependencies on a weekly schedule.</li>
+</ul>
+<h4 id="documentation-and-presentation">Documentation and presentation<a class="headerlink" href="#documentation-and-presentation" title="Permanent link">🔗</a></h4>
+<ul>
+<li>Launch a comprehensive documentation site using <code>mkdocs</code> with the <code>material</code> theme and custom stylesheets.</li>
+<li>Expand the <code>README.md</code> with project badges, a motivation section, and a detailed feature implementation table.</li>
+<li>Implement custom documentation hooks in <code>shortcodes.py</code> to support dynamic content and enhanced rendering.</li>
+<li>Add placeholder pages and "To Do" notes for <code>CHANGELOG.md</code> and <code>CONTRIBUTING.md</code> to guide future documentation efforts.</li>
+</ul>
+<h4 id="type-safety-and-quality-assurance">Type safety and quality assurance<a class="headerlink" href="#type-safety-and-quality-assurance" title="Permanent link">🔗</a></h4>
+<ul>
+<li>Enforce runtime type safety by applying the <code>@typechecked</code> decorator to all core algorithm functions.</li>
+<li>Integrate <code>pyright</code> for rigorous static type analysis and resolve complex type-hinting issues.</li>
+<li>Implement utility functions for error reporting and float comparison, including <code>generate_error_message()</code>, <code>is_almost_equal()</code>, and <code>assert_almost_equal()</code>.</li>
+<li>Achieve 100% unit test coverage for the correlation module to ensure reliability and correctness.</li>
+</ul>
+<h3 id="checklist">✅ Checklist<a class="headerlink" href="#checklist" title="Permanent link">🔗</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Establish foundational project structure and configuration.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Implement core correlation algorithms and diagnostic tests.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Create a centralised automation and maintenance script.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Launch a comprehensive documentation site and expand <code>README.md</code>.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Configure CI/CD pipelines and pre-commit hooks.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Enforce runtime and static type safety across the package.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Achieve high unit test coverage for the initial release.</li>
+</ul>
+<h3 id="pull-requests">💪 Pull Requests<a class="headerlink" href="#pull-requests" title="Permanent link">🔗</a></h3>
+<ul>
+<li>Initialise project structure and configuration by @chrimaho in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/15">https://github.com/data-science-extensions/ts-stat-tests/pull/15</a></li>
+<li>Add correlation algorithms for time series analysis by @chrimaho in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/16">https://github.com/data-science-extensions/ts-stat-tests/pull/16</a></li>
+<li>Set up unit tests and enhance development infrastructure by @chrimaho in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/17">https://github.com/data-science-extensions/ts-stat-tests/pull/17</a></li>
+<li>Establish CI/CD pipelines and automate release workflows by @chrimaho in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/18">https://github.com/data-science-extensions/ts-stat-tests/pull/18</a></li>
+<li>Bump actions/checkout from 5 to 6 by @dependabot[bot] in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/19">https://github.com/data-science-extensions/ts-stat-tests/pull/19</a></li>
+<li>Bump actions/setup-python from 5 to 6 by @dependabot[bot] in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/23">https://github.com/data-science-extensions/ts-stat-tests/pull/23</a></li>
+<li>Bump astral-sh/setup-uv from 6 to 7 by @dependabot[bot] in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/22">https://github.com/data-science-extensions/ts-stat-tests/pull/22</a></li>
+<li>Bump actions/upload-artifact from 4 to 6 by @dependabot[bot] in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/21">https://github.com/data-science-extensions/ts-stat-tests/pull/21</a></li>
+<li>Bump actions/download-artifact from 5 to 7 by @dependabot[bot] in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/20">https://github.com/data-science-extensions/ts-stat-tests/pull/20</a></li>
+<li>Enhance project documentation and presentation by @chrimaho in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/24">https://github.com/data-science-extensions/ts-stat-tests/pull/24</a></li>
+</ul>
+<h3 id="new-contributors">🆕 New Contributors<a class="headerlink" href="#new-contributors" title="Permanent link">🔗</a></h3>
+<ul>
+<li>@chrimaho made their first contribution in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/15">https://github.com/data-science-extensions/ts-stat-tests/pull/15</a></li>
+<li>@dependabot[bot] made their first contribution in <a href="https://github.com/data-science-extensions/ts-stat-tests/pull/19">https://github.com/data-science-extensions/ts-stat-tests/pull/19</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a href="https://github.com/data-science-extensions/ts-stat-tests/commits/v0.1.0">https://github.com/data-science-extensions/ts-stat-tests/commits/v0.1.0</a></p>
+</details>
+<details class="abstract">
+<summary>Updates</summary>
+<ul>
+<li><a href="https://github.com/data-science-extensions/ts-stat-tests/commit/085a4c00bf56a78889d0e1f597e628b21680c8d8"><code>085a4c0</code></a>: Re-enable key components in the <code>cd</code> workflow, ready for first deployment
+    (by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/a7225044dababc178e8f4691d3a28abf1ffa603e"><code>a722504</code></a>: Ensure coverage reports are staged even when directory paths are ignored.<br><ul>
+<li>Use the <code>--force</code> flag in the <code>git_add_coverage_report()</code> function.<br></li>
+<li>Bypass <code>.gitignore</code> restrictions to guarantee documentation updates.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/85f68e6bf01bda19f5358b70fb38831545bc7204"><code>85f68e6</code></a>: Hide some lines in <code>cd</code> to check workflow during release
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/16c928820d07ab92e8d0561dd277579f0f02acc5"><code>16c9288</code></a>: Standardise type hints and remove dependencies<br></li>
+<li>Replace custom type hints with native Python equivalents for the <code>__all__</code> variable<br></li>
+<li>Remove the unnecessary import from the <code>toolbox_python.collection_types</code> module<br></li>
+<li>Update the <code>replace()</code> function to use the <code>re.Match()</code> class directly
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/8e761435ae4ba40506038f0f835946912dc3a278"><code>8e76143</code></a>: Fix missing justifications in docs
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/a3085ffd990424cee038a46f5346487aaf6e3bce"><code>a3085ff</code></a>: Fix typos
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/aef58db45f000e2dd81ae5dea964cc3a144cb15d"><code>aef58db</code></a>: Fix typo
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/90c953bc88a6b39e23cfdb4a2123342a64eb3b5f"><code>90c953b</code></a>: Fix incorrect percentages
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/15202adbbb2b61da17ad89a09b5924da91a9d296"><code>15202ad</code></a>: Re-enable <code>mkdocs</code> checks
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/728c24afc49827ce0d7557a68701b4e72b622713"><code>728c24a</code></a>: Add overview of module progress
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/02d36d1a3528b515d455ef790547ac49b6b3bf6a"><code>02d36d1</code></a>: Add <code>correlation</code> module docs page
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/60c712708520617864e04d19fc58eb0b6847d0e1"><code>60c7127</code></a>: Fix some typos on the <code>correlation</code> module docs
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/fe9003d04a77ed0fe7c5a565f032aa30467a3a97"><code>fe9003d</code></a>: Add docs landing page and home page structures
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/37fab51d226b3b6089028019b18607f38eec4471"><code>37fab51</code></a>: Add custom hooks for docs to utilise
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/83dd55f7fdcefa2ae51f6f2e904570e242ab2f2f"><code>83dd55f</code></a>: Initial commit of package icons
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/8c3f0cfc43c03bbcd0de3e20273759c9a066c3bb"><code>8c3f0cf</code></a>: Initial commit of package stylesheets
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/950c1fb48e10c9ebbef2f99623dfff7e2a4d2dcf"><code>950c1fb</code></a>: Fill in README file
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/e2c62bdcdd79ee1b5676844ab574d808d9d2c421"><code>e2c62bd</code></a>: Initial commit of standard package docs
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/1f1a9d6aa9b874c1a64e61eb71f9416b2ed4f51d"><code>1f1a9d6</code></a>: Initial commit of <code>mkdocs</code> config file
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/c7839a4d640cc9ffcaab2b9e100eedac06b3e8cc"><code>c7839a4</code></a>: Set UTF-8 encoding for Python I/O in CI<br></li>
+<li>Define the <code>PYTHONIOENCODING</code> environment variable to ensure consistent character handling across CI environments
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/cc368ff219bbc84a0f1afdd5e8120f52bb673a87"><code>cc368ff</code></a>: Fix typo
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/0b2d5904f837c5a189895ad19dce7b996d8b00e7"><code>0b2d590</code></a>: Standardise variable naming convention<br></li>
+<li>Rename the repository variable to lower-case to follow standard naming conventions for local instances within the <code>main()</code> function.<br></li>
+<li>Update references to the variable when calling the <code>.get_releases()</code> method and <code>.get_commits()</code> method.<br></li>
+<li>The variable name <code>REPO</code> is defined in uppercase following constant naming conventions, but it's not a constant - it's a dynamically created repository object. Consider using lowercase <code>repo</code> to follow Python naming conventions where uppercase names are reserved for constants.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/ed5404dcad40928b662557871093a33418ce9f84"><code>ed5404d</code></a>: Initialise the output file before starting the main process<br></li>
+<li>Call the <code>prepare_output_file()</code> function to ensure the destination is ready for writing.<br></li>
+<li>Set up the file environment prior to opening the GitHub and file context managers.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/6060627bd8513c5f1a7f8291f647f9b82c64c3c1"><code>6060627</code></a>: Define constant for short SHA length<br></li>
+<li>Introduce <code>SHORT_SHA_LENGTH</code> constant to replace hardcoded magic numbers<br></li>
+<li>Update <code>add_commit_info()</code> function to use defined constant<br></li>
+<li>Standardise representation of short commit identifiers for improved maintainability
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/aa243b7344492813c38100e6430720f2308c36c0"><code>aa243b7</code></a>: FixPotential bug<br>
+If <code>commit.author</code> is <code>None</code>, the code constructs an incomplete markdown link <code>[]()</code> with empty values. This would result in broken links in the changelog. Consider providing a default fallback text like <code>"Unknown"</code> for the author name and omitting the link altogether when the author is unavailable.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/d1e08004b82c276ca27194727de47bb6a0051614"><code>d1e0800</code></a>: Refactor correlation tests to use pytest<br></li>
+<li>Replace <code>.assertRaises()</code> method with <code>raises()</code> function to standardise test assertions<br></li>
+<li>Update <code>.test_is_correlated()</code> method to expect <code>NotImplementedError()</code> class from <code>is_correlated()</code> function
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/01d354425639559a26dcc41f82453295d42220fa"><code>01d3544</code></a>: Create script to automate changelog generation<br></li>
+<li>Introduce the <code>src/utils/changelog.py</code> script to automate the creation of <code>CHANGELOG.md</code> by retrieving data via the GitHub API.<br></li>
+<li>Implement the <code>prepare_output_file()</code> function to ensure the document is recreated from scratch on each run.<br></li>
+<li>Define the <code>add_page_styling()</code> function to embed CSS for better navigation in Markdown viewers.<br></li>
+<li>Utilise the <code>main()</code> function to fetch releases via the <code>.get_releases()</code> method and filter out irrelevant commits to maintain a clean history.<br></li>
+<li>Use the <code>Github()</code> class to authenticate and manage repository interactions.<br></li>
+<li>Standardise the output format for release notes and commit details to improve readability.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/702d9022a10b57001d1383dd9c895e0fea648af6"><code>702d902</code></a>: Add continuous delivery workflow for releases<br></li>
+<li>Introduce <code>cd.yml</code> to automate the release cycle triggered by published GitHub releases.<br></li>
+<li>Orchestrate a multi-stage pipeline including testing, building, PyPI deployment, and documentation generation.<br></li>
+<li>Utilise <code>uv</code> to synchronise dependencies and manage the build process for improved performance.<br></li>
+<li>Execute the <code>git_update_version_cli()</code> function to handle versioning during the build stage.<br></li>
+<li>Verify package integrity using an installation matrix across multiple operating systems and Python versions.<br></li>
+<li>Automate changelog generation via the <code>changelog.py</code> script and push updates to the repository.<br></li>
+<li>Upload distribution assets to GitHub releases and coverage data to Codecov.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/3e014f6ddaa754aad38532b69e4f1d313536e502"><code>3e014f6</code></a>: Increase CI job parallelism<br></li>
+<li>Increase the <code>max-parallel</code> limit to 30 to allow for more concurrent jobs<br></li>
+<li>Optimise the CI pipeline performance by utilising more available runners for the matrix build
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/cd1f7ad4fa067f8368d9033e69b3e8505b73d6ac"><code>cd1f7ad</code></a>: Add CI workflow for automated code validation<br></li>
+<li>Implement GitHub Actions to automate validation on push and pull request events.<br></li>
+<li>Configure a check job for non-main branches to facilitate early issue detection.<br></li>
+<li>Define a matrix strategy to ensure cross-platform compatibility across various OS types.<br></li>
+<li>Support Python versions 3.9 through 3.14 to maintain broad environment stability.<br></li>
+<li>Utilise <code>uv</code> for efficient dependency management and execution of the validation script.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/1f6879423efe5a5e773453a12fd76e7258c40159"><code>1f68794</code></a>: Add Dependabot for GitHub Actions<br></li>
+<li>Initialise the configuration file to manage <code>github-actions</code> dependencies.<br></li>
+<li>Schedule weekly updates to ensure actions remain current.<br></li>
+<li>Assign a default reviewer and label to simplify the pull request review process.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/c059c7cedf1b944cb4e3798a0adeee904c4c6018"><code>c059c7c</code></a>: Raise error for unimplemented correlation test<br></li>
+<li>Replace the <code>None</code> return value in the <code>is_correlated()</code> function with a <code>NotImplementedError</code> to explicitly signal that this logic is a placeholder and has not yet been implemented.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/470fbfadd870b99e05db92006a1e523335e23f1b"><code>470fbfa</code></a>: Clarify type ignore reasons<br></li>
+<li>Document rationale for <code># type: ignore</code> on calls to the <code>acorr_lm()</code> function and <code>acorr_breusch_godfrey()</code> function<br></li>
+<li>Note that <code>statsmodels</code> type hints are incomplete or incompatible with internal <code>RegressionResults()</code> class types
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/8ea4c9d2e928b1f2fbbafb2d362ac382e828398f"><code>8ea4c9d</code></a>: Standardise equality check utility functions<br></li>
+<li>Set default value for <code>places</code> parameter in <code>is_almost_equal()</code> function and <code>assert_almost_equal()</code> function overloads<br></li>
+<li>Refactor <code>is_almost_equal()</code> function to prioritise argument validation over value equality checks<br></li>
+<li>Standardise type annotations for the <code>params</code> dictionary in <code>assert_almost_equal()</code> function<br></li>
+<li>Simplify logic for error messages in <code>assert_almost_equal()</code> function by defaulting to precision-based comparison
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/00a60299f7f292267818dcad5fcfaf14c40f9cc3"><code>00a6029</code></a>: Initialise parent classes in test suites<br></li>
+<li>Call the <code>.setUpClass()</code> and <code>.tearDownClass()</code> methods of the superclass in the <code>BaseTester()</code> class<br></li>
+<li>Implement the <code>.setUp()</code>, <code>.tearDown()</code>, and <code>.tearDownClass()</code> methods in the <code>TestCorrelation()</code> class to ensure proper lifecycle management
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/3b018b45c6f2660965a1be5719155b80a4dd1b82"><code>3b018b4</code></a>: Remove redundant lines in config file
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/58163f08e3406ac39eb5b4650dd14ddce740461d"><code>58163f0</code></a>: Update documentation headers and module summaries<br></li>
+<li>Add header comments to the <code>setup.py</code> script explaining its role in unit tests.<br></li>
+<li>Standardise documentation in the <code>errors.py</code> module regarding error generation and data equality checks.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/9c7206ad33331c08ca5b8ac44c27253750ec467e"><code>9c7206a</code></a>: Optimise data generation and loading via caching<br></li>
+<li>Apply the <code>@lru_cache</code> decorator to the <code>get_random_generator()</code> function and various <code>data_*()</code> functions to reduce redundant test overhead.<br></li>
+<li>Remove the global <code>seed()</code> function call to favour the use of independent random generators.<br></li>
+<li>Enhance the <code>load_airline()</code> function with result caching to improve data retrieval performance.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/891edd2f0cc42d23bfb725c7413808cb8dbf8f91"><code>891edd2</code></a>: Refactor correlation logic and remove redundant code<br></li>
+<li>Remove commented-out code from the <code>correlation()</code> function to clean up the source.<br></li>
+<li>Update the <code>is_correlated()</code> function to return <code>None</code> instead of raising a <code>NotImplementedError</code> class to provide a neutral placeholder.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/0d078f3ca8574cfe99c3a39e7f55b3870aa34671"><code>0d078f3</code></a>: Add implementation error to the <code>is_correlated</code> function<br>
+The function <code>is_correlated</code> is defined but returns <code>None</code> and serves no purpose. It's marked as a placeholder in the docstring, but placeholder functions should either be removed or raise <code>NotImplementedError</code> to indicate they're not yet implemented. Returning <code>None</code> with no implementation can lead to confusion.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/335045d04831067d458134b5233cb5ab40712e5d"><code>335045d</code></a>: Refine correlation APIs and improve type safety<br></li>
+<li>Introduce <code>@overload()</code> function signatures for <code>acf()</code>, <code>pacf()</code>, <code>ccf()</code>, <code>lm()</code>, <code>bglm()</code>, and <code>correlation()</code> functions to improve static analysis and developer experience.<br></li>
+<li>Standardise parameter validation using <code>Literal()</code> class aliases for algorithm options within the <code>acf()</code> and <code>pacf()</code> functions.<br></li>
+<li>Update the <code>ccf()</code> function to support <code>nlags</code> and <code>alpha</code> parameters for better consistency with other correlation tools.<br></li>
+<li>Enforce keyword-only arguments for the <code>store</code> parameter in <code>lm()</code> and <code>bglm()</code> functions and the <code>alpha</code> and <code>qstat</code> parameters in the <code>acf()</code> function.<br></li>
+<li>Refine the <code>correlation()</code> function to act as a unified interface with specific return type hints based on the provided algorithm string.<br></li>
+<li>Ensure the <code>lb()</code> function return type is correctly annotated as a <code>pd.DataFrame()</code> class.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/6176186a0656b75d2f3c88deadd0032f9d51ebbd"><code>6176186</code></a>: Validate data type in <code>load_airline()</code><br></li>
+<li>Ensure the <code>load_airline()</code> function returns a <code>pd.Series()</code> class by introducing a type check<br></li>
+<li>Raise a <code>TypeError()</code> class if the result of the <code>.squeeze()</code> method is not a series to prevent errors when initialising the <code>pd.PeriodIndex()</code> class<br></li>
+<li>Resolve PyRight errors
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/d668fa7d629b6176ec0fc783a4f5414a3e63c026"><code>d668fa7</code></a>: Organise and clean up check function calls<br></li>
+<li>Remove the redundant commented out <code>check_mypy()</code> function call from the <code>check()</code> function<br></li>
+<li>Move and disable the <code>check_mkdocs()</code> function call to execute after the <code>check_build()</code> function call within the <code>check()</code> function
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/b9a9c1a3ea359174caa023fb769e62e115c4f4e2"><code>b9a9c1a</code></a>: Add <code>pyright</code> for static type analysis<br></li>
+<li>Include <code>pyright</code> in the development dependencies<br></li>
+<li>Define the <code>check_pyright()</code> function to analyse code types<br></li>
+<li>Integrate the <code>check_pyright()</code> function into the validation <code>check()</code> function
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/d7b066934237de1dc940d8b0bea577433fa8dbbc"><code>d7b0669</code></a>: Ignore complexipy cache directory<br></li>
+<li>Prevent <code>.complexipy_cache/*</code> from being tracked in the repository
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/15b4f17388f79406f9a5afcefe034e010057441d"><code>15b4f17</code></a>: Expand correlation tests and organise imports<br></li>
+<li>Import <code>correlation()</code> and <code>is_correlated()</code> functions to expand test coverage for the correlation module.<br></li>
+<li>Add <code>.test_correlation_ccf_raises()</code> and <code>.test_correlation_bglm()</code> methods to validate algorithm error handling and behaviour.<br></li>
+<li>Simplify the <code>.setUpClass()</code> method by removing redundant type annotations from class attributes and local variables.<br></li>
+<li>Reformat import statements to improve code structure and maintainability.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/f61bbf8f83708972189887b9828d14523539e2bc"><code>f61bbf8</code></a>: Update type hints to use abstract base classes<br></li>
+<li>Replace <code>Dict()</code> and <code>List()</code> with <code>Mapping()</code> and <code>Collection()</code> classes in the <code>generate_error_message()</code> function to support broader input types<br></li>
+<li>Standardise the use of the built-in <code>dict()</code> class within the <code>assert_almost_equal()</code> function<br></li>
+<li>Simplify complex <code>Union</code> type annotations to improve code maintainability
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/c77a0894d0c018dd51066b1f5bcdf0a47f37de88"><code>c77a089</code></a>: Introduce correlation test dispatcher<br></li>
+<li>Implement the <code>correlation()</code> function to provide a unified interface for various statistical correlation algorithms.<br></li>
+<li>Map string aliases to internal implementations such as the <code>_acf()</code>, <code>_pacf()</code>, and <code>_ccf()</code> functions.<br></li>
+<li>Utilise the <code>generate_error_message()</code> function to handle unsupported algorithm selections with descriptive feedback.<br></li>
+<li>Ensure the <code>y</code> parameter is provided when the <code>ccf</code> algorithm is requested via the <code>correlation()</code> function.<br></li>
+<li>Add a placeholder <code>is_correlated()</code> function to define the intended package structure.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/47ff45991d01533659af40fbf3c0435dafe5c658"><code>47ff459</code></a>: Refine type annotations for correlation functions<br></li>
+<li>Standardise return type signatures for the <code>lm()</code> function and the <code>bglm()</code> function.<br></li>
+<li>Introduce <code>overload()</code> definitions for the <code>lm()</code> function to improve static analysis and type safety.<br></li>
+<li>Replace <code>np.float64</code>, <code>np.ndarray</code>, and complex <code>Union</code> types with specific <code>float</code> tuples to ensure consistency.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/4f783a09734481ca0559afdcb7f01a973ddbdf5d"><code>4f783a0</code></a>: Add error handling and float comparison utilities<br></li>
+<li>Add <code>generate_error_message()</code> function to standardise error reporting for invalid parameter options.<br></li>
+<li>Implement <code>is_almost_equal()</code> function to provide flexible float comparison using either decimal places or a specific delta.<br></li>
+<li>Include <code>assert_almost_equal()</code> function to facilitate testing by raising descriptive <code>AssertionError</code> messages when float values deviate beyond tolerances.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/aa0c816611028bbcde586e0be7ba32133e18930e"><code>aa0c816</code></a>: Disable invalid-name linting rule<br></li>
+<li>Disable the <code>C0103</code> rule to standardise the project's naming convention exceptions.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/8b1424e10a2b3e038270c3e5882e82968916caa9"><code>8b1424e</code></a>: Standardise docstrings and improve type hinting<br></li>
+<li>Define <code>VALID_PACF_METHODS</code> constant to centralise allowed methods for the <code>pacf()</code> function.<br></li>
+<li>Update docstring callouts to use <code>!!! note</code> and <code>???+ abstract</code> admonitions for improved documentation consistency.<br></li>
+<li>Refine parameter type descriptions in docstrings to use <code>ArrayLike</code> and <code>Optional</code> types for the <code>acf()</code>, <code>pacf()</code>, <code>ccf()</code>, <code>lb()</code>, and <code>lm()</code> functions.<br></li>
+<li>Reformat code examples to use <code>pycon</code> syntax and ensure correct line continuation for better rendering.<br></li>
+<li>Clean up <code>!!! deprecation</code> blocks and standardise internal formatting.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/02fd5d2f543e390ec91e39f18253bd4621443d04"><code>02fd5d2</code></a>: Document and standardise data utility module<br></li>
+<li>Add module-level docstrings and structural headers to improve navigation<br></li>
+<li>Enhance the <code>load_airline()</code> function with comprehensive documentation and academic references<br></li>
+<li>Remove unused <code>numpy</code> import to tidy the <code>imports</code> section<br></li>
+<li>Standardise the file layout using consistent section markers
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/f6824ad3b9a9a4cdf2ddb957b988c0b523b311ca"><code>f6824ad</code></a>: Suppress specific Pylint linting warnings<br></li>
+<li>Introduce configuration to relax linting constraints<br></li>
+<li>Minimise noise by disabling checks for line length and file length<br></li>
+<li>Disable warnings for argument counts and redefined built-ins
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/716db6d72da669f5bb358b9cee446a2559e7ee16"><code>716db6d</code></a>: Expand and standardise docstring sections<br></li>
+<li>Add <code>credit</code>, <code>references</code>, <code>see also</code>, and <code>deprecation</code> sections to the configuration<br></li>
+<li>Standardise the internal key order for all section definitions to maintain consistency<br></li>
+<li>Align configuration properties to improve visual clarity and maintenance
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/48abfe16173d2093f5b219506f38a7f079930009"><code>48abfe1</code></a>: Update package name and add script documentation<br></li>
+<li>Add a header comment block to the utility script to document usage and purpose.<br></li>
+<li>Update the <code>PACKAGE_NAME</code> constant to reflect the project identity.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/9ba6915f7d95a67cffb4c0f69fde2c28db3aa7ce"><code>9ba6915</code></a>: Introduce a centralised scripts module<br></li>
+<li>Provide a centralised suite of automation utilities for project maintenance.<br></li>
+<li>Implement a <code>run_command()</code> function to handle shell execution and argument expansion.<br></li>
+<li>Include a <code>lint()</code> function to standardise code formatting across the repository.<br></li>
+<li>Define a <code>check()</code> function to aggregate quality assurance tests and build verification.<br></li>
+<li>Automate git workflows for versioning, tagging, and documentation deployment.<br></li>
+<li>Expose utilities via a CLI entry point to simplify development and CI/CD pipelines.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/c6021f8c9c7515ce9186aedc77d3d4e8feaf7843"><code>c6021f8</code></a>: Introduce pre-commit hooks for code quality<br></li>
+<li>Standardise repository-wide formatting and linting rules<br></li>
+<li>Automate file-level sanitisation for whitespace and line endings<br></li>
+<li>Enforce Python style consistency using <code>black</code>, <code>isort</code>, and <code>pyupgrade</code><br></li>
+<li>Prevent direct commits to the <code>main</code> branch via <code>no-commit-to-branch</code><br></li>
+<li>Validate configuration files with <code>check-json</code>, <code>check-toml</code>, and <code>check-yaml</code><br></li>
+<li>Integrate <code>uv</code> lockfile and synchronisation checks to maintain environment integrity<br></li>
+<li>Sanitise documentation and check spelling with <code>blacken-docs</code> and <code>codespell</code><br></li>
+<li>Implement a local <code>ty-check</code> hook for type safety
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/ccc7aed6099ea1934b5dee89c9e619e7b033634a"><code>ccc7aed</code></a>: Add unit tests for the <code>correlation</code> module<br></li>
+<li>Update <code>llvmlite</code> and <code>numba</code> packages to stable versions in <code>pyproject.toml</code><br></li>
+<li>Add <code>stochastic</code> package to the test dependencies<br></li>
+<li>Introduce <code>BaseTester()</code> class to standardise test data setup via the <code>.setUpClass()</code> method<br></li>
+<li>Implement <code>load_airline()</code> function to retrieve sample datasets for time series analysis<br></li>
+<li>Add unit tests for correlation functions including <code>acf()</code> and <code>pacf()</code><br></li>
+<li>Configure <code>uv</code> dependency overrides to maintain <code>numpy</code> package version consistency
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/f18bc496e1b8f598daa8cbe475f7285a9f345803"><code>f18bc49</code></a>: Fix the PACF formula clarity<br>
+The PACF formula is incorrectly formatted and unclear. The notation <code>"Corr(Y_t, Y_{t-k} / Y_{t-1}, Y_{t-2}, ..., Y_{t-k+1})"</code> uses division where conditional notation should be used. It should be <code>"Corr(Y_t, Y_{t-k} | Y_{t-1}, Y_{t-2}, ..., Y_{t-k+1})"</code> with a vertical bar (<code>|</code>) to denote conditioning, not a division symbol.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/9de39deb2f3ad5ac5a4be05d4d9ff6cc29bec92e"><code>9de39de</code></a>: Correct ACF formula in <code>acf()</code> function docstring<br></li>
+<li>Update the mathematical expression in the <code>acf()</code> function docstring to correctly show square roots in the denominator.<br></li>
+<li>Add the simplified version of the ACF formula for stationary time series to the <code>acf()</code> function documentation.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/984fb1dfcc10350e406d454b485de2c7e18e6920"><code>984fb1d</code></a>: Fix typo issue<br>
+Inconsistent terminology: The documentation states "Ljung-Box and Box-Pierce statistic differ" but should use "statistics" (plural) since there are two statistics being discussed.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/04dbd4b910482b6f58e0ea6f78bcc3c71cc8f3d0"><code>04dbd4b</code></a>: Fix <code>p-value</code> formatting issue
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/96312029dfb733619e1e2c337b030a364d19c46b"><code>9631202</code></a>: Fix self-referential documentation issue<br>
+The text "See <code>q_stat</code> for more information" is circular and unhelpful since this IS the documentation for the <code>qstat</code> parameter. This reference should either be removed or point to relevant external documentation or the Returns section.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/044f8a00b5afc10a548dbe8562b7f6cc20c8fc96"><code>044f8a0</code></a>: Fix typo
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/cbf0fb7cd351268a44bb845ceafee0f97fffad37"><code>cbf0fb7</code></a>: Fix duplicate word
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/feba34c764e930ea5988421eee2b4532ba3fc801"><code>feba34c</code></a>: Standardise formatting of <code>p-value</code> in docs
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/ac283f50b89cb9f22001375a1b327138f17b8cf9"><code>ac283f5</code></a>: Correct the formula provided in the <code>lm()</code> function documentation<br></li>
+<li>Clarify the relationship between the LM test, Engle's ARCH test, and the Breusch-Godfrey test within the <code>lm()</code> function<br></li>
+<li>Refine the mathematical definition of the test statistic to focus on the auxiliary regression <code>$R^2$</code>, the number of observations, and degrees of freedom<br></li>
+<li>Provide a clearer step-by-step procedure for fitting the time series model and running the auxiliary regression to obtain the test statistic<br></li>
+<li>Improve the explanation of the null hypothesis and the resulting asymptotic chi-squared distribution of the LM statistic<br></li>
+<li>Standardise document formatting by using KaTeX for math equations and back-ticks for parameters like <code>resid</code> and <code>nlags</code>
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/1d32293a26aacc9e9187623fee0096496aff2ab2"><code>1d32293</code></a>: Add correlation algorithms for time series analysis<br></li>
+<li>Introduce <code>acf()</code> function, <code>pacf()</code> function, and <code>ccf()</code> function to compute temporal dependencies.<br></li>
+<li>Implement <code>lb()</code> function, <code>lm()</code> function, and <code>bglm()</code> function for residual autocorrelation testing.<br></li>
+<li>Utilise <code>statsmodels</code> library to ensure robust and standardised statistical results.<br></li>
+<li>Include detailed docstrings with mathematical formulas and usage examples.<br></li>
+<li>Apply <code>@typechecked</code> decorator to ensure runtime type safety for all algorithm inputs.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/fa3e3fdf4f5fcb22f87566a1e29e787f150523fb"><code>fa3e3fd</code></a>: Remove duplicate function declaration
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/94efa8be17e2fd23da3721c664ea38d6389cacde"><code>94efa8b</code></a>: Initialise project structure and configuration<br></li>
+<li>Define project metadata and dependencies within <code>pyproject.toml</code> using <code>uv_build</code>.<br></li>
+<li>Configure linting, formatting, and testing tools to standardise development.<br></li>
+<li>Implement <code>strip_ansi_codes()</code> function in <code>setup.py</code> to facilitate environment-agnostic CLI output verification.<br></li>
+<li>Add test naming helper functions like <code>name_func_flat_list()</code> function to <code>setup.py</code>.<br></li>
+<li>Configure <code>sys.path</code> in the <code>tests</code> <code>__init__.py</code> file to ensure local module resolution.<br></li>
+<li>Extend <code>.gitignore</code> to exclude <code>uv.lock</code>, <code>.vscode/</code>, and other local environment directories.
+(by <a href="https://github.com/chrimaho">chrimaho</a>)        * <a href="https://github.com/data-science-extensions/ts-stat-tests/commit/b963f053009fc9677e22d798135be493d98e1f7a"><code>b963f05</code></a>: Initial commit
+(by <a href="https://github.com/chrimaho">chrimaho</a>)</li>
+</ul>
+</li>
+</ul>
+</details>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.instant", "search.highlight", "search.suggest", "toc.follow", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
