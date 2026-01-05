@@ -5,22 +5,22 @@
 ### `ts-stat-tests`
 
 [![PyPI version](https://img.shields.io/pypi/v/ts-stat-tests?label=version&logo=git&color=blue)](https://pypi.org/project/ts-stat-tests/)
-[![Released](https://img.shields.io/github/release-date/chrimaho/ts-stat-tests?label=released&color=blue&logo=google-calendar&logoColor=FF7143)](https://pypi.org/project/ts-stat-tests/#history)
+[![Released](https://img.shields.io/github/release-date/data-science-extensions/ts-stat-tests?label=released&color=blue&logo=google-calendar&logoColor=FF7143)](https://pypi.org/project/ts-stat-tests/#history)
 [![Python](https://img.shields.io/pypi/pyversions/ts-stat-tests.svg?style=flat&logo=python&logoColor=FFDE50&color=blue)](https://pypi.org/project/ts-stat-tests/)
 [![OS](https://img.shields.io/static/v1?label=os&message=ubuntu+|+macos+|+windows&color=blue&logo=ubuntu&logoColor=green)](https://pypi.org/project/ts-stat-tests/)<br>
-[![Build Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-build-package.yml?logo=github&logoColor=white&label=build+tests)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-build-package.yml)
-[![MyPy Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-mypy-tests.yml?logo=github&logoColor=white&label=mypy+tests)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-mypy-tests.yml)
-[![Unit Tests](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/ci-unit-tests.yml?logo=github&logoColor=white&label=unit+tests)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-unit-tests.yml)
-[![codecov](https://codecov.io/gh/chrimaho/ts-stat-tests/branch/main/graph/badge.svg)](https://codecov.io/gh/chrimaho/ts-stat-tests)<br>
-[![Deploy Docs](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/cd-deploy-docs.yml?logo=github&logoColor=white&label=deploy+docs)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/cd-deploy-docs.yml)
-[![Publish Package](https://img.shields.io/github/actions/workflow/status/chrimaho/ts-stat-tests/cd-publish-package.yml?logo=github&logoColor=white&label=publish+package)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/ci-publish-package.yml)
-[![CodeQL](https://github.com/chrimaho/ts-stat-tests/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main&label=code+ql)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/github-code-scanning/codeql)<br>
-[![License][badge-license]](https://github.com/chrimaho/ts-stat-tests/blob/master/LICENSE)
+[![Build Tests](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/ci-build-package.yml?logo=github&logoColor=white&label=build+tests)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-build-package.yml)
+[![MyPy Tests](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/ci-mypy-tests.yml?logo=github&logoColor=white&label=mypy+tests)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-mypy-tests.yml)
+[![Unit Tests](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/ci-unit-tests.yml?logo=github&logoColor=white&label=unit+tests)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-unit-tests.yml)
+[![codecov](https://codecov.io/gh/data-science-extensions/ts-stat-tests/branch/main/graph/badge.svg)](https://codecov.io/gh/data-science-extensions/ts-stat-tests)<br>
+[![Deploy Docs](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/cd-deploy-docs.yml?logo=github&logoColor=white&label=deploy+docs)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/cd-deploy-docs.yml)
+[![Publish Package](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/cd-publish-package.yml?logo=github&logoColor=white&label=publish+package)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-publish-package.yml)
+[![CodeQL](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main&label=code+ql)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/github-code-scanning/codeql)<br>
+[![License][badge-license]](https://github.com/data-science-extensions/ts-stat-tests/blob/master/LICENSE)
 [![Downloads][badge-downloads]](https://piptrends.com/package/ts-stat-tests)
 [![Code Style][badge-style]](https://github.com/psf/black)<br>
-[![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/chrimaho/ts-stat-tests/issues)
+[![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/data-science-extensions/ts-stat-tests/issues)
 
-<!-- [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/chrimaho/ts-stat-tests?color=green)](https://github.com/chrimaho/ts-stat-tests) -->
+<!-- [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/data-science-extensions/ts-stat-tests?color=green)](https://github.com/data-science-extensions/ts-stat-tests) -->
 
 </div>
 
