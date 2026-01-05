@@ -194,40 +194,40 @@ jobs:
           name: dist
           path: dist
 
-      - name: Publish Package
-        id: publish-package
-        run: uv publish --token=${{ env.PYPI_TOKEN }} --no-cache dist/*
+      # - name: Publish Package
+      #   id: publish-package
+      #   run: uv publish --token=${{ env.PYPI_TOKEN }} --no-cache dist/*
 
-      - name: Check
-        id: check
-        run: |
-          echo 'Package deployed to PyPI 👉 https://pypi.org/project/${{ env.PACKAGE_NAME }}/'
-          uvx pip install --dry-run --no-deps --no-cache ${{ env.PACKAGE_NAME }}
+      # - name: Check
+      #   id: check
+      #   run: |
+      #     echo 'Package deployed to PyPI 👉 https://pypi.org/project/${{ env.PACKAGE_NAME }}/'
+      #     uvx pip install --dry-run --no-deps --no-cache ${{ env.PACKAGE_NAME }}
 
-  install-package:
+  # install-package:
 
-    needs: deploy-package
-    if: ${{ always() && needs.deploy-package.result == 'success' }}
-    strategy:
-      matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
-      fail-fast: false
-      max-parallel: 30
-    name: Install Package with '${{ matrix.os }}' and Python ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
+  #   needs: deploy-package
+  #   if: ${{ always() && needs.deploy-package.result == 'success' }}
+  #   strategy:
+  #     matrix:
+  #       os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+  #       python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+  #     fail-fast: false
+  #     max-parallel: 30
+  #   name: Install Package with '${{ matrix.os }}' and Python ${{ matrix.python-version }}
+  #   runs-on: ${{ matrix.os }}
 
-    steps:
+  #   steps:
 
-      - name: Set up Python
-        id: setup-python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
+  #     - name: Set up Python
+  #       id: setup-python
+  #       uses: actions/setup-python@v6
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
 
-      - name: Install Package
-        id: install-package
-        run: pip install --no-cache --verbose --no-python-version-warning "${{ env.PACKAGE_NAME }}==${{ env.VERSION }}"
+  #     - name: Install Package
+  #       id: install-package
+  #       run: pip install --no-cache --verbose --no-python-version-warning "${{ env.PACKAGE_NAME }}==${{ env.VERSION }}"
 
   build-docs:
 
@@ -274,18 +274,18 @@ jobs:
           REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
         run: uv run ./src/utils/changelog.py
 
-      - name: Commit Changelog
-        id: commit-changelog
-        run: |
-          git add .
-          git commit --message "Update changelog to \`${{ env.VERSION }}\` [skip ci]" || echo "No changes to commit"
-          git push --force --no-verify
-          git status
+      # - name: Commit Changelog
+      #   id: commit-changelog
+      #   run: |
+      #     git add .
+      #     git commit --message "Update changelog to \`${{ env.VERSION }}\` [skip ci]" || echo "No changes to commit"
+      #     git push --force --no-verify
+      #     git status
 
-      - name: Build Docs
-        id: build-docs
-        run: uv run ./src/utils/scripts.py build_versioned_docs_cli ${{ env.VERSION }}
+      # - name: Build Docs
+      #   id: build-docs
+      #   run: uv run ./src/utils/scripts.py build_versioned_docs_cli ${{ env.VERSION }}
 
-      - name: Fix tag reference
-        id: fix-tag-reference
-        run: uv run ./src/utils/scripts.py git_fix_tag_reference_cli ${{ env.VERSION }}
+      # - name: Fix tag reference
+      #   id: fix-tag-reference
+      #   run: uv run ./src/utils/scripts.py git_fix_tag_reference_cli ${{ env.VERSION }}
