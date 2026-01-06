@@ -212,7 +212,7 @@ def regularity(
     normalize: bool = True,
 ) -> float:
     """
-    !!! note "Summary" "Summary"
+    !!! note "Summary"
         Test for the regularity of a given data set.
 
     ???+ abstract "Details"
