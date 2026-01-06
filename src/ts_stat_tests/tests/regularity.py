@@ -334,7 +334,7 @@ def is_regular(
         algorithm (str, optional):
             Which entropy algorithm to use.<br>
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
-            - `approx_entropy()`: `["app", "approx", "approx"]`<br>
+            - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
