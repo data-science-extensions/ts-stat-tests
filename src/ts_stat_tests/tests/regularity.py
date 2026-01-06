@@ -315,7 +315,7 @@ def is_regular(
     tolerance: Union[str, float, int, None] = "default",
 ) -> dict[str, Union[str, float, bool]]:
     """
-    !!! note "Summary" "Summary"
+    !!! note "Summary"
         Test whether a given data set is `regular` or not.
 
     ???+ abstract "Details"
