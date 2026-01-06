@@ -395,21 +395,21 @@ def is_regular(
         ```pycon {.py .python linenums="1" title="Sample Entropy"}
         >>> from sktime.datasets import load_airline
         >>> data = load_airline()
-        >>> sample_entropy(x=data, algorithm="sample")
+        >>> is_regular(x=data, algorithm="sample")
         {"entropy": 0.6177074729583698, "tolerance": 23.909808306554297, "result": True}
         ```
 
         ```pycon {.py .python linenums="1" title="Approx Entropy"}
         >>> from sktime.datasets import load_airline
         >>> data = load_airline()
-        >>> approx_entropy(x=data, algorithm="approx", tolerance=20)
+        >>> is_regular(x=data, algorithm="approx", tolerance=20)
         {"entropy": 0.6451264780416452, "tolerance": 20, "result": True}
         ```
 
         ```pycon {.py .python linenums="1"  title="Spectral Entropy"}
         >>> from sktime.datasets import load_airline
         >>> data = load_airline()
-        >>> spectral_entropy(x=data, algorithm="spectral", sf=1)
+        >>> is_regular(x=data, algorithm="spectral", sf=1)
         {"entropy": 0.4287365561752448, "tolerance": 23.909808306554297, "result": True}
         ```
 
