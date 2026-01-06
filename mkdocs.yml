@@ -54,6 +54,7 @@ nav:
   - Modules:
       - code/index.md
       - Correlation: code/correlation.md
+      - Regularity: code/regularity.md
 
 
 markdown_extensions:
