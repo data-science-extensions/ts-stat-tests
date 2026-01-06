@@ -253,38 +253,42 @@ def regularity(
 
     ???+ Example "Examples"
 
-        `approx_entropy`:
+        `regularity` with `approx_entropy` algorithm:
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from sktime.datasets import load_airline
+        >>> from ts_stat_tests.tests.regularity import regularity
         >>> data = load_airline()
-        >>> approx_entropy(x=data)
+        >>> regularity(x=data, algorithm="approx_entropy")
         0.6451264780416452
         ```
 
         ---
 
-        `sample_entropy`:
+        `regularity` with `sample_entropy` algorithm:
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from sktime.datasets import load_airline
+        >>> from ts_stat_tests.tests.regularity import regularity
         >>> data = load_airline()
-        >>> sample_entropy(x=data)
+        >>> regularity(x=data, algorithm="sample_entropy")
         0.6177074729583698
         ```
 
         ---
 
-        `spectral_entropy`:
+        `regularity` with `spectral_entropy` algorithm:
         ```pycon {.py .python linenums="1"  title="Basic usage"}
         >>> from sktime.datasets import load_airline
+        >>> from ts_stat_tests.tests.regularity import regularity
         >>> data = load_airline()
-        >>> spectral_entropy(x=data, sf=1)
+        >>> regularity(x=data, algorithm="spectral_entropy", sf=1)
         2.6538040647031726
         ```
 
         ```pycon {.py .python linenums="1"  title="Advanced usage"}
         >>> from sktime.datasets import load_airline
+        >>> from ts_stat_tests.tests.regularity import regularity
         >>> data = load_airline()
-        >>> spectral_entropy(data, 2, "welch", normalize=True)
+        >>> regularity(data, algorithm="spectral_entropy", sf=2, method="welch", normalize=True)
         0.3371369604224553
         ```
 
