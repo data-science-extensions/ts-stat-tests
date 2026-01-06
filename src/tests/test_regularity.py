@@ -20,8 +20,9 @@ from ts_stat_tests.algorithms.regularity import (
     permutation_entropy,
     sample_entropy,
     spectral_entropy,
+    svd_entropy,
 )
-from ts_stat_tests.tests.regularity import is_regular
+from ts_stat_tests.tests.regularity import entropy, is_regular
 from ts_stat_tests.utils.errors import assert_almost_equal
 
 
@@ -270,3 +271,27 @@ class TestRegularity(BaseTester):
             second=0.9504,
             places=4,
         )
+
+    def test_svd_entropy_direct(self) -> None:
+        # Covers ts_stat_tests/algorithms/regularity.py line 750
+        result = svd_entropy(x=self.data_random)
+        assert isinstance(result, float)
+
+    def test_entropy_algorithms_perm_svd(self) -> None:
+        # Covers ts_stat_tests/tests/regularity.py lines 193, 195
+        res_perm = entropy(x=self.data_random, algorithm="perm")
+        res_svd = entropy(x=self.data_random, algorithm="svd")
+        assert isinstance(res_perm, float)
+        assert isinstance(res_svd, float)
+
+    def test_is_regular_with_none_tolerance(self) -> None:
+        # Covers part of is_regular tolerance logic
+        result = is_regular(x=self.data_random, tolerance=None)
+        assert isinstance(result, dict)
+        assert "result" in result
+
+    def test_is_regular_with_default_tolerance_string(self) -> None:
+        # Covers part of is_regular tolerance logic
+        result = is_regular(x=self.data_random, tolerance="default")
+        assert isinstance(result, dict)
+        assert "result" in result
