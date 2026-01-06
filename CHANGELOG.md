@@ -9,6 +9,128 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.2.0"
+
+    ## **v0.2.0 - Add Regularity Algorithms**
+
+    <!-- md:tag v0.2.0 --><br>
+    <!-- md:date 2026-01-06 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.2.0](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.2.0) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                This release introduces a suite of regularity algorithms for time series analysis, including several entropy-based measures. It also features significant performance optimisations for project maintenance utilities and ensures the package achieves 100% unit test coverage. These enhancements stabilise the codebase and provide a robust foundation for assessing the complexity and regularity of time series data.                        ### 🛠️ Implementation details                        #### Regularity and entropy algorithms                * Implement the `entropy()` function as a unified dispatcher for multiple entropy calculation algorithms, supporting Approximate, Sample, Permutation, Spectral, and SVD entropy.        * Introduce the `regularity()` function to provide a standardised wrapper for assessing time series regularity.        * Add the `is_regular()` function to determine if a time series meets a defined regularity threshold.        * Provide comprehensive wrappers for the `approx_entropy()`, `sample_entropy()`, `permutation_entropy()`, `spectral_entropy()`, and `svd_entropy()` functions.        * Utilise the `antropy` library for underlying calculations and apply the `@typechecked` decorator for rigorous runtime parameter validation.        * Integrate mathematical documentation within docstrings to describe the logic behind regularity measures.                        #### Performance and maintenance utilities                * Refactor the `get_all_files()` function in the `scripts.py` module to use system-level `git ls-files` and `find` commands.        * Optimise directory traversal for project maintenance tasks, reducing execution time from 41 seconds to near-instantaneous.        * Update the `Pylint` configuration to ignore `R0801` (duplicate code) warnings, facilitating specialised test case implementation.        * Fix documentation build failures by resolving `mkdocs-material` extension inconsistencies in the development environment.                        #### Quality assurance and environment                * Achieve 100% unit test coverage across the library by adding comprehensive test cases for regularity algorithms, data loading, and error handling.        * Enhance the `assert_almost_equal()` and `is_almost_equal()` utility functions to support precise verification of statistical results.        * Update the `load_airline()` function to include stricter data type validation and error reporting.        * Restrict the `numpy` version to `< 2.4` in `pyproject.toml` to maintain compatibility with `Numba()` and `antropy`.        * Drop support for Python 3.9 in the CI/CD workflows to align with modern Python lifecycle standards.                        ### ✅ Checklist                - [x] Implement core regularity algorithms and entropy measures.        - [x] Optimise file discovery performance in maintenance scripts.        - [x] Reach 100% unit test coverage across all modules.        - [x] Update package dependencies and Python support.        - [x] Standardise documentation and verify build success.                        ### 💪 Pull Requests                * Implement regularity algorithms by @chrimaho in https://github.com/data-science-extensions/ts-stat-tests/pull/25                        **Full Changelog**: https://github.com/data-science-extensions/ts-stat-tests/compare/v0.1.0...v0.2.0
+
+    ??? abstract "Updates"
+
+        * [`df1172b`](https://github.com/data-science-extensions/ts-stat-tests/commit/df1172b48af5434e8a571104c7165c6d7f6b3aa9): Fix f-string syntax in documentation<br>
+            The example code contains syntax errors with mismatched quotes. Lines 665, 670, and other locations use straight double quotes inside the f-string which will cause a Python syntax error. The method parameter value should use single quotes or escaped double quotes.
+            (by [chrimaho](https://github.com/chrimaho))        * [`388713e`](https://github.com/data-science-extensions/ts-stat-tests/commit/388713e30014fa4afa8145bc04d7bb59e3adcbc7): Fix documentation typo<br>
+            The examples show calls to `"sample_entropy"`, `"approx_entropy"`, and `"spectral_entropy"` functions, but the surrounding documentation indicates these should be calls to `"is_regular()"` with different algorithm parameters. The function names in the examples should be corrected to match the function being documented.
+            (by [chrimaho](https://github.com/chrimaho))        * [`49ecb5a`](https://github.com/data-science-extensions/ts-stat-tests/commit/49ecb5a1641540b41b9a5d96793384d566411f4e): Fix documentation consistency<br>
+            There's an inconsistency in the documentation examples. The function calls in the examples use `"approx_entropy"`, `"sample_entropy"`, and `"spectral_entropy"` directly, but the surrounding text indicates these should be calls to the `"regularity()"` function with different algorithm parameters. The examples should match the function being documented.
+            (by [chrimaho](https://github.com/chrimaho))        * [`579c51d`](https://github.com/data-science-extensions/ts-stat-tests/commit/579c51d262c606459c4a53d6320c091b920ff44d): Fix redundant docstring comment<br>
+            The docstring contains duplicate quote marks in the `"Summary"` admonition. It should be either `!!! note "Summary"` or just `!!! note Summary` without the extra quotes.
+            (by [chrimaho](https://github.com/chrimaho))        * [`9b125fb`](https://github.com/data-science-extensions/ts-stat-tests/commit/9b125fbf928d59adbb4030e43964378a610a8fd7): Fix another duplication<br>
+            The documentation lists `"approx"` twice in line 337 which appears to be a typo. It should likely list the valid string options as: `["app", "approx"]` based on the implementation in the entropy function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`b8461aa`](https://github.com/data-science-extensions/ts-stat-tests/commit/b8461aaa2c61bf2cba5242e4e4cb2795324ad1fd): Fix duplication<br>
+            The documentation lists `"approx"` twice in line 99 which appears to be a typo. It should likely list the valid string options as: `["app", "approx"]` based on the implementation in the options dictionary on line 181.
+            (by [chrimaho](https://github.com/chrimaho))        * [`90ce8c2`](https://github.com/data-science-extensions/ts-stat-tests/commit/90ce8c2acd1d7ebc297496bc74ef479302489dd6): Update src/ts_stat_tests/algorithms/regularity.py<br>
+            The example output shows a raw array representation `"array([0.9426, 0.9383, 0.9411, 0.9375])"` instead of formatted output. Since this is in an f-string print statement, the output format is inconsistent with the other examples which show formatted floats. Consider using `.tolist()` or formatting the array elements consistently.
+            (by [chrimaho](https://github.com/chrimaho))        * [`43954ef`](https://github.com/data-science-extensions/ts-stat-tests/commit/43954ef3d5b59aedc5dd009bed5f42000822b1f1): Remove redundant docs comment<br>
+            The docstring contains duplicate quote marks in the `"Summary"` admonition. It should be either `!!! note "Summary"` or just `!!! note Summary` without the extra quotes. It should not have duplicate `"Summary"` sections.
+            (by [chrimaho](https://github.com/chrimaho))        * [`81defae`](https://github.com/data-science-extensions/ts-stat-tests/commit/81defae6e31ccb65f7fe91e6d8249b62c1123569): Remove duplicates<br>
+            The documentation lists `"approx"` twice in line 227 which appears to be a typo. It should likely list the valid string options as: `["app", "approx"]` based on the implementation in the entropy function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`b2c8d65`](https://github.com/data-science-extensions/ts-stat-tests/commit/b2c8d65b5b82a132622468575f09f8c1afa375ae): Fix `numpy` cast process<br>
+            The cast to `np.ndarray` on line 429 may be incorrect if the input `x` is actually an `ArrayLike` that is not a `numpy` array (e.g., a `list` or `pd.Series`). The `np.std()` function already accepts `ArrayLike` inputs, so this cast is both unnecessary and potentially misleading. Consider removing the `cast()` or verifying that `x` has been converted to a `numpy` array first.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a344cca`](https://github.com/data-science-extensions/ts-stat-tests/commit/a344ccab09d60095ca36dc495cdfc696f8c47dea): Fix `numpy` version constraint<br>
+            The `numpy` version constraint `"numpy<2.4"` lacks a lower bound, which could allow installation of very old `numpy` versions (including 1.x) that may not be compatible with the codebase. Consider adding a lower bound like `"numpy>=2.0.0,<2.4"` to ensure compatibility, matching the override-dependencies specification on line 45.
+            (by [chrimaho](https://github.com/chrimaho))        * [`541a996`](https://github.com/data-science-extensions/ts-stat-tests/commit/541a9962537cdf52578ea9012cbf89e8c4298ef4): Expand test coverage for utils and entropy logic<br>
+            - Include unit tests for the `load_airline()` function to verify data type validation and error handling.<br>
+            - Add coverage for the `is_almost_equal()` and `assert_almost_equal()` utility functions to testing parameter validation and failure messages.<br>
+            - Minimise gaps in coverage for the `svd_entropy()` and `entropy()` functions by testing direct calls and algorithm selections.<br>
+            - Verify tolerance logic in the `is_regular()` function for `None` and string-based input values.<br>
+            - Bring test coverage up to 100%
+            (by [chrimaho](https://github.com/chrimaho))        * [`63ebd14`](https://github.com/data-science-extensions/ts-stat-tests/commit/63ebd147816db43d6f2abe89bcd43d6fae1679ba): Add permutation and SVD entropy options<br>
+            - Expose the `permutation_entropy()` and `svd_entropy()` functions within the regularity testing module.<br>
+            - Extend the `entropy()` function logic to include support for permutation and SVD algorithm types.<br>
+            - Update the options mapping to recognise new aliases and standardise selection of these entropy measures.
+            (by [chrimaho](https://github.com/chrimaho))        * [`369a321`](https://github.com/data-science-extensions/ts-stat-tests/commit/369a32121b70ed0e1230e52a70ae8c39ae848292): Optimise file discovery performance<br>
+            - Use the `find` system command within the `get_all_files()` function to accelerate directory traversal.<br>
+            - Implement a fallback mechanism to the `.glob()` method on the `Path()` class if the system command is unavailable.<br>
+            - Prune `.venv` and hidden directories in the search path to minimise processing time.<br>
+            - Standardise the output by applying the `sorted()` function to the list of discovered file paths.<br>
+            - Add a docstring to the `get_all_files()` function to document the dual-method execution logic.
+            (by [chrimaho](https://github.com/chrimaho))        * [`4dc7cad`](https://github.com/data-science-extensions/ts-stat-tests/commit/4dc7cad901ffc8a35fb00bea638134c17226d276): Update the Pylint configuration to suppress `R0801` duplicate-code check<br>
+            - Ignore duplicate-code warnings to reduce linting noise<br>
+            - Allow code repetition where refactoring for deduplication is not desirable
+            (by [chrimaho](https://github.com/chrimaho))        * [`5f6b9e5`](https://github.com/data-science-extensions/ts-stat-tests/commit/5f6b9e52fc88154bba15c6e121a7b3ab6f803ca1): Refine documentation and update test baselines<br>
+            - Update baseline numerical values for `approx_entropy()`, `sample_entropy()`, `permutation_entropy()`, and `spectral_entropy()` functions in the test suite to match revised calculations.<br>
+            - Standardise the type hint for the `metric` parameter in `entropy()`, `regularity()`, and `is_regular()` functions to use `VALID_KDTREE_METRIC_OPTIONS`.<br>
+            - Refine docstrings by removing redundant admonition titles in `svd_entropy()`, `entropy()`, `regularity()`, and `is_regular()` functions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`89ce566`](https://github.com/data-science-extensions/ts-stat-tests/commit/89ce566131ce89acf9af78837c4e26190ffe06e0): Improve regularity test type safety and documentation<br>
+            - Standardise docstring admonition blocks to use consistent `note` and `abstract` labels.<br>
+            - Add a comprehensive docstring for the `svd_entropy()` function including parameters and return types.<br>
+            - Enhance type safety by using the `cast()` function and specific type aliases for `metric` and `method` arguments.<br>
+            - Refactor logic in the `entropy()` function to replace nested branches with early returns.<br>
+            - Update parameter documentation for `tolerance` and `metric` in the `approx_entropy()` and `sample_entropy()` functions.<br>
+            - Ensure the `is_regular()` function returns predictable types through explicit dictionary value casting.<br>
+            - Add module-level headers and summary documentation to the regularity test utility source code.
+            (by [chrimaho](https://github.com/chrimaho))        * [`3e13d54`](https://github.com/data-science-extensions/ts-stat-tests/commit/3e13d54a2cce51937fd5d74dc5aa8c31d46d967c): Restrict NumPy version for Numba compatibility<br>
+            - Limit `numpy` version to less than `2.4` to ensure compatibility with Numba<br>
+            - Synchronise the version cap across project dependencies and `uv` overrides
+            (by [chrimaho](https://github.com/chrimaho))        * [`c0d065d`](https://github.com/data-science-extensions/ts-stat-tests/commit/c0d065d116ea9a2046123de26b27a3b9b42dac5f): Add unit tests for regularity and entropy metrics<br>
+            - Implement the `TestRegularity()` class to provide comprehensive unit testing for regularity and entropy algorithms.<br>
+            - Add test cases for the `approx_entropy()`, `sample_entropy()`, `permutation_entropy()`, and `spectral_entropy()` functions across multiple data types including noise, sine waves, and linear trends.<br>
+            - Verify that the `is_regular()` function validates return keys and value types while handling invalid algorithm parameters.<br>
+            - Validate numerical accuracy for various scenarios such as multidimensional arrays and different distance metrics used within the algorithms.<br>
+            - Utilise the `assert_almost_equal()` function to ensure precise verification of calculated entropy values.
+            (by [chrimaho](https://github.com/chrimaho))        * [`f71614b`](https://github.com/data-science-extensions/ts-stat-tests/commit/f71614b17114e333029df9950f47d2419ae99e27): Standardise documentation and fix docstring typos<br>
+            - Update code block labels to `pycon` to support interactive example rendering<br>
+            - Fix a typographical error in the `import` statement for the `spectral_entropy()` function<br>
+            - Standardise spacing in arithmetic expressions within the `sample_entropy()` and `permutation_entropy()` functions<br>
+            - Improve docstring layout by adding vertical spacing before example blocks in the `approx_entropy()` and `spectral_entropy()` functions
+            (by [chrimaho](https://github.com/chrimaho))        * [`700a063`](https://github.com/data-science-extensions/ts-stat-tests/commit/700a06329b79fdeb9b428078e6dff73759cf3a1c): Add regularity and entropy statistical tests<br>
+            - Introduce `entropy()` function as a unified interface for several entropy calculation algorithms<br>
+            - Add `regularity()` function to provide a pass-through wrapper for assessing time series regularity<br>
+            - Implement `is_regular()` function to determine if a dataset is regular by comparing entropy against a threshold<br>
+            - Apply `typechecked` decorator to ensure robust parameter validation for all new functions<br>
+            - Include helper logic to calculate a default `tolerance` based on the standard deviation of the input data<br>
+            - Support `approx_entropy()`, `sample_entropy()`, and `spectral_entropy()` functions via a central entry point<br>
+            - Provide internal parameter validation to normalise algorithm selection strings
+            (by [chrimaho](https://github.com/chrimaho))        * [`50b5405`](https://github.com/data-science-extensions/ts-stat-tests/commit/50b5405a1a56267dfd3b162e651feda658fdb61b): Add regularity test file<br>
+            - Initialise the `test_regularity.py` file to provide a structure for upcoming test cases
+            (by [chrimaho](https://github.com/chrimaho))        * [`f33cbf7`](https://github.com/data-science-extensions/ts-stat-tests/commit/f33cbf71f01d70136d695fba2a92f9cfc301a61c): Add documentation for regularity functions<br>
+            - Provide extensive docstrings for `approx_entropy()`, `sample_entropy()`, `permutation_entropy()`, and `spectral_entropy()` functions.<br>
+            - Include mathematical formulations such as $ApEn(m, r, N) = \phi_m(r) - \phi_{m+1}(r)$ to describe regularity logic.<br>
+            - Add practical examples demonstrating how to apply entropy functions to various datasets.<br>
+            - Document parameter configurations such as the `order` and `metric` arguments for the `sample_entropy()` function.<br>
+            - Detail the steps required to normalise results within the `permutation_entropy()` and `spectral_entropy()` functions.<br>
+            - Incorporate academic references and credit the `AntroPy` library for the underlying implementations.ts
+            (by [chrimaho](https://github.com/chrimaho))        * [`759edd6`](https://github.com/data-science-extensions/ts-stat-tests/commit/759edd67563daaa46ad8d3f8f3bac5928d8c314a): Refine typing and expand entropy functions<br>
+            - Introduce `Literal` type hints to restrict valid options for `metric` and `method` parameters.<br>
+            - Add `tolerance` parameter to `approx_entropy()` and `sample_entropy()` functions.<br>
+            - Standardise parameter definitions in `approx_entropy()`, `sample_entropy()`, and `spectral_entropy()` functions using `VALID_KDTREE_METRIC_OPTIONS` and `VALID_SPECTRAL_ENTROPY_METHOD_OPTIONS` constants.
+            (by [chrimaho](https://github.com/chrimaho))        * [`5c48940`](https://github.com/data-science-extensions/ts-stat-tests/commit/5c489404d588fe9d997b87b5444a5e91a0d14bf0): Add `svd_entropy()` function for regularity testing<br>
+            - Include `svd_entropy` in the `__all__` list to expose the new algorithm.<br>
+            - Implement the `svd_entropy()` function as a type-checked wrapper for the `antropy` implementation to provide Singular Value Decomposition entropy calculations.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a51404c`](https://github.com/data-science-extensions/ts-stat-tests/commit/a51404c14155f1c3f3092cfae85d3173431ea980): Add documentation header and module docstring<br>
+            - Add a descriptive header to the regularity module to clarify its purpose.<br>
+            - Include a module-level docstring that summarises functionality for computing regularity measures.
+            (by [chrimaho](https://github.com/chrimaho))        * [`1796788`](https://github.com/data-science-extensions/ts-stat-tests/commit/1796788492b1ef4891223b5ebdcdc50d51dc9a4f): Add regularity entropy algorithms<br>
+            - Implement `approx_entropy()`, `sample_entropy()`, `permutation_entropy()`, and `spectral_entropy()` functions<br>
+            - Utilise the `antropy` library for underlying entropy calculations<br>
+            - Apply the `typechecked` decorator to ensure parameter type safety<br>
+            - Define the `__all__` list to expose the public API of the module
+            (by [chrimaho](https://github.com/chrimaho))        * [`ffb08f7`](https://github.com/data-science-extensions/ts-stat-tests/commit/ffb08f7fcc34b4118898770ce6dbb8c9a775168a): Add regularity module and documentation<br>
+            - Provide regularity statistical tests within the algorithms library<br>
+            - Ensure code quality with a new test suite<br>
+            - Initialise the documentation and update the site navigation
+            (by [chrimaho](https://github.com/chrimaho))        * [`dd00a96`](https://github.com/data-science-extensions/ts-stat-tests/commit/dd00a9604012b922dec8ca2d5222de729e837693): Drop Python 3.9 support from CD workflow<br>
+            - Remove `3.9` from the environment matrix to align with modern support standards.<br>
+            - Optimise the deployment pipeline by focusing on more recent releases.
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.1.0"
 
     ## **v0.1.0 - Initial release of Time Series Statistical Tests**
