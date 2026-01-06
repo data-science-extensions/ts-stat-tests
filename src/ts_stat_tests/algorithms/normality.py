@@ -1,3 +1,29 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Normality                                                         #
+#     Purpose: Algorithms for testing normality of data.                       #
+#                                                                              #
+# ============================================================================ #
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Overview                                                              ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------------------------------------------------- #
+#  Description                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+"""
+!!! note "Summary"
+    This module provides implementations of various statistical tests to assess the normality of data distributions. These tests are essential in statistical analysis and time series forecasting, as many models assume that the underlying data follows a normal distribution.
+"""
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Setup                                                                  ####
