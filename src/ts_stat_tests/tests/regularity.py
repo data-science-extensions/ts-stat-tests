@@ -48,8 +48,10 @@ from typeguard import typechecked
 from ts_stat_tests.algorithms.regularity import (
     VALID_KDTREE_METRIC_OPTIONS,
     approx_entropy,
+    permutation_entropy,
     sample_entropy,
     spectral_entropy,
+    svd_entropy,
 )
 from ts_stat_tests.utils.errors import generate_error_message
 
@@ -178,6 +180,8 @@ def entropy(
         "sampl": ("sample", "sampl", "samp"),
         "approx": ("app", "approx"),
         "spect": ("spec", "spect", "spectral"),
+        "perm": ("perm", "permutation"),
+        "svd": ("svd", "svd_entropy"),
     }
     if algorithm in options["sampl"]:
         return sample_entropy(x=x, order=order, metric=metric)
@@ -185,6 +189,10 @@ def entropy(
         return approx_entropy(x=x, order=order, metric=metric)
     if algorithm in options["spect"]:
         return cast(float, spectral_entropy(x=x, sf=sf, normalize=normalize))
+    if algorithm in options["perm"]:
+        return permutation_entropy(x=x, order=order, normalize=normalize)
+    if algorithm in options["svd"]:
+        return svd_entropy(x=x, order=order, normalize=normalize)
     raise ValueError(
         generate_error_message(
             parameter_name="algorithm",
