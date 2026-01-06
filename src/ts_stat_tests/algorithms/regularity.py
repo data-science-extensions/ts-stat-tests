@@ -672,8 +672,8 @@ def spectral_entropy(
         ```
 
         ```pycon {.py .python linenums="1"  title="2D data"}
-        >>> print(f"{spectral_entropy(x=data_2d, sf=100, normalize=True):.4f}")
-        array([0.9426, 0.9382, 0.9410, 0.9376])
+        >>> print(spectral_entropy(x=data_2d, sf=100, normalize=True).tolist())
+        [0.9426, 0.9382, 0.9410, 0.9376]
         ```
 
         ```pycon {.py .python linenums="1"  title="Gaussian noise"}
