@@ -86,9 +86,9 @@ def entropy(
 
     ???+ abstract "Details"
         This function is a convenience wrapper around the three underlying algorithms:<br>
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]<br>
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]<br>
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]<br>
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]<br>
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
 
     Params:
         x (ArrayLike):
@@ -171,10 +171,10 @@ def entropy(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? Tip "See Also"
-        - [`regularity()`][src.ts_stat_tests.tests.regularity.regularity]
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
     options: dict[str, tuple[str, ...]] = {
         "sampl": ("sample", "sampl", "samp"),
@@ -216,7 +216,7 @@ def regularity(
         Test for the regularity of a given data set.
 
     ???+ abstract "Details"
-        This is a pass-through, convenience wrapper around the [`entropy()`][src.ts_stat_tests.tests.regularity.entropy] function.
+        This is a pass-through, convenience wrapper around the [`entropy()`][ts_stat_tests.tests.regularity.entropy] function.
 
     Params:
         x (ArrayLike):
@@ -300,10 +300,10 @@ def regularity(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? Tip "See Also"
-        - [`entropy()`][src.ts_stat_tests.tests.regularity.entropy]
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
     return entropy(x=x, algorithm=algorithm, order=order, metric=metric, sf=sf, normalize=normalize)
 
@@ -421,11 +421,11 @@ def is_regular(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? Tip "See Also"
-        - [`entropy()`][src.ts_stat_tests.tests.regularity.entropy]
-        - [`regularity()`][src.ts_stat_tests.tests.regularity.regularity]
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
+        - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
     if isinstance(tolerance, (float, int)):
         tol = tolerance

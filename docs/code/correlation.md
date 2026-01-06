@@ -40,8 +40,8 @@
 
         All of the source code can be found within this modules:
 
-        - [`src.ts_stat_tests.algorithms.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/correlation.py).
-        - [`src.ts_stat_tests.tests.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/correlation.py).
+        - [`ts_stat_tests.algorithms.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/correlation.py).
+        - [`ts_stat_tests.tests.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/correlation.py).
 
 ## Correlation Tests
 
