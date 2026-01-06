@@ -426,7 +426,7 @@ def is_regular(
     if isinstance(tolerance, (float, int)):
         tol = tolerance
     elif tolerance in ["default", None]:
-        tol = 0.2 * np.std(a=cast(np.ndarray, x))
+        tol = 0.2 * np.std(a=np.asarray(x))
     else:
         raise ValueError(
             f"Invalid option for `tolerance` parameter: {tolerance}.\n"
