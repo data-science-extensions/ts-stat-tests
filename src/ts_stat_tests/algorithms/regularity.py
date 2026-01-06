@@ -662,12 +662,12 @@ def spectral_entropy(
         ```
 
         ```pycon {.py .python linenums="1"  title="Welch method"}
-        >>> print(f"{spectral_entropy(x=data_sine, sf=100, method="welch"):.4f}")
+        >>> print(f"{spectral_entropy(x=data_sine, sf=100, method='welch'):.4f}")
         1.2924
         ```
 
         ```pycon {.py .python linenums="1"  title="Normalised calculation"}
-        >>> print(f"{spectral_entropy(x=data_sine, sf=100, method="welch", normalize=True):.4f}")
+        >>> print(f"{spectral_entropy(x=data_sine, sf=100, method='welch', normalize=True):.4f}")
         0.9956
         ```
 
