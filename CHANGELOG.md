@@ -9,6 +9,80 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.3.1"
+
+    ## **v0.3.1 - Add Normality Module**
+
+    <!-- md:tag v0.3.1 --><br>
+    <!-- md:date 2026-01-08 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.3.1](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.3.1) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                        Introduce the `normality` module, providing a suite of statistical tests to assess the distribution of time series data. Significantly expand the documentation and test coverage for the `regularity` and `normality` modules, update the implementation progress, and improve the clarity and accuracy of references across the project. Notably, introduce new documentation pages, update the `README.md` and progress tables to reflect completed work, and add a comprehensive test suite for normality algorithms.                        ### 🛠️ Implementation details                        #### Normality module implementation                        * Introduce the `src/ts_stat_tests/algorithms/normality.py` module, implementing five core normality tests: `jb()`, `ob()`, `sw()`, `dp()`, and `ad()`.        * Implement a unified interface in `src/ts_stat_tests/tests/normality.py` with the following standardised functions:            * `normality()`: Act as a dispatcher to run a selected normality test.            * `is_normal()`: Return a standardised dictionary containing the test result (`True`/`False`), statistic, and p-value.        * Support various `nan_policy` options ("propagate", "raise", "omit") across algorithms to handle missing data gracefully.        * Provide detailed mathematical documentation, including LaTeX equations and bibliographic references, in the docstrings of all normality test functions.                        #### Regularity module enhancements                        * Expand the `src/ts_stat_tests/algorithms/regularity.py` module by exposing additional entropy measures: `permutation_entropy()` and `svd_entropy()`.        * Update the `entropy()`, `regularity()`, and `is_regular()` functions in `src/ts_stat_tests/tests/regularity.py` to support these new algorithms via intuitive string aliases.        * Standardise parameter handling and improve error messaging using `generate_error_message()`.        * Enhance docstrings with comprehensive examples, mathematical context, and internal cross-references.                        #### Documentation and progress tracking                        * Create new documentation pages to provide detailed guidance:            * `docs/code/normality.md`: Provide an overview of normality testing, rationale, algorithm details, and API references.            * `docs/code/regularity.md`: Detail entropy-based regularity testing and provide a comprehensive API guide.        * Update `docs/code/index.md` and `README.md` progress tables to mark the `normality` and `regularity` modules as 100% complete.        * Refactor `docs/code/correlation.md` to correct and clarify module references and formatting.        * Register the `normality` section in `mkdocs.yml` to improve site navigation and information architecture.                        #### Testing and quality assurance                        * Add a comprehensive unit test suite in `src/tests/test_normality.py`, covering all implemented normality algorithms and edge cases.        * Implement a specific mock-based scenario to trigger the fallback path in `is_normal()`, ensuring 100% code coverage for the normality module.        * Adhere to Australian English spelling (e.g. `standardise`, `optimise`, `recognise`) and imperative coding style throughout the codebase.        * Ensure all code changes pass linting and type checks to maintain high standards for reliability, usability, and transparency.                        ### ✅ Checklist                        - [x] Implement core normality test algorithms in `src/ts_stat_tests/algorithms/normality.py`.        - [x] Create unified normality test interfaces in `src/ts_stat_tests/tests/normality.py`.        - [x] Add comprehensive unit tests in `src/tests/test_normality.py` and achieve 100% coverage.        - [x] Expand regularity algorithms and update convenience wrappers.        - [x] Generate detailed documentation for both normality and regularity modules.        - [x] Update project-wide progress tables in `README.md` and `docs/code/index.md`.        - [x] Standardise spelling to Australian English and ensure consistent formatting.                        ### 💪 Pull Requests                        * Implement normality module and enhance regularity documentation by @chrimaho in https://github.com/data-science-extensions/ts-stat-tests/pull/26                        **Full Changelog**: https://github.com/data-science-extensions/ts-stat-tests/compare/v0.2.0...v0.3.0        
+
+    ??? abstract "Updates"
+
+        * [`90cd570`](https://github.com/data-science-extensions/ts-stat-tests/commit/90cd5700ceee6223bffdc8cffd52f6f0496c9bf7): Fix grammar error
+            (by [chrimaho](https://github.com/chrimaho))        * [`b708fe1`](https://github.com/data-science-extensions/ts-stat-tests/commit/b708fe1d5f015c0544ec1669bfc0e1d84056724d): Remove documentation<br>
+            Duplicate dictionary key "entropy" in the return type documentation. The second entry on line 341 should be removed as it's identical to the one on line 340.
+            (by [chrimaho](https://github.com/chrimaho))        * [`4f554e5`](https://github.com/data-science-extensions/ts-stat-tests/commit/4f554e5171b072149759179546de3745050da64f): Incomplete documentation<br>
+            The text "because REASONS" is a placeholder that should be replaced with actual reasoning for why the AntroPy package was selected.
+            (by [chrimaho](https://github.com/chrimaho))        * [`1427c5e`](https://github.com/data-science-extensions/ts-stat-tests/commit/1427c5ec8d9ecbc2b797ce7a8fead7c65c502c25): Document additional entropy algorithms in regularity tests<br>
+            - Expand documentation to include `permutation_entropy()` and `svd_entropy()` functions as supported algorithms<br>
+            - Clarify algorithm selection options and aliases for improved user guidance<br>
+            - Ensure consistency across docstrings and abstract sections for easier reference
+            (by [chrimaho](https://github.com/chrimaho))        * [`1782d7b`](https://github.com/data-science-extensions/ts-stat-tests/commit/1782d7bd3f63400cf9c4651020b01bffaa9d75df): Update progress docs for completed regularity and normality<br>
+            - Mark completed `antropy` regularity algorithms and add `svd_entropy()` function to documentation<br>
+            - Mark all normality algorithms as implemented and tested<br>
+            - Reflect full test and unit test coverage for correlation, regularity, and normality modules in progress tables<br>
+            - Improve accuracy of documentation for current feature and test status
+            (by [chrimaho](https://github.com/chrimaho))        * [`d006b1c`](https://github.com/data-science-extensions/ts-stat-tests/commit/d006b1c722b06bc3b9435440f4043bc022aecc1b): Add documentation for normality tests and algorithms<br>
+            - Provide an overview of normality testing in time-series analysis, including rationale and references<br>
+            - Detail the use of `scipy.stats` and `statsmodels` libraries for statistical tests<br>
+            - Link to relevant source modules for implementation details<br>
+            - Outline available tests and algorithms via code documentation structure<br>
+            - Help users understand when and why to perform normality checks on residuals
+            (by [chrimaho](https://github.com/chrimaho))        * [`4584b3f`](https://github.com/data-science-extensions/ts-stat-tests/commit/4584b3f063e564de2befeb3b9446870831a7e98f): Add unit test for fallback branch in normality check<br>
+            - Improve test coverage by introducing a scenario that triggers the fallback path in the `is_normal()` function<br>
+            - Ensure behaviour when the `normality()` function returns an object that is neither a tuple/list nor has a `pvalue` attribute<br>
+            - Confirm that the `is_normal()` function handles unexpected return types gracefully and returns expected results
+            (by [chrimaho](https://github.com/chrimaho))        * [`ec8d327`](https://github.com/data-science-extensions/ts-stat-tests/commit/ec8d3270f90a8e0943b4087a28a697e924b347d1): Introduce unified normality test interface and refactor docs<br>
+            - Add `normality()` and `is_normal()` functions to standardise access to multiple normality test algorithms<br>
+            - Refactor and expand documentation for all normality algorithms, improving clarity and consistency of usage examples and equations<br>
+            - Replace scattered summary/info/example blocks with a unified doc structure and imperative notes, using Australian English spelling<br>
+            - Update and extend test coverage for new interfaces, ensuring comprehensive behaviour for all supported normality tests<br>
+            - Improve parameter handling and error messaging for invalid algorithm selection using `generate_error_message()`<br>
+            - Align with latest `scipy` and `statsmodels` result object conventions for type safety and compatibility
+            (by [chrimaho](https://github.com/chrimaho))        * [`ad67e9d`](https://github.com/data-science-extensions/ts-stat-tests/commit/ad67e9dce1da31858f87fc635c8caef12fb30823): Add detailed docstrings for normality test functions<br>
+            - Improve documentation by adding comprehensive docstrings to all normality test functions<br>
+            - Include summaries, parameter descriptions, return types, example usages, equations, references, notes, and related function links<br>
+            - Standardise documentation style and formatting for clarity and consistency<br>
+            - Enhance usability for end users by providing practical guidance and mathematical context, referencing the relevant statistical literature and library sources
+            (by [chrimaho](https://github.com/chrimaho))        * [`25c4823`](https://github.com/data-science-extensions/ts-stat-tests/commit/25c48233583ae10fa1ba7005d727b52f669c4871): Add module-level summary and structured docstrings<br>
+            - Provide a clear overview and description for the normality testing algorithms<br>
+            - Improve future maintainability by standardising documentation structure<br>
+            - Clarify module purpose for statistical analysis and forecasting workflows<br>
+            - Facilitate easier onboarding for new contributors
+            (by [chrimaho](https://github.com/chrimaho))        * [`8f21f94`](https://github.com/data-science-extensions/ts-stat-tests/commit/8f21f948d038ef2717047e488164d005920664ba): Add statistical normality test algorithm implementations<br>
+            - Provide comprehensive implementations for assessing data normality via `jb()`, `ob()`, `sw()`, `dp()`, and `ad()` functions.<br>
+            - Include detailed docstrings, equations, practical examples, and references to support correct use and interpretation.<br>
+            - Standardise parameter types, outputs, and documentation for consistent usage across different normality tests.<br>
+            - Facilitate robust statistical validation in time series forecasting workflows by exposing multiple established tests.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a4cfa2a`](https://github.com/data-science-extensions/ts-stat-tests/commit/a4cfa2af52fc13cf78ab4fb279b287f927402686): Add normality test documentation and stubs<br>
+            - Create initial documentation for normality tests<br>
+            - Add normality test file stubs for future implementation<br>
+            - Update navigation to include normality section<br>
+            - Prepare codebase for standardisation of normality test approach
+            (by [chrimaho](https://github.com/chrimaho))        * [`c0e61c5`](https://github.com/data-science-extensions/ts-stat-tests/commit/c0e61c5f4bdceb80d0f10d4f11f1a3abd95d91ee): Fix docs reference bugs
+            (by [chrimaho](https://github.com/chrimaho))        * [`1083496`](https://github.com/data-science-extensions/ts-stat-tests/commit/10834964623b343d4616da260e022f58cd54ac43): Add regularity documentation<br>
+            - Introduce comprehensive overview and rationale for regularity testing using entropy-based algorithms<br>
+            - Standardise documentation with references, examples, and usage guidelines for `ts_stat_tests` modules<br>
+            - Clarify differences between approximate entropy and sample entropy in forecasting context<br>
+            - Link to further resources on time-series analysis methodology and data quality<br>
+            - Detail regularity algorithms and tests, including filtering logic for code navigation
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.2.0"
 
     ## **v0.2.0 - Add Regularity Algorithms**
