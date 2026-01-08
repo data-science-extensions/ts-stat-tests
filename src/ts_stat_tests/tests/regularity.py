@@ -338,7 +338,6 @@ def is_regular(
         {
             "result": ...,  # The result of the test. Will be `True` if `entropy<tolerance`, and `False` otherwise
             "entropy": ...,  # A `float` value, the result of the `entropy()` function
-            "entropy": ...,  # A `float` value, the result of the `entropy()` function
             "tolerance": ...,  # A `float` value, which is the tolerance used for determining whether or not the `entropy` is `regular` or not
         }
         ```
