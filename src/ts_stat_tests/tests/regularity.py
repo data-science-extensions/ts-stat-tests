@@ -85,10 +85,12 @@ def entropy(
         Test for the entropy of a given data set.
 
     ???+ abstract "Details"
-        This function is a convenience wrapper around the three underlying algorithms:<br>
+        This function is a convenience wrapper around the five underlying algorithms:<br>
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]<br>
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]<br>
-        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]<br>
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]<br>
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
 
     Params:
         x (ArrayLike):
@@ -98,6 +100,8 @@ def entropy(
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
             - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
+            - `permutation_entropy()`: `["perm", "permutation"]`<br>
+            - `svd_entropy()`: `["svd", "svd_entropy"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
             Embedding dimension.<br>
@@ -175,6 +179,8 @@ def entropy(
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
         - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
     """
     options: dict[str, tuple[str, ...]] = {
         "sampl": ("sample", "sampl", "samp"),
@@ -226,6 +232,8 @@ def regularity(
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
             - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
+            - `permutation_entropy()`: `["perm", "permutation"]`<br>
+            - `svd_entropy()`: `["svd", "svd_entropy"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
             Embedding dimension.<br>
@@ -304,6 +312,8 @@ def regularity(
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
         - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
     """
     return entropy(x=x, algorithm=algorithm, order=order, metric=metric, sf=sf, normalize=normalize)
 
@@ -328,6 +338,7 @@ def is_regular(
         {
             "result": ...,  # The result of the test. Will be `True` if `entropy<tolerance`, and `False` otherwise
             "entropy": ...,  # A `float` value, the result of the `entropy()` function
+            "entropy": ...,  # A `float` value, the result of the `entropy()` function
             "tolerance": ...,  # A `float` value, which is the tolerance used for determining whether or not the `entropy` is `regular` or not
         }
         ```
@@ -340,6 +351,8 @@ def is_regular(
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
             - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
+            - `permutation_entropy()`: `["perm", "permutation"]`<br>
+            - `svd_entropy()`: `["svd", "svd_entropy"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
             Embedding dimension.<br>
@@ -426,6 +439,8 @@ def is_regular(
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
         - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
     """
     if isinstance(tolerance, (float, int)):
         tol = tolerance
