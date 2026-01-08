@@ -85,10 +85,12 @@ def entropy(
         Test for the entropy of a given data set.
 
     ???+ abstract "Details"
-        This function is a convenience wrapper around the three underlying algorithms:<br>
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]<br>
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]<br>
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        This function is a convenience wrapper around the five underlying algorithms:<br>
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]<br>
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]<br>
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]<br>
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]<br>
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
 
     Params:
         x (ArrayLike):
@@ -98,6 +100,8 @@ def entropy(
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
             - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
+            - `permutation_entropy()`: `["perm", "permutation"]`<br>
+            - `svd_entropy()`: `["svd", "svd_entropy"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
             Embedding dimension.<br>
@@ -171,10 +175,12 @@ def entropy(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? Tip "See Also"
-        - [`regularity()`][src.ts_stat_tests.tests.regularity.regularity]
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
     """
     options: dict[str, tuple[str, ...]] = {
         "sampl": ("sample", "sampl", "samp"),
@@ -216,7 +222,7 @@ def regularity(
         Test for the regularity of a given data set.
 
     ???+ abstract "Details"
-        This is a pass-through, convenience wrapper around the [`entropy()`][src.ts_stat_tests.tests.regularity.entropy] function.
+        This is a pass-through, convenience wrapper around the [`entropy()`][ts_stat_tests.tests.regularity.entropy] function.
 
     Params:
         x (ArrayLike):
@@ -226,6 +232,8 @@ def regularity(
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
             - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
+            - `permutation_entropy()`: `["perm", "permutation"]`<br>
+            - `svd_entropy()`: `["svd", "svd_entropy"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
             Embedding dimension.<br>
@@ -300,10 +308,12 @@ def regularity(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? Tip "See Also"
-        - [`entropy()`][src.ts_stat_tests.tests.regularity.entropy]
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
     """
     return entropy(x=x, algorithm=algorithm, order=order, metric=metric, sf=sf, normalize=normalize)
 
@@ -340,6 +350,8 @@ def is_regular(
             - `sample_entropy()`: `["sample", "sampl", "samp"]`<br>
             - `approx_entropy()`: `["app", "approx"]`<br>
             - `spectral_entropy()`: `["spec", "spect", "spectral"]`<br>
+            - `permutation_entropy()`: `["perm", "permutation"]`<br>
+            - `svd_entropy()`: `["svd", "svd_entropy"]`<br>
             Defaults to `"sample"`.
         order (int, optional):
             Embedding dimension.<br>
@@ -421,11 +433,13 @@ def is_regular(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? Tip "See Also"
-        - [`entropy()`][src.ts_stat_tests.tests.regularity.entropy]
-        - [`regularity()`][src.ts_stat_tests.tests.regularity.regularity]
-        - [`approx_entropy()`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
+        - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
+        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
     """
     if isinstance(tolerance, (float, int)):
         tol = tolerance

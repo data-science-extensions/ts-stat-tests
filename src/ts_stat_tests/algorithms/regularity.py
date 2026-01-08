@@ -235,10 +235,10 @@ def approx_entropy(
         - [`antropy.sample_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html)
         - [`antropy.perm_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html)
         - [`antropy.spectral_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html)
-        - [`ts_stat_tests.algorithms.app_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.approx_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`ts_stat_tests.algorithms.app_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.approx_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.perm_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
         - [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html)
         - [`sklearn.metrics.pairwise_distances`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html)
         - [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)
@@ -376,10 +376,10 @@ def sample_entropy(
         - [`antropy.sample_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html)
         - [`antropy.perm_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html)
         - [`antropy.spectral_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html)
-        - [`ts_stat_tests.algorithms.app_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.approx_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`ts_stat_tests.algorithms.app_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.approx_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.perm_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
         - [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html)
         - [`sklearn.metrics.pairwise_distances`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html)
         - [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)
@@ -539,10 +539,10 @@ def permutation_entropy(
         - [`antropy.sample_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html)
         - [`antropy.perm_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html)
         - [`antropy.spectral_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html)
-        - [`ts_stat_tests.algorithms.app_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.approx_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`ts_stat_tests.algorithms.app_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.approx_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.perm_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
     return cast(
         float,
@@ -691,10 +691,10 @@ def spectral_entropy(
         - [`antropy.sample_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html)
         - [`antropy.perm_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html)
         - [`antropy.spectral_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html)
-        - [`ts_stat_tests.algorithms.app_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.approx_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`ts_stat_tests.algorithms.app_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.approx_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.perm_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
     return a_spectral_entropy(
         x=x,
@@ -742,10 +742,10 @@ def svd_entropy(
 
     ??? Tip "See Also"
         - [`antropy.svd_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.svd_entropy.html)
-        - [`ts_stat_tests.algorithms.approx_entropy`][src.ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.sample_entropy`][src.ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`ts_stat_tests.algorithms.perm_entropy`][src.ts_stat_tests.algorithms.regularity.permutation_entropy]
-        - [`ts_stat_tests.algorithms.spectral_entropy`][src.ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`ts_stat_tests.algorithms.approx_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
+        - [`ts_stat_tests.algorithms.sample_entropy`][ts_stat_tests.algorithms.regularity.sample_entropy]
+        - [`ts_stat_tests.algorithms.perm_entropy`][ts_stat_tests.algorithms.regularity.permutation_entropy]
+        - [`ts_stat_tests.algorithms.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
     return a_svd_entropy(
         x=x,
