@@ -24,7 +24,7 @@
 
     !!! info "Info"
 
-        To state that the data is 'regular' is to say that the data point are evenly spaced, regularly collected, and not missing data points (ie. do not contain excessive `NA` values). Logically, it is not always necessary to conduct the Test for Regularity on automatically collected data (like for example with Energy Prices, or Daily Temperature), however if this data was collected manually then it is highly recommended. If the data does not meet the requirements of Regularity, then it is necessary to return to the data collection plan, and revise the methodology used.
+        To state that the data is 'regular' is to say that the data points are evenly spaced, regularly collected, and not missing data points (ie. do not contain excessive `NA` values). Logically, it is not always necessary to conduct the Test for Regularity on automatically collected data (like for example with Energy Prices, or Daily Temperature), however if this data was collected manually then it is highly recommended. If the data does not meet the requirements of Regularity, then it is necessary to return to the data collection plan, and revise the methodology used.
 
         ---
 
