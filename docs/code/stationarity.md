@@ -5,50 +5,42 @@
 
 !!! abstract "Summary"
 
-    !!! quote "As stated by [Someone](#):"
+    !!! quote "As stated by [Robert Nau, Duke University](https://people.duke.edu/~rnau/411arim.htm):"
 
-        Stuff...
+        A stationary time series is one whose statistical properties such as mean, variance, autocorrelation, etc. are all constant over time. Most statistical forecasting methods are based on the assumption that the time series can be rendered approximately stationary (i.e., "stationarized") through the use of mathematical transformations.
 
         ---
 
-        :material-arrow-right-bold: For more info, see: [Source](#).
+        :material-arrow-right-bold: For more info, see: [Introduction to ARIMA models](https://people.duke.edu/~rnau/411arim.htm).
 
     !!! info "Info"
 
-        There are actually three really good libraries which implements these tests:
+        There are two primary libraries used to implement these tests, ensuring both breadth of coverage and numerical reliability:
 
-        | library     | category     | algorithm                                     | short | import script                                      | url                                                                                                   |
-        | ----------- | ------------ | --------------------------------------------- | ----- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-        | pmdarima    | Stationarity | Augmented Dickey-Fuller                       | ADF   | `from pmdarima.arima import ADFTest`               | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ADFTest.html#pmdarima.arima.ADFTest |
-        |             | Stationarity | Kwiatkowski-Phillips-Schmidt-Shin             | KPSS  | `from pmdarima.arima import KPSSTest`              | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.KPSSTest.html                       |
-        |             | Stationarity | Phillips-Peron                                | PP    | `from pmdarima.arima import PPTest`                | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html                         |
-        |             | Seasonality  | Osborn-Chui-Smith-Birchenhall                 | OCSB  | `from pmdarima.arima import OCSBTest`              | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.OCSBTest.html                       |
-        |             | Seasonality  | Canova-Hansen                                 | CH    | `from pmdarima.arima import CHTest`                | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.CHTest.html                         |
-        |             | Correlation  | Auto-Correlation                              | ACF   | `from pmdarima.utils import ACFTest`               | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.utils.acf.html#pmdarima.utils.acf         |
-        |             | Correlation  | Partial Auto-Ccorrelation                     | PACF  | `from pmdarima.utils import PACFTest`              | https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.utils.pacf.html                           |
-        | statsmodels | Stationarity | Augmented Dickey-Fuller                       | ADF   | `from statsmodels.api import adfuller`             | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html                  |
-        |             | Stationarity | Kwiatkowski-Phillips-Schmidt-Shin             | KPSS  | `from statsmodels.api import kpss`                 | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html                      |
-        |             | Unit-Root    | Zivot-Andrews structural-break unit-root test | KPSS  | `from statsmodels.api import zivot_andrews`        | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html             |
-        |             | Stationarity | Range unit-root test for stationarity         | RUR   | `from statsmodels.api import range_unit_root_test` | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html      |
-        |             | White-Noise  | Ljung-Box Q Statistic                         | LB    | `from statsmodels.api import q_stat`               | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.q_stat.html                    |
-        |             | Correlation  | Auto-Correlation                              | ACF   | `from statsmodels.api import acf`                  | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html                       |
-        |             | Correlation  | Partial Auto-Ccorrelation                     | PACF  | `from statsmodels.api import pacf`                 | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html                      |
-        | arch        |
+        | library     | category     | algorithm                                     | short | import script                                                | url                                                                                              |
+        | ----------- | ------------ | --------------------------------------------- | ----- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+        | statsmodels | Stationarity | Augmented Dickey-Fuller                       | ADF   | `from statsmodels.tsa.stattools import adfuller`             | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html             |
+        |             | Stationarity | Kwiatkowski-Phillips-Schmidt-Shin             | KPSS  | `from statsmodels.tsa.stattools import kpss`                 | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html                 |
+        |             | Unit-Root    | Zivot-Andrews structural-break unit-root test | ZA    | `from statsmodels.tsa.stattools import zivot_andrews`        | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html        |
+        |             | Stationarity | Range unit-root test for stationarity         | RUR   | `from statsmodels.tsa.stattools import range_unit_root_test` | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html |
+        | arch        | Stationarity | Phillips-Perron                               | PP    | `from arch.unitroot import PhillipsPerron`                   | https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html       |
+        |             | Stationarity | Elliott-Rothenberg-Stock (ERS) de-trended DF  | ERS   | `from arch.unitroot import DFGLS`                            | https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html                |
+        |             | Unit-Root    | Variance Ratio (VR) test                      | VR    | `from arch.unitroot import VarianceRatio`                    | https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html        |
 
         ---
 
-        :material-arrow-right-bold: For more info, see: [Source](#).
+        :material-arrow-right-bold: For more info, see: [Statsmodels TSA](https://www.statsmodels.org/stable/tsa.html) and [Arch Unit Roots](https://arch.readthedocs.io/en/latest/unitroot/unitroot.html).
 
     !!! question "Source Library"
 
-        The [`library`](#) package was chosen because **REASONS**.
+        The `statsmodels` and `arch` packages were chosen because they provide robust, industry-standard implementations of unit root and stationarity tests. Specifically, `statsmodels` offers the classic ADF and KPSS tests along with specialized ones like Zivot-Andrews and RUR, while `arch` provides high-performance implementations of Phillips-Perron, ERS, and Variance Ratio tests, ensuring a comprehensive suite of tools for detecting non-stationarity and random walks.
 
     !!! example "Source Module"
 
-        All of the source code can be found within this modules:
+        All of the source code can be found within these modules:
 
-        - [`src.ts_stat_tests.algorithms.suitability`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/suitability.py).
-        - [`src.ts_stat_tests.tests.suitability`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/suitability.py).
+        - [`src.ts_stat_tests.algorithms.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/stationarity.py).
+        - [`src.ts_stat_tests.tests.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/stationarity.py).
 
 ## Stationarity Tests
 
