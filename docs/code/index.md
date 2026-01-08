@@ -20,17 +20,17 @@
 
 ## Implementation Progress
 
-| module             | algorithms              | tests                 | unit-tests                 |
-| ------------------ | ----------------------- | --------------------- | -------------------------- |
-| Correlation        | [=6/6   "6/6   =  100%"] | [=1/2  "1/2  =  50%"] | [=15/16  "15/16   =  94%"] |
-| Regularity         | [=0/4   "0/4   =   0%"] | [=0/3  "0/3  =   0%"] | [=0/30   "0/30    =   0%"] |
-| Seasonality        | [=0/6   "0/6   =   0%"] | [=0/2  "0/2  =   0%"] | [=0/10   "0/10    =   0%"] |
-| Stability          | [=0/2   "0/2   =   0%"] | [=0/2  "0/2  =   0%"] | [=0/4    "0/4     =   0%"] |
-| Stationarity       | [=0/7   "0/7   =   0%"] | [=0/2  "0/2  =   0%"] | [=0/44   "0/44    =   0%"] |
-| Normality          | [=0/5   "0/5   =   0%"] | [=0/2  "0/2  =   0%"] | [=0/5    "0/5     =   0%"] |
-| Linearity          | [=0/4   "0/4   =   0%"] | [=0/2  "0/2  =   0%"] | [=0/0    "0/0     =   0%"] |
-| Heteroscedasticity | [=0/4   "0/4   =   0%"] | [=0/2  "0/2  =   0%"] | [=0/0    "0/0     =   0%"] |
-| **Overall**        | [=6/38  "6/38  =  16%"] | [=1/17 "1/17 =   6%"] | [=15/106 "15/106 =  14%"] |
+| module             | algorithms               | tests                 | unit-tests                 |
+| ------------------ | ------------------------ | --------------------- | -------------------------- |
+| Correlation        | [=6/6   "6/6   =  100%"] | [=2/2  "2/2  = 100%"] | [=19/19  "19/19   = 100%"] |
+| Regularity         | [=5/5   "5/5   =  100%"] | [=2/2  "2/2  = 100%"] | [=34/34  "34/34   = 100%"] |
+| Seasonality        | [=0/6   "0/6   =    0%"] | [=0/2  "0/2  =   0%"] | [=0/10   "0/10    =   0%"] |
+| Stability          | [=0/2   "0/2   =    0%"] | [=0/2  "0/2  =   0%"] | [=0/4    "0/4     =   0%"] |
+| Stationarity       | [=0/7   "0/7   =    0%"] | [=0/2  "0/2  =   0%"] | [=0/44   "0/44    =   0%"] |
+| Normality          | [=5/5   "5/5   =  100%"] | [=2/2  "2/2  = 100%"] | [=12/12  "12/12   = 100%"] |
+| Linearity          | [=0/4   "0/4   =    0%"] | [=0/2  "0/2  =   0%"] | [=0/0    "0/0     =   0%"] |
+| Heteroscedasticity | [=0/4   "0/4   =    0%"] | [=0/2  "0/2  =   0%"] | [=0/0    "0/0     =   0%"] |
+| **Overall**        | [=16/39 "16/39 =   41%"] | [=6/16 "6/16 =  38%"] | [=65/119 "65/119 =  55%"]  |
 
 
 ## Tests
@@ -76,6 +76,7 @@
         | Regularity         | Sample Entropy                                                                | ✅[`antropy`][antropy]:[`sample_entropy()`][antropy-sample_entropy]                                                                                                   |
         | Regularity         | Permutation Entropy                                                           | ✅[`antropy`][antropy]:[`perm_entropy()`][antropy-perm_entropy]                                                                                                       |
         | Regularity         | Spectral Entropy                                                              | ✅[`antropy`][antropy]:[`spectral_entropy()`][antropy-spectral_entropy]                                                                                               |
+        | Regularity         | SVD Entropy                                                                   | ✅[`antropy`][antropy]:[`svd_entropy()`][antropy-svd_entropy]                                                                                                         |
         | Seasonality        | QS                                                                            | ✅[`seastests`][seastests]:[`qs()`][seastests-qs]                                                                                                                     |
         | Seasonality        | Osborn-Chui-Smith-Birchenhall test of seasonality (OCSB)                      | ✅[`pmdarima`][pmdarima]:[`OCSBTest()`][pmdarima-ocsbtest]                                                                                                            |
         | Seasonality        | Canova-Hansen test for seasonal differences (CH)                              | ✅[`pmdarima`][pmdarima]:[`CHTest()`][pmdarima-chtest]                                                                                                                |
@@ -196,6 +197,7 @@
 [antropy-sample_entropy]: https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html
 [antropy-perm_entropy]: https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html
 [antropy-spectral_entropy]: https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html
+[antropy-svd_entropy]: https://raphaelvallat.com/antropy/build/html/generated/antropy.svd_entropy.html
 [scipy]: https://docs.scipy.org/
 [scipy-shapiro]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html
 [scipy-normaltest]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html
