@@ -217,19 +217,24 @@ def is_stationary(
     pvalue_or_bool = res[1]
 
     # Handle H0 logic
-    kpss_options = ("kpss", "kwiatkowski_phillips_schmidt_shin")
+    # KPSS: H0 is stationarity. Stationary if p-value > alpha.
+    # Others (ADF, PP, ZA, ERS, VR, RUR): H0 is non-stationarity. Stationary if p-value < alpha.
+    stationary_h0 = (
+        "kpss",
+        "kwiatkowski_phillips_schmidt_shin",
+    )
 
     if isinstance(pvalue_or_bool, bool):
-        # Case for algorithms like 'pp' that might return a bool result directly
+        # Case for algorithms that might return a bool result directly
         is_stat = pvalue_or_bool
         pvalue = None
     else:
         pvalue = pvalue_or_bool
-        if algorithm in kpss_options:
-            # KPSS: Stationary if pvalue > alpha
+        if algorithm in stationary_h0:
+            # H0 is stationarity: Result is stationary if we FAIL to reject H0
             is_stat = pvalue > alpha
         else:
-            # Others: Stationary if pvalue < alpha
+            # H0 is non-stationarity: Result is stationary if we REJECT H0
             is_stat = pvalue < alpha
 
     return {

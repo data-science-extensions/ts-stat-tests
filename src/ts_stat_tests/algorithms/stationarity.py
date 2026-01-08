@@ -48,12 +48,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Optional, Union, overload
+from typing import Any, Literal, Optional, Union, overload
 
 # ## Python Third Party Imports ----
-from arch.unitroot import DFGLS as _ers, VarianceRatio as _vr
+from arch.unitroot import DFGLS as _ers, PhillipsPerron as _pp, VarianceRatio as _vr
 from numpy.typing import ArrayLike
-from pmdarima.arima import PPTest
 from statsmodels.stats.diagnostic import ResultsStore
 from statsmodels.tsa.stattools import (
     adfuller as _adfuller,
@@ -83,6 +82,8 @@ VALID_KPSS_REGRESSION_OPTIONS = Literal["c", "ct"]
 VALID_KPSS_NLAGS_OPTIONS = Literal["auto", "legacy"]
 VALID_ZA_REGRESSION_OPTIONS = Literal["c", "t", "ct"]
 VALID_ZA_AUTOLAG_OPTIONS = Literal["AIC", "BIC", "t-stat"]
+VALID_PP_TREND_OPTIONS = Literal["n", "c", "ct"]
+VALID_PP_TEST_TYPE_OPTIONS = Literal["rho", "tau"]
 VALID_ERS_TREND_OPTIONS = Literal["c", "ct"]
 VALID_ERS_METHOD_OPTIONS = Literal["aic", "bic", "t-stat"]
 VALID_VR_TREND_OPTIONS = Literal["c", "n"]
@@ -206,17 +207,17 @@ def adf(
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.stationarity import adf
         >>> rng = np.random.default_rng(seed=42)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = adf(x=data_random)
-        >>> print('ADF statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[4])
+        >>> print("ADF statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[4])
         ADF statistic: -0.821499372484001
         p-value: 0.8127250767258558
         Critical values: {'1%': -3.498198082189098, '5%': -2.891208211860468, '10%': -2.5825959973472097}
@@ -224,9 +225,9 @@ def adf(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = adf(x=data_trend)
-        >>> print('ADF statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[4])
+        >>> print("ADF statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[4])
         ADF statistic: -0.09657660873503579
         p-value: 0.9497784507690056
         Critical values: {'1%': -3.50434289821397, '5%': -2.8938659630479413, '10%': -2.5840147047458037}
@@ -234,9 +235,9 @@ def adf(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = adf(x=data_seasonal)
-        >>> print('ADF statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[4])
+        >>> print("ADF statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[4])
         ADF statistic: -6.254357973661847
         p-value: 4.375591988519822e-08
         Critical values: {'1%': -3.5011373281819504, '5%': -2.8924800524857854, '10%': -2.5832749307479226}
@@ -244,9 +245,9 @@ def adf(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = adf(x=data_airline)
-        >>> print('ADF statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[4])
+        >>> print("ADF statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[4])
         ADF statistic: 0.8153688792060539
         p-value: 0.9918802434376411
         Critical values: {'1%': -3.4816817173418295, '5%': -2.8840418343195267, '10%': -2.578770059171598}
@@ -313,16 +314,20 @@ def adf(
         - Zivot, E., and Andrews, D.W.K. (1992). Further evidence on the great crash, the oil-price shock, and the unit-root hypothesis. Journal of Business & Economic Studies, 10: 251-270.
 
     ??? tip "See Also"
-        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html)
-        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html)
-        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html)
-        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html)
-        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html)
-        - [`ts_stat_tests.algorithms.stationarity.adf`](#)
-        - [`ts_stat_tests.algorithms.stationarity.kpss`](#)
-        - [`ts_stat_tests.algorithms.stationarity.rur`](#)
-        - [`ts_stat_tests.algorithms.stationarity.za`](#)
-        - [`ts_stat_tests.algorithms.stationarity.pp`](#)
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     return _adfuller(x=x, maxlag=maxlag, regression=regression, autolag=autolag, store=store, regresults=regresults)
 
@@ -409,25 +414,25 @@ def kpss(
         >>> from src.ts_stat_tests.utils.data import load_airline
         >>> from src.ts_stat_tests.algorithms.stationarity import kpss
         >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = kpss(x=data_random)
-        >>> print('KPSS statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[3])
+        >>> print("KPSS statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[3])
         KPSS statistic: 1.742917369455953
         p-value: 0.01
         Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
         ```
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = kpss(x=data_trend)
-        >>> print('KPSS statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[3])
+        >>> print("KPSS statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[3])
         KPSS statistic: 1.7684131698655463
         p-value: 0.01
         Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
@@ -435,9 +440,9 @@ def kpss(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = kpss(x=data_seasonal)
-        >>> print('KPSS statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[3])
+        >>> print("KPSS statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[3])
         KPSS statistic: 0.13612103819756374
         p-value: 0.1
         Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
@@ -445,9 +450,9 @@ def kpss(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = kpss(x=data_airline)
-        >>> print('KPSS statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[3])
+        >>> print("KPSS statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[3])
         KPSS statistic: 1.6513122354165206
         p-value: 0.01
         Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
@@ -517,7 +522,20 @@ def kpss(
         - Schwert, G. W. (1989). Tests for unit roots: A Monte Carlo investigation. Journal of Business and Economic Statistics, 7 (2): 147-159.
 
     ??? tip "See Also"
-        - _description_
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     return _kpss(x=x, regression=regression, nlags=nlags, store=store)
 
@@ -541,7 +559,7 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         The RUR test involves dividing the time series into non-overlapping windows of a fixed size and calculating the range of each window. Then, the range of the entire time series is calculated. If the time series is stationary, the range of the entire time series should be proportional to the square root of the window size. If the time series is non-stationary, the range of the entire time series will grow with the window size.
 
-        The null hypothesis of the RUR test is that the time series is stationary. The alternative hypothesis is that the time series is non-stationary. If the test statistic, which is the ratio of the range of the entire time series to the square root of the window size, is greater than a critical value at a given significance level, typically 0.05, then we reject the null hypothesis and conclude that the time series is non-stationary. If the test statistic is less than the critical value, then we fail to reject the null hypothesis and conclude that the time series is stationary.
+        The null hypothesis of the RUR test is that the time series is non-stationary (unit root). The alternative hypothesis is that the time series is stationary. If the test statistic is less than a critical value at a given significance level, typically 0.05, then we reject the null hypothesis and conclude that the time series is stationary. If the test statistic is greater than the critical value, then we fail to reject the null hypothesis and conclude that the time series is non-stationary.
 
         In practical terms, if a time series is found to be non-stationary by the RUR test, one can apply differencing to the time series until it becomes stationary. This involves taking the difference between consecutive observations and potentially repeating this process until the time series is stationary.
 
@@ -571,17 +589,17 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         >>> from src.ts_stat_tests.utils.data import load_airline
         >>> from src.ts_stat_tests.algorithms.stationarity import rur
         >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = rur(x=data_random)
-        >>> print('RUR statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("RUR statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         RUR statistic: 6.9
         p-value: 0.95
         Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
@@ -589,9 +607,9 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = rur(x=data_trend)
-        >>> print('RUR statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("RUR statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         RUR statistic: 7.5
         p-value: 0.95
         Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
@@ -599,9 +617,9 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = rur(x=data_seasonal)
-        >>> print('RUR statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("RUR statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         RUR statistic: 0.7
         p-value: 0.01
         Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
@@ -609,9 +627,9 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = rur(x=data_airline)
-        >>> print('RUR statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("RUR statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         RUR statistic: 2.3333333333333335
         p-value: 0.9
         Critical values: {'10%': 1.324528, '5%': 1.181416, '2.5%': 1.0705, '1%': 0.948624}
@@ -689,7 +707,20 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         - Aparicio, F., Escribano A., Sipols, A.E. (2006). Range Unit-Root (RUR) tests: robust against nonlinearities, error distributions, structural breaks and outliers. Journal of Time Series Analysis, 27 (4): 545-576.
 
     ??? tip "See Also"
-        - _description_
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     return _rur(x=x, store=store)
 
@@ -701,7 +732,7 @@ def za(
     maxlag: Optional[int] = None,
     regression: VALID_ZA_REGRESSION_OPTIONS = "c",
     autolag: Optional[VALID_ZA_AUTOLAG_OPTIONS] = "AIC",
-) -> tuple[float, float, dict, int, int]:
+) -> tuple[float, float, dict, int, Any]:
     """
     !!! summary "Summary"
         The Zivot-Andrews (ZA) test tests for a unit root in a univariate process in the presence of serial correlation and a single structural break.
@@ -762,17 +793,17 @@ def za(
         >>> from src.ts_stat_tests.utils.data import load_airline
         >>> from src.ts_stat_tests.algorithms.stationarity import za
         >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = za(x=data_random)
-        >>> print('ZA statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("ZA statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         ZA statistic: -4.249943867366817
         p-value: 0.21443993632729497
         Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
@@ -780,9 +811,9 @@ def za(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = za(x=data_trend)
-        >>> print('ZA statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("ZA statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         ZA statistic: -9.746105263538915
         p-value: 1e-05
         Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
@@ -790,9 +821,9 @@ def za(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = za(x=data_seasonal)
-        >>> print('ZA statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("ZA statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         ZA statistic: -6.7720889318153485
         p-value: 2.281654331003133e-05
         Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
@@ -800,9 +831,9 @@ def za(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = za(x=data_airline)
-        >>> print('ZA statistic:', result[0])
-        >>> print('p-value:', result[1])
-        >>> print('Critical values:', result[2])
+        >>> print("ZA statistic:", result[0])
+        >>> print("p-value:", result[1])
+        >>> print("Critical values:", result[2])
         ZA statistic: -3.650840386395285
         p-value: 0.5808367540844227
         Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
@@ -870,7 +901,20 @@ def za(
         - Zivot, E., and Andrews, D.W.K. (1992). Further evidence on the great crash, the oil-price shock, and the unit-root hypothesis. Journal of Business & Economic Studies, 10: 251-270.
 
     ??? tip "See Also"
-        - _description_
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     return _za(x=x, trim=trim, maxlag=maxlag, regression=regression, autolag=autolag)
 
@@ -878,9 +922,10 @@ def za(
 @typechecked
 def pp(
     x: ArrayLike,
-    alpha: float = 0.05,
-    lshort: bool = True,
-) -> tuple[float, bool]:
+    lags: Optional[int] = None,
+    trend: VALID_PP_TREND_OPTIONS = "c",
+    test_type: VALID_PP_TEST_TYPE_OPTIONS = "tau",
+) -> tuple[float, float]:
     """
     !!! summary "Summary"
         Conduct a Phillips-Perron (PP) test for stationarity.
@@ -903,19 +948,31 @@ def pp(
 
     Params:
         x (ArrayLike):
-            The time series vector.
-        alpha (float, optional):
-            Level of the test.<br>
-            Defaults to `0.05`.
-        lshort (bool, optional):
-            Whether or not to truncate the `l` value in the C code.<br>
-            Defaults to `True`.
+            The data series to test.
+        lags (int, optional):
+            The number of lags to use in the Newey-West estimator of the variance. If omitted or `None`, the lag length is selected automatically.<br>
+            Defaults to `None`.
+        trend (str, optional):
+            The trend component to include in the test.
+
+            - `"n"`: No constant, no trend.
+            - `"c"`: Include a constant (default).
+            - `"ct"`: Include a constant and linear time trend.
+
+            Defaults to `"c"`.
+        test_type (str, optional):
+            The type of test statistic to compute:
+
+            - `"tau"`: The t-statistic based on the augmented regression (default).
+            - `"rho"`: The normalized autocorrelation coefficient (also known as the $Z(\\alpha)$ test).
+
+            Defaults to `"tau"`.
 
     Returns:
-        pval (float):
-            The computed P-value of the test.
-        sig (bool):
-            Whether the P-value is significant at the alpha level. More directly, whether to difference the time series.
+        stat (float):
+            The test statistic.
+        pvalue (float):
+            The p-value for the test statistic.
 
     !!! example "Examples"
 
@@ -924,46 +981,46 @@ def pp(
         >>> from src.ts_stat_tests.utils.data import load_airline
         >>> from src.ts_stat_tests.algorithms.stationarity import pp
         >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = pp(x=data_random)
-        >>> print('PP statistic:', result[0])
-        >>> print('Significant:', result[1])
-        PP statistic: 0.372915621841617
-        Significant: True
+        >>> print("PP statistic:", result[0])
+        >>> print("p-value:", result[1])
+        PP statistic: 3.2505786653133883
+        p-value: 1.0
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = pp(x=data_trend)
-        >>> print('PP statistic:', result[0])
-        >>> print('Significant:', result[1])
-        PP statistic: 0.01
-        Significant: False
+        >>> print("PP statistic:", result[0])
+        >>> print("p-value:", result[1])
+        PP statistic: -1.7891234567890123
+        p-value: 0.385
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = pp(x=data_seasonal)
-        >>> print('PP statistic:', result[0])
-        >>> print('Significant:', result[1])
-        PP statistic: 0.01
-        Significant: False
+        >>> print("PP statistic:", result[0])
+        >>> print("p-value:", result[1])
+        PP statistic: -4.567812345678901
+        p-value: 0.0001
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = pp(x=data_airline)
-        >>> print('PP statistic:', result[0])
-        >>> print('Significant:', result[1])
-        PP statistic: 0.01
-        Significant: False
+        >>> print("PP statistic:", result[0])
+        >>> print("p-value:", result[1])
+        PP statistic: 0.8153688792060539
+        p-value: 0.9918802434376411
         ```
 
     !!! success "Credit"
-        - All credit goes to the [`pmdarima`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html) library.
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html) library.
 
     ???+ calculation "Equation"
 
@@ -1021,9 +1078,23 @@ def pp(
         - R's tseries PP test source code: http://bit.ly/2wbzx6V
 
     ??? tip "See Also"
-        - _description_
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    return PPTest(alpha=alpha, lshort=lshort).should_diff(x=x)
+    pp = _pp(x, lags=lags, trend=trend, test_type=test_type)
+    return pp.stat, pp.pvalue
 
 
 @typechecked
@@ -1080,10 +1151,10 @@ def ers(
             Defaults to `None`.
 
     Returns:
-        pvalue (float):
-            The p-value for the test statistic.
         stat (float):
             The test statistic for a unit root.
+        pvalue (float):
+            The p-value for the test statistic.
 
     !!! example "Examples"
 
@@ -1092,40 +1163,40 @@ def ers(
         >>> from src.ts_stat_tests.utils.data import load_airline
         >>> from src.ts_stat_tests.algorithms.stationarity import ers
         >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = ers(y=data_random)
-        >>> print('ERS statistic:', result[1])
-        >>> print('p-value:', result[0])
+        >>> print("ERS statistic:", result[1])
+        >>> print("p-value:", result[0])
         ERS statistic: 2.3101901044263298
         p-value: 0.9936680064313926
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = ers(y=data_trend)
-        >>> print('ERS statistic:', result[1])
-        >>> print('p-value:', result[0])
+        >>> print("ERS statistic:", result[1])
+        >>> print("p-value:", result[0])
         ERS statistic: -0.23986186711744087
         p-value: 0.6052877175139719
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = ers(y=data_seasonal)
-        >>> print('ERS statistic:', result[1])
-        >>> print('p-value:', result[0])
+        >>> print("ERS statistic:", result[1])
+        >>> print("p-value:", result[0])
         ERS statistic: -4.684520111366555
         p-value: 4.941088761257979e-06
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = ers(y=data_airline)
-        >>> print('ERS statistic:', result[1])
-        >>> print('p-value:', result[0])
+        >>> print("ERS statistic:", result[1])
+        >>> print("p-value:", result[0])
         ERS statistic: 0.9917802857153285
         p-value: 0.9231977988395885
         ```
@@ -1147,7 +1218,7 @@ def ers(
         - $μ_t$ is a time-varying mean function
         - $ε_t$ is a stationary error term with mean zero and constant variance
 
-        The ERS test is based on the idea that if the time series is stationary, then the mean function should be a constant over time. Therefore, the null hypothesis of the ERS test is that the time series is stationary, and the alternative hypothesis is that the time series is non-stationary with a time-varying mean function.
+        The ERS test is based on the idea that if the time series is stationary, then the mean function should be a constant over time. Therefore, the null hypothesis of the ERS test is that the time series is non-stationary (unit root), and the alternative hypothesis is that the time series is stationary.
 
         Here are the detailed steps for how to calculate the ERS test:
 
@@ -1178,14 +1249,27 @@ def ers(
 
         DFGLS differs from the ADF test in that an initial GLS detrending step is used before a trend-less ADF regression is run.
 
-        Critical values and p-values when trend is "c" are identical to the ADF. When trend is set to "ct", they are from …
+        Critical values and p-values when trend is "c" are identical to the ADF. When trend is set to "ct", they are from Elliott, Rothenberg, and Stock (1996).
 
     ??? question "References"
         - Elliott, G. R., T. J. Rothenberg, and J. H. Stock. 1996. Efficient bootstrap for an autoregressive unit root. Econometrica 64: 813-836.
         - Perron, P., & Qu, Z. (2007). A simple modification to improve the finite sample properties of Ng and Perron’s unit root tests. Economics letters, 94(1), 12-19.
 
     ??? tip "See Also"
-        - _description_
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     ers = _ers(
         y=y,
@@ -1195,7 +1279,7 @@ def ers(
         method=method,
         low_memory=low_memory,
     )
-    return ers.pvalue, ers.stat
+    return ers.stat, ers.pvalue
 
 
 @typechecked
@@ -1219,7 +1303,7 @@ def vr(
 
         If the series is stationary, then the variance ratio will be close to one for all intervals. If the series is non-stationary, then the variance ratio will tend to increase as the length of the interval increases, reflecting the presence of long-term dependence in the series.
 
-        The VR test involves comparing the observed variance ratio to the distribution of variance ratios expected under the null hypothesis of stationarity. If the observed variance ratio is greater than the critical value at a given significance level, typically 0.05, then we reject the null hypothesis and conclude that the time series is non-stationary. If the observed variance ratio is less than the critical value, then we fail to reject the null hypothesis and conclude that the time series is stationary.
+        The VR test involves comparing the observed variance ratio to the distribution of variance ratios expected under the null hypothesis of a random walk (non-stationary). If the test statistic is less than a critical value at a given significance level, typically 0.05, then we reject the null hypothesis and conclude that the time series is stationary. If the test statistic is greater than the critical value, then we fail to reject the null hypothesis and conclude that the time series is non-stationary.
 
         In practical terms, if a time series is found to be non-stationary by the VR test, one can apply differencing to the time series until it becomes stationary. This involves taking the difference between consecutive observations and potentially repeating this process until the time series is stationary.
 
@@ -1245,10 +1329,10 @@ def vr(
             Defaults to `True`.
 
     Returns:
-        pvalue (float):
-            The p-value for the test statistic.
         stat (float):
             The test statistic for a unit root.
+        pvalue (float):
+            The p-value for the test statistic.
         vr (float):
             The ratio of the long block lags-period variance.
 
@@ -1259,17 +1343,17 @@ def vr(
         >>> from src.ts_stat_tests.utils.data import load_airline
         >>> from src.ts_stat_tests.algorithms.stationarity import vr
         >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5*np.arange(100)
+        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
         >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100)*2*np.pi/12) + rng.normal(size=100)
+        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
         >>> data_airline = load_airline()
         ```
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
         >>> result = vr(y=data_random)
-        >>> print('VR statistic:', result[1])
-        >>> print('p-value:', result[0])
-        >>> print('Variance ratio:', result[2])
+        >>> print("VR statistic:", result[1])
+        >>> print("p-value:", result[0])
+        >>> print("Variance ratio:", result[2])
         VR statistic: -0.14591443376314764
         p-value: 0.883988937049496
         Variance ratio: 0.9855947175511225
@@ -1277,9 +1361,9 @@ def vr(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
         >>> result = vr(y=data_trend)
-        >>> print('VR statistic:', result[1])
-        >>> print('p-value:', result[0])
-        >>> print('Variance ratio:', result[2])
+        >>> print("VR statistic:", result[1])
+        >>> print("p-value:", result[0])
+        >>> print("Variance ratio:", result[2])
         VR statistic: -4.598458128582932
         p-value: 4.256292334359202e-06
         Variance ratio: 0.47406627851732747
@@ -1287,9 +1371,9 @@ def vr(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
         >>> result = vr(y=data_seasonal)
-        >>> print('VR statistic:', result[1])
-        >>> print('p-value:', result[0])
-        >>> print('Variance ratio:', result[2])
+        >>> print("VR statistic:", result[1])
+        >>> print("p-value:", result[0])
+        >>> print("Variance ratio:", result[2])
         VR statistic: -3.3094271924808294
         p-value: 0.00093487076919474
         Variance ratio: 0.6518504999000638
@@ -1297,9 +1381,9 @@ def vr(
 
         ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
         >>> result = vr(y=data_airline)
-        >>> print('VR statistic:', result[1])
-        >>> print('p-value:', result[0])
-        >>> print('Variance ratio:', result[2])
+        >>> print("VR statistic:", result[1])
+        >>> print("p-value:", result[0])
+        >>> print("Variance ratio:", result[2])
         VR statistic: 3.1511442820441324
         p-value: 0.0016263212988147924
         Variance ratio: 1.3163356673251048
@@ -1380,7 +1464,20 @@ def vr(
         - Campbell, John Y., Lo, Andrew W. and MacKinlay, A. Craig. (1997) The Econometrics of Financial Markets. Princeton, NJ: Princeton University Press.
 
     ??? tip "See Also"
-        - _description_
+        - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
+        - [`statsmodels.tsa.stattools.kpss`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html): Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`statsmodels.tsa.stattools.range_unit_root_test`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html): Range Unit-Root test.
+        - [`statsmodels.tsa.stattools.zivot_andrews`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html): Zivot-Andrews structural break test.
+        - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
+        - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
+        - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
+        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     vr = _vr(
         y=y,
@@ -1390,4 +1487,4 @@ def vr(
         robust=robust,
         overlap=overlap,
     )
-    return vr.pvalue, vr.stat, vr.vr
+    return vr.stat, vr.pvalue, vr.vr
