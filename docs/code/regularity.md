@@ -32,7 +32,7 @@
 
     !!! question "Source Library"
 
-        The [`AntroPy`](https://raphaelvallat.com/antropy/build/html/index.html) package was chosen because **REASONS**.
+        The [`AntroPy`](https://raphaelvallat.com/antropy/build/html/index.html) package was chosen because it provides well-tested and efficient implementations of approximate entropy, sample entropy, and related complexity measures for time-series data, is built on top of the scientific Python stack (NumPy/SciPy), and is actively maintained and open source, making it a reliable choice for reproducible statistical analysis.
 
     !!! example "Source Module"
 
