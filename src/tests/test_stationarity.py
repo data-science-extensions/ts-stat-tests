@@ -24,7 +24,7 @@ from statsmodels.tsa.stattools import (
 )
 
 # ## Local First Party Imports ----
-from src.tests.test_base import BaseTester
+from tests.setup import BaseTester
 from ts_stat_tests.algorithms.stationarity import adf, ers, kpss, pp, rur, vr, za
 from ts_stat_tests.tests.stationarity import is_stationary, stationarity
 
@@ -196,41 +196,41 @@ class TestStationarityZA(BaseTester):
     def setUp(self):
         pass
 
-    def test_statuionarity_za_airline(self) -> None:
+    def test_stationarity_za_airline(self) -> None:
         self.result_za_airline = tuple(
-            round(elem, 7) if indx <= 1 else elem for indx, elem in enumerate(self.result_za_airline)
+            round(elem, 7) if index <= 1 else elem for index, elem in enumerate(self.result_za_airline)
         )
         self.result_sm_za_airline = tuple(
-            round(elem, 7) if indx <= 1 else elem for indx, elem in enumerate(self.result_sm_za_airline)
+            round(elem, 7) if index <= 1 else elem for index, elem in enumerate(self.result_sm_za_airline)
         )
         assert self.result_za_airline == self.result_sm_za_airline
 
-    def test_statuionarity_za_random(self) -> None:
+    def test_stationarity_za_random(self) -> None:
         self.result_za_random = tuple(
-            round(elem, 7) if indx <= 1 else elem for indx, elem in enumerate(self.result_za_random)
+            round(elem, 7) if index <= 1 else elem for index, elem in enumerate(self.result_za_random)
         )
         self.result_sm_za_random = tuple(
-            round(elem, 7) if indx <= 1 else elem for indx, elem in enumerate(self.result_sm_za_random)
+            round(elem, 7) if index <= 1 else elem for index, elem in enumerate(self.result_sm_za_random)
         )
         assert self.result_za_random == self.result_sm_za_random
 
-    def test_statuionarity_za_sine(self) -> None:
+    def test_stationarity_za_sine(self) -> None:
         # assert self.result_za_sine == self.result_sm_za_sine
         pass
 
-    def test_statuionarity_za_line(self) -> None:
+    def test_stationarity_za_line(self) -> None:
         # assert self.result_za_line == self.result_sm_za_line
         pass
 
-    def test_statuionarity_za_basic(self) -> None:
+    def test_stationarity_za_basic(self) -> None:
         assert self.result_za_basic == self.result_sm_za_basic
 
-    def test_statuionarity_za_noise(self) -> None:
+    def test_stationarity_za_noise(self) -> None:
         self.result_za_noise = tuple(
-            round(elem, 7) if indx <= 1 else elem for indx, elem in enumerate(self.result_za_noise)
+            round(elem, 7) if index <= 1 else elem for index, elem in enumerate(self.result_za_noise)
         )
         self.result_sm_za_noise = tuple(
-            round(elem, 7) if indx <= 1 else elem for indx, elem in enumerate(self.result_sm_za_noise)
+            round(elem, 7) if index <= 1 else elem for index, elem in enumerate(self.result_sm_za_noise)
         )
         assert self.result_za_noise == self.result_sm_za_noise
 
