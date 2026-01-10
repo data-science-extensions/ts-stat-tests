@@ -141,10 +141,10 @@ def adf(
     tuple[float, float, int, int, dict, float],
 ]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         The Augmented Dickey-Fuller test can be used to test for a unit root in a univariate process in the presence of serial correlation.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Augmented Dickey-Fuller (ADF) test is a statistical test used to determine whether a time series is stationary or not. Stationarity refers to the property of a time series where the statistical properties, such as mean and variance, remain constant over time. Stationarity is important for time series forecasting as it allows for the use of many popular forecasting models, such as ARIMA.
 
@@ -200,7 +200,7 @@ def adf(
         resstore (Optional[ResultStore]):
             A dummy class with results attached as attributes.
 
-    !!! example "Examples"
+    ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Prepare data"}
         >>> import numpy as np
@@ -301,7 +301,7 @@ def adf(
 
         1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is stationary and can be used for forecasting. If the null hypothesis is not rejected, then the time series is non-stationary and requires further pre-processing before it can be used for forecasting.
 
-    ??? info "Notes"
+    ??? note "Notes"
         The null hypothesis of the Augmented Dickey-Fuller is that there is a unit root, with the alternative that there is no unit root. If the pvalue is above a critical size, then we cannot reject that there is a unit root.
 
         The p-values are obtained through regression surface approximation from MacKinnon 1994, but using the updated 2010 tables. If the p-value is close to significant, then the critical values should be used to judge whether to reject the null.
@@ -360,10 +360,10 @@ def kpss(
     tuple[float, float, int, dict],
 ]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Computes the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test for the null hypothesis that `x` is level or trend stationary.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test is another statistical test used to determine whether a time series is stationary or not. The KPSS test is the opposite of the Augmented Dickey-Fuller (ADF) test, which tests for the presence of a unit root in the time series.
 
@@ -550,10 +550,10 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
     tuple[float, float, dict, ResultsStore],
 ]:
     r"""
-    !!! summary "Summary"
+    !!! note "Summary"
         Computes the Range Unit-Root (RUR) test for the null hypothesis that x is stationary.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Range Unit-Root (RUR) test is a statistical test used to determine whether a time series is stationary or not. It is based on the range of the time series and does not require any knowledge of the underlying stochastic process.
 
@@ -734,10 +734,10 @@ def za(
     autolag: Optional[VALID_ZA_AUTOLAG_OPTIONS] = "AIC",
 ) -> tuple[float, float, dict, int, Any]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         The Zivot-Andrews (ZA) test tests for a unit root in a univariate process in the presence of serial correlation and a single structural break.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
         The Zivot-Andrews (ZA) test is a statistical test used to determine whether a time series is stationary or not in the presence of structural breaks. Structural breaks refer to significant changes in the underlying stochastic process of the time series, which can cause non-stationarity.
 
         The ZA test involves running a regression of the time series on a constant and a linear time trend, and testing whether the residuals of the regression are stationary or not. The null hypothesis of the test is that the time series is stationary with a single break point, while the alternative hypothesis is that the time series is non-stationary with a single break point.
@@ -927,12 +927,12 @@ def pp(
     test_type: VALID_PP_TEST_TYPE_OPTIONS = "tau",
 ) -> tuple[float, float]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Conduct a Phillips-Perron (PP) test for stationarity.
 
         In statistics, the Phillips-Perron test (named after Peter C. B. Phillips and Pierre Perron) is a unit root test. It is used in time series analysis to test the null hypothesis that a time series is integrated of order $1$. It builds on the Dickey-Fuller test of the null hypothesis $p=0$.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Phillips-Perron (PP) test is a statistical test used to determine whether a time series is stationary or not. It is similar to the Augmented Dickey-Fuller (ADF) test, but it has some advantages, especially in the presence of autocorrelation and heteroscedasticity.
 
@@ -1107,10 +1107,10 @@ def ers(
     low_memory: Optional[bool] = None,
 ) -> tuple[float, float]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Elliott, Rothenberg and Stock's GLS detrended Dickey-Fuller.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Elliott-Rothenberg-Stock (ERS) test is a statistical test used to determine whether a time series is stationary or not. It is a robust test that is able to handle a wide range of non-stationary processes, including ones with structural breaks, heteroscedasticity, and autocorrelation.
 
@@ -1292,10 +1292,10 @@ def vr(
     overlap: bool = True,
 ) -> tuple[float, float, float]:
     """
-    !!! summary "Summary"
+    !!! note "Summary"
         Variance Ratio test of a random walk.
 
-    ???+ info "Details"
+    ???+ abstract "Details"
 
         The Variance Ratio (VR) test is a statistical test used to determine whether a time series is stationary or not based on the presence of long-term dependence in the series. It is a non-parametric test that can be used to test for the presence of a unit root or a trend in the series.
 
