@@ -242,36 +242,52 @@ def is_normal(
     if algorithm in options["ad"]:
         # res is AndersonResult(statistic, critical_values, significance_level, fit_result)
         # indexing only gives the first 3 elements
-        stat, crit, sig = res[0], res[1], res[2]
+        res_tuple = cast(tuple[float, np.ndarray, np.ndarray], res)
+        stat = res_tuple[0]
+        crit = res_tuple[1]
+        sig = res_tuple[2]
+
         # sig is something like [15. , 10. ,  5. ,  2.5,  1. ]
         # alpha is something like 0.05 (which is 5%)
-        idx = np.argmin(np.abs(sig - (alpha * 100)))
-        critical_value = crit[idx]
+        sig_arr = np.asarray(sig)
+        crit_arr = np.asarray(crit)
+        idx = np.argmin(np.abs(sig_arr - (alpha * 100)))
+        critical_value = crit_arr[idx]
         is_norm = stat < critical_value
         return {
             "result": bool(is_norm),
             "statistic": float(stat),
             "critical_value": float(critical_value),
-            "significance_level": float(sig[idx]),
+            "significance_level": float(sig_arr[idx]),
             "alpha": float(alpha),
         }
 
     # For others, they return (statistic, pvalue) or similar
-    if hasattr(res, "pvalue"):
-        p_val = res.pvalue
-        stat = res.statistic
-    elif isinstance(res, (tuple, list)):
-        stat, p_val = res[0], res[1]
+    p_val: Union[float, None] = None
+    stat_val: Union[float, None] = None
+
+    # Use getattr to avoid type checker attribute issues
+    p_val_attr = getattr(res, "pvalue", None)
+    stat_val_attr = getattr(res, "statistic", None)
+
+    if p_val_attr is not None and stat_val_attr is not None:
+        p_val = float(p_val_attr)
+        stat_val = float(stat_val_attr)
+    elif isinstance(res, (tuple, list)) and len(res) >= 2:
+        res_tuple_any = cast(tuple[Any, Any], res)
+        stat_val = float(res_tuple_any[0])
+        p_val = float(res_tuple_any[1])
     else:
         # Fallback
-        stat = res
+        if isinstance(res, (float, int)):
+            stat_val = float(res)
         p_val = None
 
-    is_norm = p_val >= alpha if p_val is not None else False
+    is_norm_val = p_val >= alpha if p_val is not None else False
 
     return {
-        "result": bool(is_norm),
-        "statistic": float(stat) if isinstance(stat, (float, int)) else stat,
-        "p_value": float(p_val) if p_val is not None else None,
+        "result": bool(is_norm_val),
+        "statistic": stat_val,
+        "p_value": p_val,
         "alpha": float(alpha),
     }
