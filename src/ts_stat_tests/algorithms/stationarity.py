@@ -112,7 +112,7 @@ def adf(
     maxlag: Optional[int] = None,
     regression: VALID_ADF_REGRESSION_OPTIONS = "c",
     *,
-    autolag: None = None,
+    autolag: None,
     store: Literal[False] = False,
     regresults: bool = False,
 ) -> tuple[float, float, int, int, dict]: ...
@@ -157,10 +157,10 @@ def adf(
     Params:
         x (ArrayLike):
             The data series to test.
-        maxlag (int, optional):
+        maxlag (Optional[int], optional):
             Maximum lag which is included in test, default value of $12 \\times (\\frac{nobs}{100})^{\\frac{1}{4}}$ is used when `None`.<br>
             Defaults to `None`.
-        regression (str, optional):
+        regression (VALID_ADF_REGRESSION_OPTIONS, optional):
             Constant and trend order to include in regression.
 
             - `"c"`: constant only (default).
@@ -169,7 +169,7 @@ def adf(
             - `"n"`: no constant, no trend.
 
             Defaults to `"c"`.
-        autolag (str, optional):
+        autolag (Optional[VALID_ADF_AUTOLAG_OPTIONS], optional):
             Method to use when automatically determining the lag length among the values $0, 1, ..., maxlag$.
 
             - If `"AIC"` (default) or `"BIC"`, then the number of lags is chosen to minimize the corresponding information criterion.
@@ -336,7 +336,7 @@ def kpss(
     nlags: Optional[Union[VALID_KPSS_NLAGS_OPTIONS, int]] = None,
     *,
     store: Literal[True],
-) -> tuple[float, float, dict, ResultsStore]: ...
+) -> tuple[float, float, int, dict, ResultsStore]: ...
 @overload
 def kpss(
     x: ArrayLike,
@@ -353,7 +353,7 @@ def kpss(
     *,
     store: bool = False,
 ) -> Union[
-    tuple[float, float, dict, ResultsStore],
+    tuple[float, float, int, dict, ResultsStore],
     tuple[float, float, int, dict],
 ]:
     """
@@ -375,14 +375,14 @@ def kpss(
     Params:
         x (ArrayLike):
             The data series to test.
-        regression (str, optional):
+        regression (VALID_KPSS_REGRESSION_OPTIONS, optional):
             The null hypothesis for the KPSS test.
 
             - `"c"`: The data is stationary around a constant (default).
             - `"ct"`: The data is stationary around a trend.
 
             Defaults to `"c"`.
-        nlags (Union[str, int], optional):
+        nlags (Optional[Union[VALID_KPSS_NLAGS_OPTIONS, int]], optional):
             Indicates the number of lags to be used.
 
             - If `"auto"` (default), `lags` is calculated using the data-dependent method of Hobijn et al. (1998). See also Andrews (1991), Newey & West (1994), and Schwert (1989).
@@ -537,13 +537,13 @@ def kpss(
 
 
 @overload
-def rur(x: ArrayLike, *, store: Literal[True]) -> tuple[float, float, dict]: ...
+def rur(x: ArrayLike, *, store: Literal[True]) -> tuple[float, float, dict, ResultsStore]: ...
 @overload
-def rur(x: ArrayLike, *, store: Literal[False] = False) -> tuple[float, float, dict, ResultsStore]: ...
+def rur(x: ArrayLike, *, store: Literal[False] = False) -> tuple[float, float, dict]: ...
 @typechecked
 def rur(x: ArrayLike, *, store: bool = False) -> Union[
-    tuple[float, float, dict],
     tuple[float, float, dict, ResultsStore],
+    tuple[float, float, dict],
 ]:
     r"""
     !!! note "Summary"
@@ -727,7 +727,7 @@ def za(
     maxlag: Optional[int] = None,
     regression: VALID_ZA_REGRESSION_OPTIONS = "c",
     autolag: Optional[VALID_ZA_AUTOLAG_OPTIONS] = "AIC",
-) -> tuple[float, float, dict, int, Any]:
+) -> tuple[float, float, dict, int, int]:
     """
     !!! note "Summary"
         The Zivot-Andrews (ZA) test tests for a unit root in a univariate process in the presence of serial correlation and a single structural break.
@@ -749,10 +749,10 @@ def za(
         trim (float, optional):
             The percentage of series at begin/end to exclude from break-period calculation in range [0, 0.333].<br>
             Defaults to `0.15`.
-        maxlag (int, optional):
+        maxlag (Optional[int], optional):
             The maximum lag which is included in test, default is $12 \\times (\\frac{nobs}{100})^{\\frac{1}{4}} (Schwert, 1989).<br>
             Defaults to `None`.
-        regression (str, optional):
+        regression (VALID_ZA_REGRESSION_OPTIONS, optional):
             Constant and trend order to include in regression.
 
             - `"c"`: constant only (default).
@@ -760,7 +760,7 @@ def za(
             - `"ct"`: constant and trend.
 
             Defaults to `"c"`.
-        autolag (str, optional):
+        autolag (Optional[VALID_ZA_AUTOLAG_OPTIONS], optional):
             The method to select the lag length when using automatic selection.
 
             - If `None`, then `maxlag` lags are used,
@@ -919,7 +919,7 @@ def pp(
     lags: Optional[int] = None,
     trend: VALID_PP_TREND_OPTIONS = "c",
     test_type: VALID_PP_TEST_TYPE_OPTIONS = "tau",
-) -> tuple[float, float]:
+) -> tuple[float, float, int, dict]:
     """
     !!! note "Summary"
         Conduct a Phillips-Perron (PP) test for stationarity.
@@ -943,10 +943,10 @@ def pp(
     Params:
         x (ArrayLike):
             The data series to test.
-        lags (int, optional):
+        lags (Optional[int], optional):
             The number of lags to use in the Newey-West estimator of the variance. If omitted or `None`, the lag length is selected automatically.<br>
             Defaults to `None`.
-        trend (str, optional):
+        trend (VALID_PP_TREND_OPTIONS, optional):
             The trend component to include in the test.
 
             - `"n"`: No constant, no trend.
@@ -954,7 +954,7 @@ def pp(
             - `"ct"`: Include a constant and linear time trend.
 
             Defaults to `"c"`.
-        test_type (str, optional):
+        test_type (VALID_PP_TEST_TYPE_OPTIONS, optional):
             The type of test statistic to compute:
 
             - `"tau"`: The t-statistic based on the augmented regression (default).
@@ -1097,7 +1097,7 @@ def ers(
     max_lags: Optional[int] = None,
     method: VALID_ERS_METHOD_OPTIONS = "aic",
     low_memory: Optional[bool] = None,
-) -> tuple[float, float]:
+) -> tuple[float, float, int, dict]:
     """
     !!! note "Summary"
         Elliott, Rothenberg and Stock's GLS detrended Dickey-Fuller.
@@ -1117,20 +1117,20 @@ def ers(
     Params:
         y (ArrayLike):
             The data to test for a unit root.
-        lags (int, optional):
+        lags (Optional[int], optional):
             The number of lags to use in the ADF regression. If omitted or `None`, method is used to automatically select the lag length with no more than `max_lags` are included.<br>
             Defaults to `None`.
-        trend (str, optional):
+        trend (VALID_ERS_TREND_OPTIONS, optional):
             The trend component to include in the test
 
             - `"c"`: Include a constant (Default)
             - `"ct"`: Include a constant and linear time trend
 
             Defaults to `"c"`.
-        max_lags (int, optional):
+        max_lags (Optional[int], optional):
             The maximum number of lags to use when selecting lag length. When using automatic lag length selection, the lag is selected using OLS detrending rather than GLS detrending.<br>
             Defaults to `None`.
-        method (str, optional):
+        method (VALID_ERS_METHOD_OPTIONS, optional):
             The method to use when selecting the lag length
 
             - `"AIC"`: Select the minimum of the Akaike IC
@@ -1138,7 +1138,7 @@ def ers(
             - `"t-stat"`: Select the minimum of the Schwarz/Bayesian IC
 
             Defaults to `"aic"`.
-        low_memory (bool, optional):
+        low_memory (Optional[bool], optional):
             Flag indicating whether to use the low-memory algorithm for lag-length selection.
             Defaults to `None`.
 
@@ -1302,10 +1302,10 @@ def vr(
     Params:
         y (ArrayLike):
             The data to test for a random walk.
-        lags (int, optional):
+        lags (int):
             The number of periods to used in the multi-period variance, which is the numerator of the test statistic. Must be at least 2.<br>
             Defaults to `2`.
-        trend (str, optional):
+        trend (VALID_VR_TREND_OPTIONS, optional):
             `"c"` allows for a non-zero drift in the random walk, while `"n"` requires that the increments to `y` are mean `0`.<br>
             Defaults to `"c"`.
         debiased (bool, optional):
