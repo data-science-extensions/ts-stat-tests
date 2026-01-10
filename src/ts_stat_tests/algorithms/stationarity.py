@@ -600,7 +600,7 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         p_value (float):
             The p-value of the test. The p-value is interpolated from Table 1 in Aparicio et al. (2006), and a boundary point is returned if the test statistic is outside the table of critical values, that is, if the p-value is outside the interval (0.01, 0.1).
         crit (dict):
-            The critical values at $10\\%$, $5\\%$, $2.5\\%$ and $1\\%$. Based on Aparicio et al. (2006).
+            The critical values at $10\%$, $5\%$, $2.5\%$ and $1\%$. Based on Aparicio et al. (2006).
         resstore (Optional[ResultStore]):
             An instance of a dummy class with results attached as attributes.
 
