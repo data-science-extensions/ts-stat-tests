@@ -38,10 +38,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Union
+from typing import Any, Union, cast
 
 # ## Python Third Party Imports ----
 from numpy.typing import ArrayLike
+from statsmodels.stats.diagnostic import ResultsStore
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -76,7 +77,7 @@ __all__: list[str] = ["stationarity", "is_stationary"]
 def stationarity(
     x: ArrayLike,
     algorithm: str = "adf",
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]:
     """
     !!! note "Summary"
@@ -105,7 +106,7 @@ def stationarity(
             - `vr()`: `["vr", "variance_ratio"]`<br>
             - `rur()`: `["rur", "range_unit_root"]`<br>
             Defaults to `"adf"`.
-        kwargs (Union[float, int, str, bool, None]):
+        kwargs (Union[float, int, str, bool, ArrayLike, None]):
             Additional arguments to pass to the underlying algorithm.
 
     Raises:
@@ -167,7 +168,7 @@ def is_stationary(
     x: ArrayLike,
     algorithm: str = "adf",
     alpha: float = 0.05,
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> dict[str, Union[str, float, bool, None]]:
     """
     !!! note "Summary"
@@ -187,7 +188,7 @@ def is_stationary(
             Which stationarity algorithm to use. Defaults to `"adf"`.
         alpha (float, optional):
             The significance level for the test. Defaults to `0.05`.
-        kwargs (Union[float, int, str, bool, None]):
+        kwargs (Union[float, int, str, bool, ArrayLike, None]):
             Additional arguments to pass to the underlying algorithm.
 
     Returns:
