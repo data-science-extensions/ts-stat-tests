@@ -222,34 +222,39 @@ def is_stationary(
     """
     res = stationarity(x=x, algorithm=algorithm, **kwargs)
 
-    stat = res[0]
-    pvalue_or_bool = res[1]
+    stat: Union[float, int, dict[str, float]]
+    pvalue: Union[float, int, dict[str, float], bool, str, None]
+
+    # stationarity() always returns a tuple
+    res_tuple = res
+    stat = cast(Union[float, int, dict[str, float]], res_tuple[0])
+    pvalue_or_bool = res_tuple[1]
 
     # Handle H0 logic
-    # KPSS: H0 is stationarity. Stationary if p-value > alpha.
-    # Others (ADF, PP, ZA, ERS, VR, RUR): H0 is non-stationarity. Stationary if p-value < alpha.
     stationary_h0 = (
         "kpss",
         "kwiatkowski_phillips_schmidt_shin",
     )
 
+    is_stat: bool = False
+    pvalue = None
+
     if isinstance(pvalue_or_bool, bool):
-        # Case for algorithms that might return a bool result directly
         is_stat = pvalue_or_bool
-        pvalue = None
-    else:
+    elif isinstance(pvalue_or_bool, (int, float)):
         pvalue = pvalue_or_bool
         if algorithm in stationary_h0:
-            # H0 is stationarity: Result is stationary if we FAIL to reject H0
-            is_stat = pvalue > alpha
+            is_stat = bool(pvalue > alpha)
         else:
-            # H0 is non-stationarity: Result is stationary if we REJECT H0
-            is_stat = pvalue < alpha
+            is_stat = bool(pvalue < alpha)
 
-    return {
-        "result": bool(is_stat),
-        "statistic": float(stat),
-        "pvalue": float(pvalue) if pvalue is not None else None,
-        "alpha": float(alpha),
-        "algorithm": str(algorithm),
-    }
+    return cast(
+        dict[str, Union[str, float, bool, None]],
+        {
+            "result": bool(is_stat),
+            "statistic": float(stat) if isinstance(stat, (int, float)) else stat,  # type: ignore
+            "pvalue": float(pvalue) if isinstance(pvalue, (int, float)) else pvalue,  # type: ignore
+            "alpha": float(alpha),
+            "algorithm": str(algorithm),
+        },
+    )
