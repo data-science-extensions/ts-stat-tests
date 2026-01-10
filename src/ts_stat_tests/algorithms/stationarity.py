@@ -329,7 +329,21 @@ def adf(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    return _adfuller(x=x, maxlag=maxlag, regression=regression, autolag=autolag, store=store, regresults=regresults)
+    return cast(
+        Union[
+            tuple[float, float, dict, ResultsStore],
+            tuple[float, float, int, int, dict],
+            tuple[float, float, int, int, dict, float],
+        ],
+        _adfuller(
+            x=x,
+            maxlag=maxlag,
+            regression=regression,
+            autolag=cast(Literal["AIC"], autolag),
+            store=store,
+            regresults=regresults,
+        ),
+    )
 
 
 @overload
@@ -541,6 +555,11 @@ def kpss(
     !!! success "Credit"
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html) library.
     """
+    _nlags: Union[VALID_KPSS_NLAGS_OPTIONS, int] = nlags if nlags is not None else "auto"
+    return cast(
+        Union[tuple[float, float, int, dict, ResultsStore], tuple[float, float, int, dict]],
+        _kpss(x=x, regression=regression, nlags=_nlags, store=store),
+    )
 
 
 @overload
@@ -716,63 +735,11 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
-
-    !!! example "Examples"
-
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import rur
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = rur(x=data_random)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 6.9
-        p-value: 0.95
-        Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = rur(x=data_trend)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 7.5
-        p-value: 0.95
-        Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = rur(x=data_seasonal)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 0.7
-        p-value: 0.01
-        Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = rur(x=data_airline)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 2.3333333333333335
-        p-value: 0.9
-        Critical values: {'10%': 1.324528, '5%': 1.181416, '2.5%': 1.0705, '1%': 0.948624}
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html) library.
     """
+    return cast(
+        Union[tuple[float, float, dict, ResultsStore], tuple[float, float, dict]],
+        _rur(x=x, store=store),
+    )
 
 
 @typechecked
@@ -966,6 +933,20 @@ def za(
     !!! success "Credit"
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html) library.
     """
+    res = _za(
+        x=x,
+        trim=trim,
+        maxlag=maxlag,
+        regression=regression,
+        autolag=cast(Literal["AIC"], autolag),
+    )
+    return (
+        float(cast(float, res[0])),
+        float(cast(float, res[1])),
+        cast(dict, res[2]),
+        int(cast(int, res[3])),
+        int(cast(int, res[4])),
+    )
 
 
 @typechecked
@@ -1142,6 +1123,18 @@ def pp(
     !!! success "Credit"
         - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html) library.
     """
+    _x = np.asarray(x)
+    nobs = _x.shape[0]
+    _lags = lags
+    if _lags is None:
+        _lags = int(np.ceil(12.0 * np.power(nobs / 100.0, 1 / 4.0)))
+
+    # arch PP test requires lags < nobs-1
+    if _lags >= nobs - 1:
+        _lags = max(0, nobs - 2)
+
+    res = _pp(y=_x, lags=_lags, trend=trend, test_type=test_type)
+    return (float(res.stat), float(res.pvalue), int(res.lags), dict(res.critical_values))
 
 
 @typechecked
@@ -1318,13 +1311,15 @@ def ers(
     !!! success "Credit"
         - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html) library.
     """
+    res = _ers(
+        y=np.asarray(y),
         lags=lags,
         trend=trend,
         max_lags=max_lags,
         method=method,
         low_memory=low_memory,
     )
-    return ers.stat, ers.pvalue
+    return (float(res.stat), float(res.pvalue), int(res.lags), dict(res.critical_values))
 
 
 @typechecked
@@ -1524,10 +1519,12 @@ def vr(
     !!! success "Credit"
         - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html) library.
     """
+    res = _vr(
+        y=np.asarray(y),
         lags=lags,
         trend=trend,
         debiased=debiased,
         robust=robust,
         overlap=overlap,
     )
-    return vr.stat, vr.pvalue, vr.vr
+    return (float(res.stat), float(res.pvalue), float(res.vr))
