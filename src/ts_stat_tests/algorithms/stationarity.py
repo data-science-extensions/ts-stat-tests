@@ -253,10 +253,7 @@ def adf(
         Critical values: {'1%': -3.4816817173418295, '5%': -2.8840418343195267, '10%': -2.578770059171598}
         ```
 
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html) library.
-
-    ???+ calculation "Equation"
+    ??? equation "Calculation"
 
         The mathematical equation for the Augmented Dickey-Fuller (ADF) test for stationarity in time series forecasting is:
 
@@ -408,6 +405,11 @@ def kpss(
         resstore (Optional[ResultStore]):
             An instance of a dummy class with results attached as attributes.
 
+    ??? note "Notes"
+        To estimate $sigma^2$ the Newey-West estimator is used. If `lags` is `"legacy"`, the truncation lag parameter is set to $int(12 \\times (\\frac{n}{100})^{\\frac{1}{4}})$, as outlined in Schwert (1989). The p-values are interpolated from Table 1 of Kwiatkowski et al. (1992). If the computed statistic is outside the table of critical values, then a warning message is generated.
+
+        Missing values are not handled.
+
     !!! example "Examples"
         ```pycon {.py .python linenums="1" title="Prepare data"}
         >>> import numpy as np
@@ -458,10 +460,7 @@ def kpss(
         Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
         ```
 
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html) library.
-
-    ???+ calculation "Equation"
+    ??? equation "Calculation"
 
         The mathematical equation for the KPSS test for stationarity in time series forecasting is:
 
@@ -509,11 +508,6 @@ def kpss(
 
         1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is non-stationary and requires further pre-processing before it can be used for forecasting. If the null hypothesis is not rejected, then the time series is trend stationary and can be used for forecasting.
 
-    ??? info "Notes"
-        To estimate $sigma^2$ the Newey-West estimator is used. If `lags` is `"legacy"`, the truncation lag parameter is set to $int(12 \\times (\\frac{n}{100})^{\\frac{1}{4}})$, as outlined in Schwert (1989). The p-values are interpolated from Table 1 of Kwiatkowski et al. (1992). If the computed statistic is outside the table of critical values, then a warning message is generated.
-
-        Missing values are not handled.
-
     ??? question "References"
         - Andrews, D.W.K. (1991). Heteroskedasticity and autocorrelation consistent covariance matrix estimation. Econometrica, 59: 817-858.
         - Hobijn, B., Frances, B.H., & Ooms, M. (2004). Generalizations of the KPSS-test for stationarity. Statistica Neerlandica, 52: 483-502.
@@ -536,8 +530,10 @@ def kpss(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+
+    !!! success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html) library.
     """
-    return _kpss(x=x, regression=regression, nlags=nlags, store=store)
 
 
 @overload
@@ -581,6 +577,11 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
             The critical values at $10\\%$, $5\\%$, $2.5\\%$ and $1\\%$. Based on Aparicio et al. (2006).
         resstore (Optional[ResultStore]):
             An instance of a dummy class with results attached as attributes.
+
+    ??? note "Notes"
+        The p-values are interpolated from Table 1 of Aparicio et al. (2006). If the computed statistic is outside the table of critical values, then a warning message is generated.
+
+        Missing values are not handled.
 
     !!! example "Examples"
 
@@ -634,9 +635,6 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         p-value: 0.9
         Critical values: {'10%': 1.324528, '5%': 1.181416, '2.5%': 1.0705, '1%': 0.948624}
         ```
-
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html) library.
 
     ???+ calculation "Equation"
 
@@ -698,11 +696,6 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         In practice, the RUR test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of parameters and calculation of the test statistic.
 
-    ??? info "Notes"
-        The p-values are interpolated from Table 1 of Aparicio et al. (2006). If the computed statistic is outside the table of critical values, then a warning message is generated.
-
-        Missing values are not handled.
-
     ??? question "References"
         - Aparicio, F., Escribano A., Sipols, A.E. (2006). Range Unit-Root (RUR) tests: robust against nonlinearities, error distributions, structural breaks and outliers. Journal of Time Series Analysis, 27 (4): 545-576.
 
@@ -721,8 +714,10 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+
+    !!! success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html) library.
     """
-    return _rur(x=x, store=store)
 
 
 @typechecked
@@ -786,6 +781,11 @@ def za(
         pbidx (int):
             The index of `x` corresponding to endogenously calculated break period with values in the range $[0..nobs-1]$.
 
+    ??? note "Notes"
+        H0 = unit root with a single structural break
+
+        Algorithm follows Baum (2004/2015) approximation to original Zivot-Andrews method. Rather than performing an autolag regression at each candidate break period (as per the original paper), a single autolag regression is run up-front on the base model (constant + trend with no dummies) to determine the best lag length. This lag length is then used for all subsequent break-period regressions. This results in significant run time reduction but also slightly more pessimistic test statistics than the original Zivot-Andrews method, although no attempt has been made to characterize the size/power trade-off.
+
     !!! example "Examples"
 
         ```pycon {.py .python linenums="1" title="Prepare data"}
@@ -839,9 +839,6 @@ def za(
         Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
         ```
 
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html) library.
-
     ???+ calculation "Equation"
 
         The mathematical equation for the Zivot-Andrews test is:
@@ -890,11 +887,6 @@ def za(
 
         In practice, the Zivot-Andrews test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of parameters and calculation of the test statistic.
 
-    ??? info "Notes"
-        H0 = unit root with a single structural break
-
-        Algorithm follows Baum (2004/2015) approximation to original Zivot-Andrews method. Rather than performing an autolag regression at each candidate break period (as per the original paper), a single autolag regression is run up-front on the base model (constant + trend with no dummies) to determine the best lag length. This lag length is then used for all subsequent break-period regressions. This results in significant run time reduction but also slightly more pessimistic test statistics than the original Zivot-Andrews method, although no attempt has been made to characterize the size/power trade-off.
-
     ??? question "References"
         - Baum, C.F. (2004). ZANDREWS: Stata module to calculate Zivot-Andrews unit root test in presence of structural break," Statistical Software Components S437301, Boston College Department of Economics, revised 2015.
         - Schwert, G.W. (1989). Tests for unit roots: A Monte Carlo investigation. Journal of Business & Economic Statistics, 7: 147-159.
@@ -915,8 +907,10 @@ def za(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+
+    !!! success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html) library.
     """
-    return _za(x=x, trim=trim, maxlag=maxlag, regression=regression, autolag=autolag)
 
 
 @typechecked
@@ -974,6 +968,11 @@ def pp(
         pvalue (float):
             The p-value for the test statistic.
 
+    ??? note "Notes"
+        This test is generally used indirectly via the [`pmdarima.arima.ndiffs()`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ndiffs.html) function, which computes the differencing term, `d`.
+
+        The R code allows for two types of tests: `'Z(alpha)'` and `'Z(t_alpha)'`. Since sklearn does not allow extraction of std errors from the linear model fit, `t_alpha` is much more difficult to achieve, so we do not allow that variant.
+
     !!! example "Examples"
 
         ```pycon {.py .python linenums="1" title="Prepare data"}
@@ -1018,9 +1017,6 @@ def pp(
         PP statistic: 0.8153688792060539
         p-value: 0.9918802434376411
         ```
-
-    !!! success "Credit"
-        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html) library.
 
     ???+ calculation "Equation"
 
@@ -1069,11 +1065,6 @@ def pp(
 
         In practice, the PP test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of the regression model and calculation of the test statistic.
 
-    ??? info "Notes"
-        This test is generally used indirectly via the [`pmdarima.arima.ndiffs()`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ndiffs.html) function, which computes the differencing term, `d`.
-
-        The R code allows for two types of tests: `'Z(alpha)'` and `'Z(t_alpha)'`. Since sklearn does not allow extraction of std errors from the linear model fit, `t_alpha` is much more difficult to achieve, so we do not allow that variant.
-
     ??? question "References"
         - R's tseries PP test source code: http://bit.ly/2wbzx6V
 
@@ -1092,9 +1083,10 @@ def pp(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+
+    !!! success "Credit"
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html) library.
     """
-    pp = _pp(x, lags=lags, trend=trend, test_type=test_type)
-    return pp.stat, pp.pvalue
 
 
 @typechecked
@@ -1156,6 +1148,13 @@ def ers(
         pvalue (float):
             The p-value for the test statistic.
 
+    ??? note "Notes"
+        The null hypothesis of the Dickey-Fuller GLS is that there is a unit root, with the alternative that there is no unit root. If the pvalue is above a critical size, then the null cannot be rejected and the series appears to be a unit root.
+
+        DFGLS differs from the ADF test in that an initial GLS detrending step is used before a trend-less ADF regression is run.
+
+        Critical values and p-values when trend is "c" are identical to the ADF. When trend is set to "ct", they are from Elliott, Rothenberg, and Stock (1996).
+
     !!! example "Examples"
 
         ```pycon {.py .python linenums="1" title="Prepare data"}
@@ -1201,9 +1200,6 @@ def ers(
         p-value: 0.9231977988395885
         ```
 
-    !!! success "Credit"
-        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html) library.
-
     ???+ calculation "Equation"
 
         The mathematical equation for the ERS test is:
@@ -1244,13 +1240,6 @@ def ers(
 
         In practice, the ERS test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of the time-varying mean function and calculation of the test statistic.
 
-    ??? info "Notes"
-        The null hypothesis of the Dickey-Fuller GLS is that there is a unit root, with the alternative that there is no unit root. If the pvalue is above a critical size, then the null cannot be rejected and the series appears to be a unit root.
-
-        DFGLS differs from the ADF test in that an initial GLS detrending step is used before a trend-less ADF regression is run.
-
-        Critical values and p-values when trend is "c" are identical to the ADF. When trend is set to "ct", they are from Elliott, Rothenberg, and Stock (1996).
-
     ??? question "References"
         - Elliott, G. R., T. J. Rothenberg, and J. H. Stock. 1996. Efficient bootstrap for an autoregressive unit root. Econometrica 64: 813-836.
         - Perron, P., & Qu, Z. (2007). A simple modification to improve the finite sample properties of Ng and Perron’s unit root tests. Economics letters, 94(1), 12-19.
@@ -1270,9 +1259,10 @@ def ers(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+
+    !!! success "Credit"
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html) library.
     """
-    ers = _ers(
-        y=y,
         lags=lags,
         trend=trend,
         max_lags=max_lags,
@@ -1336,63 +1326,10 @@ def vr(
         vr (float):
             The ratio of the long block lags-period variance.
 
-    !!! example "Examples"
+    ??? note "Notes"
+        The null hypothesis of a VR is that the process is a random walk, possibly plus drift. Rejection of the null with a positive test statistic indicates the presence of positive serial correlation in the time series.
 
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import vr
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = vr(y=data_random)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: -0.14591443376314764
-        p-value: 0.883988937049496
-        Variance ratio: 0.9855947175511225
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = vr(y=data_trend)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: -4.598458128582932
-        p-value: 4.256292334359202e-06
-        Variance ratio: 0.47406627851732747
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = vr(y=data_seasonal)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: -3.3094271924808294
-        p-value: 0.00093487076919474
-        Variance ratio: 0.6518504999000638
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = vr(y=data_airline)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: 3.1511442820441324
-        p-value: 0.0016263212988147924
-        Variance ratio: 1.3163356673251048
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html) library.
-
-    ???+ calculation "Equation"
+    ??? equation "Calculation"
 
         The Variance Ratio (VR) test is a statistical test for stationarity in time series forecasting that is based on the idea that if the time series is stationary, then the variance of the returns should be constant over time. The mathematical equation for the VR test is:
 
@@ -1457,9 +1394,6 @@ def vr(
 
         In practice, the VR test is often conducted using software packages such as R, Python, or MATLAB, which automate the calculation of the variance ratio and the determination of the critical value.
 
-    ???+ info "Details"
-        The null hypothesis of a VR is that the process is a random walk, possibly plus drift. Rejection of the null with a positive test statistic indicates the presence of positive serial correlation in the time series.
-
     ??? question "References"
         - Campbell, John Y., Lo, Andrew W. and MacKinlay, A. Craig. (1997) The Econometrics of Financial Markets. Princeton, NJ: Princeton University Press.
 
@@ -1478,9 +1412,10 @@ def vr(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+
+    !!! success "Credit"
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html) library.
     """
-    vr = _vr(
-        y=y,
         lags=lags,
         trend=trend,
         debiased=debiased,
