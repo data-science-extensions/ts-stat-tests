@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Union
+from typing import Any, Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -79,7 +79,7 @@ def normality(
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> Any:
+) -> Union[tuple[float, float], object]:
     """
     !!! note "Summary"
         Perform a normality test on the given data.
@@ -120,7 +120,7 @@ def normality(
         ValueError: When the given value for `algorithm` is not valid.
 
     Returns:
-        (Any):
+        (Union[float, int, str, bool, None]):
             The result of the normality test.
 
     !!! Success "Credit"
@@ -171,7 +171,7 @@ def is_normal(
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> dict[str, Union[str, float, bool, Any]]:
+) -> dict[str, Union[str, float, bool, None]]:
     """
     !!! note "Summary"
         Test whether a given data set is `normal` or not.

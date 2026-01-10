@@ -39,7 +39,7 @@
 
 # ## Python StdLib Imports ----
 from collections.abc import Collection, Mapping
-from typing import Any, Optional, Union, overload
+from typing import Optional, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -65,7 +65,7 @@ from typeguard import typechecked
 @typechecked
 def generate_error_message(
     parameter_name: str,
-    value_parsed: Any,
+    value_parsed: object,
     options: Union[
         Mapping[str, str],
         Mapping[str, Collection[Union[str, int, float]]],
@@ -78,7 +78,7 @@ def generate_error_message(
     Params:
         parameter_name (str):
             The name of the parameter.
-        value_parsed (Any):
+        value_parsed (object):
             The invalid value provided.
         options (Union[Mapping[str, str], Mapping[str, Collection[Union[str, int, float]]]]):
             A dictionary mapping valid option keys to their acceptable values.

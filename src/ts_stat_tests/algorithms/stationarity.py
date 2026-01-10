@@ -48,7 +48,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Literal, Optional, Union, overload
+from typing import Literal, Optional, Union, cast, overload
 
 # ## Python Third Party Imports ----
 from arch.unitroot import DFGLS as _ers, PhillipsPerron as _pp, VarianceRatio as _vr

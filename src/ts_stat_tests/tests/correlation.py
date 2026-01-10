@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Literal, Union, overload
+from typing import Literal, Union, overload
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -83,31 +83,31 @@ __all__: list[str] = ["correlation", "is_correlated"]
 def correlation(
     x: ArrayLike,
     algorithm: Literal["acf", "auto", "ac"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike1D,
     algorithm: Literal["pacf", "partial", "pc"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["ccf", "cross", "cross-correlation", "cc"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["lb", "alb", "acorr_ljungbox", "acor_lb", "a_lb", "ljungbox"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, None],
 ) -> pd.DataFrame: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["lm", "alm", "acorr_lm", "a_lm"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, None],
 ) -> Union[
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -116,7 +116,7 @@ def correlation(
 def correlation(
     x: Union[RegressionResults, RegressionResultsWrapper],
     algorithm: Literal["bglm", "breusch_godfrey", "bg"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, None],
 ) -> Union[
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -125,8 +125,14 @@ def correlation(
 def correlation(
     x: Union[ArrayLike, ArrayLike1D, RegressionResults, RegressionResultsWrapper],
     algorithm: str = "acf",
-    **kwargs: Any,
-) -> Any:
+    **kwargs: Union[float, int, str, bool, None],
+) -> Union[
+    np.ndarray,
+    tuple[np.ndarray, ...],
+    pd.DataFrame,
+    tuple[float, float, float, float],
+    tuple[float, float, float, float, ResultsStore],
+]:
     """
     !!! note "Summary"
         A unified interface for various correlation tests.
@@ -142,7 +148,7 @@ def correlation(
             - "lb", "alb", "acorr_ljungbox", "acor_lb", "a_lb", "ljungbox": Ljung-Box Test
             - "lm", "alm", "acorr_lm", "a_lm": Lagrange Multiplier Test
             - "bglm", "breusch_godfrey", "bg": Breusch-Godfrey Test
-        kwargs (Any):
+        kwargs (Union[float, int, str, bool, None]):
             Additional keyword arguments specific to the chosen algorithm.
 
     Returns:

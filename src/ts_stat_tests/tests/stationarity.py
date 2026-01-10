@@ -76,8 +76,8 @@ __all__: list[str] = ["stationarity", "is_stationary"]
 def stationarity(
     x: ArrayLike,
     algorithm: str = "adf",
-    **kwargs: Any,
-) -> Any:
+    **kwargs: Union[float, int, str, bool, None],
+) -> tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]:
     """
     !!! note "Summary"
         Perform a stationarity test on the given data.
@@ -105,14 +105,14 @@ def stationarity(
             - `vr()`: `["vr", "variance_ratio"]`<br>
             - `rur()`: `["rur", "range_unit_root"]`<br>
             Defaults to `"adf"`.
-        kwargs (Any):
+        kwargs (Union[float, int, str, bool, None]):
             Additional arguments to pass to the underlying algorithm.
 
     Raises:
         ValueError: When the given value for `algorithm` is not valid.
 
     Returns:
-        (Any):
+        (Union[tuple, dict]):
             The result of the stationarity test.
 
     !!! Success "Credit"
@@ -167,8 +167,8 @@ def is_stationary(
     x: ArrayLike,
     algorithm: str = "adf",
     alpha: float = 0.05,
-    **kwargs: Any,
-) -> dict[str, Union[str, float, bool, Any]]:
+    **kwargs: Union[float, int, str, bool, None],
+) -> dict[str, Union[str, float, bool, None]]:
     """
     !!! note "Summary"
         Test whether a given data set is `stationary` or not.
@@ -187,7 +187,7 @@ def is_stationary(
             Which stationarity algorithm to use. Defaults to `"adf"`.
         alpha (float, optional):
             The significance level for the test. Defaults to `0.05`.
-        kwargs (Any):
+        kwargs (Union[float, int, str, bool, None]):
             Additional arguments to pass to the underlying algorithm.
 
     Returns:

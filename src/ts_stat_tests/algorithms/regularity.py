@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Literal, Optional, Union, cast
+from typing import Literal, Optional, Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -549,7 +549,7 @@ def permutation_entropy(
         a_perm_entropy(
             x=x,
             order=order,
-            delay=cast(Any, delay),
+            delay=cast(int, delay),
             normalize=normalize,
         ),
     )
