@@ -717,6 +717,14 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         In practice, the RUR test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of parameters and calculation of the test statistic.
 
+    ??? note "Notes"
+        The p-values are interpolated from Table 1 of Aparicio et al. (2006). If the computed statistic is outside the table of critical values, then a warning message is generated.
+
+        Missing values are not handled.
+
+    !!! success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.range_unit_root_test.html) library.
+
     ??? question "References"
         - Aparicio, F., Escribano A., Sipols, A.E. (2006). Range Unit-Root (RUR) tests: robust against nonlinearities, error distributions, structural breaks and outliers. Journal of Time Series Analysis, 27 (4): 545-576.
 
