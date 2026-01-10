@@ -139,20 +139,28 @@ def stationarity(
         "rur": ("rur", "range_unit_root"),
     }
 
+    # Internal helper to handle kwargs casting for ty
+    def _call(func: Any, **args: Any) -> Any:
+        """
+        !!! note "Summary"
+            Internal helper to call the test function.
+        """
+        return func(**args)
+
     if algorithm in options["adf"]:
-        return _adf(x=x, **kwargs)
+        return _call(_adf, x=x, **kwargs)
     if algorithm in options["kpss"]:
-        return _kpss(x=x, **kwargs)
+        return _call(_kpss, x=x, **kwargs)
     if algorithm in options["pp"]:
-        return _pp(x=x, **kwargs)
+        return _call(_pp, x=x, **kwargs)
     if algorithm in options["za"]:
-        return _za(x=x, **kwargs)
+        return _call(_za, x=x, **kwargs)
     if algorithm in options["ers"]:
-        return _ers(y=x, **kwargs)
+        return _call(_ers, y=x, **kwargs)
     if algorithm in options["vr"]:
-        return _vr(y=x, **kwargs)
+        return _call(_vr, y=x, **kwargs)
     if algorithm in options["rur"]:
-        return _rur(x=x, **kwargs)
+        return _call(_rur, x=x, **kwargs)
 
     raise ValueError(
         generate_error_message(
