@@ -83,31 +83,31 @@ __all__: list[str] = ["correlation", "is_correlated"]
 def correlation(
     x: ArrayLike,
     algorithm: Literal["acf", "auto", "ac"],
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike1D,
     algorithm: Literal["pacf", "partial", "pc"],
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["ccf", "cross", "cross-correlation", "cc"],
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["lb", "alb", "acorr_ljungbox", "acor_lb", "a_lb", "ljungbox"],
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> pd.DataFrame: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["lm", "alm", "acorr_lm", "a_lm"],
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -116,7 +116,7 @@ def correlation(
 def correlation(
     x: Union[RegressionResults, RegressionResultsWrapper],
     algorithm: Literal["bglm", "breusch_godfrey", "bg"],
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -125,7 +125,7 @@ def correlation(
 def correlation(
     x: Union[ArrayLike, ArrayLike1D, RegressionResults, RegressionResultsWrapper],
     algorithm: str = "acf",
-    **kwargs: Union[float, int, str, bool, None],
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[
     np.ndarray,
     tuple[np.ndarray, ...],
@@ -148,7 +148,7 @@ def correlation(
             - "lb", "alb", "acorr_ljungbox", "acor_lb", "a_lb", "ljungbox": Ljung-Box Test
             - "lm", "alm", "acorr_lm", "a_lm": Lagrange Multiplier Test
             - "bglm", "breusch_godfrey", "bg": Breusch-Godfrey Test
-        kwargs (Union[float, int, str, bool, None]):
+        kwargs (Union[float, int, str, bool, ArrayLike, None]):
             Additional keyword arguments specific to the chosen algorithm.
 
     Returns:
