@@ -305,6 +305,9 @@ def adf(
 
         The autolag option and maxlag for it are described in Greene.
 
+    ??? success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html) library.
+
     ??? question "References"
         - Baum, C.F. (2004). ZANDREWS: Stata module to calculate Zivot-Andrews unit root test in presence of structural break," Statistical Software Components S437301, Boston College Department of Economics, revised 2015.
         - Schwert, G.W. (1989). Tests for unit roots: A Monte Carlo investigation. Journal of Business & Economic Statistics, 7: 147-159.
