@@ -39,28 +39,30 @@
 
         All of the source code can be found within these modules:
 
-        - [`src.ts_stat_tests.algorithms.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/stationarity.py).
-        - [`src.ts_stat_tests.tests.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/stationarity.py).
+        - [`ts_stat_tests.algorithms.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/stationarity.py).
+        - [`ts_stat_tests.tests.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/stationarity.py).
 
 ## Stationarity Tests
 
-::: src.ts_stat_tests.tests.stationarity
+::: ts_stat_tests.tests.stationarity
     options:
-        show_root_heading: false
-        heading_level: 3
-        show_if_no_docstrings: true
-        member_order: source
-        filters:
-            - "^is"
+        extra:
+            show_root_heading: false
+            heading_level: 3
+            show_if_no_docstrings: true
+            member_order: source
+            filters:
+                - "^is"
 
 ## Stationarity Algorithms
 
-::: src.ts_stat_tests.algorithms.stationarity
+::: ts_stat_tests.algorithms.stationarity
     options:
-        show_root_heading: false
-        heading_level: 3
-        show_if_no_docstrings: true
-        member_order: source
-        filters:
-            - "!^is"
-            - "!^_"
+        extra:
+            show_root_heading: false
+            heading_level: 3
+            show_if_no_docstrings: true
+            member_order: source
+            filters:
+                - "!^is"
+                - "!^_"
