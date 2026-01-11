@@ -26,6 +26,14 @@
 
         To state that the data is 'regular' is to say that the data points are evenly spaced, regularly collected, and not missing data points (ie. do not contain excessive `NA` values). Logically, it is not always necessary to conduct the Test for Regularity on automatically collected data (like for example with Energy Prices, or Daily Temperature), however if this data was collected manually then it is highly recommended. If the data does not meet the requirements of Regularity, then it is necessary to return to the data collection plan, and revise the methodology used.
 
+        | library | category   | algorithm           | short  | import script                          | url                                                                                  |
+        | ------- | ---------- | ------------------- | ------ | -------------------------------------- | ------------------------------------------------------------------------------------ |
+        | antropy | Regularity | Approximate Entropy | AppEn  | `from antropy import app_entropy`      | https://raphaelvallat.com/antropy/build/html/generated/antropy.app_entropy.html      |
+        | antropy | Regularity | Sample Entropy      | SampEn | `from antropy import sample_entropy`   | https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html   |
+        | antropy | Regularity | Permutation Entropy | PermEn | `from antropy import perm_entropy`     | https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html     |
+        | antropy | Regularity | Spectral Entropy    | SpecEn | `from antropy import spectral_entropy` | https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html |
+        | antropy | Regularity | SVD Entropy         | SvdEn  | `from antropy import svd_entropy`      | https://raphaelvallat.com/antropy/build/html/generated/antropy.svd_entropy.html      |
+
         ---
 
         :material-arrow-right-bold: For more info, see: [The Future of Australian Energy Prices: Time-Series Analysis of Historic Prices and Forecast for Future Prices](https://chrimaho.medium.com/ausenergyprices-737b9cbe5540).

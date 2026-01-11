@@ -28,6 +28,14 @@
 
         What this means is that the Partial Auto-Correlation plot would have a very high value at `lag0`, which will drop very quickly at `lag1`, and should remain below the blue reference lines for the remainder of the Correlogram. The observations of `lag>0` should resemble white noise data points. If it does not resemble white noise, and there is a distinct pattern occurring, then the data is not suitable for time-series forecasting.
 
+        | library     | category    | algorithm                        | short | import script                                                    | url                                                                                                  |
+        | ----------- | ----------- | -------------------------------- | ----- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+        | statsmodels | Correlation | Autocorrelation Function         | ACF   | `from statsmodels.tsa.stattools import acf`                      | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html                      |
+        | statsmodels | Correlation | Partial Autocorrelation Function | PACF  | `from statsmodels.tsa.stattools import pacf`                     | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html                     |
+        | statsmodels | Correlation | Cross-Correlation Function       | CCF   | `from statsmodels.tsa.stattools import ccf`                      | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html                      |
+        | statsmodels | Correlation | Ljung-Box Test                   | LB    | `from statsmodels.stats.diagnostic import acorr_ljungbox`        | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html        |
+        | statsmodels | Correlation | Breusch-Godfrey LM Test          | BGLM  | `from statsmodels.stats.diagnostic import acorr_breusch_godfrey` | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html |
+
         ---
 
         :material-arrow-right-bold: For more info, see: [Time Series Analysis in Python: A Comprehensive Guide with Examples](https://www.machinelearningplus.com/time-series/time-series-analysis-python/).
