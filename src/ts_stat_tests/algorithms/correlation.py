@@ -961,7 +961,7 @@ def lm(
 
         The LM test is a generalization of the Durbin-Watson test, which is a simpler test that only tests for first-order autocorrelation.
 
-    ???+ itemized "Params"
+    Params:
 
         resid (ArrayLike):
             Time series to test.
@@ -980,7 +980,7 @@ def lm(
         cov_kwargs (Optional[dict], optional):
             Dictionary of covariance options passed to `OLS.fit`. See [`OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html) for more details. Defaults to `None`.
 
-    ???+ itemized "Returns"
+    Returns:
 
         lm (float):
             Lagrange multiplier test statistic.
@@ -1087,7 +1087,7 @@ def bglm(
 
         If the test statistic is greater than the critical value from the chi-squared distribution, then the null hypothesis of no autocorrelation is rejected, indicating that there is evidence of autocorrelation in the residuals.
 
-    ???+ itemized "Params"
+    Params:
 
         res (Union[RegressionResults, RegressionResultsWrapper]):
             Estimation results for which the residuals are tested for serial correlation.
@@ -1096,7 +1096,7 @@ def bglm(
         store (bool, optional):
             If `store` is `True`, then an additional class instance that contains intermediate results is returned. Defaults to `False`.
 
-    ???+ itemized "Returns"
+    Returns:
 
         lm (float):
             Lagrange multiplier test statistic.
