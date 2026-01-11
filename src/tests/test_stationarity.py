@@ -11,11 +11,16 @@
 
 
 # ## Python StdLib Imports ----
+from unittest.mock import patch
 
 # ## Python Third Party Imports ----
 import numpy as np
-from arch.unitroot import DFGLS as ar_ers, VarianceRatio as ar_vr
-from pmdarima.arima import PPTest as pa_pp
+from arch.unitroot import (
+    DFGLS as ar_ers,
+    PhillipsPerron as ar_pp,
+    VarianceRatio as ar_vr,
+)
+from pytest import raises
 from statsmodels.tsa.stattools import (
     adfuller as sm_adf,
     kpss as sm_kpss,
@@ -51,13 +56,64 @@ class TestStationarity(BaseTester):
         pass
 
     def test_stationarity(self) -> None:
-        self.assertIsNone(stationarity(x=np.arange(100)))
+        assert isinstance(stationarity(x=np.arange(100)), tuple)
 
     def test_is_stationarity(self) -> None:
-        self.assertIsNone(is_stationary(x=np.arange(100)))
+        assert isinstance(is_stationary(x=np.arange(100), algorithm="adf"), dict)
+
+    def test_stationarity_invalid_algorithm(self) -> None:
+        """Test invalid algorithm in stationarity dispatcher."""
+
+        with raises(ValueError) as excinfo:
+            stationarity(np.arange(100), algorithm="invalid")
+
+        assert "algorithm" in str(excinfo.value)
+
+    def test_is_stationary_logic(self) -> None:
+        """Test different H0 logic in is_stationary."""
+        data = np.random.normal(0, 1, 100)
+
+        # ADF (H0: unit root)
+        res_adf = is_stationary(data, algorithm="adf", alpha=0.05)
+        assert isinstance(res_adf["result"], bool)
+
+        # KPSS (H0: stationary)
+        res_kpss = is_stationary(data, algorithm="kpss", alpha=0.05)
+        assert isinstance(res_kpss["result"], bool)
+
+    def test_is_stationary_pvalue_bool_coverage(self) -> None:
+        """Test branch coverage for pvalue_or_bool being a boolean."""
+
+        with patch("ts_stat_tests.tests.stationarity.stationarity") as mock_stat:
+            # Mock returning (stat, bool)
+            mock_stat.return_value = (0.5, True)
+            res = is_stationary(np.arange(100), algorithm="adf")
+            assert res["result"] is True
+            assert res["pvalue"] is None
+
+    def test_is_stationary_non_numeric_pvalue(self) -> None:
+        """Test coverage where pvalue is neither bool nor numeric."""
+
+        with patch("ts_stat_tests.tests.stationarity.stationarity") as mock_stat:
+            # Mock returning (stat, string)
+            mock_stat.return_value = (0.5, "invalid")
+            res = is_stationary(np.arange(100), algorithm="adf")
+            assert res["result"] is False
+            assert res["pvalue"] is None
+
+    def test_stationarity_dispatcher_coverage(self) -> None:
+        """Test all algorithms in stationarity dispatcher for coverage."""
+        data = np.random.normal(0, 1, 100)
+        # These are already covered or partially covered, but let's be explicit
+        stationarity(data, algorithm="pp")
+        stationarity(data, algorithm="za")
+        stationarity(data, algorithm="ers")
+        stationarity(data, algorithm="vr")
+        stationarity(data, algorithm="rur")
 
 
 class TestStationarityADF(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -97,6 +153,7 @@ class TestStationarityADF(BaseTester):
 
 
 class TestStationarityKPSS(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -136,6 +193,7 @@ class TestStationarityKPSS(BaseTester):
 
 
 class TestStationarityRUR(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -177,6 +235,7 @@ class TestStationarityRUR(BaseTester):
 
 
 class TestStationarityZA(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -236,21 +295,31 @@ class TestStationarityZA(BaseTester):
 
 
 class TestStationarityPP(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        def get_ar_pp_res(y):
+            nobs = len(y)
+            lags = int(np.ceil(12.0 * np.power(nobs / 100.0, 1 / 4.0)))
+            if lags >= nobs - 1:
+                lags = max(0, nobs - 2)
+            res = ar_pp(y, lags=lags)
+            return (float(res.stat), float(res.pvalue), int(res.lags), dict(res.critical_values))
+
         cls.result_pp_airline = pp(x=cls.data_airline)
         cls.result_pp_random = pp(x=cls.data_random)
         cls.result_pp_sine = pp(x=cls.data_sine)
         cls.result_pp_line = pp(x=cls.data_line)
         cls.result_pp_basic = pp(x=np.array(cls.data_basic))
         cls.result_pp_noise = pp(x=cls.data_noise)
-        cls.result_pa_pp_airline = pa_pp().should_diff(x=cls.data_airline)
-        cls.result_pa_pp_random = pa_pp().should_diff(x=cls.data_random)
-        cls.result_pa_pp_sine = pa_pp().should_diff(x=cls.data_sine)
-        cls.result_pa_pp_line = pa_pp().should_diff(x=cls.data_line)
-        cls.result_pa_pp_basic = pa_pp().should_diff(x=np.array(cls.data_basic))
-        cls.result_pa_pp_noise = pa_pp().should_diff(x=cls.data_noise)
+        cls.result_pa_pp_airline = get_ar_pp_res(cls.data_airline)
+        cls.result_pa_pp_random = get_ar_pp_res(cls.data_random)
+        cls.result_pa_pp_sine = get_ar_pp_res(cls.data_sine)
+        cls.result_pa_pp_line = get_ar_pp_res(cls.data_line)
+        cls.result_pa_pp_basic = get_ar_pp_res(np.array(cls.data_basic))
+        cls.result_pa_pp_noise = get_ar_pp_res(cls.data_noise)
 
     def setUp(self):
         pass
@@ -275,6 +344,7 @@ class TestStationarityPP(BaseTester):
 
 
 class TestStationarityERS(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -285,17 +355,37 @@ class TestStationarityERS(BaseTester):
         cls.result_ers_basic = ers(y=cls.data_basic)
         cls.result_ers_noise = ers(y=cls.data_noise)
         ar_ers_airline = ar_ers(y=cls.data_airline)
-        cls.result_ar_ers_airline = (ar_ers_airline.pvalue, ar_ers_airline.stat)
+        cls.result_ar_ers_airline = (
+            float(ar_ers_airline.stat),
+            float(ar_ers_airline.pvalue),
+            int(ar_ers_airline.lags),
+            dict(ar_ers_airline.critical_values),
+        )
         ar_ers_random = ar_ers(y=cls.data_random)
-        cls.result_ar_ers_random = (ar_ers_random.pvalue, ar_ers_random.stat)
+        cls.result_ar_ers_random = (
+            float(ar_ers_random.stat),
+            float(ar_ers_random.pvalue),
+            int(ar_ers_random.lags),
+            dict(ar_ers_random.critical_values),
+        )
         # ar_ers_sine = ar_ers(y=cls.data_sine)
-        # cls.result_ar_ers_sine = (ar_ers_sine.pvalue, ar_ers_sine.stat)
+        # cls.result_ar_ers_sine = (float(ar_ers_sine.stat), float(ar_ers_sine.pvalue), int(ar_ers_sine.lags), dict(ar_ers_sine.critical_values))
         # ar_ers_line = ar_ers(y=cls.data_line)
-        # cls.result_ar_ers_line = (ar_ers_line.pvalue, ar_ers_line.stat)
+        # cls.result_ar_ers_line = (float(ar_ers_line.stat), float(ar_ers_line.pvalue), int(ar_ers_line.lags), dict(ar_ers_line.critical_values))
         ar_ers_basic = ar_ers(y=cls.data_basic)
-        cls.result_ar_ers_basic = (ar_ers_basic.pvalue, ar_ers_basic.stat)
+        cls.result_ar_ers_basic = (
+            float(ar_ers_basic.stat),
+            float(ar_ers_basic.pvalue),
+            int(ar_ers_basic.lags),
+            dict(ar_ers_basic.critical_values),
+        )
         ar_ers_noise = ar_ers(y=cls.data_noise)
-        cls.result_ar_ers_noise = (ar_ers_noise.pvalue, ar_ers_noise.stat)
+        cls.result_ar_ers_noise = (
+            float(ar_ers_noise.stat),
+            float(ar_ers_noise.pvalue),
+            int(ar_ers_noise.lags),
+            dict(ar_ers_noise.critical_values),
+        )
 
     def setUp(self):
         pass
@@ -322,6 +412,7 @@ class TestStationarityERS(BaseTester):
 
 
 class TestStationarityVR(BaseTester):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -333,24 +424,24 @@ class TestStationarityVR(BaseTester):
         cls.result_vr_noise = vr(y=cls.data_noise)
         ar_vr_airline = ar_vr(y=cls.data_airline)
         cls.result_ar_vr_airline = (
-            ar_vr_airline.pvalue,
-            ar_vr_airline.stat,
-            ar_vr_airline.vr,
+            float(ar_vr_airline.stat),
+            float(ar_vr_airline.pvalue),
+            float(ar_vr_airline.vr),
         )
         ar_vr_random = ar_vr(y=cls.data_random)
         cls.result_ar_vr_random = (
-            ar_vr_random.pvalue,
-            ar_vr_random.stat,
-            ar_vr_random.vr,
+            float(ar_vr_random.stat),
+            float(ar_vr_random.pvalue),
+            float(ar_vr_random.vr),
         )
         ar_vr_sine = ar_vr(y=cls.data_sine)
-        cls.result_ar_vr_sine = (ar_vr_sine.pvalue, ar_vr_sine.stat, ar_vr_sine.vr)
+        cls.result_ar_vr_sine = (float(ar_vr_sine.stat), float(ar_vr_sine.pvalue), float(ar_vr_sine.vr))
         ar_vr_line = ar_vr(y=cls.data_line)
-        cls.result_ar_vr_line = (ar_vr_line.pvalue, ar_vr_line.stat, ar_vr_line.vr)
+        cls.result_ar_vr_line = (float(ar_vr_line.stat), float(ar_vr_line.pvalue), float(ar_vr_line.vr))
         ar_vr_basic = ar_vr(y=cls.data_basic)
-        cls.result_ar_vr_basic = (ar_vr_basic.pvalue, ar_vr_basic.stat, ar_vr_basic.vr)
+        cls.result_ar_vr_basic = (float(ar_vr_basic.stat), float(ar_vr_basic.pvalue), float(ar_vr_basic.vr))
         ar_vr_noise = ar_vr(y=cls.data_noise)
-        cls.result_ar_vr_noise = (ar_vr_noise.pvalue, ar_vr_noise.stat, ar_vr_noise.vr)
+        cls.result_ar_vr_noise = (float(ar_vr_noise.stat), float(ar_vr_noise.pvalue), float(ar_vr_noise.vr))
 
     def setUp(self):
         pass
