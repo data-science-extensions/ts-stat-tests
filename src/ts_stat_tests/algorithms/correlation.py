@@ -229,19 +229,12 @@ def acf(
             Defaults to `"none"`.
 
     Returns:
-        acf (np.ndarray):
-            The autocorrelation function for lags `0, 1, ..., nlags`.<br>
-            Shape `(nlags+1,)`.
-        confint (Optional[np.ndarray]):
-            Confidence intervals for the ACF at lags `0, 1, ..., nlags`.<br>
-            Shape `(nlags + 1, 2)`.<br>
-            Returned if `alpha` is not `None`.
-        qstat (Optional[np.ndarray]):
-            The Ljung-Box Q-Statistic for lags `1, 2, ..., nlags` (excludes lag zero).<br>
-            Returned if `qstat` is `True`.
-        pvalues (Optional[np.ndarray]):
-            The p-values associated with the Q-statistics for lags `1, 2, ..., nlags` (excludes lag zero).<br>
-            Returned if `qstat` is `True`.
+        (Union[np.ndarray, tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]):
+            Depending on `qstat` and `alpha`, returns the following values:
+            - `acf` (np.ndarray): The autocorrelation function for lags `0, 1, ..., nlags`.
+            - `confint` (np.ndarray, optional): Confidence intervals for the ACF (returned if `alpha` is not `None`).
+            - `qstat` (np.ndarray, optional): The Ljung-Box Q-Statistic (returned if `qstat` is `True`).
+            - `pvalues` (np.ndarray, optional): P-values associated with the Q-statistics (returned if `qstat` is `True`).
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Test ACF without FFT"}
@@ -422,13 +415,10 @@ def pacf(
             Defaults to `None`.
 
     Returns:
-        pacf (np.ndarray):
-            The partial autocorrelations for lags `0, 1, ..., nlags`.<br>
-            Shape `(nlags+1,)`.
-        confint (Optional[np.ndarray]):
-            Confidence intervals for the PACF at lags `0, 1, ..., nlags`.<br>
-            Shape `(nlags + 1, 2)`.<br>
-            Returned if `alpha` is not `None`.
+        (Union[np.ndarray, tuple[np.ndarray, np.ndarray]]):
+            Depending on `alpha`, returns the following values:
+            - `pacf` (np.ndarray): The partial autocorrelations for lags `0, 1, ..., nlags`.
+            - `confint` (np.ndarray, optional): Confidence intervals for the PACF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Test PACF using Yule-Walker method with sample-size adjustment"}
@@ -692,8 +682,10 @@ def ccf(
             Defaults to `None`.
 
     Returns:
-        ccf (np.ndarray):
-            The cross-correlation function of `x` and `y`.
+        (Union[np.ndarray, tuple[np.ndarray, np.ndarray]]):
+            Depending on `alpha`, returns the following values:
+            - `ccf` (np.ndarray): The cross-correlation function of `x` and `y` for lags `0, 1, ..., nlags`.
+            - `confint` (np.ndarray, optional): Confidence intervals for the CCF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Test CCF without FFT"}
@@ -816,14 +808,12 @@ def lb(
             Defaults to `False`.
 
     Returns:
-        lbvalue (Union[float, np.ndarray]):
-            The Ljung-Box test statistic.
-        pvalue (Union[float, np.ndarray]):
-            The p-value based on chi-square distribution. The p-value is computed as $1 - \text{cdf}(lbvalue, dof)$ where $dof$ is $lag - model\_df$. If $lag - model\_df \le 0$, then `NaN` is returned for the `pvalue`.
-        bpvalue (Optional[Union[float, np.ndarray]]):
-            The test statistic for Box-Pierce test.
-        bppvalue (Optional[Union[float, np.ndarray]]):
-            The p-value based for Box-Pierce test on chi-square distribution. The p-value is computed as $1 - \text{cdf}(bpvalue, dof)$ where $dof$ is $lag - model\_df$. If $lag - model\_df \le 0$, then `NaN` is returned for the `pvalue`.
+        (Union[pd.DataFrame, tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]):
+            Depending on `return_df` and `boxpierce`, returns the following values:
+            - `lb_stat` (np.ndarray): The Ljung-Box test statistic.
+            - `lb_pvalue` (np.ndarray): The p-value for the Ljung-Box test.
+            - `bp_stat` (np.ndarray, optional): The Box-Pierce test statistic (returned if `boxpierce` is `True`).
+            - `bp_pvalue` (np.ndarray, optional): The p-value for the Box-Pierce test (returned if `boxpierce` is `True`).
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Python"}
@@ -981,17 +971,13 @@ def lm(
             Dictionary of covariance options passed to `OLS.fit`. See [`OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html) for more details. Defaults to `None`.
 
     Returns:
-
-        lm (float):
-            Lagrange multiplier test statistic.
-        lmpval (float):
-            The p-value for Lagrange multiplier test.
-        fval (float):
-            The f-statistic of the F test, alternative version of the same test based on F test for the parameter restriction.
-        fpval (float):
-            The p-value of the F test.
-        res_store (Optional[ResultsStore]):
-            Intermediate results. Only returned if `store=True`.
+        (Union[tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+            Returns the following values:
+            - `lm` (float): Lagrange multiplier test statistic.
+            - `lmpval` (float): The p-value for the Lagrange multiplier test.
+            - `fval` (float): The f-statistic of the F test.
+            - `fpval` (float): The p-value of the F test.
+            - `res_store` (ResultsStore, optional): Intermediate results (returned if `store` is `True`).
 
     ???+ example "Examples"
 
@@ -1097,17 +1083,13 @@ def bglm(
             If `store` is `True`, then an additional class instance that contains intermediate results is returned. Defaults to `False`.
 
     Returns:
-
-        lm (float):
-            Lagrange multiplier test statistic.
-        lmpval (float):
-            The p-value for Lagrange multiplier test.
-        fval (float):
-            The value of the f-statistic for F test, alternative version of the same test based on F test for the parameter restriction.
-        fpval (float):
-            The p-value of the F test.
-        res_store (Optional[ResultsStore]):
-            A class instance that holds intermediate results. Only returned if `store=True`.
+        (Union[tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+            Returns the following values:
+            - `lm` (float): Lagrange multiplier test statistic.
+            - `lmpval` (float): The p-value for the Lagrange multiplier test.
+            - `fval` (float): The value of the f-statistic for the F test.
+            - `fpval` (float): The p-value of the F test.
+            - `res_store` (ResultsStore, optional): Intermediate results (returned if `store` is `True`).
 
     ???+ example "Examples"
 

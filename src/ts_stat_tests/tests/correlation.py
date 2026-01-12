@@ -152,8 +152,8 @@ def correlation(
             Additional keyword arguments specific to the chosen algorithm.
 
     Returns:
-        (Any):
-            The result of the specified correlation test.
+        (Union[np.ndarray, tuple[np.ndarray, ...], pd.DataFrame, tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+            Returns the result of the specified correlation test.
     """
 
     options: dict[str, tuple[str, ...]] = {
