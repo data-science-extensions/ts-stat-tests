@@ -124,9 +124,8 @@ def is_almost_equal(
         (bool):
             `True` if the values are almost equal, `False` otherwise.
 
-    ??? success "Credit":
-        Inspiration from Python's UnitTest function `assertAlmostEqual`.
-        See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
+    !!! success "Credit"
+        Inspiration from Python's UnitTest function [`assertAlmostEqual`](https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py).
     """
     if places is not None and delta is not None:
         raise ValueError(f"Specify `delta` or `places`, not both.")
@@ -174,11 +173,10 @@ def assert_almost_equal(
 
     Returns:
         (None):
-            Raises an `AssertionError` if the values are not almost equal to within the tolerances specified.
+            None. Raises an `AssertionError` if the values are not almost equal to within the tolerances specified.
 
-    ??? success "Credit":
-        Inspiration from Python's UnitTest function `assertAlmostEqual`.
-        See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
+    !!! success "Credit"
+        Inspiration from Python's UnitTest function [`assertAlmostEqual`](https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py).
     """
     params: dict[str, Optional[Union[float, int]]] = {
         "first": first,

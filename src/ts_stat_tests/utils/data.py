@@ -60,12 +60,11 @@ def load_airline() -> pd.Series:
         (pd.Series):
             The Airline Passengers dataset.
 
-    ??? success "Credit":
-        Inspiration from: `sktime.datasets.load_airline()`
+    !!! success "Credit"
+        Inspiration from: [`sktime.datasets.load_airline()`](https://www.sktime.net/en/stable/api_reference/generated/sktime.datasets.load_airline.html)
 
-    ??? question "References":
-        - Box, G. E. P., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). Time series analysis:
-          forecasting and control. John Wiley & Sons.
+    ??? quote "References"
+        - Box, G. E. P., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). Time series analysis: forecasting and control. John Wiley & Sons.
     """
     data_source = "https://raw.githubusercontent.com/sktime/sktime/main/sktime/datasets/data/Airline/Airline.csv"
     _data = pd.read_csv(data_source, index_col=0, dtype={1: float}).squeeze("columns")
