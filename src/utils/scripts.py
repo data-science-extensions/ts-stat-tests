@@ -281,7 +281,7 @@ def check_doctest_module(module_name: str) -> None:
 
 
 def check_doctest_cli() -> None:
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print("Requires argument: <module_name>")
         sys.exit(1)
     check_doctest_module(sys.argv[2])
