@@ -25,14 +25,9 @@
     There are several different types of stationarity tests, including the Augmented Dickey-Fuller (ADF) test, the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test, the Phillips-Perron (PP) test, the Elliott-Rothenberg-Stock (ERS) test, and the Variance Ratio (VR) test. Each of these tests has its own strengths and weaknesses, and the choice of which test to use will depend on the specific characteristics of the time series being analyzed.
 
     Overall, stationarity tests are an important tool in time series analysis and forecasting, as they help identify whether a time series is stationary or non-stationary, which can have implications for the choice of forecasting models and methods.
+
+    For a really good article on ADF & KPSS tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
 """
-
-
-# from pmdarima.arima.stationarity import PPTest, ADFTest, KPSSTest
-# from statsmodels.tsa.api import adfuller, kpss
-# """
-# For a really good article on ADF & KPSS tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
-# """
 
 
 # ---------------------------------------------------------------------------- #
