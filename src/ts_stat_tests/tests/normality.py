@@ -122,9 +122,9 @@ def normality(
             When the given value for `algorithm` is not valid.
 
     Returns:
-        (Union[tuple[float, float], object]):
+        (Union[tuple[float, float], tuple[float, list[float], list[float]]]):
             If not `"ad"`, returns a `tuple` of `(stat, pvalue)`.
-            If `"ad"`, returns the internal library result object from `scipy.stats`.
+            If `"ad"`, returns a `tuple` of `(stat, critical_values, significance_level)`.
 
     !!! success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.
@@ -164,7 +164,8 @@ def normality(
         "ad": ("ad", "anderson", "anderson-darling"),
     }
     if algorithm in options["jb"]:
-        return _jb(x=x, axis=axis)
+        res_jb = _jb(x=x, axis=axis)
+        return (res_jb[0], res_jb[1])
     if algorithm in options["ob"]:
         return _ob(x=x, axis=axis)
     if algorithm in options["sw"]:
