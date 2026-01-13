@@ -37,9 +37,10 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal
+from typing import Literal, Protocol
 
 # ## Python Third Party Imports ----
+import numpy as np
 from numpy.typing import ArrayLike
 from scipy.stats import anderson as _ad, normaltest as _dp, shapiro as _sw
 from statsmodels.stats.stattools import jarque_bera as _jb, omni_normtest as _ob
@@ -65,6 +66,24 @@ VALID_DP_NAN_POLICY_OPTIONS = Literal["propagate", "raise", "omit"]
 VALID_AD_DIST_OPTIONS = Literal[
     "norm", "expon", "logistic", "gumbel", "gumbel_l", "gumbel_r", "extreme1", "weibull_min"
 ]
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Classes                                                               ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+class AndersonResult(Protocol):
+    """
+    !!! note "Summary"
+        Protocol for Anderson-Darling test result.
+    """
+
+    statistic: float
+    critical_values: np.ndarray
+    significance_level: np.ndarray
 
 
 # ---------------------------------------------------------------------------- #
@@ -509,9 +528,9 @@ def ad(
         - [`sw()`][ts_stat_tests.algorithms.normality.sw]
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
     """
-    res = _ad(x=x, dist=dist)
+    res = cast(AndersonResult, _ad(x=x, dist=dist))
     return (
-        float(res.statistic),  # type: ignore
-        res.critical_values.tolist(),  # type: ignore
-        res.significance_level.tolist(),  # type: ignore
+        float(res.statistic),
+        res.critical_values.tolist(),
+        res.significance_level.tolist(),
     )
