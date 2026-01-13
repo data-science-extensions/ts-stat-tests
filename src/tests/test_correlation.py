@@ -33,7 +33,7 @@ from statsmodels.tsa.stattools import (
 from tests.setup import BaseTester
 from ts_stat_tests.algorithms.correlation import acf, bglm, ccf, lb, lm, pacf
 from ts_stat_tests.tests.correlation import correlation, is_correlated
-from ts_stat_tests.utils.data import load_airline
+from ts_stat_tests.utils.data import get_uniform_data, load_airline, load_macrodata
 from ts_stat_tests.utils.errors import assert_almost_equal, is_almost_equal
 
 
@@ -170,7 +170,6 @@ class TestCorrelation(BaseTester):
             is_correlated()
 
     def test_load_airline_type_error(self) -> None:
-        # Covers ts_stat_tests/utils/data.py line 73
         mock_df = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
         load_airline.cache_clear()
         with patch("pandas.read_csv", return_value=mock_df):
@@ -178,18 +177,27 @@ class TestCorrelation(BaseTester):
                 load_airline()
         load_airline.cache_clear()
 
+    def test_load_macrodata_type_error(self) -> None:
+        load_macrodata.cache_clear()
+        with patch("pandas.read_csv", return_value=pd.Series(dtype=float)):
+            with raises(TypeError, match="Expected a pandas DataFrame from the data source."):
+                load_macrodata()
+        load_macrodata.cache_clear()
+
+    def test_get_uniform_data(self) -> None:
+        res = get_uniform_data(42)
+        assert isinstance(res, np.ndarray)
+        assert res.shape == (1000,)
+
     def test_is_almost_equal_value_error(self) -> None:
-        # Covers ts_stat_tests/utils/errors.py line 132
         with raises(ValueError, match="Specify `delta` or `places`, not both."):
             is_almost_equal(1.0, 1.1, places=7, delta=0.1)
 
     def test_is_almost_equal_with_delta(self) -> None:
-        # Covers ts_stat_tests/utils/errors.py lines 137-138
         assert is_almost_equal(1.0, 1.05, delta=0.1) is True
         assert is_almost_equal(1.0, 1.2, delta=0.1) is False
 
     def test_assert_almost_equal_failures(self) -> None:
-        # Covers ts_stat_tests/utils/errors.py lines 191-198
         with raises(AssertionError, match="within 0.1 delta"):
             assert_almost_equal(1.0, 1.2, delta=0.1)
 

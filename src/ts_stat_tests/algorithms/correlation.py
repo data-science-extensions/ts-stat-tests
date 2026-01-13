@@ -981,7 +981,7 @@ def lm(
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
-    return acorr_lm(  # type: ignore  # statsmodels' acorr_lm has incomplete type hints for these arguments
+    return acorr_lm(  # type: ignore # statsmodels typing is incomplete/incompatible
         resid=resid,
         nlags=nlags,
         store=store,
@@ -1117,7 +1117,7 @@ def bglm(
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
     """
-    return acorr_breusch_godfrey(  # type: ignore  # statsmodels typing for acorr_breusch_godfrey is incomplete/incompatible with our RegressionResults types
+    return acorr_breusch_godfrey(  # type: ignore # statsmodels typing is incomplete/incompatible
         res=res,
         nlags=nlags,
         store=store,
