@@ -121,9 +121,6 @@ def approx_entropy(
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance). For a full list of all available metrics, see [`sklearn.metrics.pairwise.distance_metrics`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html) and [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)<br>
             Defaults to `"chebyshev"`.
 
-    Raises:
-        None: This function does not explicitly raise any exceptions.
-
     Returns:
         (float):
             The approximate entropy score.
@@ -236,9 +233,6 @@ def sample_entropy(
         metric (VALID_KDTREE_METRIC_OPTIONS, optional):
             Name of the distance metric function used with [`sklearn.neighbors.KDTree`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree). Default is to use the [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance). For a full list of all available metrics, see [`sklearn.metrics.pairwise.distance_metrics`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html) and [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)<br>
             Defaults to `"chebyshev"`.
-
-    Raises:
-        None: This function does not explicitly raise any exceptions.
 
     Returns:
         (float):
@@ -373,9 +367,6 @@ def permutation_entropy(
             If `True`, divide by $\log_2(\text{order}!)$ to normalize the entropy between $0$ and $1$. Otherwise, return the permutation entropy in bits.<br>
             Defaults to `False`.
 
-    Raises:
-        None: This function does not explicitly raise any exceptions.
-
     Returns:
         (float):
             The permutation entropy of the data set.
@@ -508,9 +499,6 @@ def spectral_entropy(
             The axis along which the entropy is calculated. Default is the last axis.<br>
             Defaults to `-1`.
 
-    Raises:
-        None: This function does not explicitly raise any exceptions.
-
     Returns:
         (Union[float, np.ndarray]):
             The spectral entropy score. Returned as a float for 1D input, or a numpy array for N-dimensional input.
@@ -625,9 +613,6 @@ def svd_entropy(
         normalize (bool, optional):
             If `True`, divide by $\log_2(\text{order}!)$ to normalize the entropy between $0$ and $1$.<br>
             Defaults to `False`.
-
-    Raises:
-        None: This function does not explicitly raise any exceptions.
 
     Returns:
         (float):

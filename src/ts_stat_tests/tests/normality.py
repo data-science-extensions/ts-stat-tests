@@ -118,7 +118,8 @@ def normality(
             Default: `"norm"`
 
     Raises:
-        ValueError: When the given value for `algorithm` is not valid.
+        (ValueError):
+            When the given value for `algorithm` is not valid.
 
     Returns:
         (Union[tuple[float, float], object]):

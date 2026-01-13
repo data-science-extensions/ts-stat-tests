@@ -104,6 +104,10 @@ def jb(
             Axis to use if data has more than 1 dimension.
             Default: `0`
 
+    Raises:
+        (ValueError):
+            If the input data `x` is invalid.
+
     Returns:
         JB (float):
             The Jarque-Bera test statistic.
@@ -304,6 +308,10 @@ def ob(
         axis (int):
             Axis to use if data has more than 1 dimension.
             Default: `0`
+
+    Raises:
+        (ValueError):
+            If the input data `x` is invalid.
 
     Returns:
         statistic (float):
@@ -507,6 +515,10 @@ def sw(
         x (ArrayLike):
             Array of sample data.
 
+    Raises:
+        (ValueError):
+            If the input data `x` is invalid.
+
     Returns:
         statistic (float):
             The test statistic.
@@ -687,6 +699,10 @@ def dp(
             - `"omit"`: performs the calculations ignoring nan values
             
             Default: `"propagate"`
+
+    Raises:
+        (ValueError):
+            If the input data `x` is invalid.
 
     Returns:
         statistic (float):
@@ -920,6 +936,10 @@ def ad(
         dist (VALID_AD_DIST_OPTIONS):
             The type of distribution to test against.
             Default: `"norm"`
+
+    Raises:
+        (ValueError):
+            If the input data `x` is invalid.
 
     Returns:
         statistic (float):

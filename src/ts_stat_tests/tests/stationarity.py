@@ -110,7 +110,8 @@ def stationarity(
             Additional arguments to pass to the underlying algorithm.
 
     Raises:
-        ValueError: When the given value for `algorithm` is not valid.
+        (ValueError):
+            When the given value for `algorithm` is not valid.
 
     Returns:
         (tuple[Union[float, int, dict, ResultsStore, None], ...]):

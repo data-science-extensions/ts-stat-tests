@@ -121,7 +121,8 @@ def entropy(
             Defaults to `True`.
 
     Raises:
-        ValueError: When the given value for `algorithm` is not valid.
+        (ValueError):
+            When the given value for `algorithm` is not valid.
 
     Returns:
         (float):
@@ -380,7 +381,8 @@ def is_regular(
             Defaults to `"default"`.
 
     Raises:
-        (ValueError): If the given `tolerance` parameter is invalid.
+        (ValueError):
+            If the given `tolerance` parameter is invalid.
 
             Valid options are:
 
