@@ -63,6 +63,7 @@
             member_order: source
             filters:
                 - "^is"
+                - "^correlation"
 
 ## Correlation Algorithms
 

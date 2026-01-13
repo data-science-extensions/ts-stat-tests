@@ -53,6 +53,7 @@
             member_order: source
             filters:
                 - "^is"
+                - "^stationarity"
 
 ## Stationarity Algorithms
 

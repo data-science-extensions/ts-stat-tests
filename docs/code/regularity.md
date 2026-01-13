@@ -60,6 +60,8 @@
             member_order: source
             filters:
                 - "^is"
+                - "^entropy"
+                - "^regularity"
 
 ## Regularity Algorithms
 
