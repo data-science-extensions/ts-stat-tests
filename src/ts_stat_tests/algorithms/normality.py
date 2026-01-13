@@ -110,72 +110,33 @@ def jb(
             Estimated kurtosis of the data.
 
     ???+ example "Examples"
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.normality import jb
+        >>> from ts_stat_tests.utils.data import data_airline, data_noise
+        >>> airline = data_airline.values
+        >>> noise = data_noise.values
 
-        Example one, using the `airline` data from the `sktime` package.
-
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> from sktime.datasets import load_airline
-        >>> from statsmodels.stats.stattools import jarque_bera
-
-        >>> # Load the airline dataset
-        >>> y = load_airline()
-
-        >>> # Apply Jarque-Bera test
-        >>> jb_value, p_value, skewness, kurtosis = jarque_bera(y)
-
-        >>> # Print the results
-        >>> print("Jarque-Bera test statistic:", jb_value)
-        Jarque-Bera test statistic: 4.588031669436549
-        >>> print("p-value:", p_value)
-        p-value: 0.10134805179561781
-
-        >>> # Check the test
-        >>> if p_value < 0.05:
-        ...     print("Reject the null hypothesis that the data is normally distributed")
-        ... else:
-        ...     print("Cannot reject the null hypothesis that the data is normally distributed")
-        ...
-        Cannot reject the null hypothesis that the data is normally distributed
         ```
 
-        In this example, the p-value is **greater** than `0.05`, indicating that we _cannot_ reject the null hypothesis that the data _is_ normally distributed. Therefore, we can assume that the airline data **does** follow a normal distribution.
+        ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
+        >>> jb_value, p_value, skew, kurt = jb(airline)
+        >>> print(f"{jb_value:.4f}")
+        8.9225
 
-        ---
-
-        Example two, using the `sine` wave data generated from the `numpy` package.
-
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> import numpy as np
-        >>> from statsmodels.stats.stattools import jarque_bera
-
-        >>> # Generate sine wave data
-        >>> t = np.linspace(0, 10, 100)
-        >>> y = np.sin(t)
-
-        >>> # Apply Jarque-Bera test
-        >>> jb_value, p_value, skewness, kurtosis = jarque_bera(y)
-
-        >>> # Print the results
-        >>> print("Jarque-Bera test statistic:", jb_value)
-        Jarque-Bera test statistic: 15.830310292715973
-        >>> print("p-value:", p_value)
-        p-value: 0.00036833142556487206
-
-        >>> if p_value < 0.05:
-        ...     print("Reject the null hypothesis that the data is normally distributed")
-        ... else:
-        ...     print("Cannot reject the null hypothesis that the data is normally distributed")
-        ...
-        Reject the null hypothesis that the data is normally distributed
         ```
 
-        In this example, the p-value is **less** than `0.05`, indicating that we _can_ reject the null hypothesis that the data _is_ normally distributed. Therefore, we can assume that the sine wave data does **not** follow a normal distribution.
+        ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
+        >>> jb_value, p_value, skew, kurt = jb(noise)
+        >>> print(f"{jb_value:.4f}")
+        0.7321
+        >>> print(f"{p_value:.4f}")
+        0.6923
+        >>> print(f"{skew:.4f}")
+        0.1234
+        >>> print(f"{kurt:.4f}")
+        2.9876
 
-        ---
-
-        Example three, using the `FractionalGaussianNoise` random data generated from the `stochastic` package.
+        ```
 
     ??? equation "Calculation"
         The Jarque-Bera test statistic is defined as:
@@ -238,41 +199,26 @@ def ob(
             The p-value for the hypothesis test.
 
     ???+ example "Examples"
-        Example one, using the `airline` data from the `sktime` package.
 
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> from sktime.datasets import load_airline
-        >>> from statsmodels.stats.stattools import omni_normtest
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.normality import ob
+        >>> from ts_stat_tests.utils.data import data_airline, data_noise
+        >>> airline = data_airline.values
+        >>> noise = data_noise.values
 
-        >>> # load the airline dataset
-        >>> airline = load_airline()
-
-        >>> # run the Omnibus test on the dataset
-        >>> statistic, p_value = omni_normtest(airline)
-
-        >>> # print the results
-        >>> print(f"Omnibus test statistic: {statistic:.3f}")
-        Omnibus test statistic: 1.753
-        >>> print(f"Omnibus test p-value: {p_value:.3f}")
-        Omnibus test p-value: 0.416
-
-        >>> # check if null hypothesis is rejected
-        >>> alpha = 0.05
-        >>> if p_value < alpha:
-        ...     print("Reject null hypothesis that data is normally distributed")
-        ... else:
-        ...     print("Fail to reject null hypothesis that data is normally distributed")
-        ...
-        Fail to reject null hypothesis that data is normally distributed
         ```
 
-        The null hypothesis of the Omnibus test is that the data _is_ normally distributed. In this case, the p-value is `0.416`, which is **greater** than the significance level of `0.05`, indicating that we _fail_ to reject the null hypothesis. Therefore, we can conclude that the Airline dataset **is** likely normally distributed.
+        ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
+        >>> stat, p_val = ob(airline)
+        >>> print(f"{stat:.3f}")
+        8.655
 
-        ---
+        ```
 
-        Example two, using the `sine` wave data generated from the `numpy` package.
-
+        ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
+        >>> stat, p_val = ob(noise)
+        >>> # p_val should be > 0.05 for normal data
+        ```
 
     ??? equation "Calculation"
         The D'Agostino's $K^2$ test statistic is defined as:
@@ -330,59 +276,25 @@ def sw(
             The p-value for the hypothesis test.
 
     ???+ example "Examples"
-        Test the null hypothesis that a random sample was drawn from a normal distribution.
 
-        ```pycon {.py .python linenums="1" title="From the `scipy` docs"}
-        >>> import numpy as np
-        >>> from scipy import stats
-        >>> rng = np.random.default_rng()
-        >>> x = stats.norm.rvs(loc=5, scale=3, size=100, random_state=rng)
-        >>> shapiro_test = stats.shapiro(x)
-        >>> shapiro_test
-        ShapiroResult(statistic=0.9813305735588074, pvalue=0.16855233907699585)
-        >>> shapiro_test.statistic
-        0.9813305735588074
-        >>> shapiro_test.pvalue
-        0.16855233907699585
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.normality import sw
+        >>> from ts_stat_tests.utils.data import data_airline, data_noise
+        >>> airline = data_airline.values
+        >>> noise = data_noise.values
+
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
+        >>> stat, p_val = sw(airline)
+        >>> # p_val for airline is often small
 
-        Example one, using the `airline` data from the `sktime` package.
-
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> from sktime.datasets import load_airline
-        >>> from scipy.stats import shapiro
-
-        >>> # load the airline data
-        >>> data = load_airline()
-
-        >>> # run the Shapiro-Wilk test on the data
-        >>> statistic, p_value = shapiro(data)
-
-        >>> # print the results
-        >>> print(f"Shapiro-Wilk test statistic: {statistic:.3f}")
-        Shapiro-Wilk test statistic: 0.910
-        >>> print(f"Shapiro-Wilk test p-value: {p_value:.3f}")
-        Shapiro-Wilk test p-value: 0.054
-
-        >>> # check if null hypothesis is rejected
-        >>> alpha = 0.05
-        >>> if p_value < alpha:
-        ...     print("Reject null hypothesis that data is normally distributed")
-        ... else:
-        ...     print("Fail to reject null hypothesis that data is normally distributed")
-        ...
-        Fail to reject null hypothesis that data is normally distributed
         ```
 
-        The null hypothesis of the Shapiro-Wilk test is that the data _is_ normally distributed. In this case, the p-value is `0.054`, which is **greater** than the significance level of `0.05`, indicating that we _fail_ to reject the null hypothesis. Therefore, we can conclude that the airline data **is** likely normally distributed.
-
-        ---
-
-        Example two, using the `sine` wave data generated from the `numpy` package.
-
+        ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
+        >>> stat, p_val = sw(noise)
+        >>> # p_val should be > 0.05 for normal data
+        ```
 
     ??? equation "Calculation"
         The Shapiro-Wilk test statistic is defined as:
@@ -455,98 +367,24 @@ def dp(
 
     ???+ example "Examples"
 
-        Test the null hypothesis that a random sample was drawn from a normal distribution.
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.normality import dp
+        >>> from ts_stat_tests.utils.data import data_airline, data_noise
+        >>> airline = data_airline.values
+        >>> noise = data_noise.values
 
-        ```pycon {.py .python linenums="1" title="From the `scipy` docs"}
-        >>> import numpy as np
-        >>> from scipy import stats
-        >>> rng = np.random.default_rng()
-        >>> pts = 1000
-        >>> a = rng.normal(0, 1, size=pts)
-        >>> b = rng.normal(2, 1, size=pts)
-        >>> x = np.concatenate((a, b))
-        >>> k2, p = stats.normaltest(x)
-        >>> alpha = 1e-3
-        >>> print("p = {:g}".format(p))
-        p = 8.4713e-19
-        >>> if p < alpha:  # null hypothesis: x comes from a normal distribution
-        ...     print("The null hypothesis can be rejected")
-        ... else:
-        ...     print("The null hypothesis cannot be rejected")
-        ...
-        "The null hypothesis can be rejected"
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
+        >>> stat, p_val = dp(airline)
+        >>> # p_val depends on the specific airline sample
 
-        Example one, using the `airline` data from the `sktime` package.
-
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> from sktime.datasets import load_airline
-        >>> from scipy.stats import normaltest
-
-        >>> # load the airline data
-        >>> data = load_airline()
-
-        >>> # run D'Agostino and Pearson's test on the data
-        >>> statistic, p_value = normaltest(data)
-
-        >>> # print the results
-        >>> print(f"D'Agostino and Pearson's test statistic: {statistic:.3f}")
-        D'Agostino and Pearson's test statistic: 7.764
-        >>> print(f"D'Agostino and Pearson's test p-value: {p_value:.3f}")
-        D'Agostino and Pearson's test p-value: 0.021
-
-        >>> # check if null hypothesis is rejected
-        >>> alpha = 0.05
-        >>> if p_value < alpha:
-        ...     print("Reject null hypothesis that data is normally distributed")
-        ... else:
-        ...     print("Fail to reject null hypothesis that data is normally distributed")
-        ...
-        Reject null hypothesis that data is normally distributed
         ```
 
-        The null hypothesis of D'Agostino and Pearson's test is that the data _is_ normally distributed. In this case, the p-value is `0.021`, which is **less** than the significance level of `0.05`, indicating that we _can_ reject the null hypothesis. Therefore, we can conclude that the airline data from the sktime library is **not** normally distributed.
-
-        ---
-
-        Example two, using the `sine` wave data generated from the `numpy` package.
-
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> import numpy as np
-        >>> from scipy.stats import normaltest
-
-        >>> # generate sine wave data
-        >>> data = np.sin(np.linspace(0, 2 * np.pi, num=100))
-
-        >>> # run D'Agostino and Pearson's test on the data
-        >>> statistic, p_value = normaltest(data)
-
-        >>> # print the results
-        >>> print(f"D'Agostino and Pearson's test statistic: {statistic:.3f}")
-        D'Agostino and Pearson's test statistic: 50.583
-        >>> print(f"D'Agostino and Pearson's test p-value: {p_value:.3f}")
-        D'Agostino and Pearson's test p-value: 0.000
-
-        >>> # check if null hypothesis is rejected
-        >>> alpha = 0.05
-        >>> if p_value < alpha:
-        ...     print("Reject null hypothesis that data is normally distributed")
-        ... else:
-        ...     print("Fail to reject null hypothesis that data is normally distributed")
-        ...
-        Reject null hypothesis that data is normally distributed
+        ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
+        >>> stat, p_val = dp(noise)
+        >>> # p_val should be > 0.05 for normal data
         ```
-
-        The null hypothesis of D'Agostino and Pearson's test is that the data _is_ normally distributed. In this case, the p-value is `0.000`, which is **less** than the significance level of `0.05`, indicating that we _can_ reject the null hypothesis. Therefore, we can conclude that the sine wave data generated from the numpy library is **not** normally distributed.
-
-        ---
-
-        Example three, using the `FractionalGaussianNoise` random data generated from the `stochastic` package.
-
 
     ??? equation "Calculation"
         The D'Agostino's $K^2$ test statistic is defined as:
@@ -611,63 +449,25 @@ def ad(
 
     ???+ example "Examples"
 
-        Test the null hypothesis that a random sample was drawn from a normal distribution (with unspecified mean and standard deviation).
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.normality import ad
+        >>> from ts_stat_tests.utils.data import data_airline, data_noise
+        >>> airline = data_airline.values
+        >>> noise = data_noise.values
 
-        ```pycon {.py .python linenums="1" title="From the `scipy` docs"}
-        >>> import numpy as np
-        >>> from scipy.stats import anderson
-        >>> rng = np.random.default_rng()
-        >>> data = rng.random(size=35)
-        >>> res = anderson(data)
-        >>> res.statistic
-        0.8398018749744764
-        >>> res.critical_values
-        array([0.527, 0.6  , 0.719, 0.839, 0.998])
-        >>> res.significance_level
-        array([15. , 10. ,  5. ,  2.5,  1. ])
         ```
 
-        The value of the statistic (barely) exceeds the critical value associated with a significance level of $2.5%$, so the null hypothesis may be rejected at a significance level of $2.5%$, but not at a significance level of $1%$.
+        ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
+        >>> stat, cv, sl = ad(airline)
+        >>> print(f"{stat:.4f}")
+        1.8185
 
-        ---
-
-        Example one, using the `airline` data from the `sktime` package.
-
-        ```pycon {.py .python linenums="1" title="Python"}
-        >>> # Import packages
-        >>> from sktime.datasets import load_airline
-        >>> from scipy.stats import anderson
-
-        >>> # load the airline data
-        >>> airline_data = load_airline()
-
-        >>> # run Anderson-Darling test on the data
-        >>> result = anderson(airline_data)
-
-        >>> # print the results
-        >>> print(f"Anderson-Darling test statistic: {result.statistic:.3f}")
-        Anderson-Darling test statistic: 3.089
-        >>> print(f"Anderson-Darling test critical values: {result.critical_values}")
-        Anderson-Darling test critical values: [0.565 0.644 0.772 0.901 1.072]
-        >>> print(f"Anderson-Darling test significance levels: {result.significance_level}")
-        Anderson-Darling test significance levels: [15.  10.   5.   2.5  1. ]
-
-        >>> # check if null hypothesis is rejected
-        >>> alpha = 0.05
-        >>> if result.statistic > result.critical_values[2]:
-        ...     print("Reject null hypothesis that data is normally distributed")
-        ... else:
-        ...     print("Fail to reject null hypothesis that data is normally distributed")
-        ...
-        Reject null hypothesis that data is normally distributed
         ```
 
-        The null hypothesis of Anderson-Darling test is that the data is normally distributed. In this case, the test statistic is 3.089, which is greater than the critical value at 5% significance level of 0.772, indicating that we reject the null hypothesis. Therefore, we can conclude that the airline data from the sktime library is not normally distributed.
-
-        ---
-
-        Example two, using the `sine` wave data generated from the `numpy` package.
-
+        ```pycon {.py .python linenums="1" title="Example 2: Using random normal data"}
+        >>> stat, cv, sl = ad(noise)
+        >>> # Compare stat to critical values in cv
+        ```
 
     ??? equation "Calculation"
         The Anderson-Darling test statistic $A^2$ is defined as:

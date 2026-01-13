@@ -131,12 +131,29 @@ def normality(
 
     ???+ example "Examples"
 
-        `normality` with `dagostino-pearson` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> import numpy as np
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.normality import normality
-        >>> data = np.random.normal(0, 1, 100)
-        >>> result = normality(data, algorithm="dp")
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal.values
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: D'Agostino-Pearson test"}
+        >>> stat, pvalue = normality(normal, algorithm="dp")
+        >>> print(f"DP statistic: {stat:.4f}")
+        DP statistic: 0.1845
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.9119
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Jarque-Bera test"}
+        >>> stat, pvalue = normality(normal, algorithm="jb")
+        >>> print(f"JB statistic: {stat:.4f}")
+        JB statistic: 0.3671
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.8323
+
         ```
     """
     options: dict[str, tuple[str, ...]] = {
@@ -231,14 +248,28 @@ def is_normal(
 
     ???+ example "Examples"
 
-        `is_normal` with `dagostino-pearson` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> import numpy as np
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.normality import is_normal
-        >>> data = np.random.normal(0, 1, 100)
-        >>> result = is_normal(data, algorithm="dp")
-        >>> result["result"]
+        >>> from ts_stat_tests.utils.data import data_normal, data_uniform
+        >>> normal = data_normal.values
+        >>> uniform = data_uniform.values
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Test normal data"}
+        >>> res = is_normal(normal, algorithm="dp")
+        >>> res["result"]
         True
+        >>> print(f"p-value: {res['p_value']:.4f}")
+        p-value: 0.9119
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Test non-normal (uniform) data"}
+        >>> res = is_normal(uniform, algorithm="sw")
+        >>> res["result"]
+        False
+
         ```
     """
     res = normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist)
