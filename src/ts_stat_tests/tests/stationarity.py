@@ -122,12 +122,68 @@ def stationarity(
 
     ???+ example "Examples"
 
-        `stationarity` with `augmented_dickey_fuller` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> import numpy as np
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.stationarity import stationarity
-        >>> data = np.random.normal(0, 1, 100)
-        >>> result = stationarity(data, algorithm="adf")
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Augmented Dickey-Fuller"}
+        >>> result = stationarity(normal, algorithm="adf")
+        >>> print(f"ADF statistic: {result[0]:.4f}")
+        ADF statistic: -30.7838
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Kwiatkowski-Phillips-Schmidt-Shin"}
+        >>> result = stationarity(normal, algorithm="kpss")
+        >>> print(f"KPSS statistic: {result[0]:.4f}")
+        KPSS statistic: 0.0858
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Phillips-Perron"}
+        >>> result = stationarity(normal, algorithm="pp")
+        >>> print(f"PP statistic: {result[0]:.4f}")
+        PP statistic: -30.7758
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: Zivot-Andrews"}
+        >>> result = stationarity(normal, algorithm="za")
+        >>> print(f"ZA statistic: {result[0]:.4f}")
+        ZA statistic: -30.8800
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 5: Elliot-Rothenberg-Stock"}
+        >>> result = stationarity(normal, algorithm="ers")
+        >>> print(f"ERS statistic: {result[0]:.4f}")
+        ERS statistic: -30.1517
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 6: Variance Ratio"}
+        >>> result = stationarity(normal, algorithm="vr")
+        >>> print(f"VR statistic: {result[0]:.4f}")
+        VR statistic: -12.8518
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 7: Range Unit Root"}
+        >>> result = stationarity(normal, algorithm="rur")
+        >>> print(f"RUR statistic: {result[0]:.4f}")
+        RUR statistic: 0.3479
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 8: Invalid algorithm"}
+        >>> stationarity(normal, algorithm="invalid")
+        Traceback (most recent call last):
+            ...
+        ValueError: Invalid option for `algorithm` parameter: 'invalid'...
+
         ```
     """
     options: dict[str, tuple[str, ...]] = {
@@ -214,14 +270,38 @@ def is_stationary(
 
     ???+ example "Examples"
 
-        `is_stationary` with `adf` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> import numpy as np
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.stationarity import is_stationary
-        >>> data = np.random.normal(0, 1, 100)
-        >>> result = is_stationary(data, algorithm="adf")
-        >>> result["result"]
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: ADF test on stationary data"}
+        >>> res = is_stationary(normal, algorithm="adf")
+        >>> res["result"]
         True
+        >>> print(f"p-value: {res['pvalue']:.4f}")
+        p-value: 0.0000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: KPSS test on stationary data"}
+        >>> res = is_stationary(normal, algorithm="kpss")
+        >>> res["result"]
+        True
+        >>> print(f"p-value: {res['pvalue']:.4f}")
+        p-value: 0.1000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: RUR test"}
+        >>> res = is_stationary(normal, algorithm="rur")
+        >>> res["result"]
+        True
+        >>> print(f"p-value: {res['pvalue']:.2f}")
+        p-value: 0.01
+
         ```
     """
     res = stationarity(x=x, algorithm=algorithm, **kwargs)

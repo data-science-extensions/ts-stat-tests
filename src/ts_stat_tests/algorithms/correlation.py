@@ -718,7 +718,7 @@ def lb(
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from statsmodels import api as sm
         >>> from ts_stat_tests.algorithms.correlation import lb
-        >>> from ts_stat_tests.utils import data_airline
+        >>> from ts_stat_tests.utils.data import data_airline
         >>> data = data_airline.values
         >>> res = sm.tsa.ARIMA(data, order=(1, 0, 1)).fit()
 
@@ -727,26 +727,26 @@ def lb(
         ```pycon {.py .python linenums="1" title="Example 1: Ljung-Box test on ARIMA residuals"}
         >>> results = lb(res.resid, lags=[10], return_df=True)
         >>> print(results)
-               lb_stat     lb_pvalue
-        10  214.108693  1.825878e-40
+              lb_stat  lb_pvalue
+        10  13.844361    0.18021
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Ljung-Box and Box-Pierce tests with multiple lags"}
         >>> results = lb(res.resid, lags=[5, 10, 15], boxpierce=True, return_df=True)
         >>> print(results)
-               lb_stat     lb_pvalue     bp_stat     bp_pvalue
-        5   107.865588  1.157311e-21  105.908488  2.997243e-21
-        10  214.108693  1.825878e-40  208.563351  2.633187e-39
-        15  303.936143  8.496025e-56  294.225541  8.847387e-54
+              lb_stat     lb_pvalue    bp_stat     bp_pvalue
+        5    6.274986  2.803736e-01   6.019794  3.042976e-01
+        10  13.844361  1.802099e-01  13.080554  2.192028e-01
+        15  86.182531  5.083111e-12  78.463124  1.332482e-10
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Ljung-Box test with specific lag"}
         >>> results = lb(res.resid, lags=[5], return_df=True)
         >>> print(results)
-              lb_stat     lb_pvalue
-        5  107.865588  1.157311e-21
+            lb_stat  lb_pvalue
+        5  6.274986   0.280374
 
         ```
 

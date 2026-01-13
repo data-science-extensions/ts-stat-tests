@@ -179,7 +179,7 @@ def correlation(
         ```pycon {.py .python linenums="1" title="Example 1: Autocorrelation (ACF)"}
         >>> res = correlation(normal, algorithm="acf", nlags=10)
         >>> print(f"Lag 1 ACF: {res[1]:.4f}")
-        Lag 1 ACF: -0.0228
+        Lag 1 ACF: 0.0236
 
         ```
 
@@ -187,7 +187,7 @@ def correlation(
         >>> res = correlation(normal, algorithm="lb", lags=[5])
         >>> print(res)
             lb_stat  lb_pvalue
-        5  4.479727     0.4826
+        5  7.882362   0.162839
 
         ```
 

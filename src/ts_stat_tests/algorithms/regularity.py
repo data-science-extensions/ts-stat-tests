@@ -126,34 +126,25 @@ def approx_entropy(
             The approximate entropy score.
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from sktime.datasets import load_airline
-        >>> from stochastic.processes import noise as sn
-        >>> data_airline = load_airline().to_numpy()
-        >>> rng = np.random.default_rng(seed=42)
-        >>> data_noise = sn.FractionalGaussianNoise(hurst=0.5, rng=rng).sample(10000)
-        >>> data_random = rng.random(1000)
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.regularity import approx_entropy
+        >>> from ts_stat_tests.utils.data import data_airline, data_random
+        >>> airline = data_airline.values
+        >>> random = data_random
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> print(f"{approx_entropy(x=data_airline):.4f}")
+        ```pycon {.py .python linenums="1" title="Example 1: Airline Passengers Data"}
+        >>> print(f"{approx_entropy(x=airline):.4f}")
         0.6451
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Gaussian noise"}
-        >>> print(f"{approx_entropy(x=data_noise, order=2):.4f}")
-        2.1958
-        ```
+        ```pycon {.py .python linenums="1" title="Example 2: Random Data"}
+        >>> print(f"{approx_entropy(x=random):.4f}")
+        1.8177
 
-        ```pycon {.py .python linenums="1" title="Euclidean metric"}
-        >>> print(f"{approx_entropy(x=data_noise, order=3, metric='euclidean'):.4f}")
-        1.5120
-        ```
-
-        ```pycon {.py .python linenums="1" title="Random data"}
-        >>> print(f"{approx_entropy(x=data_random):.4f}")
-        1.8030
         ```
 
     ??? equation "Calculation"
@@ -239,46 +230,25 @@ def sample_entropy(
             The sample entropy score.
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from sktime.datasets import load_airline
-        >>> from stochastic.processes import noise as sn
-        >>> data_airline = load_airline().to_numpy()
-        >>> rng = np.random.default_rng(seed=42)
-        >>> data_noise = sn.FractionalGaussianNoise(hurst=0.5, rng=rng).sample(10000)
-        >>> data_random = rng.random(1000)
-        >>> data_sine = np.sin(2 * np.pi * 1 * np.arange(3000) / 100)
-        >>> data_line = np.arange(1000)
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.regularity import sample_entropy
+        >>> from ts_stat_tests.utils.data import data_airline, data_random
+        >>> airline = data_airline.values
+        >>> random = data_random
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> print(f"{sample_entropy(x=data_airline):.4f}")
+        ```pycon {.py .python linenums="1" title="Example 1: Airline Passengers Data"}
+        >>> print(f"{sample_entropy(x=airline):.4f}")
         0.6177
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Gaussian noise"}
-        >>> print(f"{sample_entropy(x=data_noise, order=2):.4f}")
-        2.1819
-        ```
+        ```pycon {.py .python linenums="1" title="Example 2: Random Data"}
+        >>> print(f"{sample_entropy(x=random):.4f}")
+        2.2017
 
-        ```pycon {.py .python linenums="1" title="Euclidean metric"}
-        >>> print(f"{sample_entropy(x=data_noise, order=3, metric='euclidean'):.4f}")
-        2.6806
-        ```
-
-        ```pycon {.py .python linenums="1" title="Random data"}
-        >>> print(f"{sample_entropy(x=data_random):.4f}")
-        2.1595
-        ```
-
-        ```pycon {.py .python linenums="1" title="Sine wave"}
-        >>> print(f"{sample_entropy(x=data_sine):.4f}")
-        0.1633
-        ```
-
-        ```pycon {.py .python linenums="1" title="Straight line"}
-        >>> print(f"{sample_entropy(x=data_line):.4f}")
-        0.0000
         ```
 
     ??? equation "Calculation"
@@ -372,42 +342,25 @@ def permutation_entropy(
             The permutation entropy of the data set.
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from sktime.datasets import load_airline
-        >>> from stochastic.processes import noise as sn
-        >>> x_simple = [4, 7, 9, 10, 6, 11, 3]
-        >>> data_airline = load_airline().to_numpy()
-        >>> rng = np.random.default_rng(seed=42)
-        >>> data_noise = sn.FractionalGaussianNoise(hurst=0.5, rng=rng).sample(10000)
-        >>> data_random = rng.random(1000)
-        >>> data_sine = np.sin(2 * np.pi * 1 * np.arange(3000) / 100)
-        >>> data_line = np.arange(1000)
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.regularity import permutation_entropy
+        >>> from ts_stat_tests.utils.data import data_airline, data_random
+        >>> airline = data_airline.values
+        >>> random = data_random
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> print(f"{permutation_entropy(x=data_airline):.4f}")
+        ```pycon {.py .python linenums="1" title="Example 1: Airline Passengers Data"}
+        >>> print(f"{permutation_entropy(x=airline):.4f}")
         2.3601
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Simple series"}
-        >>> print(f"{permutation_entropy(x=x_simple, order=2):.4f}")
-        0.9183
-        ```
+        ```pycon {.py .python linenums="1" title="Example 2: Random Data (Normalized)"}
+        >>> print(f"{permutation_entropy(x=random, normalize=True):.4f}")
+        0.9997
 
-        ```pycon {.py .python linenums="1" title="Normalized noise"}
-        >>> print(f"{permutation_entropy(x=data_noise, order=2, normalize=True):.4f}")
-        0.9999
-        ```
-
-        ```pycon {.py .python linenums="1" title="Multiple delays"}
-        >>> print(f"{permutation_entropy(x=data_noise, delay=[1, 2, 3], normalize=True):.4f}")
-        0.9999
-        ```
-
-        ```pycon {.py .python linenums="1" title="Sine wave"}
-        >>> print(f"{permutation_entropy(x=data_sine, normalize=True):.4f}")
-        0.4463
         ```
 
     ??? equation "Calculation"
@@ -504,43 +457,25 @@ def spectral_entropy(
             The spectral entropy score. Returned as a float for 1D input, or a numpy array for N-dimensional input.
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from sktime.datasets import load_airline
-        >>> from stochastic.processes import noise as sn
-        >>> sf, dur = 100, 4
-        >>> N = sf * dur
-        >>> data_time = np.arange(N)
-        >>> data_sine = np.sin(2 * np.pi * 1 * data_time)
-        >>> rng = np.random.default_rng(seed=42)
-        >>> data_noise = sn.FractionalGaussianNoise(hurst=0.5, rng=rng).sample(10000)
-        >>> data_2d = rng.normal(size=(4, 1000))
-        >>> data_airline = load_airline().to_numpy()
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.regularity import spectral_entropy
+        >>> from ts_stat_tests.utils.data import data_airline
+        >>> airline = data_airline.values
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> print(f"{spectral_entropy(x=data_airline, sf=12):.4f}")
+        ```pycon {.py .python linenums="1" title="Example 1: Airline Passengers Data"}
+        >>> print(f"{spectral_entropy(x=airline, sf=12):.4f}")
         2.6538
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Sine wave"}
-        >>> print(f"{spectral_entropy(x=data_sine, sf=100, method='fft'):.4f}")
-        6.2329
-        ```
-
-        ```pycon {.py .python linenums="1" title="Welch method"}
+        ```pycon {.py .python linenums="1" title="Example 2: Welch method for spectral entropy"}
+        >>> data_sine = np.sin(2 * np.pi * 1 * np.arange(400) / 100)
         >>> print(f"{spectral_entropy(x=data_sine, sf=100, method='welch'):.4f}")
-        1.2924
-        ```
+        1.2938
 
-        ```pycon {.py .python linenums="1" title="Normalized noise"}
-        >>> print(f"{spectral_entropy(x=data_noise, sf=100, normalize=True):.4f}")
-        0.9505
-        ```
-
-        ```pycon {.py .python linenums="1" title="2D data"}
-        >>> print(spectral_entropy(x=data_2d, sf=100, normalize=True).round(4).tolist())
-        [0.9419, 0.9407, 0.9417, 0.9431]
         ```
 
     ??? equation "Calculation"
@@ -619,16 +554,18 @@ def svd_entropy(
             The SVD entropy of the data set.
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
+
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.algorithms.regularity import svd_entropy
-        >>> rng = np.random.default_rng(seed=42)
-        >>> x = rng.random(1000)
+        >>> from ts_stat_tests.utils.data import data_random
+        >>> random = data_random
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> print(f"{svd_entropy(x):.4f}")
-        1.5833
+        ```pycon {.py .python linenums="1" title="Example 1: Basic SVD entropy"}
+        >>> print(f"{svd_entropy(random):.4f}")
+        1.3514
+
         ```
 
     ??? equation "Calculation"

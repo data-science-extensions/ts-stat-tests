@@ -131,41 +131,31 @@ def entropy(
     ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
-    ???+ Example "Examples"
+    ???+ example "Examples"
 
-        `approx_entropy`:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> entropy(x=data, algorithm="approx")
-        0.6451264780416452
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.tests.regularity import entropy
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
+        >>> entropy(x=normal, algorithm="sample")
+        2.23743099781426
 
-        `sample_entropy`:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> entropy(x=data, algorithm="sample")
-        0.6177074729583698
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
+        >>> entropy(x=normal, algorithm="approx")
+        1.6643808251518548
 
-        `spectral_entropy`:
-        ```pycon {.py .python linenums="1"  title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> entropy(x=data, algorithm="spectral", sf=1)
-        2.6538040647031726
         ```
 
-        ```pycon {.py .python linenums="1"  title="Advanced usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> spectral_entropy(data, 2, "welch", normalize=True)
-        0.3371369604224553
+        ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
+        >>> entropy(x=normal, algorithm="spectral", sf=1)
+        0.932981071295013
+
         ```
 
     ??? question "References"
@@ -260,45 +250,31 @@ def regularity(
     ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
-    ???+ Example "Examples"
+    ???+ example "Examples"
 
-        `regularity` with `approx_entropy` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(x=data, algorithm="approx_entropy")
-        0.6451264780416452
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
+        >>> regularity(x=normal, algorithm="sample")
+        2.23743099781426
 
-        `regularity` with `sample_entropy` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(x=data, algorithm="sample_entropy")
-        0.6177074729583698
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
+        >>> regularity(x=normal, algorithm="approx")
+        1.6643808251518548
 
-        `regularity` with `spectral_entropy` algorithm:
-        ```pycon {.py .python linenums="1"  title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(x=data, algorithm="spectral_entropy", sf=1)
-        2.6538040647031726
         ```
 
-        ```pycon {.py .python linenums="1"  title="Advanced usage"}
-        >>> from sktime.datasets import load_airline
-        >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(data, algorithm="spectral_entropy", sf=2, method="welch", normalize=True)
-        0.3371369604224553
+        ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
+        >>> regularity(x=normal, algorithm="spectral", sf=1)
+        0.932981071295013
+
         ```
 
     ??? question "References"
@@ -401,27 +377,25 @@ def is_regular(
     ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
-    ???+ Example "Examples"
+    ???+ example "Examples"
 
-        ```pycon {.py .python linenums="1" title="Sample Entropy"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> is_regular(x=data, algorithm="sample")
-        {"entropy": 0.6177074729583698, "tolerance": 23.909808306554297, "result": True}
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.tests.regularity import is_regular
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Approx Entropy"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> is_regular(x=data, algorithm="approx", tolerance=20)
-        {"entropy": 0.6451264780416452, "tolerance": 20, "result": True}
+        ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
+        >>> is_regular(x=normal, algorithm="sample")
+        {'result': False, 'entropy': 2.23743099781426, 'tolerance': 0.20294652904313437}
+
         ```
 
-        ```pycon {.py .python linenums="1"  title="Spectral Entropy"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> is_regular(x=data, algorithm="spectral", sf=1)
-        {"entropy": 0.4287365561752448, "tolerance": 23.909808306554297, "result": True}
+        ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
+        >>> is_regular(x=normal, algorithm="approx", tolerance=0.5)
+        {'result': False, 'entropy': 1.6643808251518548, 'tolerance': 0.5}
+
         ```
 
     ??? question "References"

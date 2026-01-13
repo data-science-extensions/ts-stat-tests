@@ -198,55 +198,28 @@ def adf(
 
     ???+ example "Examples"
 
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from ts_stat_tests.utils.data import load_airline
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.algorithms.stationarity import adf
-        >>> rng = np.random.default_rng(seed=42)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal
+        >>> normal = data_normal
+        >>> airline = data_airline.values
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = adf(x=data_random)
-        >>> print("ADF statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[4])
-        ADF statistic: -0.821499372484001
-        p-value: 0.8127250767258558
-        Critical values: {'1%': -3.498198082189098, '5%': -2.891208211860468, '10%': -2.5825959973472097}
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, lags, nobs, crit, icbest = adf(x=normal)
+        >>> print(f"ADF statistic: {stat:.4f}")
+        ADF statistic: -30.7838
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = adf(x=data_trend)
-        >>> print("ADF statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[4])
-        ADF statistic: -0.09657660873503579
-        p-value: 0.9497784507690056
-        Critical values: {'1%': -3.50434289821397, '5%': -2.8938659630479413, '10%': -2.5840147047458037}
-        ```
+        ```pycon {.py .python linenums="1" title="Example 2: Airline Passengers Data"}
+        >>> stat, pvalue, lags, nobs, crit, icbest = adf(x=airline)
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.9919
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = adf(x=data_seasonal)
-        >>> print("ADF statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[4])
-        ADF statistic: -6.254357973661847
-        p-value: 4.375591988519822e-08
-        Critical values: {'1%': -3.5011373281819504, '5%': -2.8924800524857854, '10%': -2.5832749307479226}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = adf(x=data_airline)
-        >>> print("ADF statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[4])
-        ADF statistic: 0.8153688792060539
-        p-value: 0.9918802434376411
-        Critical values: {'1%': -3.4816817173418295, '5%': -2.8840418343195267, '10%': -2.578770059171598}
         ```
 
     ??? equation "Calculation"
@@ -415,11 +388,31 @@ def kpss(
             - `crit` (dict): The critical values at 10%, 5%, 2.5%, and 1%.
             - `resstore` (Optional[ResultsStore]): Result instance (if `store` is `True`).
 
-    ??? note "Notes"
-        To estimate $sigma^2$ the Newey-West estimator is used. If `lags` is `"legacy"`, the truncation lag parameter is set to $int(12 \\times (\\frac{n}{100})^{\\frac{1}{4}})$, as outlined in Schwert (1989). The p-values are interpolated from Table 1 of Kwiatkowski et al. (1992). If the computed statistic is outside the table of critical values, then a warning message is generated.
+    ???+ example "Examples"
 
-        Missing values are not handled.
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.stationarity import kpss
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal
+        >>> normal = data_normal
+        >>> airline = data_airline.values
 
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, lags, crit = kpss(x=normal)
+        >>> print(f"KPSS statistic: {stat:.4f}")
+        KPSS statistic: 0.0858
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.1000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Airline Passengers Data"}
+        >>> stat, pvalue, lags, crit = kpss(x=airline)
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0100
+
+        ```
 
     ??? equation "Calculation"
 
@@ -499,62 +492,6 @@ def kpss(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
-
-    !!! example "Examples"
-
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import kpss
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = kpss(x=data_random)
-        >>> print("KPSS statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[3])
-        KPSS statistic: 1.742917369455953
-        p-value: 0.01
-        Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = kpss(x=data_trend)
-        >>> print("KPSS statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[3])
-        KPSS statistic: 1.7684131698655463
-        p-value: 0.01
-        Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = kpss(x=data_seasonal)
-        >>> print("KPSS statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[3])
-        KPSS statistic: 0.13612103819756374
-        p-value: 0.1
-        Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = kpss(x=data_airline)
-        >>> print("KPSS statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[3])
-        KPSS statistic: 1.6513122354165206
-        p-value: 0.01
-        Critical values: {'10%': 0.347, '5%': 0.463, '2.5%': 0.574, '1%': 0.739}
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html) library.
     """
     _nlags: Union[VALID_KPSS_NLAGS_OPTIONS, int] = nlags if nlags is not None else "auto"
     return cast(
@@ -603,57 +540,52 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
             - `crit` (dict): The critical values at 10%, 5%, 2.5%, and 1%.
             - `resstore` (Optional[ResultsStore]): Result instance (if `store` is `True`).
 
-    !!! example "Examples"
+    ???+ example "Examples"
 
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import rur
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_trend, data_sine
+        >>> from ts_stat_tests.algorithms.stationarity import rur
+        >>> normal = data_normal
+        >>> trend = data_trend
+        >>> seasonal = data_sine
+        >>> airline = data_airline.values
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = rur(x=data_random)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 6.9
-        p-value: 0.95
-        Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, crit = rur(x=normal)
+        >>> print(f"RUR statistic: {stat:.4f}")
+        RUR statistic: 0.3479
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0100
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = rur(x=data_trend)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 7.5
-        p-value: 0.95
-        Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
+        ```pycon {.py .python linenums="1" title="Example 2: Trend-Stationary Series"}
+        >>> stat, pvalue, crit = rur(x=trend)
+        >>> print(f"RUR statistic: {stat:.4f}")
+        RUR statistic: 31.5912
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.9500
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = rur(x=data_seasonal)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 0.7
-        p-value: 0.01
-        Critical values: {'10%': 1.2888, '5%': 1.1412, '2.5%': 1.0243, '1%': 0.907}
+        ```pycon {.py .python linenums="1" title="Example 3: Seasonal Series"}
+        >>> stat, pvalue, crit = rur(x=seasonal)
+        >>> print(f"RUR statistic: {stat:.4f}")
+        RUR statistic: 0.9129
+        >>> print(f"p-value: {pvalue:.04f}")
+        p-value: 0.0100
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = rur(x=data_airline)
-        >>> print("RUR statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        RUR statistic: 2.3333333333333335
-        p-value: 0.9
-        Critical values: {'10%': 1.324528, '5%': 1.181416, '2.5%': 1.0705, '1%': 0.948624}
+        ```pycon {.py .python linenums="1" title="Example 4: Real-World Time Series"}
+        >>> stat, pvalue, crit = rur(x=airline)
+        >>> print(f"RUR statistic: {stat:.4f}")
+        RUR statistic: 2.3333
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.9000
+
         ```
 
     ??? equation "Calculation"
@@ -806,6 +738,44 @@ def za(
             - `baselag` (int): Lags used for period regressions.
             - `pbidx` (int): Break period index.
 
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_noise
+        >>> from ts_stat_tests.algorithms.stationarity import za
+        >>> normal = data_normal
+        >>> noise = data_noise
+        >>> airline = data_airline.values
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, crit, lags, break_idx = za(x=normal)
+        >>> print(f"ZA statistic: {stat:.4f}")
+        ZA statistic: -30.8800
+        >>> print(f"p-value: {pvalue:.4e}")
+        p-value: 1.0000e-05
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Noisy Series"}
+        >>> stat, pvalue, crit, lags, break_idx = za(x=noise)
+        >>> print(f"ZA statistic: {stat:.4f}")
+        ZA statistic: -32.4316
+        >>> print(f"p-value: {pvalue:.4e}")
+        p-value: 1.0000e-05
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Real-World Time Series"}
+        >>> stat, pvalue, crit, lags, break_idx = za(x=airline)
+        >>> print(f"ZA statistic: {stat:.4f}")
+        ZA statistic: -3.6508
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.5808
+
+        ```
+
     ??? equation "Calculation"
 
         The mathematical equation for the Zivot-Andrews test is:
@@ -882,62 +852,6 @@ def za(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
-
-    !!! example "Examples"
-
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import za
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = za(x=data_random)
-        >>> print("ZA statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        ZA statistic: -4.249943867366817
-        p-value: 0.21443993632729497
-        Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = za(x=data_trend)
-        >>> print("ZA statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        ZA statistic: -9.746105263538915
-        p-value: 1e-05
-        Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = za(x=data_seasonal)
-        >>> print("ZA statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        ZA statistic: -6.7720889318153485
-        p-value: 2.281654331003133e-05
-        Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = za(x=data_airline)
-        >>> print("ZA statistic:", result[0])
-        >>> print("p-value:", result[1])
-        >>> print("Critical values:", result[2])
-        ZA statistic: -3.650840386395285
-        p-value: 0.5808367540844227
-        Critical values: {'1%': -5.27644, '5%': -4.81067, '10%': -4.56618}
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html) library.
     """
     res = _za(
         x=x,
@@ -1012,6 +926,64 @@ def pp(
             - `lags` (int): The number of lags used in the test.
             - `crit` (dict): The critical values at 1%, 5%, and 10%.
 
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.stationarity import pp
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_trend, data_sine
+        >>> normal = data_normal
+        >>> trend = data_trend
+        >>> seasonal = data_sine
+        >>> airline = data_airline.values
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, lags, crit = pp(x=normal)
+        >>> print(f"PP statistic: {stat:.4f}")
+        PP statistic: -30.7758
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Trend-Stationary Series"}
+        >>> stat, pvalue, lags, crit = pp(x=trend)
+        >>> print(f"PP statistic: {stat:.4f}")
+        PP statistic: -1.6306
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.4672
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Seasonal Series"}
+        >>> stat, pvalue, lags, crit = pp(x=seasonal)
+        >>> print(f"PP statistic: {stat:.4f}")
+        PP statistic: -8.0571
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: Real-World Time Series"}
+        >>> stat, pvalue, lags, crit = pp(x=airline)
+        >>> print(f"PP statistic: {stat:.4f}")
+        PP statistic: -1.3511
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.6055
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 5: PP test with excessive lags (coverage check)"}
+        >>> from ts_stat_tests.algorithms.stationarity import pp
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> # data_normal has 1000 observations. Force lags = 1000 to trigger adjustment.
+        >>> res = pp(data_normal, lags=1000)
+        >>> print(f"stat: {res[0]:.4f}, lags: {res[2]}")
+        stat: -43.6895, lags: 998
+
+        ```
+
     ??? equation "Calculation"
 
         The Phillips-Perron (PP) test is a commonly used test for stationarity in time series forecasting. The mathematical equation for the PP test is:
@@ -1085,54 +1057,6 @@ def pp(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
-
-    !!! example "Examples"
-
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import pp
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = pp(x=data_random)
-        >>> print("PP statistic:", result[0])
-        >>> print("p-value:", result[1])
-        PP statistic: 3.2505786653133883
-        p-value: 1.0
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = pp(x=data_trend)
-        >>> print("PP statistic:", result[0])
-        >>> print("p-value:", result[1])
-        PP statistic: -1.7891234567890123
-        p-value: 0.385
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = pp(x=data_seasonal)
-        >>> print("PP statistic:", result[0])
-        >>> print("p-value:", result[1])
-        PP statistic: -4.567812345678901
-        p-value: 0.0001
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = pp(x=data_airline)
-        >>> print("PP statistic:", result[0])
-        >>> print("p-value:", result[1])
-        PP statistic: 0.8153688792060539
-        p-value: 0.9918802434376411
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html) library.
     """
     _x = np.asarray(x)
     nobs = _x.shape[0]
@@ -1209,6 +1133,44 @@ def ers(
             - `lags` (int): The number of lags used in the test.
             - `crit` (dict): The critical values for the test statistic at the 1%, 5%, and 10% levels.
 
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.stationarity import ers
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_noise
+        >>> normal = data_normal
+        >>> noise = data_noise
+        >>> airline = data_airline.values
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, lags, crit = ers(y=normal)
+        >>> print(f"ERS statistic: {stat:.4f}")
+        ERS statistic: -30.1517
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Noisy Series"}
+        >>> stat, pvalue, lags, crit = ers(y=noise)
+        >>> print(f"ERS statistic: {stat:.4f}")
+        ERS statistic: -12.6897
+        >>> print(f"p-value: {pvalue:.4e}")
+        p-value: 1.0956e-21
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Real-World Time Series"}
+        >>> stat, pvalue, lags, crit = ers(y=airline)
+        >>> print(f"ERS statistic: {stat:.4f}")
+        ERS statistic: 0.9918
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.9232
+
+        ```
+
     ??? equation "Calculation"
 
         The mathematical equation for the ERS test is:
@@ -1278,54 +1240,6 @@ def ers(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
-
-    !!! example "Examples"
-
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import ers
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = ers(y=data_random)
-        >>> print("ERS statistic:", result[1])
-        >>> print("p-value:", result[0])
-        ERS statistic: 2.3101901044263298
-        p-value: 0.9936680064313926
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = ers(y=data_trend)
-        >>> print("ERS statistic:", result[1])
-        >>> print("p-value:", result[0])
-        ERS statistic: -0.23986186711744087
-        p-value: 0.6052877175139719
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = ers(y=data_seasonal)
-        >>> print("ERS statistic:", result[1])
-        >>> print("p-value:", result[0])
-        ERS statistic: -4.684520111366555
-        p-value: 4.941088761257979e-06
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = ers(y=data_airline)
-        >>> print("ERS statistic:", result[1])
-        >>> print("p-value:", result[0])
-        ERS statistic: 0.9917802857153285
-        p-value: 0.9231977988395885
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html) library.
     """
     res = _ers(
         y=np.asarray(y),
@@ -1391,8 +1305,61 @@ def vr(
             - `pvalue` (float): The p-value for the test statistic.
             - `vr` (float): The ratio of the long block lags-period variance.
 
-    ??? note "Notes"
-        The null hypothesis of a VR is that the process is a random walk, possibly plus drift. Rejection of the null with a positive test statistic indicates the presence of positive serial correlation in the time series.
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.algorithms.stationarity import vr
+        >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_noise, data_sine
+        >>> normal = data_normal
+        >>> noise = data_noise
+        >>> seasonal = data_sine
+        >>> airline = data_airline.values
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Stationary Series"}
+        >>> stat, pvalue, variance_ratio = vr(y=normal)
+        >>> print(f"VR statistic: {stat:.4f}")
+        VR statistic: -12.8518
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+        >>> print(f"Variance ratio: {variance_ratio:.4f}")
+        Variance ratio: 0.5202
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Noisy Series"}
+        >>> stat, pvalue, variance_ratio = vr(y=noise)
+        >>> print(f"VR statistic: {stat:.4f}")
+        VR statistic: -11.5007
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+        >>> print(f"Variance ratio: {variance_ratio:.4f}")
+        Variance ratio: 0.5094
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Seasonal Series"}
+        >>> stat, pvalue, variance_ratio = vr(y=seasonal)
+        >>> print(f"VR statistic: {stat:.4f}")
+        VR statistic: 44.7019
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0000
+        >>> print(f"Variance ratio: {variance_ratio:.4f}")
+        Variance ratio: 1.9980
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: Real-World Time Series"}
+        >>> stat, pvalue, variance_ratio = vr(y=airline)
+        >>> print(f"VR statistic: {stat:.4f}")
+        VR statistic: 3.1511
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.0016
+        >>> print(f"Variance ratio: {variance_ratio:.4f}")
+        Variance ratio: 1.3163
+
+        ```
 
     ??? equation "Calculation"
 
@@ -1483,62 +1450,6 @@ def vr(
         - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
-
-    !!! example "Examples"
-
-        ```pycon {.py .python linenums="1" title="Prepare data"}
-        >>> import numpy as np
-        >>> from src.ts_stat_tests.utils.data import load_airline
-        >>> from src.ts_stat_tests.algorithms.stationarity import vr
-        >>> rng = np.random.default_rng(seed=123)
-        >>> data_random = np.cumsum(rng.normal(size=100)) + 0.5 * np.arange(100)
-        >>> data_trend = np.arange(100) + rng.normal(size=100)
-        >>> data_seasonal = np.sin(np.arange(100) * 2 * np.pi / 12) + rng.normal(size=100)
-        >>> data_airline = load_airline()
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a random walk time series with drift"}
-        >>> result = vr(y=data_random)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: -0.14591443376314764
-        p-value: 0.883988937049496
-        Variance ratio: 0.9855947175511225
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a trend-stationary time series"}
-        >>> result = vr(y=data_trend)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: -4.598458128582932
-        p-value: 4.256292334359202e-06
-        Variance ratio: 0.47406627851732747
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a seasonal time series"}
-        >>> result = vr(y=data_seasonal)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: -3.3094271924808294
-        p-value: 0.00093487076919474
-        Variance ratio: 0.6518504999000638
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test for stationarity in a real-world time series"}
-        >>> result = vr(y=data_airline)
-        >>> print("VR statistic:", result[1])
-        >>> print("p-value:", result[0])
-        >>> print("Variance ratio:", result[2])
-        VR statistic: 3.1511442820441324
-        p-value: 0.0016263212988147924
-        Variance ratio: 1.3163356673251048
-        ```
-
-    !!! success "Credit"
-        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html) library.
     """
     res = _vr(
         y=np.asarray(y),
