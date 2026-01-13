@@ -31,22 +31,23 @@
         | library     | category    | algorithm                        | short | import script                                                    | url                                                                                                  |
         | ----------- | ----------- | -------------------------------- | ----- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
         | statsmodels | Correlation | Autocorrelation Function         | ACF   | `from statsmodels.tsa.stattools import acf`                      | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html                      |
-        | statsmodels | Correlation | Partial Autocorrelation Function | PACF  | `from statsmodels.tsa.stattools import pacf`                     | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html                     |
-        | statsmodels | Correlation | Cross-Correlation Function       | CCF   | `from statsmodels.tsa.stattools import ccf`                      | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html                      |
-        | statsmodels | Correlation | Ljung-Box Test                   | LB    | `from statsmodels.stats.diagnostic import acorr_ljungbox`        | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html        |
-        | statsmodels | Correlation | Breusch-Godfrey LM Test          | BGLM  | `from statsmodels.stats.diagnostic import acorr_breusch_godfrey` | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html |
+        |             | Correlation | Partial Autocorrelation Function | PACF  | `from statsmodels.tsa.stattools import pacf`                     | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html                     |
+        |             | Correlation | Cross-Correlation Function       | CCF   | `from statsmodels.tsa.stattools import ccf`                      | https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html                      |
+        |             | Correlation | Ljung-Box Test                   | LB    | `from statsmodels.stats.diagnostic import acorr_ljungbox`        | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html        |
+        |             | Correlation | Lagrange Multiplier Test         | LM    | `from statsmodels.stats.diagnostic import acorr_lm`              | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html              |
+        |             | Correlation | Breusch-Godfrey LM Test          | BGLM  | `from statsmodels.stats.diagnostic import acorr_breusch_godfrey` | https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html |
 
         ---
 
-        :material-arrow-right-bold: For more info, see: [Time Series Analysis in Python: A Comprehensive Guide with Examples](https://www.machinelearningplus.com/time-series/time-series-analysis-python/).
+        :material-arrow-right-bold: For more info, see: [Statsmodels Diagnostic](https://www.statsmodels.org/stable/stats.html#diagnostic-tests).
 
     !!! question "Source Library"
 
-        The [`statsmodels`](https://www.statsmodels.org/) package was chosen because it provides mature, well-tested implementations of core time-series tools (such as ACF, PACF, and correlograms), integrates seamlessly with NumPy and pandas data structures, and offers a comprehensive suite of statistical tests that align closely with the methods demonstrated in this project.
+        The `statsmodels` package was chosen because it provides mature, well-tested implementations of core time-series tools (such as ACF, PACF, and correlograms), integrates seamlessly with `numpy` and `pandas` data structures, and offers a comprehensive suite of statistical tests that align closely with the methods demonstrated in this project.
 
     !!! example "Source Module"
 
-        All of the source code can be found within this modules:
+        All of the source code can be found within these modules:
 
         - [`ts_stat_tests.algorithms.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/correlation.py).
         - [`ts_stat_tests.tests.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/correlation.py).
@@ -65,6 +66,17 @@
 
 ## Correlation Algorithms
 
+::: ts_stat_tests.tests.correlation
+    options:
+        extra:
+            show_root_heading: false
+            heading_level: 3
+            show_if_no_docstrings: true
+            member_order: source
+            filters:
+                - "!^is"
+                - "!^_"
+
 ::: ts_stat_tests.algorithms.correlation
     options:
         extra:
@@ -73,4 +85,5 @@
             show_if_no_docstrings: true
             member_order: source
             filters:
+                - "!^is"
                 - "!^_"
