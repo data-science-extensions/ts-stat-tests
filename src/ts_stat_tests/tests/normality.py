@@ -102,19 +102,20 @@ def normality(
             - `sw()`: `["sw", "shapiro", "shapiro-wilk"]`<br>
             - `dp()`: `["dp", "dagostino", "dagostino-pearson"]`<br>
             - `ad()`: `["ad", "anderson", "anderson-darling"]`<br>
-            Defaults to `"dp"`.
+            Default: `"dp"`
         axis (int):
-            Axis along which to compute the test. Default is `0`.
+            Axis along which to compute the test.
+            Default: `0`
         nan_policy (VALID_DP_NAN_POLICY_OPTIONS):
             Defines how to handle when input contains `NaN`.<br>
             - `propagate`: returns `NaN`<br>
             - `raise`: throws an error<br>
             - `omit`: performs the calculations ignoring `NaN` values<br>
-            Defaults to `"propagate"`.
+            Default: `"propagate"`
         dist (VALID_AD_DIST_OPTIONS):
             The type of distribution to test against.<br>
             Only relevant when `algorithm=anderson`.<br>
-            Defaults to `"norm"`.
+            Default: `"norm"`
 
     Raises:
         ValueError: When the given value for `algorithm` is not valid.
@@ -197,21 +198,23 @@ def is_normal(
             - `sw()`: `["sw", "shapiro", "shapiro-wilk"]`<br>
             - `dp()`: `["dp", "dagostino", "dagostino-pearson"]`<br>
             - `ad()`: `["ad", "anderson", "anderson-darling"]`<br>
-            Defaults to `"dp"`.
+            Default: `"dp"`
         alpha (float):
-            Significance level. Default is `0.05`.
+            Significance level.
+            Default: `0.05`
         axis (int):
-            Axis along which to compute the test. Default is `0`.
+            Axis along which to compute the test.
+            Default: `0`
         nan_policy (VALID_DP_NAN_POLICY_OPTIONS):
             Defines how to handle when input contains `NaN`.<br>
             - `propagate`: returns `NaN`<br>
             - `raise`: throws an error<br>
             - `omit`: performs the calculations ignoring `NaN` values<br>
-            Defaults to `"propagate"`.
+            Default: `"propagate"`
         dist (VALID_AD_DIST_OPTIONS):
             The type of distribution to test against.<br>
             Only relevant when `algorithm=anderson`.<br>
-            Defaults to `"norm"`.
+            Default: `"norm"`
 
     Returns:
         (dict):

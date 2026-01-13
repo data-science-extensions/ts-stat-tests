@@ -158,10 +158,10 @@ def adf(
     Params:
         x (ArrayLike):
             The data series to test.
-        maxlag (Optional[int], optional):
-            Maximum lag which is included in test, default value of $12 \\times (\\frac{nobs}{100})^{\\frac{1}{4}}$ is used when `None`.<br>
-            Defaults to `None`.
-        regression (VALID_ADF_REGRESSION_OPTIONS, optional):
+        maxlag (Optional[int]):
+            Maximum lag which is included in test, default value of $12 \times (\frac{nobs}{100})^{\frac{1}{4}}$ is used when `None`.
+            Default: `None`
+        regression (VALID_ADF_REGRESSION_OPTIONS):
             Constant and trend order to include in regression.
 
             - `"c"`: constant only (default).
@@ -169,21 +169,21 @@ def adf(
             - `"ctt"`: constant, and linear and quadratic trend.
             - `"n"`: no constant, no trend.
 
-            Defaults to `"c"`.
-        autolag (Optional[VALID_ADF_AUTOLAG_OPTIONS], optional):
+            Default: `"c"`
+        autolag (Optional[VALID_ADF_AUTOLAG_OPTIONS]):
             Method to use when automatically determining the lag length among the values $0, 1, ..., maxlag$.
 
             - If `"AIC"` (default) or `"BIC"`, then the number of lags is chosen to minimize the corresponding information criterion.
             - `"t-stat"` based choice of `maxlag`. Starts with `maxlag` and drops a lag until the t-statistic on the last lag length is significant using a 5%-sized test.
             - If `None`, then the number of included lags is set to `maxlag`.
 
-            Defaults to `"AIC"`.
-        store (bool, optional):
-            If `True`, then a result instance is returned additionally to the `adf` statistic.<br>
-            Defaults to `False`.
-        regresults (bool, optional):
-            If `True`, the full regression results are returned.<br>
-            Defaults to `False`.
+            Default: `"AIC"`
+        store (bool):
+            If `True`, then a result instance is returned additionally to the `adf` statistic.
+            Default: `False`
+        regresults (bool):
+            If `True`, the full regression results are returned.
+            Default: `False`
 
     Returns:
         adf (float):
@@ -777,28 +777,27 @@ def za(
     Params:
         x (ArrayLike):
             The data series to test.
-        trim (float, optional):
-            The percentage of series at begin/end to exclude from break-period calculation in range [0, 0.333].<br>
-            Defaults to `0.15`.
-        maxlag (Optional[int], optional):
-            The maximum lag which is included in test, default is $12 \\times (\\frac{nobs}{100})^{\\frac{1}{4}} (Schwert, 1989).<br>
-            Defaults to `None`.
-        regression (VALID_ZA_REGRESSION_OPTIONS, optional):
+        trim (float):
+            The percentage of series at begin/end to exclude.
+            Default: `0.15`
+        maxlag (Optional[int]):
+            The maximum lag which is included in test.
+            Default: `None`
+        regression (VALID_ZA_REGRESSION_OPTIONS):
             Constant and trend order to include in regression.
 
             - `"c"`: constant only (default).
             - `"t"`: trend only.
             - `"ct"`: constant and trend.
 
-            Defaults to `"c"`.
-        autolag (Optional[VALID_ZA_AUTOLAG_OPTIONS], optional):
-            The method to select the lag length when using automatic selection.
+            Default: `"c"`
+        autolag (Optional[VALID_ZA_AUTOLAG_OPTIONS]):
+            The method to select the lag length.
 
-            - If `None`, then `maxlag` lags are used,
-            - If `"AIC"` (default) or `"BIC"`, then the number of lags is chosen to minimize the corresponding information criterion,
-            - `"t-stat"` based choice of `maxlag`. Starts with maxlag and drops a lag until the t-statistic on the last lag length is significant using a 5%-sized test.
+            - If `None`, then `maxlag` lags are used.
+            - If `"AIC"` (default) or `"BIC"`, then the number of lags is chosen.
 
-            Defaults to `"AIC"`.
+            Default: `"AIC"`
 
     Returns:
         zastat (float):

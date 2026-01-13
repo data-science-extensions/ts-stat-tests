@@ -101,8 +101,8 @@ def jb(
         x (ArrayLike):
             Data to test for normality. Usually regression model residuals that are mean 0.
         axis (int):
-            Axis to use if data has more than 1 dimension.<br>
-            Defaults to `0`.
+            Axis to use if data has more than 1 dimension.
+            Default: `0`
 
     Returns:
         JB (Union[float, ArrayLike]):
@@ -302,8 +302,8 @@ def ob(
         x (ArrayLike):
             Data to test for normality. Usually regression model residuals that are mean 0.
         axis (int):
-            Axis to use if data has more than 1 dimension.<br>
-            Defaults to `0`.
+            Axis to use if data has more than 1 dimension.
+            Default: `0`
 
     Returns:
         statistic (Union[float, np.ndarray]):
@@ -505,7 +505,7 @@ def sw(
 
     Params:
         x (ArrayLike):
-            Array of sample data
+            Array of sample data.
 
     Returns:
         statistic (float):
@@ -677,16 +677,16 @@ def dp(
         x (ArrayLike):
             The array containing the sample to be tested.
         axis (int):
-            Axis along which to compute test. If `None`, compute over the whole array `a`.<br>
-            Defaults to `0`.
+            Axis along which to compute test. If `None`, compute over the whole array `a`.
+            Default: `0`
         nan_policy (VALID_DP_NAN_POLICY_OPTIONS):
-            Defines how to handle when input contains nan. The following options are available (default is 'propagate'):
-
-            - 'propagate': returns nan
-            - 'raise': throws an error
-            - 'omit': performs the calculations ignoring nan values.
-
-            Defaults to `"propagate"`.
+            Defines how to handle when input contains nan.
+            
+            - `"propagate"`: returns nan
+            - `"raise"`: throws an error
+            - `"omit"`: performs the calculations ignoring nan values
+            
+            Default: `"propagate"`
 
     Returns:
         statistic (Union[float, np.ndarray]):
@@ -918,8 +918,8 @@ def ad(
         x (ArrayLike):
             Array of sample data.
         dist (VALID_AD_DIST_OPTIONS):
-            The type of distribution to test against. The default is `'norm'`. The names `'extreme1'`, `'gumbel_l'` and `'gumbel'` are synonyms for the same distribution.<br>
-            Defaults to `"norm"`.
+            The type of distribution to test against.
+            Default: `"norm"`
 
     Returns:
         statistic (float):
