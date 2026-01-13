@@ -153,8 +153,9 @@ def entropy(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
-        >>> entropy(x=normal, algorithm="spectral", sf=1)
-        0.932981071295013
+        >>> res = entropy(x=normal, algorithm="spectral", sf=1)
+        >>> print(f"{res:.13f}")
+        0.9329810712950
 
         ```
 
@@ -272,8 +273,9 @@ def regularity(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
-        >>> regularity(x=normal, algorithm="spectral", sf=1)
-        0.932981071295013
+        >>> res = regularity(x=normal, algorithm="spectral", sf=1)
+        >>> print(f"{res:.13f}")
+        0.9329810712950
 
         ```
 

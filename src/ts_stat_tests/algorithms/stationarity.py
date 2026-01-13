@@ -948,11 +948,9 @@ def pp(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Trend-Stationary Series"}
-        >>> stat, pvalue, lags, crit = pp(x=trend)
-        >>> print(f"PP statistic: {stat:.4f}")
-        PP statistic: -1.6306
+        >>> stat, pvalue, lags, crit = pp(x=trend, trend="ct")
         >>> print(f"p-value: {pvalue:.4f}")
-        p-value: 0.4672
+        p-value: 0.0000
 
         ```
 
