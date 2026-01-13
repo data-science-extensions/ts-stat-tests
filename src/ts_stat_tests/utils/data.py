@@ -161,6 +161,10 @@ def get_normal_curve(seed: int) -> np.ndarray:
     !!! note "Summary"
         Generates a normal distribution curve dataset.
 
+    Params:
+        seed (int):
+            The seed value for the random number generator.
+
     Returns:
         (np.ndarray):
             An array representing a normal distribution curve with shape (1000,).
