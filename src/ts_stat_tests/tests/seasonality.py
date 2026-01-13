@@ -1,3 +1,40 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Seasonality                                                       #
+#     Purpose: Seasonality Tests                                               #
+#                                                                              #
+# ============================================================================ #
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Overview                                                              ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------------------------------------------------- #
+#  Description                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+"""
+!!! note "Summary"
+    This module contains functions to assess the seasonality of time series data.
+    The implemented algorithms include:
+
+    - QS Test
+    - OCSB Test
+    - CH Test
+    - Seasonal Strength
+    - Trend Strength
+    - Spikiness
+
+    Each function is designed to analyze a univariate time series and return
+    relevant statistics or indicators of seasonality.
+"""
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Setup                                                                  ####

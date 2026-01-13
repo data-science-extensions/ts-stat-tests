@@ -1,3 +1,35 @@
+# ============================================================================ #
+#                                                                              #
+#     Title: Seasonality                                                       #
+#     Purpose: Algorithms for testing seasonality in time series data.         #
+#                                                                              #
+# ============================================================================ #
+
+
+# ---------------------------------------------------------------------------- #
+#                                                                              #
+#     Overview                                                              ####
+#                                                                              #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------------------------------------------------- #
+#  Description                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+"""
+!!! note "Summary"
+    Seasonality tests are statistical tests used to determine whether a time series exhibits seasonal patterns or cycles. Seasonality refers to the regular and predictable fluctuations in a time series that occur at specific intervals, such as daily, weekly, monthly, or yearly.
+
+    Seasonality tests help identify whether a time series has a seasonal component that needs to be accounted for in forecasting models. By detecting seasonality, analysts can choose appropriate models that capture these patterns and improve the accuracy of their forecasts.
+
+    Common seasonality tests include the QS test, OCSB test, Canova-Hansen test, and others. These tests analyze the autocorrelation structure of the time series data to identify significant seasonal patterns.
+
+    Overall, seasonality tests are essential tools in time series analysis and forecasting, as they help identify and account for seasonal patterns that can significantly impact the accuracy of predictions.
+"""
+
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Setup                                                                  ####
