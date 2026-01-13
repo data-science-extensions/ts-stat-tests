@@ -152,10 +152,13 @@ disable = [
     "C0301",  # line-too-long
     "C0302",  # too-many-lines
     "R0801",  # duplicate-code
+    "R0903",  # too-few-public-methods
     "R0911",  # too-many-return-statements
+    "R0912",  # too-many-branches
     "R0913",  # too-many-arguments
     "R0914",  # too-many-locals
     "R0917",  # too-many-positional-arguments
+    "R1719",  # simplifiable-if-expression
     "W0622",  # redefined-builtin
 ]
 
