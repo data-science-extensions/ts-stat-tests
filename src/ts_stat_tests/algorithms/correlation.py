@@ -237,69 +237,65 @@ def acf(
             - `pvalues` (np.ndarray, optional): P-values associated with the Q-statistics (returned if `qstat` is `True`).
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Test ACF without FFT"}
-        >>> from pprint import pprint
-        >>> from statsmodels.datasets import macrodata
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import numpy as np
+        >>> from ts_stat_tests.utils.data import load_macrodata, load_airline
         >>> from ts_stat_tests.algorithms.correlation import acf
-        >>> data = macrodata.load_pandas()
-        >>> x = data.data["realgdp"]
-        >>> res_acf, res_confint, res_qstat, res_pvalues = acf(
-        ...     x, nlags=40, qstat=True, alpha=0.05, fft=False
-        ... )
-        >>> pprint(res_acf[1:11])
-        array([0.94804734, 0.87557484, 0.80668116, 0.75262542, 0.71376997,
-               0.6817336 , 0.66290439, 0.65561048, 0.67094833, 0.70271992])
-        >>> pprint(res_confint[1:11])
-        array([[0.78471701, 1.11137767],
-               [0.60238868, 1.14876099],
-               [0.46677939, 1.14658292],
-               [0.36500159, 1.14024925],
-               [0.28894752, 1.13859242],
-               [0.22604068, 1.13742653],
-               [0.18077091, 1.14503787],
-               [0.14974636, 1.16147461],
-               [0.1429036 , 1.19899305],
-               [0.15240228, 1.25303756]])
-        >>> pprint(res_qstat[:10])
-        array([132.14153858, 245.64616028, 342.67482586, 427.73868355,
-               504.79657041, 575.6018536 , 643.03859337, 709.48449817,
-               779.59123116, 857.06863862])
-        >>> pprint(res_pvalues[:10])
-        array([1.39323140e-030, 4.55631819e-054, 5.75108846e-074, 2.81773062e-091,
-               7.36019524e-107, 4.26400770e-121, 1.30546283e-134, 6.49627091e-148,
-               5.24937010e-162, 1.10078935e-177])
+        >>> data_macro = load_macrodata().realgdp.values
+        >>> data_airline = load_airline().values
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test ACF with FFT"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import acf
-        >>> data = load_airline()
+        ```pycon {.py .python linenums="1" title="Example 1: Basic ACF"}
+        >>> res_acf = acf(data_macro, nlags=5)
+        >>> print(res_acf[1:6])
+        [0.98685781 0.97371846 0.96014366 0.94568545 0.93054425]
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: ACF with Confidence Intervals and Q-Statistics"}
         >>> res_acf, res_confint, res_qstat, res_pvalues = acf(
-        ...     data, nlags=40, qstat=True, alpha=0.05, fft=True
+        ...     data_macro, nlags=5, qstat=True, alpha=0.05
         ... )
-        >>> pprint(res_acf[1:11])
-        array([0.94804734, 0.87557484, 0.80668116, 0.75262542, 0.71376997,
-               0.6817336 , 0.66290439, 0.65561048, 0.67094833, 0.70271992])
-        >>> pprint(res_confint[1:11])
-        array([[0.78471701, 1.11137767],
-               [0.60238868, 1.14876099],
-               [0.46677939, 1.14658292],
-               [0.36500159, 1.14024925],
-               [0.28894752, 1.13859242],
-               [0.22604068, 1.13742653],
-               [0.18077091, 1.14503787],
-               [0.14974636, 1.16147461],
-               [0.1429036 , 1.19899305],
-               [0.15240228, 1.25303756]])
-        >>> pprint(res_qstat[:10])
-        array([132.14153858, 245.64616028, 342.67482586, 427.73868355,
-               504.79657041, 575.6018536 , 643.03859337, 709.48449817,
-               779.59123116, 857.06863862])
-        >>> pprint(res_pvalues[:10])
-        array([1.39323140e-030, 4.55631819e-054, 5.75108846e-074, 2.81773062e-091,
-               7.36019524e-107, 4.26400770e-121, 1.30546283e-134, 6.49627091e-148,
-               5.24937010e-162, 1.10078935e-177])
+        >>> print(res_acf[1:6])
+        [0.98685781 0.97371846 0.96014366 0.94568545 0.93054425]
+        >>> print(res_confint[1:6])
+        [[0.84929531 1.12442032]
+         [0.73753616 1.20990077]
+         [0.65738012 1.2629072 ]
+         [0.5899385  1.30143239]
+         [0.53004062 1.33104787]]
+        >>> print(res_qstat[:5])
+        [200.63546275 396.93562234 588.75493948 775.77587865 957.77058934]
+        >>> print(res_pvalues[:5])
+        [1.51761209e-045 6.40508316e-087 2.76141970e-127 1.35591614e-166
+         8.33354393e-205]
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: ACF without FFT"}
+        >>> res_acf, res_confint, res_qstat, res_pvalues = acf(
+        ...     data_macro, nlags=5, qstat=True, alpha=0.05, fft=False
+        ... )
+        >>> print(res_acf[1:6])
+        [0.98685781 0.97371846 0.96014366 0.94568545 0.93054425]
+        >>> print(res_qstat[:5])
+        [200.63546275 396.93562234 588.75493948 775.77587865 957.77058934]
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: ACF with Adjusted Denominator"}
+        >>> res_acf, res_confint = acf(data_macro, nlags=5, adjusted=True, alpha=0.05)
+        >>> print(res_acf[1:6])
+        [0.99174325 0.98340721 0.97454582 0.9646942  0.95404284]
+        >>> print(res_confint[1:6])
+        [[0.85418074 1.12930575]
+         [0.74645168 1.22036273]
+         [0.66999819 1.27909344]
+         [0.60595482 1.32343358]
+         [0.54917796 1.35890772]]
+
         ```
 
     ??? equation "Calculation"
@@ -421,158 +417,41 @@ def pacf(
             - `confint` (np.ndarray, optional): Confidence intervals for the PACF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Test PACF using Yule-Walker method with sample-size adjustment"}
-        >>> from pprint import pprint
+
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.95467704, -0.26527732,  0.05546955,  0.10885622,  0.08112579,
-                0.00412541,  0.15616955,  0.10370833,  0.28878144,  0.20691805])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.79134671,  1.11800737],
-               [-0.42860765, -0.10194698],
-               [-0.10786078,  0.21879988],
-               [-0.05447412,  0.27218655],
-               [-0.08220455,  0.24445612],
-               [-0.15920493,  0.16745574],
-               [-0.00716078,  0.31949988],
-               [-0.059622  ,  0.26703866],
-               [ 0.12545111,  0.45211177],
-               [ 0.04358772,  0.37024838]])
+        >>> data = load_airline().values
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test PACF using Yule-Walker method without adjustment"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, method="ywm", alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.94804734, -0.22942187,  0.03814778,  0.09378544,  0.0736067 ,
-                0.0077276 ,  0.12559713,  0.08995134,  0.23248854,  0.16605126])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.78471701,  1.11137767],
-               [-0.39275221, -0.06609154],
-               [-0.12518255,  0.20147811],
-               [-0.06954489,  0.25711577],
-               [-0.08972363,  0.23693703],
-               [-0.15560273,  0.17105793],
-               [-0.0377332 ,  0.28892746],
-               [-0.07337899,  0.25328168],
-               [ 0.06915821,  0.39581887],
-               [ 0.00272093,  0.32938159]])
+        ```pycon {.py .python linenums="1" title="Example 1: Basic PACF using Yule-Walker adjusted"}
+        >>> res_pacf = pacf(data, nlags=5)
+        >>> print(res_pacf[1:6])
+        [ 0.95467704 -0.26527732  0.05546955  0.10885622  0.08112579]
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test PACF using regression of time series"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, method="ols", alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.95893198, -0.32983096,  0.2018249 ,  0.14500798,  0.25848232,
-               -0.02690283,  0.20433019,  0.15607896,  0.56860841,  0.29256358])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.79560165,  1.12226231],
-               [-0.49316129, -0.16650062],
-               [ 0.03849457,  0.36515523],
-               [-0.01832235,  0.30833831],
-               [ 0.09515198,  0.42181265],
-               [-0.19023316,  0.1364275 ],
-               [ 0.04099986,  0.36766053],
-               [-0.00725137,  0.31940929],
-               [ 0.40527808,  0.73193874],
-               [ 0.12923325,  0.45589391]])
+        ```pycon {.py .python linenums="1" title="Example 2: PACF with confidence intervals"}
+        >>> res_pacf, res_confint = pacf(data, nlags=5, alpha=0.05)
+        >>> print(res_confint[1:3])
+        [[ 0.79134671  1.11800737]
+         [-0.42860765 -0.10194698]]
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test PACF using regression of time series on lags with inefficient optimisation"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, method="ols-inefficient", alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.94692978, -0.3540491 ,  0.18292698,  0.12813227,  0.23647898,
-               -0.04596983,  0.19748537,  0.12877966,  0.55357665,  0.22081591])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.78359944,  1.11026011],
-               [-0.51737943, -0.19071876],
-               [ 0.01959665,  0.34625731],
-               [-0.03519806,  0.2914626 ],
-               [ 0.07314865,  0.39980932],
-               [-0.20930016,  0.1173605 ],
-               [ 0.03415504,  0.3608157 ],
-               [-0.03455067,  0.29211   ],
-               [ 0.39024632,  0.71690698],
-               [ 0.05748558,  0.38414625]])
+        ```pycon {.py .python linenums="1" title="Example 3: PACF using OLS method"}
+        >>> res_pacf_ols = pacf(data, nlags=5, method="ols")
+        >>> print(res_pacf_ols[1:6])
+        [ 0.95893198 -0.32983096  0.2018249   0.14500798  0.25848232]
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test PACF using regression of time series on lags with a bias adjustment"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, method="ols-adjusted", alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.9656378 , -0.33447646,  0.20611905,  0.14915107,  0.26778024,
-               -0.02807252,  0.21477042,  0.16526008,  0.60651564,  0.31439668])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.80230746,  1.12896813],
-               [-0.49780679, -0.17114613],
-               [ 0.04278872,  0.36944938],
-               [-0.01417926,  0.3124814 ],
-               [ 0.10444991,  0.43111057],
-               [-0.19140285,  0.13525782],
-               [ 0.05144009,  0.37810076],
-               [ 0.00192974,  0.32859041],
-               [ 0.4431853 ,  0.76984597],
-               [ 0.15106635,  0.47772701]])
-        ```
+        ```pycon {.py .python linenums="1" title="Example 4: PACF using Levinson-Durbin recursion with bias correction"}
+        >>> res_pacf_ld = pacf(data, nlags=5, method="ldadjusted")
+        >>> print(res_pacf_ld[1:6])
+        [ 0.95467704 -0.26527732  0.05546955  0.10885622  0.08112579]
 
-        ```pycon {.py .python linenums="1" title="Test PACF using Levinson-Durbin recursion with bias correction"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, method="ldadjusted", alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.95467704, -0.26527732,  0.05546955,  0.10885622,  0.08112579,
-                0.00412541,  0.15616955,  0.10370833,  0.28878144,  0.20691805])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.79134671,  1.11800737],
-               [-0.42860765, -0.10194698],
-               [-0.10786078,  0.21879988],
-               [-0.05447412,  0.27218655],
-               [-0.08220455,  0.24445612],
-               [-0.15920493,  0.16745574],
-               [-0.00716078,  0.31949988],
-               [-0.059622  ,  0.26703866],
-               [ 0.12545111,  0.45211177],
-               [ 0.04358772,  0.37024838]])
-        ```
-
-        ```pycon {.py .python linenums="1" title="Test PACF using Levinson-Durbin recursion without bias correction"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline()
-        >>> res_acf, res_confint = pacf(data, nlags=40, method="ldbiased", alpha=0.05)
-        >>> pprint(res_acf[1:11])
-        array([ 0.94804734, -0.22942187,  0.03814778,  0.09378544,  0.0736067 ,
-                0.0077276 ,  0.12559713,  0.08995134,  0.23248854,  0.16605126])
-        >>> pprint(res_confint[1:11])
-        array([[ 0.78471701,  1.11137767],
-               [-0.39275221, -0.06609154],
-               [-0.12518255,  0.20147811],
-               [-0.06954489,  0.25711577],
-               [-0.08972363,  0.23693703],
-               [-0.15560273,  0.17105793],
-               [-0.0377332 ,  0.28892746],
-               [-0.07337899,  0.25328168],
-               [ 0.06915821,  0.39581887],
-               [ 0.00272093,  0.32938159]])
         ```
 
     ??? equation "Calculation"
@@ -688,26 +567,46 @@ def ccf(
             - `confint` (np.ndarray, optional): Confidence intervals for the CCF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Test CCF without FFT"}
-        >>> from pprint import pprint
+
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import ccf
         >>> data = load_airline()
-        >>> res_ccf = ccf(data, data + 1, adjusted=True, fft=False)
-        >>> pprint(res_ccf[1:11])
-        array([0.95467704, 0.88790688, 0.82384458, 0.774129  , 0.73944515,
-               0.71137419, 0.69677541, 0.69417581, 0.71567822, 0.75516171])
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Test CCF with FFT"}
-        >>> from pprint import pprint
-        >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.correlation import ccf
-        >>> data = load_airline()
-        >>> res_ccf = ccf(data, data + 1, adjusted=True, fft=True)
-        >>> pprint(res_ccf[1:11])
-        array([0.95467704, 0.88790688, 0.82384458, 0.774129  , 0.73944515,
-               0.71137419, 0.69677541, 0.69417581, 0.71567822, 0.75516171])
+        ```pycon {.py .python linenums="1" title="Example 1: Basic CCF"}
+        >>> res = ccf(data, data + 1, adjusted=True)
+        >>> print(res[:5])
+        [1.         0.95467704 0.88790688 0.82384458 0.774129  ]
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: CCF with confidence intervals"}
+        >>> res_ccf, res_conf = ccf(data, data + 1, alpha=0.05)
+        >>> print(res_ccf[:5])
+        [1.         0.95467704 0.88790688 0.82384458 0.774129  ]
+        >>> print(res_conf[:5])
+        [[0.83666967 1.16333033]
+         [0.79134671 1.11800737]
+         [0.72457654 1.05123721]
+         [0.66051425 0.98717492]
+         [0.61079867 0.93745933]]
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: CCF without adjustment"}
+        >>> res_ccf_no_adj = ccf(data, data + 1, adjusted=False)
+        >>> print(res_ccf_no_adj[:5])
+        [1.         0.94804734 0.87557484 0.80668116 0.75262542]
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: CCF without FFT"}
+        >>> res_ccf_no_fft = ccf(data, data + 1, fft=False)
+        >>> print(res_ccf_no_fft[:5])
+        [1.         0.95467704 0.88790688 0.82384458 0.774129  ]
+
         ```
 
     ??? equation "Calculation"
@@ -816,14 +715,39 @@ def lb(
             - `bp_pvalue` (np.ndarray, optional): The p-value for the Box-Pierce test (returned if `boxpierce` is `True`).
 
     ???+ example "Examples"
-        ```pycon {.py .python linenums="1" title="Python"}
+
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.algorithms.correlation import lb
         >>> data = sm.datasets.sunspots.load_pandas().data
         >>> res = sm.tsa.ARIMA(data["SUNACTIVITY"], order=(1, 0, 1)).fit()
-        >>> lb(res.resid, lags=[10], return_df=True)
-            lb_stat     lb_pvalue
-        10  214.106992  1.827374e-40
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Ljung-Box test on ARIMA residuals"}
+        >>> results = lb(res.resid, lags=[10], return_df=True)
+        >>> print(results)
+               lb_stat     lb_pvalue
+        10  214.108693  1.825878e-40
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Ljung-Box and Box-Pierce tests with multiple lags"}
+        >>> results = lb(res.resid, lags=[5, 10, 15], boxpierce=True, return_df=True)
+        >>> print(results)
+               lb_stat     lb_pvalue     bp_stat     bp_pvalue
+        5   107.865588  1.157311e-21  105.908488  2.997243e-21
+        10  214.108693  1.825878e-40  208.563351  2.633187e-39
+        15  303.936143  8.496025e-56  294.225541  8.847387e-54
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Ljung-Box test with specific lag"}
+        >>> results = lb(res.resid, lags=[5], return_df=True)
+        >>> print(results)
+              lb_stat     lb_pvalue
+        5  107.865588  1.157311e-21
+
         ```
 
     ??? equation "Calculation"
@@ -981,20 +905,56 @@ def lm(
 
     ???+ example "Examples"
 
-        ```pycon {.py .python linenums="1" title="Test Lagrange Multiplier for autocorrelation"}
-        >>> from pprint import pprint
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import lm
         >>> data = load_airline()
-        >>> res_lm, res_lmpval, res_fval, res_fpval = lm(data)
-        >>> pprint(res_lm)
-        128.09655717844828
-        >>> pprint(res_lmpval)
-        1.1416848684314836e-22
-        >>> pprint(res_fval)
-        266.89301496118736
-        >>> pprint(res_fpval)
-        2.36205831339912e-78
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Lagrange Multiplier test"}
+        >>> res_lm, res_p, res_f, res_fp = lm(data)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 128.0966
+        >>> print(f"p-value: {res_p:.4e}")
+        p-value: 1.1417e-22
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Lagrange Multiplier test with intermediate results"}
+        >>> res_lm, res_p, res_f, res_fp, res_store = lm(data, store=True)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 128.0966
+        >>> print(f"p-value: {res_p:.4e}")
+        p-value: 1.1417e-22
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Lagrange Multiplier test with robust covariance"}
+        >>> res_lm, res_p, res_f, res_fp = lm(data, cov_type="HC3")
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 2063.3981
+        >>> print(f"p-value: {res_p:.1f}")
+        p-value: 0.0
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: Lagrange Multiplier test with seasonal period"}
+        >>> res_lm, res_p, res_f, res_fp = lm(data, period=12)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 119.1109
+        >>> print(f"p-value: {res_p:.4e}")
+        p-value: 1.3968e-14
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 5: Lagrange Multiplier test with specified degrees of freedom"}
+        >>> res_lm, res_p, res_f, res_fp = lm(data, ddof=2)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 126.1847
+        >>> print(f"p-value: {res_p:.4e}")
+        p-value: 2.7990e-22
+
         ```
 
     ??? equation "Calculation"
@@ -1093,21 +1053,41 @@ def bglm(
 
     ???+ example "Examples"
 
-        ```pycon {.py .python linenums="1" title="Test for Breusch-Godfrey Lagrange Multiplier in residual autocorrelation"}
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from statsmodels import api as sm
         >>> from ts_stat_tests.algorithms.correlation import bglm
         >>> y = sm.datasets.longley.load_pandas().endog
         >>> X = sm.datasets.longley.load_pandas().exog
         >>> X = sm.add_constant(X)
-        >>> res_lm, res_lmpval, res_fval, res_fpval = bglm(sm.OLS(y, X).fit())
-        >>> print(res_lm)
-        5.1409448555268185
-        >>> print(res_lmpval)
-        0.16176265367835008
-        >>> print(res_fval)
-        0.9468493873718188
-        >>> print(res_fpval)
-        0.4751521243357578
+        >>> model = sm.OLS(y, X).fit()
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Breusch-Godfrey test"}
+        >>> res_lm, res_p, res_f, res_fp = bglm(model)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 5.1409
+        >>> print(f"p-value: {res_p:.4f}")
+        p-value: 0.1618
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Breusch-Godfrey test with intermediate results"}
+        >>> res_lm, res_p, res_f, res_fp, res_store = bglm(model, store=True)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 5.1409
+        >>> print(f"p-value: {res_p:.4f}")
+        p-value: 0.1618
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 3: Breusch-Godfrey test with specified lags"}
+        >>> res_lm, res_p, res_f, res_fp = bglm(model, nlags=2)
+        >>> print(f"LM statistic: {res_lm:.4f}")
+        LM statistic: 2.8762
+        >>> print(f"p-value: {res_p:.4f}")
+        p-value: 0.2374
+
         ```
 
     ??? equation "Calculation"
