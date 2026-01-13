@@ -66,17 +66,6 @@
 
 ## Correlation Algorithms
 
-::: ts_stat_tests.tests.correlation
-    options:
-        extra:
-            show_root_heading: false
-            heading_level: 3
-            show_if_no_docstrings: true
-            member_order: source
-            filters:
-                - "!^is"
-                - "!^_"
-
 ::: ts_stat_tests.algorithms.correlation
     options:
         extra:
