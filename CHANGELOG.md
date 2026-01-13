@@ -9,6 +9,332 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.4.5"
+
+    ## **v0.4.5 - Add Stationarity Module**
+
+    <!-- md:tag v0.4.5 --><br>
+    <!-- md:date 2026-01-13 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.4.5](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.4.5) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                        Introduce the `stationarity` module, completing the third major component of the statistical test suite. This release provides a unified interface for seven core unit-root and stationarity tests, expanding the library's capability to assess time-series properties. Alongside the new module, this release implements a comprehensive overhaul of documentation standardisation, introduces new synthetic data generators, and achieves a milestone of 100% global code coverage through enhanced unit tests and doctest validation logic.                        ### 🛠️ Implementation details                        #### Stationarity module implementation                        * Introduce the `src/ts_stat_tests/algorithms/stationarity.py` module, implementing seven essential stationarity tests:            * `adf()`: Augmented Dickey-Fuller test.            * `kpss()`: Kwiatkowski-Phillips-Schmidt-Shin test.            * `pp()`: Phillips-Perron test (utilising `arch` for improved reliability).            * `za()`: Zivot-Andrews test for structural breaks.            * `ers()`: Elliott-Rothenberg-Stock GLS test.            * `vr()`: Variance Ratio test.            * `rur()`: Range Unit Root test.        * Implement a unified dispatcher in `src/ts_stat_tests/tests/stationarity.py`:            * `stationarity()`: Provide a consistent interface to execute any supported stationarity test via string aliases.            * `is_stationary()`: Return a standardised dictionary containing the Boolean result, test statistic, and interpreted p-value.        * Standardise all algorithm outputs to native Python types (`float`, `int`, `dict`, `tuple`), ensuring consistent behaviour across the API.                        #### Data utility enhancements                        * Expand the `src/ts_stat_tests/utils/data.py` module with new synthetic data generators:            * `get_normal_curve()`: Generate data following a normal distribution.            * `get_trend_data()`: Generate data with deterministic linear trends.            * `get_uniform_data()`: Generate data following a uniform distribution.        * Expose these as global variables (`data_normal`, `data_trend`, `data_uniform`) to facilitate reproducible examples and testing.        * Refactor all docstring examples across the library (correlation, normality, regularity, stationarity) to use these standardised data imports.                        #### Documentation standardisation                        * Standardise all function docstrings to follow strict Google-style formatting and DFC compliance.        * Move mathematical formulations into dedicated `equation` dropdowns using KaTeX notation for improved readability.        * Update terminology to Australian English (e.g., `standardise`, `summarise`, `recognise`) and adopt the imperative mood across all descriptions.        * Enhance the API reference by adding `docs/code/stationarity.md` and updating the implementation progress tables in `README.md` and `docs/index.md`.                        ### ✅ Checklist                        * [x] Implement seven core stationarity algorithms in the `algorithms` layer.        * [x] Develop a unified stationarity dispatcher and Boolean check in the `tests` layer.        * [x] Achieve 100% global code coverage across the `ts_stat_tests` package.        * [x] Standardise all docstrings and mathematical equations across the entire library.        * [x] Expand data utilities with new synthetic generators and integrate them into examples.        * [x] Implement robust cross-platform doctest validation for floating-point precision.                        ### 🧪 Testing and quality assurance                        * Achieve 100% code coverage by adding comprehensive unit tests for the stationarity module and addressing edge cases in `utils/errors.py`.        * Implement a custom doctest runner in `src/utils/scripts.py` to enable targeted validation of documentation examples.        * Standardise numeric outputs in doctests using explicit string formatting to ensure stability across different operating systems and Python versions.        * Pass all strict `pylint` (10/10), `pyright` (strict), and `complexipy` checks.                        ### 💪 Pull requests                        * #27: [Implement stationarity module](https://github.com/data-science-extensions/ts-stat-tests/pull/27)        
+
+    ??? abstract "Updates"
+
+        * [`ef5d67a`](https://github.com/data-science-extensions/ts-stat-tests/commit/ef5d67a977aee961001bfae8e006891e57518caf): Fix docstring for the `get_normal_curce()` function
+            (by [chrimaho](https://github.com/chrimaho))        * [`ee52e6d`](https://github.com/data-science-extensions/ts-stat-tests/commit/ee52e6dafa27415d95f281c64a15492734dcfff9): Fix `sys.argv` length in the `check_doctest_cli()` function<br>
+            The function accesses `sys.argv[2]` but the length check only ensures at least 2 elements exist (indices 0 and 1). This will cause an IndexError when exactly 2 arguments are provided. The check should be `len(sys.argv) < 3` or the access should be `sys.argv[1]`.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ba4df2c`](https://github.com/data-science-extensions/ts-stat-tests/commit/ba4df2ca3e1a5e9151891ccdd536b3b2f4f45e79): Add `test_errors` unit tests
+            (by [chrimaho](https://github.com/chrimaho))        * [`9d3ca5c`](https://github.com/data-science-extensions/ts-stat-tests/commit/9d3ca5cfc969ad1e5f88f62a44668fc81e735d3f): Fix unit tests
+            (by [chrimaho](https://github.com/chrimaho))        * [`df27be0`](https://github.com/data-science-extensions/ts-stat-tests/commit/df27be052387bd847bb6a410c64f62c986ff97f0): Update unit tests
+            (by [chrimaho](https://github.com/chrimaho))        * [`5610b08`](https://github.com/data-science-extensions/ts-stat-tests/commit/5610b0878d17ca504dd3554c7db3370d60601c7b): Add `check_doctest()` function to list of checks
+            (by [chrimaho](https://github.com/chrimaho))        * [`667ac56`](https://github.com/data-science-extensions/ts-stat-tests/commit/667ac564bdec1f13192c7554ead4299398a8ced4): Standardise and modernise docstring examples for all algorithms and tests<br>
+            - Replace legacy or inconsistent data preparation in docstring examples with unified imports from `ts_stat_tests.utils.data`<br>
+            - Use consistent variable names such as `normal`, `airline`, `random`, `trend`, `noise`, and `seasonal` to improve clarity in all code examples<br>
+            - Remove redundant or outdated example blocks, and add new, focused examples for every major algorithm to better illustrate expected output<br>
+            - Update expected output values in example code to reflect current results from the associated algorithms<br>
+            - Ensure all examples use the proper `pycon` code block style and follow a logical, repeatable structure for easier maintenance<br>
+            - Improve exception and error reporting in usage notes, including explicit `ValueError` tracebacks for invalid algorithm parameters<br>
+            - Align with Australian English spelling and imperative mood in documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`95b107b`](https://github.com/data-science-extensions/ts-stat-tests/commit/95b107b4124df088e8889731bbb583000c1512fc): Expand doc filters to include algorithm-specific patterns<br>
+            - Improve documentation clarity by adding new filter patterns for algorithm-specific members such as `^correlation`, `^entropy`, `^regularity`, and `^stationarity`<br>
+            - Standardise filtering approach to ensure relevant functions and methods are included in docs for each algorithm section<br>
+            - Reduce noise and improve discoverability for users browsing documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`3ce6ff6`](https://github.com/data-science-extensions/ts-stat-tests/commit/3ce6ff65cae8a00fa24e1654e91d27b2fbd95727): Standardise test docstring examples and update expected outputs<br>
+            - Replace `.values` usage with direct assignment for test data examples to align with actual return types and avoid confusion<br>
+            - Update expected numeric outputs in code examples for accuracy and consistency with current algorithm behaviour<br>
+            - Clarify example titles and comments for improved readability and instructional value<br>
+            - Ensure test documentation reflects standard dataset and normality testing patterns
+            (by [chrimaho](https://github.com/chrimaho))        * [`ee2eea8`](https://github.com/data-science-extensions/ts-stat-tests/commit/ee2eea8a505547e7d06a72635a997911585a544f): Fix bug in README links
+            (by [chrimaho](https://github.com/chrimaho))        * [`ae14c7f`](https://github.com/data-science-extensions/ts-stat-tests/commit/ae14c7f39a0e9c8c5245a7dc00002aaf51632d54): Fix typos
+            (by [chrimaho](https://github.com/chrimaho))        * [`bf06810`](https://github.com/data-science-extensions/ts-stat-tests/commit/bf068108007c44dbe7724478663bbd2aaeaca3bc): Remove redundant test documentation sections from API docs<br>
+            - Streamline documentation by removing duplicate `ts_stat_tests.tests` sections<br>
+            - Focus on algorithm documentation for clarity and consistency<br>
+            - Improve maintainability by reducing unnecessary content
+            (by [chrimaho](https://github.com/chrimaho))        * [`5e9fe9f`](https://github.com/data-science-extensions/ts-stat-tests/commit/5e9fe9f553fccd924502d44539d99c1da7a8c666): Add doctest checking functions for targeted modules<br>
+            - Introduce `check_doctest()` function to enable running doctests on specific files containing `ts_stat_tests`<br>
+            - Add `check_doctest_module()` function to allow module-specific doctest execution<br>
+            - Implement `check_doctest_cli()` function for command-line doctest invocation using arguments<br>
+            - Comment out doctest check in `check()` function to prevent default execution until ready<br>
+            - Facilitate easier validation of documentation examples and improve test coverage for doctests
+            (by [chrimaho](https://github.com/chrimaho))        * [`a02994a`](https://github.com/data-science-extensions/ts-stat-tests/commit/a02994a9fd23317978411f43ce40f9dcd6a1ead0): Clarify and standardise normality test return values<br>
+            - Update the return type documentation to clarify that the Anderson-Darling algorithm yields a `tuple` of `(stat, critical_values, significance_level)` instead of a library-specific object<br>
+            - Unpack the result from `_jb()` and return a `tuple` of test statistic and p-value for consistency with other algorithms<br>
+            - Improve code clarity and maintainability by standardising interface and documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`84e144e`](https://github.com/data-science-extensions/ts-stat-tests/commit/84e144ecb2255c2c4acb5b3b635169ba6462fd54): Standardise and simplify normality test docstring examples<br>
+            - Replace lengthy, varied examples with concise, uniform usage across all normality test function docstrings<br>
+            - Use standardised datasets (`data_airline`, `data_noise`, `data_normal`, `data_uniform`) to ensure examples are reproducible and consistent<br>
+            - Remove unrelated or overly detailed explanations, focusing on clarity and direct usage of test interfaces<br>
+            - Improve clarity for end users by providing setup code blocks and clear example output<br>
+            - Reduce maintenance burden by avoiding external library dependencies (e.g. remove references to `sktime`, `numpy` sin data)
+            (by [chrimaho](https://github.com/chrimaho))        * [`243adad`](https://github.com/data-science-extensions/ts-stat-tests/commit/243adadc99f084c3112f17fa1d656863b4356841): Add usage examples for `correlation()` function<br>
+            - Clarify usage by including practical examples<br>
+            - Demonstrate different algorithms such as "acf" and "lb"<br>
+            - Help users understand input requirements and expected outputs
+            (by [chrimaho](https://github.com/chrimaho))        * [`5f8f675`](https://github.com/data-science-extensions/ts-stat-tests/commit/5f8f675cd74734afc5a3942558c5f308a63f1cfe): Standardise usage of example data in docstrings<br>
+            - Replace legacy data loading functions with direct data imports in example code for consistency<br>
+            - Update example code to use `data_airline` and `data_macrodata` variables rather than call `load_airline()` or `load_macrodata()`<br>
+            - Align example usage with updated data utilities to improve clarity and reproducibility<br>
+            - Use `from statsmodels import api as sm` import style to match internal standards
+            (by [chrimaho](https://github.com/chrimaho))        * [`6a3cf35`](https://github.com/data-science-extensions/ts-stat-tests/commit/6a3cf35873570dd44b433d14d075d069bff8ed1c): Add normal, trend, and uniform data generators<br>
+            - Expand data utilities to include `get_normal_curve()`, `get_trend_data()`, and `get_uniform_data()` functions for generating additional synthetic datasets<br>
+            - Expose new sample arrays such as `data_normal` and `data_trend` for easier access in tests and examples<br>
+            - Support reproducibility by seeding random generators for new functions<br>
+            - Enhance flexibility for statistical testing and demonstration scenarios
+            (by [chrimaho](https://github.com/chrimaho))        * [`57ed6df`](https://github.com/data-science-extensions/ts-stat-tests/commit/57ed6df963da76ed89a656be2efa940dcb33683c): Standardise correlation algorithm documentation and references<br>
+            - Update algorithm table to improve clarity and consistency, including renaming 'Breusch-Godfrey LM Test' and adding 'Lagrange Multiplier Test'<br>
+            - Remove redundant library column entries for algorithms that are all from `statsmodels`<br>
+            - Replace external reference with direct link to official `statsmodels` documentation for improved relevance<br>
+            - Correct grammar and style for improved readability, including module names and package references<br>
+            - Add documentation configuration block for `ts_stat_tests.tests.correlation` to align with existing structure<br>
+            - Apply consistent filtering for member listing by excluding methods starting with `is` and `_`
+            (by [chrimaho](https://github.com/chrimaho))        * [`8ae9069`](https://github.com/data-science-extensions/ts-stat-tests/commit/8ae9069b177b1eeeab40a5fe4ec475c0b32c0c44): Standardise return types for normality test functions<br>
+            - Ensure all normality test functions consistently return tuples of floats or lists, improving type clarity and downstream compatibility<br>
+            - Refine type casting and result extraction in tests to align with updated function outputs<br>
+            - Enhance robustness of result handling in both normality and stationarity test utilities
+            (by [chrimaho](https://github.com/chrimaho))        * [`215a2af`](https://github.com/data-science-extensions/ts-stat-tests/commit/215a2aff134f485fdda840d25b5abc59971e2e67): Standardise normality test function return types<br>
+            - Ensure all normality test functions return plain tuples for consistency and predictability<br>
+            - Remove use of union types and result classes from function signatures to simplify API and reduce ambiguity<br>
+            - Facilitate easier downstream usage and type checking by unifying return types across statistical test functions
+            (by [chrimaho](https://github.com/chrimaho))        * [`cbeac37`](https://github.com/data-science-extensions/ts-stat-tests/commit/cbeac37e18e787655364b92a5783d874a6a1be89): Standardise and clarify documentation for statistical tests<br>
+            - Clarify and condense docstrings for normality and stationarity tests, removing repetitive explanations and focusing on essential details<br>
+            - Standardise notation in mathematical equations, consistently using LaTeX formatting and correct mathematical symbols (e.g., `\Delta`, `\epsilon_t`)<br>
+            - Enhance explanations of test statistics, including concise mathematical definitions and parameter descriptions<br>
+            - Add, correct, and clarify credit and reference sections for external libraries and sources, ensuring proper attribution<br>
+            - Improve consistency in section headers and callout formatting (e.g., `??? success "Credit"`, `??? tip "See Also"`)<br>
+            - Add an abstract and usage details to the correlation test dispatcher, listing supported algorithms<br>
+            - Improve clarity and accuracy of parameter descriptions and summary sections<br>
+            - Update docstring language to Australian English (e.g., 'standardise', 'summarise'), and use imperative mood throughout
+            (by [chrimaho](https://github.com/chrimaho))        * [`8e78a81`](https://github.com/data-science-extensions/ts-stat-tests/commit/8e78a81587d28df95f7a5bc1e5333cabd6b57646): Standardise exception docstrings for validation errors<br>
+            - Replace inconsistent exception documentation with uniform `Raises:` sections detailing `(ValueError)` for invalid input across normality and regularity algorithms<br>
+            - Remove redundant `Raises:` notes specifying no exceptions raised, clarifying documentation<br>
+            - Improve clarity and maintainability of API reference for users and contributors
+            (by [chrimaho](https://github.com/chrimaho))        * [`9bab801`](https://github.com/data-science-extensions/ts-stat-tests/commit/9bab8013c537d629672e58b9e25e0c071ab399f5): Standardise and clarify docstrings for return types<br>
+            - Update and clarify return type annotations and descriptions in docstrings for statistical test functions<br>
+            - Remove outdated or ambiguous type hints, ensuring consistency and improved readability<br>
+            - Adopt consistent dictionary and tuple return type formatting using Python type hinting<br>
+            - Enhance explanations for result dictionaries, clearly listing expected fields and value types<br>
+            - Improve maintainability and reduce confusion for users and contributors by standardising documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`eee99be`](https://github.com/data-science-extensions/ts-stat-tests/commit/eee99be83795e71edc43cfa9e42995b98c700d77): Standardise parameter documentation formatting<br>
+            - Align docstrings for parameter default values and descriptions across functions<br>
+            - Remove inconsistent HTML tags and unify wording to improve readability<br>
+            - Clarify default values using `Default: value` for easier reference<br>
+            - Improve consistency for users consuming API documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`c298449`](https://github.com/data-science-extensions/ts-stat-tests/commit/c298449327cfae74dc5b77d68cc3074eb4edbd88): Standardise and expand statistical test docstring examples<br>
+            - Align all docstring code examples to a clear, consistent format using stepwise "Setup" and labelled example sections<br>
+            - Replace outdated or confusing usage with current, project-specific data loader and methods<br>
+            - Expand coverage for key statistical tests to demonstrate more parameter combinations and result formats<br>
+            - Replace `pprint` with `print` for clarity, and showcase array slicing for readable outputs<br>
+            - Add new examples for confidence intervals, advanced options, and more realistic outputs for `acf()`, `pacf()`, `ccf()`, `lb()`, `lm()`, and `bglm()` functions<br>
+            - Improve readability for end users and facilitate easier learning by showing expected results and recommended invocation patterns
+            (by [chrimaho](https://github.com/chrimaho))        * [`01926a1`](https://github.com/data-science-extensions/ts-stat-tests/commit/01926a1f17105382820070c61bdfb0d7e274b1b6): Refactor test data setup to use shared utility functions<br>
+            - Standardise test data access by importing shared utility functions<br>
+            - Remove duplicate data generation logic from test setup file<br>
+            - Simplify test base class to use direct references to shared data<br>
+            - Improve maintainability and consistency of test data across the project
+            (by [chrimaho](https://github.com/chrimaho))        * [`bc95f0f`](https://github.com/data-science-extensions/ts-stat-tests/commit/bc95f0f520700ebeebb3f35e3b46187c73107b70): Add utility functions and datasets for synthetic and real data<br>
+            - Enable generation of random, sine wave, straight line, and fractional Gaussian noise datasets via dedicated utility functions for reproducible testing and experimentation<br>
+            - Introduce caching for data generators using `@lru_cache` to improve performance and ensure consistent outputs<br>
+            - Add direct access to classic real-world datasets by loading airline passenger and macroeconomic data as pandas objects<br>
+            - Standardise data access patterns for downstream code and unit tests by exposing curated data objects<br>
+            - Improve code clarity by listing public exports and grouping related logic
+            (by [chrimaho](https://github.com/chrimaho))        * [`bafa581`](https://github.com/data-science-extensions/ts-stat-tests/commit/bafa5816f567b5d450998d7b0037985a95ef649d): Standardise return value documentation for functions in the `correlation` module<br>
+            - Align function docstrings to consistently document return types and conditional outputs<br>
+            - Improve clarity on optional outputs based on input parameters for core statistical test functions<br>
+            - Enhance maintainability and user comprehension of function behaviour
+            (by [chrimaho](https://github.com/chrimaho))        * [`6b19d4b`](https://github.com/data-science-extensions/ts-stat-tests/commit/6b19d4b12356448fd7e44b99a43b52240a5a9216): Standardise docstring formatting and improve references<br>
+            - Replace `???` admonition syntax with `!!!` for credits and adjust headings to follow a consistent style<br>
+            - Add hyperlinks to referenced resources for clarity and ease of access<br>
+            - Update reference block styles to better distinguish between credits and citations<br>
+            - Clarify return type documentation by removing redundant text and consolidating explanations
+            (by [chrimaho](https://github.com/chrimaho))        * [`fa557b8`](https://github.com/data-science-extensions/ts-stat-tests/commit/fa557b889ede3e067b535e68c491a5f547146d5a): Refactor and standardise entropy docstrings and return types<br>
+            - Refactor and condense docstrings for all entropy-related functions to improve clarity, consistency, and maintainability<br>
+            - Standardise parameter descriptions and sections, ensuring consistent formatting and mathematical notation using LaTeX<br>
+            - Add or update examples and notes for better user guidance, using realistic data and reproducible snippets<br>
+            - Remove redundant or overly verbose explanations and outdated links, and clarify equations in dedicated sections<br>
+            - Standardise all entropy function return types to explicitly cast outputs to `float` for consistency<br>
+            - Update references to external libraries and methods, and ensure proper credit is given to the original sources<br>
+            - Adopt imperative mood and Australian English spelling throughout documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`f913bb3`](https://github.com/data-science-extensions/ts-stat-tests/commit/f913bb36eb98fa07df84a5bd4215cce1f06bbc3d): Standardise docstring param and return sections<br>
+            - Replace non-standard `???+ itemized` markers with standard `Params:` and `Returns:` sections in function docstrings<br>
+            - Improve clarity and consistency of documentation to align with typical Python docstring conventions<br>
+            - Facilitate better integration with documentation tools and enhance readability for maintainers
+            (by [chrimaho](https://github.com/chrimaho))        * [`1cc3d1e`](https://github.com/data-science-extensions/ts-stat-tests/commit/1cc3d1e0377f742b0191e588907b7462b0c538f0): Refactor and clarify statistical docstrings for correlation tests<br>
+            - Reorganise and clarify docstring explanations for autocorrelation, partial autocorrelation, cross-correlation, Ljung-Box, Lagrange Multiplier, and Breusch-Godfrey tests<br>
+            - Move mathematical definitions and formulas into dedicated `equation` dropdowns for better readability and accessibility<br>
+            - Standardise notation (e.g. use `$nlags$`, `$n_{obs}$`, and proper LaTeX formatting) for consistency across documentation<br>
+            - Replace raw Markdown examples with `example` dropdowns and improve usage clarity<br>
+            - Fix minor typos and wording for Australian English, e.g. 'standardise', 'summarise', and ensure use of imperative mood in documentation<br>
+            - Enhance explanation of test parameters, especially default values and deprecation warnings, for improved user guidance<br>
+            - Remove redundant or duplicated information and modernise docstring structure with collapsible sections for details, examples, and references<br>
+            - Credit the `statsmodels` library more consistently and visibly in each section
+            (by [chrimaho](https://github.com/chrimaho))        * [`313e185`](https://github.com/data-science-extensions/ts-stat-tests/commit/313e185afc2a563f7f644f14e7502d9dd64c650d): Expand and standardise stationarity test coverage<br>
+            - Add tests for invalid algorithm handling in `stationarity()` function to ensure ValueError is raised as expected<br>
+            - Standardise test results from statistical libraries by converting outputs to native Python types for consistency and easier assertions<br>
+            - Improve branch coverage in `is_stationary()` function, including logic for boolean and non-numeric p-value handling<br>
+            - Explicitly cover all algorithm branches in stationarity dispatcher for comprehensive test coverage<br>
+            - Replace `pmdarima`'s `PPTest().should_diff()` usage with direct `arch.unitroot.PhillipsPerron()` calls for result consistency across libraries<br>
+            - Enhance readability and maintainability by grouping related imports and adding whitespace for class separation
+            (by [chrimaho](https://github.com/chrimaho))        * [`35aa684`](https://github.com/data-science-extensions/ts-stat-tests/commit/35aa684384219303fcc81edd06f00e096b027481): Increase test coverage for normality checks<br>
+            - Add tests to cover branch scenarios in `is_normal()` function where result has `statistic` and `pvalue` attributes, or is a simple float<br>
+            - Use `unittest.mock.patch()` to simulate different return types from `normality()` function<br>
+            - Ensure more robust handling and validation of diverse outputs for improved reliability
+            (by [chrimaho](https://github.com/chrimaho))        * [`c0ecca4`](https://github.com/data-science-extensions/ts-stat-tests/commit/c0ecca42d30fca7c3cc7bd048cd78fae104dc25d): Add summary tables of key statistical tests to docs<br>
+            - Improve discoverability by listing major correlation, normality, and regularity tests in markdown tables<br>
+            - Standardise documentation with clear algorithm names, abbreviations, import scripts, and links for each method<br>
+            - Aid users in identifying and accessing relevant statistical tools quickly for time series analysis
+            (by [chrimaho](https://github.com/chrimaho))        * [`fe7c283`](https://github.com/data-science-extensions/ts-stat-tests/commit/fe7c283758085e8e55e81c47520b6e97a29c9a9c): Standardise documentation references and configuration keys<br>
+            - Remove redundant `src.` prefix from module references for consistency across documentation<br>
+            - Update configuration blocks to use `extra:` root key, aligning with documentation standards<br>
+            - Improve clarity and maintainability for future documentation updates
+            (by [chrimaho](https://github.com/chrimaho))        * [`dcdbd26`](https://github.com/data-science-extensions/ts-stat-tests/commit/dcdbd26411d77bb92fc0d6e00052047e781f3322): Add missing `numpy` import to the `stationarity` module
+            (by [chrimaho](https://github.com/chrimaho))        * [`c3093aa`](https://github.com/data-science-extensions/ts-stat-tests/commit/c3093aa6816201626233962d22912de61b97ad88): Refactor stationarity result handling and typing<br>
+            - Improve clarity and robustness of the `is_stationary()` function by explicitly casting result types and handling tuple returns safely<br>
+            - Standardise type checking and assignment for statistics and p-values, supporting multiple possible types<br>
+            - Cast return dictionary to expected types, ensuring outputs are consistently formatted and type-safe<br>
+            - Enhance maintainability and reduce ambiguity in interpreting `stationarity()` function results
+            (by [chrimaho](https://github.com/chrimaho))        * [`1b27b60`](https://github.com/data-science-extensions/ts-stat-tests/commit/1b27b6081392ed7eba3324dc64202edafe6cb9bb): Introduce internal helper to standardise function calls<br>
+            - Introduce `_call()` function to centralise keyword argument handling when invoking test functions<br>
+            - Improve maintainability and reduce code duplication by standardising how stationarity test functions are called<br>
+            - Lay groundwork for future changes that may require consistent invocation logic
+            (by [chrimaho](https://github.com/chrimaho))        * [`e26a2e7`](https://github.com/data-science-extensions/ts-stat-tests/commit/e26a2e7d32b940fb799d0001125796f6a7be3802): Expand supported types for algorithm keyword arguments<br>
+            - Allow `stationarity()` function and `is_stationary()` function to accept `ArrayLike` as a valid type for keyword arguments<br>
+            - Enable passing complex argument types directly to underlying algorithms, improving flexibility for users specifying parameters<br>
+            - Standardise type annotations in docstrings to match updated function signatures
+            (by [chrimaho](https://github.com/chrimaho))        * [`335aaa1`](https://github.com/data-science-extensions/ts-stat-tests/commit/335aaa17bd37529966a5ac0203d3a42867bf202b): Expand keyword argument types to support array-like inputs<br>
+            - Allow pass array-like types as values for `**kwargs` in the `correlation()` function overloads<br>
+            - Enable greater flexibility for algorithms requiring non-scalar keyword arguments<br>
+            - Improve API consistency and support for advanced use cases
+            (by [chrimaho](https://github.com/chrimaho))        * [`985bd06`](https://github.com/data-science-extensions/ts-stat-tests/commit/985bd0664770ea10663aa3a47e4d04a2bc6576c6): Add usage notes and credit to docstring for `rur()` function<br>
+            - Clarify that p-values are interpolated and out-of-range statistics generate a warning<br>
+            - Document that missing values are not handled<br>
+            - acknowledge the `statsmodels` library as the basis for the implementation
+            (by [chrimaho](https://github.com/chrimaho))        * [`546a1c9`](https://github.com/data-science-extensions/ts-stat-tests/commit/546a1c9416f7b8885504c21d67973a7412ff095f): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`2df720e`](https://github.com/data-science-extensions/ts-stat-tests/commit/2df720ea51865f4770a5688f8ec7a92f13935862): Standardise output types and add explicit casting in tests<br>
+            - Ensure all test functions return standardised output formats by explicitly casting results<br>
+            - Improve type safety and compatibility across statistical test functions<br>
+            - Remove inline usage examples from docstrings to declutter documentation<br>
+            - Adjust lag handling logic for the Phillips-Perron test to avoid invalid lag values<br>
+            - Enhance maintainability and clarity for future extension or integration
+            (by [chrimaho](https://github.com/chrimaho))        * [`d293fa1`](https://github.com/data-science-extensions/ts-stat-tests/commit/d293fa1800c468e1803c98b7a69109eb3e1acb91): Relocate and standardise example blocks in docstrings<br>
+            - Move all example blocks to consistent positions at the end of each function docstring for improved documentation clarity<br>
+            - Use uniform markdown formatting for all example code, ensuring consistent presentation across tests including `kpss()`, `rur()`, `za()`, `pp()`, `ers()`, and `vr()`<br>
+            - Add missing "See Also" section to the Zivot-Andrews test to align with other stationarity tests and aid discoverability<br>
+            - Improve documentation structure to aid user navigation and future maintenance
+            (by [chrimaho](https://github.com/chrimaho))        * [`4fd8c98`](https://github.com/data-science-extensions/ts-stat-tests/commit/4fd8c9874453dbc5c7d9c7c563817955f9c48e1c): Add missing `Credit` section to the docstring for the `adf()` function
+            (by [chrimaho](https://github.com/chrimaho))        * [`714073e`](https://github.com/data-science-extensions/ts-stat-tests/commit/714073e3eac37871608fd8aeea27b558dad3cda6): Standardise type annotations and return values in stationarity algorithms<br>
+            - Align type annotations for parameters and return types to be more explicit and consistent, using domain-specific type aliases where appropriate<br>
+            - Update docstrings to accurately reflect parameter types and improve clarity on optional arguments<br>
+            - Adjust return signatures of `kpss()`, `rur()`, `pp()`, `za()`, and `ers()` functions for consistency with value structure and expected outputs<br>
+            - Clarify the use of `store` parameter and its effect on returned result tuples<br>
+            - Reduce ambiguity and potential confusion for users and static analysis tools, improving maintainability and type safety throughout the statistical test API
+            (by [chrimaho](https://github.com/chrimaho))        * [`fe5eae8`](https://github.com/data-science-extensions/ts-stat-tests/commit/fe5eae8f698edcca6d8bb0c91f89f9eea8b8bb09): Refactor and standardise docstrings for consistency<br>
+            - Improve consistency and clarity in docstring formatting across all stationarity test functions<br>
+            - Replace scattered "Notes", "Credits", and "Examples" sections with standardised locations and Markdown formatting<br>
+            - Move or consolidate important notes into `??? note "Notes"` blocks for better visibility<br>
+            - Relocate all credit attributions to the end of docstrings in a uniform `!!! success "Credit"` block<br>
+            - Remove redundant or duplicate content and streamline explanations, focusing on essential mathematical and usage details<br>
+            - Enhance maintainability by ensuring all test documentation sections follow a clear, predictable structure
+            (by [chrimaho](https://github.com/chrimaho))        * [`e613d7c`](https://github.com/data-science-extensions/ts-stat-tests/commit/e613d7c3a39185e18d83fa6d552312feded04fad): Standardise docstring admonitions for clarity<br>
+            - Replace all occurrences of `!!! summary` with `!!! note` to improve consistency in documentation style<br>
+            - Change `???+ info` to `???+ abstract` for detailed sections to better reflect their purpose<br>
+            - Update `!!! example` to `???+ example` for improved formatting and alignment with documentation tools<br>
+            - Amend `??? info` to `??? note` to standardise note sections across docstrings<br>
+            - Improve readability and maintainability of docstring formatting for future contributors
+            (by [chrimaho](https://github.com/chrimaho))        * [`9ec60ac`](https://github.com/data-science-extensions/ts-stat-tests/commit/9ec60ac2214d435c1bf2f9667becc2d93a5278ff): Refactor normality result handling for robustness<br>
+            - Improve robustness of result extraction by using `getattr()` and type casting to handle diverse result types from statistical tests<br>
+            - Ensure consistent float conversion and type safety for `statistic` and `p_value` fields<br>
+            - Enhance code clarity around Anderson-Darling test result parsing by separating tuple unpacking and array conversions<br>
+            - Reduce risk of runtime errors from unexpected result formats, standardise output structure, and improve maintainability
+            (by [chrimaho](https://github.com/chrimaho))        * [`c2fdd32`](https://github.com/data-science-extensions/ts-stat-tests/commit/c2fdd3255f6acd93118f6743b4b28222876c4d94): Add calculation section to docstring configuration<br>
+            - Introduce a `calculation` section with `equation` admonition and unique order in the docstring structure<br>
+            - Standardise documentation by enabling explicit space for calculation or formula details<br>
+            - Improve clarity by shifting the order of existing sections to accommodate `calculation`
+            (by [chrimaho](https://github.com/chrimaho))        * [`afabea1`](https://github.com/data-science-extensions/ts-stat-tests/commit/afabea174e6d2b4ebf1af831afac5a599e93eb09): Expand pylint `disable` list for improved code maintainability<br>
+            - Add `R0911`, `R0914` to the pylint disable list for warnings related to too many return statements and too many local variables<br>
+            - Support more flexible code patterns without triggering style violations<br>
+            - Facilitate maintainability by reducing unnecessary linting noise and focusing on critical issues
+            (by [chrimaho](https://github.com/chrimaho))        * [`27aca4e`](https://github.com/data-science-extensions/ts-stat-tests/commit/27aca4e1590b103be0c9173e13b531b429d2addb): Fix various typos<br>
+            - Standardise test naming and refactor variable names<br>
+            - Replace inconsistent test method names to use `test_stationarity_za_*` format for clarity and consistency<br>
+            - Update variable names from `indx` to `index` for readability and alignment with standard conventions<br>
+            - Change import statement to use `tests.setup` for improved test structure organisation<br>
+            - Improve code maintainability and ease future test extensions
+            (by [chrimaho](https://github.com/chrimaho))        * [`1735768`](https://github.com/data-science-extensions/ts-stat-tests/commit/1735768ec24c8b298d7d8654a819fd5bf55e59af): Standardise typing and signatures for keyword arguments<br>
+            - Replace generic `Any` keyword argument types with explicit `Union[float, int, str, bool, None]` to improve static type checking and code clarity<br>
+            - Update function return type annotations for accuracy, clarifying output types for consumers and future maintainers<br>
+            - Remove unused `Any` imports to clean up namespace and avoid confusion<br>
+            - Apply `cast(int, delay)` instead of `cast(Any, delay)` in `permutation_entropy()` function to enforce type correctness<br>
+            - Use `object` instead of `Any` in `generate_error_message()` function parameters to further restrict accepted types<br>
+            - Improve docstrings to accurately reflect updated parameter and return types, supporting clearer auto-generated documentation
+            (by [chrimaho](https://github.com/chrimaho))        * [`f90d46b`](https://github.com/data-science-extensions/ts-stat-tests/commit/f90d46b7eb9c0b5276028aae58edd1b9f661fe03): Standardise and update stationarity test documentation<br>
+            - Update statistical test links to point to relevant documentation pages for improved navigation<br>
+            - Standardise stationarity test implementation indicators from `🔲` to `✅` in the README to reflect completed Python support<br>
+            - Revise progress table to show full implementation and unit-test coverage for stationarity tests<br>
+            - Clarify test status and improve transparency of documentation for users
+            (by [chrimaho](https://github.com/chrimaho))        * [`826dd68`](https://github.com/data-science-extensions/ts-stat-tests/commit/826dd68022787d8db03a1fd547edb32664ebd44b): Update stationarity docs to clarify test coverage<br>
+            - Standardise terminology and references for time series stationarity<br>
+            - Reference authoritative external sources for definitions and further reading<br>
+            - Refine library comparison table to focus on `statsmodels` and `arch` for numerical reliability<br>
+            - Clarify rationale for selecting `statsmodels` and `arch` packages, highlighting their comprehensive suite of tests<br>
+            - Update source module references to point to correct stationarity modules
+            (by [chrimaho](https://github.com/chrimaho))        * [`49eb822`](https://github.com/data-science-extensions/ts-stat-tests/commit/49eb8229834539ae530a5075e0691492911f50d2): Standardise hypothesis logic and update PP test implementation<br>
+            - Clarify and align null hypothesis handling for stationarity tests, ensuring consistent interpretation of p-values across algorithms<br>
+            - Replace `pmdarima` PP test implementation with `arch` library version, refactor `pp()` function signature and return values<br>
+            - Improve documentation with explicit references, trend and test type options for PP test, and fix docstring examples<br>
+            - Update VR, ERS, RUR test hypotheses in docstrings for accuracy<br>
+            - Enhance stationarity determination logic to robustly support all test types<br>
+            Relates to improved consistency and accuracy in statistical testing APIs
+            (by [chrimaho](https://github.com/chrimaho))        * [`17dd78a`](https://github.com/data-science-extensions/ts-stat-tests/commit/17dd78a5485d0d3e4bed8d4ba3af33e1fa6ed1b2): Add documentation for time-series stationarity tests<br>
+            - Provide an overview of key stationarity and seasonality tests for time-series data, comparing major Python libraries and their relevant algorithms<br>
+            - List supported statistical tests with import instructions and direct links to documentation<br>
+            - Reference implementation modules and usage for both algorithmic and test layers<br>
+            - Facilitate easier selection and understanding of statistical tools for assessing time-series suitability
+            (by [chrimaho](https://github.com/chrimaho))        * [`5acad0c`](https://github.com/data-science-extensions/ts-stat-tests/commit/5acad0cd5de4575ac8ecc898501f2eabc7a545d1): Add comprehensive unit tests for stationarity algorithms<br>
+            - Expand test coverage for statistical stationarity tests by introducing new test classes and cases<br>
+            - Standardise testing by comparing custom implementations to third-party libraries, verifying consistency of results<br>
+            - Include tests for major time series stationarity checks such as ADF, KPSS, PP, ERS, ZA, RUR, and VR<br>
+            - Use selective assertions and rounding to address minor numerical discrepancies between implementations<br>
+            - Improve reliability of statistical test code and facilitate future refactoring or algorithm enhancements
+            (by [chrimaho](https://github.com/chrimaho))        * [`0a1feb9`](https://github.com/data-science-extensions/ts-stat-tests/commit/0a1feb906af113378efdad5767eb08c441427835): add comprehensive docstrings for stationarity test functions<br>
+            - improve clarity and usability by providing detailed docstrings for `stationarity()` and `is_stationary()` functions<br>
+            - include algorithm options, parameter descriptions, return values, and example usage in the documentation<br>
+            - guide users on the interpretation of test results and clarify statistical assumptions
+            (by [chrimaho](https://github.com/chrimaho))        * [`a1da846`](https://github.com/data-science-extensions/ts-stat-tests/commit/a1da8461e270f5bc327844b69eb66afa5a25e096): add module header and summary docstring for clarity<br>
+            - provide an overview section and description to improve documentation<br>
+            - include a summary docstring for the module to explain its purpose<br>
+            - enhance code readability and maintainability by standardising file headers
+            (by [chrimaho](https://github.com/chrimaho))        * [`e497a9c`](https://github.com/data-science-extensions/ts-stat-tests/commit/e497a9c8754774e209d8e59b5b59d0bea3cda3af): Add stationarity test wrappers with unified interface<br>
+            - Provide `stationarity()` function to standardise access to multiple stationarity tests via a single interface<br>
+            - Implement `is_stationary()` function to streamline stationarity assessment using consistent logic across algorithms<br>
+            - Simplify selection of test algorithms with flexible naming and error handling<br>
+            - Improve code maintainability and readability by centralising algorithm dispatch and result interpretation
+            (by [chrimaho](https://github.com/chrimaho))        * [`68fbec0`](https://github.com/data-science-extensions/ts-stat-tests/commit/68fbec060e949830679cf4adeae58114c37adaf3): Add comprehensive docstrings for all stationarity test functions<br>
+            - Improve clarity and usability by introducing detailed docstrings for each statistical test function<br>
+            - Include mathematical formulations, parameter descriptions, expected return values, and practical code examples<br>
+            - Standardise documentation style with markdown formatting and KaTeX math for equations<br>
+            - Credit original libraries and add references for further reading to facilitate user understanding<br>
+            - Enhance discoverability with "See Also" sections linking related tests
+            (by [chrimaho](https://github.com/chrimaho))        * [`1eba0d9`](https://github.com/data-science-extensions/ts-stat-tests/commit/1eba0d90775451317ea10ef7fdaf400cd5367700): Add module overview and detailed documentation for stationarity algorithms<br>
+            - Introduce a comprehensive module header describing the purpose and scope of stationarity tests in time series analysis<br>
+            - Add a detailed summary discussing the statistical rationale and importance of stationarity tests, including ADF, KPSS, PP, ERS, and VR<br>
+            - Reference useful external resources for further reading to aid understanding<br>
+            - Improve code readability and maintainability by clarifying context and intent for future contributors
+            (by [chrimaho](https://github.com/chrimaho))        * [`40d087b`](https://github.com/data-science-extensions/ts-stat-tests/commit/40d087bf55566546dae634a3ba7f97c47e93e2d4): Add stationarity test wrappers with type validation<br>
+            - Provide standardised function interfaces for multiple stationarity tests<br>
+            - Use type validation via `@typechecked` decorator for input safety<br>
+            - Expose consistent argument options and overloads for flexible usage<br>
+            - Centralise imports and constants to simplify maintenance and readability<br>
+            - Improve usability by mirroring third-party library signatures
+            (by [chrimaho](https://github.com/chrimaho))        * [`0c6c10b`](https://github.com/data-science-extensions/ts-stat-tests/commit/0c6c10bf0772981c8c2962aa982c5a8dff58f67a): Add stationarity test scaffolding to codebase<br>
+            - Prepare groundwork for future stationarity feature implementation<br>
+            - Standardise documentation and navigation by including stationarity references<br>
+            - Enable future unit testing via placeholder test files<br>
+            - Facilitate expansion of statistical algorithms with initial stationarity structure
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.3.1"
 
     ## **v0.3.1 - Add Normality Module**
