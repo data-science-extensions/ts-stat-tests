@@ -141,7 +141,10 @@ def stationarity(
     }
 
     # Internal helper to handle kwargs casting for ty
-    def _call(func: Any, **args: Any) -> Any:
+    def _call(
+        func: Callable[..., tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]],
+        **args: Union[float, int, str, bool, ArrayLike, None],
+    ) -> tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]:
         """
         !!! note "Summary"
             Internal helper to call the test function.
@@ -253,8 +256,8 @@ def is_stationary(
         dict[str, Union[str, float, bool, None]],
         {
             "result": bool(is_stat),
-            "statistic": float(stat) if isinstance(stat, (int, float)) else stat,  # type: ignore
-            "pvalue": float(pvalue) if isinstance(pvalue, (int, float)) else pvalue,  # type: ignore
+            "statistic": float(stat) if isinstance(stat, (int, float)) else stat,
+            "pvalue": float(pvalue) if isinstance(pvalue, (int, float)) else pvalue,
             "alpha": float(alpha),
             "algorithm": str(algorithm),
         },

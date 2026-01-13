@@ -283,9 +283,9 @@ def is_normal(
         p_val = float(p_val_attr)
         stat_val = float(stat_val_attr)
     elif isinstance(res, (tuple, list)) and len(res) >= 2:
-        res_tuple_any = cast(tuple[Any, Any], res)
-        stat_val = float(res_tuple_any[0])
-        p_val = float(res_tuple_any[1])
+        res_tuple = cast(tuple[float, float], res)
+        stat_val = float(res_tuple[0])
+        p_val = float(res_tuple[1])
     else:
         # Fallback
         if isinstance(res, (float, int)):

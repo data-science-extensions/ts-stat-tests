@@ -204,7 +204,8 @@ def jb(
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    return _jb(resids=x, axis=axis)
+    res = _jb(resids=x, axis=axis)
+    return (float(res[0]), float(res[1]), float(res[2]), float(res[3]))
 
 
 @typechecked
@@ -299,7 +300,8 @@ def ob(
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    return _ob(resids=x, axis=axis)
+    res = _ob(resids=x, axis=axis)
+    return (float(res[0]), float(res[1]))
 
 
 @typechecked
@@ -409,7 +411,8 @@ def sw(
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    return _sw(x=x)
+    res = _sw(x=x)
+    return (float(res[0]), float(res[1]))
 
 
 @typechecked
@@ -571,7 +574,8 @@ def dp(
         - [`sw()`][ts_stat_tests.algorithms.normality.sw]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    return _dp(a=x, axis=axis, nan_policy=nan_policy)
+    res = _dp(a=x, axis=axis, nan_policy=nan_policy)
+    return (float(res[0]), float(res[1]))
 
 
 @typechecked
@@ -694,4 +698,9 @@ def ad(
         - [`sw()`][ts_stat_tests.algorithms.normality.sw]
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
     """
-    return _ad(x=x, dist=dist)
+    res = _ad(x=x, dist=dist)
+    return (
+        float(res.statistic),  # type: ignore
+        res.critical_values.tolist(),  # type: ignore
+        res.significance_level.tolist(),  # type: ignore
+    )
