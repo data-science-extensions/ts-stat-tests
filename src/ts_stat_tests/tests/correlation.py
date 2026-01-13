@@ -137,6 +137,18 @@ def correlation(
     !!! note "Summary"
         A unified interface for various correlation tests.
 
+    ???+ abstract "Details"
+        This function acts as a dispatcher for several correlation measures and tests, allowing users to access them through a single, consistent API. Depending on the `algorithm` parameter, it routes the call to the appropriate implementation in `ts_stat_tests.algorithms.correlation`.
+
+        The supported algorithms include:
+
+        - **Autocorrelation Function (ACF)**: Measures the correlation of a signal with a delayed copy of itself.
+        - **Partial Autocorrelation Function (PACF)**: Measures the correlation between a signal and its lagged values after removing the effects of intermediate lags.
+        - **Cross-Correlation Function (CCF)**: Measures the correlation between two signals at different lags.
+        - **Ljung-Box Test**: Tests for the presence of autocorrelation in the residuals of a model.
+        - **Lagrange Multiplier (LM) Test**: A generic test for autocorrelation, often used for ARCH effects.
+        - **Breusch-Godfrey Test**: A more general version of the LM test for serial correlation in residuals.
+
     Params:
         x (Union[ArrayLike, ArrayLike1D, RegressionResults, RegressionResultsWrapper]):
             The input time series data or regression results.
@@ -154,6 +166,14 @@ def correlation(
     Returns:
         (Union[np.ndarray, tuple[np.ndarray, ...], pd.DataFrame, tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
             Returns the result of the specified correlation test.
+
+    ??? tip "See Also"
+        - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Autocorrelation Function algorithm.
+        - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial Autocorrelation Function algorithm.
+        - [`ts_stat_tests.algorithms.correlation.ccf`][ts_stat_tests.algorithms.correlation.ccf]: Cross-Correlation Function algorithm.
+        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box Test algorithm.
+        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier Test algorithm.
+        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Test algorithm.
     """
 
     options: dict[str, tuple[str, ...]] = {

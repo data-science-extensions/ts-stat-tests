@@ -126,7 +126,7 @@ def normality(
             If not `"ad"`, returns a `tuple` of `(stat, pvalue)`.
             If `"ad"`, returns the internal library result object from `scipy.stats`.
 
-    !!! Success "Credit"
+    !!! success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.
 
     ???+ example "Examples"
@@ -226,7 +226,7 @@ def is_normal(
             - `"p_value"` (float): The p-value of the test (if applicable).
             - `"alpha"` (float): The significance level used.
 
-    !!! Success "Credit"
+    !!! success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.
 
     ???+ example "Examples"

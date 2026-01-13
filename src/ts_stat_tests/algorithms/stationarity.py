@@ -254,52 +254,52 @@ def adf(
         The mathematical equation for the Augmented Dickey-Fuller (ADF) test for stationarity in time series forecasting is:
 
         $$
-        Δy_t = α + βy_{t-1} + \\sum_{i=1}^p  δ_iΔy_{t-i} + ε_t
+        \Delta y_t = \alpha + \beta y_{t-1} + \sum_{i=1}^p \delta_i \Delta y_{t-i} + \epsilon_t
         $$
 
         where:
 
-        - $y_t$ is the value of the time series at time $t$
-        - $Δy_t$ is the first difference of $y_t$, which is defined as $Δy_t = y_t - y_{t-1}$
-        - $α$ is the constant term
-        - $β$ is the coefficient on $y_{t-1}$
-        - $δ_i$ are the coefficients on the lagged differences of $y$
-        - $ε_t$ is the error term
+        - $y_t$ is the value of the time series at time $t$.
+        - $\Delta y_t$ is the first difference of $y_t$, which is defined as $\Delta y_t = y_t - y_{t-1}$.
+        - $\alpha$ is the constant term.
+        - $\beta$ is the coefficient on $y_{t-1}$.
+        - $\delta_i$ are the coefficients on the lagged differences of $y$.
+        - $\epsilon_t$ is the error term.
 
-        The ADF test involves testing the null hypothesis that $β = 0$, or equivalently, that the time series has a unit root. If $β$ is significantly different from $0$, then the null hypothesis can be rejected and the time series is considered stationary.
+        The ADF test involves testing the null hypothesis that $\beta = 0$, or equivalently, that the time series has a unit root. If $\beta$ is significantly different from $0$, then the null hypothesis can be rejected and the time series is considered stationary.
 
         Here are the detailed steps for how to calculate the ADF test:
 
         1. Collect your time series data and plot it to visually check for any trends, seasonal patterns, or other patterns that could make the data non-stationary. If you detect any such patterns, you will need to pre-process your data (e.g., detrending, deseasonalizing, etc.) to remove these effects.
 
-        1. Calculate the first differences of the time series, which is simply the difference between each observation and the previous observation. This step is performed to transform the original data into a stationary process. The first difference of $y_t$ is defined as $Δy_t = y_t - y_{t-1}$.
+        1. Calculate the first differences of the time series, which is simply the difference between each observation and the previous observation. This step is performed to transform the original data into a stationary process. The first difference of $y_t$ is defined as $\Delta y_t = y_t - y_{t-1}$.
 
-        1. Estimate the parameters $α$, $β$, and $δ_i$ using the least squares method. This involves regressing $Δy_t$ on its lagged values, $y_{t-1}$, and the lagged differences of $y, Δy_{t-1}, Δy_{t-2}, ..., Δy_{t-p}$, where $p$ is the number of lags to include in the model. The estimated equation is:
+        1. Estimate the parameters $\alpha$, $\beta$, and $\delta_i$ using the least squares method. This involves regressing $\Delta y_t$ on its lagged values, $y_{t-1}$, and the lagged differences of $y, \Delta y_{t-1}, \Delta y_{t-2}, \dots, \Delta y_{t-p}$, where $p$ is the number of lags to include in the model. The estimated equation is:
 
             $$
-            Δy_t = α + βy_{t-1} + \\sum_{i=1}^p δ_iΔy_{t-i} + ε_t
+            \Delta y_t = \alpha + \beta y_{t-1} + \sum_{i=1}^p \delta_i \Delta y_{t-i} + \epsilon_t
             $$
 
         1. Calculate the test statistic, which is given by:
 
             $$
-            ADF = \\frac {β-1} {SE(β)}
+            ADF = \frac {\beta-1}{SE(\beta)}
             $$
 
-            - where $SE(β)$ is the standard error of the coefficient on $y_{t-1}$.
+            - where $SE(\beta)$ is the standard error of the coefficient on $y_{t-1}$.
 
-            The test statistic measures the number of standard errors by which $β$ deviates from $1$. If ADF is less than the critical values from the ADF distribution table, we can reject the null hypothesis and conclude that the time series is stationary.
+            The test statistic measures the number of standard errors by which $\beta$ deviates from $1$. If ADF is less than the critical values from the ADF distribution table, we can reject the null hypothesis and conclude that the time series is stationary.
 
         1. Compare the test statistic to the critical values in the ADF distribution table to determine the level of significance. The critical values depend on the sample size, the level of significance, and the number of lags in the model.
 
         1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is stationary and can be used for forecasting. If the null hypothesis is not rejected, then the time series is non-stationary and requires further pre-processing before it can be used for forecasting.
 
     ??? note "Notes"
-        The null hypothesis of the Augmented Dickey-Fuller is that there is a unit root, with the alternative that there is no unit root. If the pvalue is above a critical size, then we cannot reject that there is a unit root.
+        The null hypothesis of the Augmented Dickey-Fuller is that there is a unit root, with the alternative that there is no unit root. If the p-value is above a critical size, then we cannot reject that there is a unit root.
 
         The p-values are obtained through regression surface approximation from MacKinnon 1994, but using the updated 2010 tables. If the p-value is close to significant, then the critical values should be used to judge whether to reject the null.
 
-        The autolag option and maxlag for it are described in Greene.
+        The `autolag` option and `maxlag` for it are described in Greene.
 
     ??? success "Credit"
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html) library.
@@ -426,14 +426,14 @@ def kpss(
         The mathematical equation for the KPSS test for stationarity in time series forecasting is:
 
         $$
-        y_t = μ_t + ε_t
+        y_t = \mu_t + \epsilon_t
         $$
 
         where:
 
-        - $y_t$ is the value of the time series at time $t$
-        - $μ_t$ is the trend component of the time series
-        - $ε_t$ is the error term
+        - $y_t$ is the value of the time series at time $t$.
+        - $\mu_t$ is the trend component of the time series.
+        - $\epsilon_t$ is the error term.
 
         The KPSS test involves testing the null hypothesis that the time series is trend stationary, which means that the trend component of the time series is stationary over time. If the null hypothesis is rejected, then the time series is non-stationary and requires further pre-processing before it can be used for forecasting.
 
@@ -443,12 +443,12 @@ def kpss(
 
         1. Divide your time series data into multiple overlapping windows of equal size. The length of each window depends on the length of your time series and the level of detail you want to capture.
 
-        1. Calculate the trend component $μ_t$ for each window using a trend estimation method. There are several methods for estimating the trend component, such as the Hodrick-Prescott filter, the Christiano-Fitzgerald filter, or simple linear regression. The choice of method depends on the characteristics of your data and the level of accuracy you want to achieve.
+        1. Calculate the trend component $\mu_t$ for each window using a trend estimation method. There are several methods for estimating the trend component, such as the Hodrick-Prescott filter, the Christiano-Fitzgerald filter, or simple linear regression. The choice of method depends on the characteristics of your data and the level of accuracy you want to achieve.
 
-        1. Calculate the residual series $ε_t$ by subtracting the trend component from the original time series:
+        1. Calculate the residual series $\epsilon_t$ by subtracting the trend component from the original time series:
 
             $$
-            ε_t = y_t - μ_t
+            \epsilon_t = y_t - \mu_t
             $$
 
         1. Estimate the variance of the residual series using a suitable estimator, such as the Newey-West estimator or the Bartlett kernel estimator. This step is necessary to correct for any serial correlation in the residual series.
@@ -456,18 +456,26 @@ def kpss(
         1. Calculate the test statistic, which is given by:
 
             $$
-            KPSS = T \\times \\sum_{t=1}^T \\frac {S_t^2} {σ^2}
+            KPSS = T \times \sum_{t=1}^T \frac {S_t^2} {\sigma^2}
             $$
 
             where:
 
-            - $T$ is the number of observations in the time series
-            - $S_t$ is the cumulative sum of the residual series up to time $t$, i.e., $S_t = \\sum_{i=1}^t ε_i$
-            - $σ^2$ is the estimated variance of the residual series
+            - $T$ is the number of observations in the time series.
+            - $S_t$ is the cumulative sum of the residual series up to time $t$, i.e., $S_t = \sum_{i=1}^t \epsilon_i$.
+            - $\sigma^2$ is the estimated variance of the residual series.
 
             The test statistic measures the strength of the trend component relative to the residual series. If KPSS is greater than the critical values from the KPSS distribution table, we can reject the null hypothesis and conclude that the time series is non-stationary.
 
         1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is non-stationary and requires further pre-processing before it can be used for forecasting. If the null hypothesis is not rejected, then the time series is trend stationary and can be used for forecasting.
+
+    ??? note "Notes"
+        To estimate $\sigma^2$ the Newey-West estimator is used. If `lags` is `"legacy"`, the truncation lag parameter is set to $int(12 \times (\frac{n}{100})^{\frac{1}{4}})$, as outlined in Schwert (1989). The p-values are interpolated from Table 1 of Kwiatkowski et al. (1992). If the computed statistic is outside the table of critical values, then a warning message is generated.
+
+        Missing values are not handled.
+
+    ??? success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.kpss.html) library.
 
     ??? question "References"
         - Andrews, D.W.K. (1991). Heteroskedasticity and autocorrelation consistent covariance matrix estimation. Econometrica, 59: 817-858.
@@ -653,15 +661,15 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         The mathematical equation for the RUR test is:
 
         $$
-        y_t = ρ y_{t-1} + ε_t
+        y_t = \rho y_{t-1} + \epsilon_t
         $$
 
         where:
 
-        - $y_t$ is the value of the time series at time $t$
-        - $ρ$ is the parameter of the unit root process
-        - $y_{t-1}$ is the value of the time series at time $t-1$
-        - $ε_t$ is a stationary error term with mean zero and constant variance
+        - $y_t$ is the value of the time series at time $t$.
+        - $\rho$ is the parameter of the unit root process.
+        - $y_{t-1}$ is the value of the time series at time $t-1$.
+        - $\epsilon_t$ is a stationary error term with mean zero and constant variance.
 
         The null hypothesis of the RUR test is that the time series is stationary, and the alternative hypothesis is that the time series is non-stationary with a unit root.
 
@@ -669,37 +677,37 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         1. Collect your time series data and plot it to visually check for any trends, seasonal patterns, or other patterns that could make the data non-stationary. If you detect any such patterns, you will need to pre-process your data (e.g., detrending, deseasonalizing, etc.) to remove these effects.
 
-        1. Estimate the parameter $ρ$ using the ordinary least squares method. This involves regressing $y_t$ on $y_{t-1}$. The estimated equation is:
+        1. Estimate the parameter $\rho$ using the ordinary least squares method. This involves regressing $y_t$ on $y_{t-1}$. The estimated equation is:
 
             $$
-            y_t = α + ρ y_{t-1} + ε_t
+            y_t = \alpha + \rho y_{t-1} + \epsilon_t
             $$
 
             where:
 
-            - $α$ is the intercept, and
-            - $ε_t$ is the error term
+            - $\alpha$ is the intercept.
+            - $\epsilon_t$ is the error term.
 
         1. Calculate the range of the time series, which is the difference between the maximum and minimum values of the time series:
 
             $$
-            R = max(y_t) - min(y_t)
+            R = \max(y_t) - \min(y_t)
             $$
 
         1. Calculate the expected range of the time series under the null hypothesis of stationarity, which is given by:
 
             $$
-            E(R) = (T - 1) / (2 √(T))
+            E(R) = \frac {T - 1} {2 \sqrt{T}}
             $$
 
             where:
 
-            - $T$ is the sample size
+            - $T$ is the sample size.
 
         1. Calculate the test statistic, which is given by:
 
             $$
-            RUR = (R - E(R)) / E(R)
+            RUR = \frac {R - E(R)} {E(R)}
             $$
 
         1. Compare the test statistic to the critical values in the RUR distribution table to determine the level of significance. The critical values depend on the sample size and the level of significance.
@@ -803,18 +811,18 @@ def za(
         The mathematical equation for the Zivot-Andrews test is:
 
         $$
-        y_t = α + β t + γ y_{t-1} + δ_1 D_t + δ_2 t D_t + ε_t
+        y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 D_t + \delta_2 t D_t + \epsilon_t
         $$
 
         where:
 
-        - $y_t$ is the value of the time series at time $t$
-        - $α$ is the intercept
-        - $β$ is the slope coefficient of the time trend
-        - $γ$ is the coefficient of the lagged dependent variable
-        - $D_t$ is a dummy variable that takes a value of $1$ after the suspected structural break point, and $0$ otherwise
-        - $δ_1$ and $δ_2$ are the coefficients of the dummy variable and the interaction term of the dummy variable and time trend, respectively
-        - $ε_t$ is a stationary error term with mean zero and constant variance
+        - $y_t$ is the value of the time series at time $t$.
+        - $\alpha$ is the intercept.
+        - $\beta$ is the slope coefficient of the time trend.
+        - $\gamma$ is the coefficient of the lagged dependent variable.
+        - $D_t$ is a dummy variable that takes a value of 1 after the suspected structural break point, and 0 otherwise.
+        - $\delta_1$ and $\delta_2$ are the coefficients of the dummy variable and the interaction term of the dummy variable and time trend, respectively.
+        - $\epsilon_t$ is a stationary error term with mean zero and constant variance.
 
         The null hypothesis of the Zivot-Andrews test is that the time series is non-stationary, and the alternative hypothesis is that the time series is stationary with a single structural break.
 
@@ -825,7 +833,7 @@ def za(
         1. Estimate the parameters of the model using the least squares method. This involves regressing $y_t$ on $t$, $y_{t-1}$, $D_t$, and $t D_t$. The estimated equation is:
 
             $$
-            y_t = α + β t + γ y_{t-1} + δ_1 D_t + δ_2 t D_t + ε_t
+            y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 D_t + \delta_2 t D_t + \epsilon_t
             $$
 
         1. Perform a unit root test on the residuals to check for stationarity. The most commonly used unit root tests for this purpose are the Augmented Dickey-Fuller (ADF) test and the Phillips-Perron (PP) test.
@@ -833,18 +841,26 @@ def za(
         1. Calculate the test statistic, which is based on the largest root of the following equation:
 
             $$
-            ∆y_t = α + β t + γ y_{t-1} + δ_1 D_t + δ_2 t D_t + ε_t
+            \Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 D_t + \delta_2 t D_t + \epsilon_t
             $$
 
             where:
 
-            - $∆$ is the first difference operator.
+            - $\Delta$ is the first difference operator.
 
         1. Determine the critical values of the test statistic from the Zivot-Andrews distribution table. The critical values depend on the sample size, the level of significance, and the number of lagged dependent variables in the model.
 
         1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is stationary with a structural break. If the null hypothesis is not rejected, then the time series is non-stationary and may require further processing to make it stationary.
 
         In practice, the Zivot-Andrews test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of parameters and calculation of the test statistic.
+
+    ??? note "Notes"
+        H0 = unit root with a single structural break
+
+        Algorithm follows Baum (2004/2015) approximation to original Zivot-Andrews method. Rather than performing an autolag regression at each candidate break period (as per the original paper), a single autolag regression is run up-front on the base model (constant + trend with no dummies) to determine the best lag length. This lag length is then used for all subsequent break-period regressions. This results in significant run time reduction but also slightly more pessimistic test statistics than the original Zivot-Andrews method, although no attempt has been made to characterize the size/power trade-off.
+
+    ??? success "Credit"
+        - All credit goes to the [`statsmodels`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.zivot_andrews.html) library.
 
     ??? question "References"
         - Baum, C.F. (2004). ZANDREWS: Stata module to calculate Zivot-Andrews unit root test in presence of structural break," Statistical Software Components S437301, Boston College Department of Economics, revised 2015.
@@ -1001,50 +1017,58 @@ def pp(
         The Phillips-Perron (PP) test is a commonly used test for stationarity in time series forecasting. The mathematical equation for the PP test is:
 
         $$
-        y_t = δ + πt + ρy_{t-1} + ε_t
+        y_t = \delta + \pi t + \rho y_{t-1} + \epsilon_t
         $$
 
         where:
 
-        - $y_t$ is the value of the time series at time $t$
-        - $δ$ is a constant term
-        - $π$ is a coefficient that captures the trend in the data
-        - $ρ$ is a coefficient that captures the autocorrelation in the data
-        - $y_{t-1}$ is the lagged value of the time series at time $t-1$
-        - $ε_t$ is a stationary error term with mean zero and constant variance
+        - $y_t$ is the value of the time series at time $t$.
+        - $\delta$ is a constant term.
+        - $\pi$ is a coefficient that captures the trend in the data.
+        - $\rho$ is a coefficient that captures the autocorrelation in the data.
+        - $y_{t-1}$ is the lagged value of the time series at time $t-1$.
+        - $\epsilon_t$ is a stationary error term with mean zero and constant variance.
 
-        The PP test is based on the idea that if the time series is stationary, then the coefficient $ρ$ should be equal to zero. Therefore, the null hypothesis of the PP test is that the time series is stationary, and the alternative hypothesis is that the time series is non-stationary with a non-zero value of $ρ$.
+        The PP test is based on the idea that if the time series is stationary, then the coefficient $\rho$ should be equal to zero. Therefore, the null hypothesis of the PP test is that the time series is stationary, and the alternative hypothesis is that the time series is non-stationary with a non-zero value of $\rho$.
 
         Here are the detailed steps for how to calculate the PP test:
 
         1. Collect your time series data and plot it to visually check for any trends, seasonal patterns, or other patterns that could make the data non-stationary. If you detect any such patterns, you will need to pre-process your data (e.g., detrending, deseasonalizing, etc.) to remove these effects.
 
-        1. Estimate the regression model by regressing y_t on a constant, a linear trend, and the lagged value of $y_{t-1}$. The regression equation is:
+        1. Estimate the regression model by regressing $y_t$ on a constant, a linear trend, and the lagged value of $y_{t-1}$. The regression equation is:
 
             $$
-            y_t = δ + πt + ρy_{t-1} + ε_t
+            y_t = \delta + \pi t + \rho y_{t-1} + \epsilon_t
             $$
 
         1. Calculate the test statistic, which is based on the following equation:
 
             $$
-            z = \\left( T^{-\\frac{1}{2}} \\right) \\times \\left( \\sum_{t=1}^T \\left( y_t - δ - πt - ρy_{t-1} \\right) - \\left( \\frac{1}{T} \\right) \\times \\sum_{t=1}^T \\sum_{s=1}^T K \\left( \\frac{s-t}{h} \\right) (y_s - δ - πs - ρy_{s-1}) \\right)
+            z = \left( T^{-\frac{1}{2}} \right) \times \left( \sum_{t=1}^T \left( y_t - \delta - \pi t - \rho y_{t-1} \right) - \left( \frac{1}{T} \right) \times \sum_{t=1}^T \sum_{s=1}^T K \left( \frac{s-t}{h} \right) (y_s - \delta - \pi s - \rho y_{s-1}) \right)
             $$
 
             where:
 
-            - $T$ is the sample size
-            - $K()$ is the kernel function, which determines the weight of each observation in the smoothed series. The choice of the kernel function depends on the degree of serial correlation in the data. Typically, a Gaussian kernel or a Bartlett kernel is used.
+            - $T$ is the sample size.
+            - $K(\dots)$ is the kernel function, which determines the weight of each observation in the smoothed series. The choice of the kernel function depends on the degree of serial correlation in the data. Typically, a Gaussian kernel or a Bartlett kernel is used.
             - $h$ is the bandwidth parameter, which controls the degree of smoothing of the series. The optimal value of $h$ depends on the sample size and the noise level of the data.
 
         1. Determine the critical values of the test statistic from the PP distribution table. The critical values depend on the sample size and the level of significance.
 
-        1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is non-stationary with a non-zero value of $ρ$. If the null hypothesis is not rejected, then the time series is stationary.
+        1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is non-stationary with a non-zero value of $\rho$. If the null hypothesis is not rejected, then the time series is stationary.
 
         In practice, the PP test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of the regression model and calculation of the test statistic.
 
+    ??? note "Notes"
+        This test is generally used indirectly via the [`pmdarima.arima.ndiffs()`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ndiffs.html) function, which computes the differencing term, `d`.
+
+        The R code allows for two types of tests: `'Z(alpha)'` and `'Z(t_alpha)'`. Since sklearn does not allow extraction of std errors from the linear model fit, `t_alpha` is much more difficult to achieve, so we do not allow that variant.
+
+    !!! success "Credit"
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.PhillipsPerron.html) library.
+
     ??? question "References"
-        - R's tseries PP test source code: http://bit.ly/2wbzx6V
+        - Phillips, P. C. B.; Perron, P. (1988). Testing for a Unit Root in Time Series Regression. Biometrika. 75 (2): 335-346.
 
     ??? tip "See Also"
         - [`statsmodels.tsa.stattools.adfuller`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html): Augmented Dickey-Fuller unit root test.
@@ -1190,14 +1214,14 @@ def ers(
         The mathematical equation for the ERS test is:
 
         $$
-        y_t = μ_t + ε_t
+        y_t = \mu_t + \epsilon_t
         $$
 
         where:
 
-        - $y_t$ is the value of the time series at time $t$
-        - $μ_t$ is a time-varying mean function
-        - $ε_t$ is a stationary error term with mean zero and constant variance
+        - $y_t$ is the value of the time series at time $t$.
+        - $\mu_t$ is a time-varying mean function.
+        - $\epsilon_t$ is a stationary error term with mean zero and constant variance.
 
         The ERS test is based on the idea that if the time series is stationary, then the mean function should be a constant over time. Therefore, the null hypothesis of the ERS test is that the time series is non-stationary (unit root), and the alternative hypothesis is that the time series is stationary.
 
@@ -1205,25 +1229,35 @@ def ers(
 
         1. Collect your time series data and plot it to visually check for any trends, seasonal patterns, or other patterns that could make the data non-stationary. If you detect any such patterns, you will need to pre-process your data (e.g., detrending, deseasonalizing, etc.) to remove these effects.
 
-        1. Estimate the time-varying mean function using a local polynomial regression method. The choice of the polynomial degree depends on the complexity of the mean function and the sample size. Typically, a quadratic or cubic polynomial is used. The estimated mean function is denoted as $μ_t$.
+        1. Estimate the time-varying mean function using a local polynomial regression method. The choice of the polynomial degree depends on the complexity of the mean function and the sample size. Typically, a quadratic or cubic polynomial is used. The estimated mean function is denoted as $\mu_t$.
 
         1. Calculate the test statistic, which is based on the following equation:
 
             $$
-            z = \\left( \\frac {T-1} {( \\frac {1} {12π^2 \\times Δ^2} )} \\right) ^{\\frac{1}{2}} \\times \\left( \\sum_{t=1}^T \\frac {(y_t - μ_t)^2} {T-1} \\right)
+            z = \left( \frac {T-1} {( \frac {1} {12\pi^2 \times \Delta^2} )} \right) ^{\frac{1}{2}} \times \left( \sum_{t=1}^T \frac {(y_t - \mu_t)^2} {T-1} \right)
             $$
 
             where:
 
             - $T$ is the sample size
-            - $Δ$ is the bandwidth parameter, which controls the degree of smoothing of the mean function. The optimal value of $Δ$ depends on the sample size and the noise level of the data.
-            - $π$ is the constant pi
+            - $\Delta$ is the bandwidth parameter, which controls the degree of smoothing of the mean function. The optimal value of $\Delta$ depends on the sample size and the noise level of the data.
+            - $\pi$ is the constant pi.
 
         1. Determine the critical values of the test statistic from the ERS distribution table. The critical values depend on the sample size and the level of significance.
 
         1. Finally, interpret the results and draw conclusions about the stationarity of the time series. If the null hypothesis is rejected, then the time series is non-stationary with a time-varying mean function. If the null hypothesis is not rejected, then the time series is stationary.
 
         In practice, the ERS test is often conducted using software packages such as R, Python, or MATLAB, which automate the estimation of the time-varying mean function and calculation of the test statistic.
+
+    ??? note "Notes"
+        The null hypothesis of the Dickey-Fuller GLS is that there is a unit root, with the alternative that there is no unit root. If the p-value is above a critical size, then the null cannot be rejected and the series appears to be a unit root.
+
+        DFGLS differs from the ADF test in that an initial GLS detrending step is used before a trend-less ADF regression is run.
+
+        Critical values and p-values when trend is `"c"` are identical to the ADF. When trend is set to `"ct"`, they are from Elliott, Rothenberg, and Stock (1996).
+
+    !!! success "Credit"
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html) library.
 
     ??? question "References"
         - Elliott, G. R., T. J. Rothenberg, and J. H. Stock. 1996. Efficient bootstrap for an autoregressive unit root. Econometrica 64: 813-836.
@@ -1365,14 +1399,14 @@ def vr(
         The Variance Ratio (VR) test is a statistical test for stationarity in time series forecasting that is based on the idea that if the time series is stationary, then the variance of the returns should be constant over time. The mathematical equation for the VR test is:
 
         $$
-        VR(k) = \\frac {σ^2(k)} {kσ^2(1)}
+        VR(k) = \frac {\sigma^2(k)} {k\sigma^2(1)}
         $$
 
         where:
 
-        - $VR(k)$ is the variance ratio for the time series over $k$ periods
-        - $σ^2(k)$ is the variance of the returns over $k$ periods
-        - $σ^2(1)$ is the variance of the returns over $1$ period
+        - $VR(k)$ is the variance ratio for the time series over $k$ periods.
+        - $\sigma^2(k)$ is the variance of the returns over $k$ periods.
+        - $\sigma^2(1)$ is the variance of the returns over $1$ period.
 
         The VR test involves comparing the variance ratio to a critical value, which is derived from the null distribution of the variance ratio under the assumption of a random walk with drift.
 
@@ -1381,7 +1415,7 @@ def vr(
         1. Collect your time series data and compute the log returns, which are defined as:
 
             $$
-            r_t = log(y_t) - log(y_{t-1})
+            r_t = \log(y_t) - \log(y_{t-1})
             $$
 
             where:
@@ -1391,32 +1425,32 @@ def vr(
         1. Compute the variance of the returns over $k$ periods, which is defined as:
 
             $$
-            σ^2(k) = \\left( \\frac {1} {n-k} \\right) \\times \\sum_{t=k+1}^n (r_t - μ_k)^2
+            \sigma^2(k) = \left( \frac {1} {n-k} \right) \times \sum_{t=k+1}^n (r_t - \mu_k)^2
             $$
 
             where:
 
-            - $n$ is the sample size
-            - $μ_k$ is the mean of the returns over k periods, which is defined as:
+            - $n$ is the sample size.
+            - $\mu_k$ is the mean of the returns over $k$ periods, which is defined as:
 
-                $μ_k = \\left( \\frac{1} {n-k} \\right) \\times \\sum_{t=k+1}^n r_t$
+                $\mu_k = \left( \frac{1} {n-k} \right) \times \sum_{t=k+1}^n r_t$
 
-        1. Compute the variance of the returns over 1 period, which is defined as:
+        1. Compute the variance of the returns over $1$ period, which is defined as:
 
             $$
-            σ^2(1) = \\left( \\frac{1} {n-1} \\right) \\times \\sum_{t=2}^n (r_t - μ_1)^2
+            \sigma^2(1) = \left( \frac{1} {n-1} \right) \times \sum_{t=2}^n (r_t - \mu_1)^2
             $$
 
-            where
+            where:
 
-            - $μ_1$ is the mean of the returns over $1$ period, which is defined as:
+            - $\mu_1$ is the mean of the returns over $1$ period, which is defined as:
 
-                $μ_1 = \\left( \\frac{1} {n-1} \\right) \\times \\sum_{t=2}^n r_t$
+                $\mu_1 = \left( \frac{1} {n-1} \right) \times \sum_{t=2}^n r_t$
 
         1. Compute the variance ratio for each value of $k$, which is defined as:
 
             $$
-            VR(k) = \\frac {σ^2(k)} {kσ^2(1)}
+            VR(k) = \frac {\sigma^2(k)} {k\sigma^2(1)}
             $$
 
         1. Determine the critical values of the variance ratio from the null distribution table of the VR test, which depend on the sample size, the level of significance, and the lag length $k$.
@@ -1424,6 +1458,12 @@ def vr(
         1. Finally, compare the variance ratio to the critical value. If the variance ratio is greater than the critical value, then the null hypothesis of a random walk with drift is rejected, and the time series is considered stationary. If the variance ratio is less than or equal to the critical value, then the null hypothesis cannot be rejected, and the time series is considered non-stationary.
 
         In practice, the VR test is often conducted using software packages such as R, Python, or MATLAB, which automate the calculation of the variance ratio and the determination of the critical value.
+
+    ??? note "Notes"
+        The null hypothesis of a VR is that the process is a random walk, possibly plus drift. Rejection of the null with a positive test statistic indicates the presence of positive serial correlation in the time series.
+
+    !!! success "Credit"
+        - All credit goes to the [`arch`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html) library.
 
     ??? question "References"
         - Campbell, John Y., Lo, Andrew W. and MacKinlay, A. Craig. (1997) The Econometrics of Financial Markets. Princeton, NJ: Princeton University Press.

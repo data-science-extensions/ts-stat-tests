@@ -128,7 +128,7 @@ def entropy(
         (float):
             The calculated entropy value.
 
-    !!! Success "Credit"
+    ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
     ???+ Example "Examples"
@@ -168,14 +168,14 @@ def entropy(
         0.3371369604224553
         ```
 
-    ??? Question "References"
+    ??? question "References"
         - Richman, J. S. et al. (2000). Physiological time-series analysis using approximate entropy and sample entropy. American Journal of Physiology-Heart and Circulatory Physiology, 278(6), H2039-H2049.
         - https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
         - Inouye, T. et al. (1991). Quantification of EEG irregularity by use of the entropy of the power spectrum. Electroencephalography and clinical neurophysiology, 79(3), 204-210.
         - https://en.wikipedia.org/wiki/Spectral_density
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
-    ??? Tip "See Also"
+    ??? tip "See Also"
         - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
@@ -257,7 +257,7 @@ def regularity(
         (float):
             The calculated regularity (entropy) value.
 
-    !!! Success "Credit"
+    ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
     ???+ Example "Examples"
@@ -301,14 +301,14 @@ def regularity(
         0.3371369604224553
         ```
 
-    ??? Question "References"
+    ??? question "References"
         - Richman, J. S. et al. (2000). Physiological time-series analysis using approximate entropy and sample entropy. American Journal of Physiology-Heart and Circulatory Physiology, 278(6), H2039-H2049.
         - https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
         - Inouye, T. et al. (1991). Quantification of EEG irregularity by use of the entropy of the power spectrum. Electroencephalography and clinical neurophysiology, 79(3), 204-210.
         - https://en.wikipedia.org/wiki/Spectral_density
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
-    ??? Tip "See Also"
+    ??? tip "See Also"
         - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
@@ -397,6 +397,8 @@ def is_regular(
             - `result` (bool): `True` if `entropy < tolerance`.
             - `entropy` (float): The calculated entropy value.
             - `tolerance` (float): The threshold used for regularity.
+
+    ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
     ???+ Example "Examples"
@@ -422,14 +424,14 @@ def is_regular(
         {"entropy": 0.4287365561752448, "tolerance": 23.909808306554297, "result": True}
         ```
 
-    ??? Question "References"
+    ??? question "References"
         - Richman, J. S. et al. (2000). Physiological time-series analysis using approximate entropy and sample entropy. American Journal of Physiology-Heart and Circulatory Physiology, 278(6), H2039-H2049.
         - https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
         - Inouye, T. et al. (1991). Quantification of EEG irregularity by use of the entropy of the power spectrum. Electroencephalography and clinical neurophysiology, 79(3), 204-210.
         - https://en.wikipedia.org/wiki/Spectral_density
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
-    ??? Tip "See Also"
+    ??? tip "See Also"
         - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
         - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]

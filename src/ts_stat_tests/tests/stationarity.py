@@ -117,7 +117,7 @@ def stationarity(
         (tuple[Union[float, int, dict, ResultsStore, None], ...]):
             The result of the stationarity test.
 
-    !!! Success "Credit"
+    !!! success "Credit"
         Calculations are performed by `statsmodels`, `arch`, and `pmdarima`.
 
     ???+ example "Examples"
