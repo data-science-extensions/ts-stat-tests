@@ -239,11 +239,10 @@ def acf(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
-        >>> from ts_stat_tests.utils.data import load_macrodata, load_airline
         >>> from ts_stat_tests.algorithms.correlation import acf
-        >>> data_macro = load_macrodata().realgdp.values
-        >>> data_airline = load_airline().values
+        >>> from ts_stat_tests.utils.data import data_airline, data_macrodata
+        >>> data_macro = data_macrodata.realgdp.values
+        >>> data_airline = data_airline.values
 
         ```
 
@@ -419,9 +418,9 @@ def pacf(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import pacf
-        >>> data = load_airline().values
+        >>> from ts_stat_tests.utils.data import data_airline
+        >>> data = data_airline.values
 
         ```
 
@@ -569,9 +568,9 @@ def ccf(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import ccf
-        >>> data = load_airline()
+        >>> from ts_stat_tests.utils.data import data_airline
+        >>> data = data_airline.values
 
         ```
 
@@ -717,10 +716,11 @@ def lb(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import statsmodels.api as sm
+        >>> from statsmodels import api as sm
         >>> from ts_stat_tests.algorithms.correlation import lb
-        >>> data = sm.datasets.sunspots.load_pandas().data
-        >>> res = sm.tsa.ARIMA(data["SUNACTIVITY"], order=(1, 0, 1)).fit()
+        >>> from ts_stat_tests.utils import data_airline
+        >>> data = data_airline.values
+        >>> res = sm.tsa.ARIMA(data, order=(1, 0, 1)).fit()
 
         ```
 
@@ -906,9 +906,9 @@ def lm(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.utils.data import load_airline
         >>> from ts_stat_tests.algorithms.correlation import lm
-        >>> data = load_airline()
+        >>> from ts_stat_tests.utils.data import data_airline
+        >>> data = data_airline.values
 
         ```
 
