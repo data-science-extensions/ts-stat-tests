@@ -167,6 +167,30 @@ def correlation(
         (Union[np.ndarray, tuple[np.ndarray, ...], pd.DataFrame, tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
             Returns the result of the specified correlation test.
 
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.tests.correlation import correlation
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Autocorrelation (ACF)"}
+        >>> res = correlation(normal, algorithm="acf", nlags=10)
+        >>> print(f"Lag 1 ACF: {res[1]:.4f}")
+        Lag 1 ACF: -0.0228
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Ljung-Box test"}
+        >>> res = correlation(normal, algorithm="lb", lags=[5])
+        >>> print(res)
+            lb_stat  lb_pvalue
+        5  4.479727     0.4826
+
+        ```
+
     ??? tip "See Also"
         - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Autocorrelation Function algorithm.
         - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial Autocorrelation Function algorithm.
