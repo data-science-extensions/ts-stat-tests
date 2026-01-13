@@ -121,8 +121,9 @@ def normality(
         ValueError: When the given value for `algorithm` is not valid.
 
     Returns:
-        (Union[float, int, str, bool, None]):
-            The result of the normality test.
+        (Union[tuple[float, float], object]):
+            If not `"ad"`, returns a `tuple` of `(stat, pvalue)`.
+            If `"ad"`, returns the internal library result object from `scipy.stats`.
 
     !!! Success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.
@@ -217,8 +218,12 @@ def is_normal(
             Default: `"norm"`
 
     Returns:
-        (dict):
-            A dictionary containing the results of the test.
+        (dict[str, Union[str, float, bool, None]]):
+            A dictionary containing:
+            - `"result"` (bool): Indicator if the series is normal.
+            - `"statistic"` (float): The test statistic.
+            - `"p_value"` (float): The p-value of the test (if applicable).
+            - `"alpha"` (float): The significance level used.
 
     !!! Success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.

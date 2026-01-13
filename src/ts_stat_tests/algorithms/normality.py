@@ -105,13 +105,13 @@ def jb(
             Default: `0`
 
     Returns:
-        JB (Union[float, ArrayLike]):
+        JB (float):
             The Jarque-Bera test statistic.
-        JBpv (Union[float, ArrayLike]):
+        JBpv (float):
             The pvalue of the test statistic.
-        skew (Union[float, ArrayLike]):
+        skew (float):
             Estimated skewness of the data.
-        kurtosis (Union[float, ArrayLike]):
+        kurtosis (float):
             Estimated kurtosis of the data.
 
     ???+ example "Examples"
@@ -306,9 +306,9 @@ def ob(
             Default: `0`
 
     Returns:
-        statistic (Union[float, np.ndarray]):
+        statistic (float):
             The Omnibus test statistic.
-        pvalue (Union[float, np.ndarray]):
+        pvalue (float):
             The p-value for the hypothesis test.
 
     ???+ example "Examples"
@@ -689,9 +689,9 @@ def dp(
             Default: `"propagate"`
 
     Returns:
-        statistic (Union[float, np.ndarray]):
-            Value $s^2 + k^2$, where $s$ is the z-score returned by [`skewtest`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.skewtest.html) and $k$ is the z-score returned by [`kurtosistest`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kurtosistest.html).
-        pvalue (Union[float, np.ndarray]):
+        statistic (float):
+            The test statistic ($K^2$).
+        pvalue (float):
             A 2-sided chi-squared probability for the hypothesis test.
 
     ???+ example "Examples"
@@ -924,13 +924,10 @@ def ad(
     Returns:
         statistic (float):
             The Anderson-Darling test statistic.
-        critical_values (list):
+        critical_values (list[float]):
             The critical values for this distribution.
-        significance_level (list):
-            The significance levels for the corresponding critical values in percents. The function returns critical values for a differing set of significance levels depending on the distribution that is being tested against.
-        fit_result (Any):
-            An object containing the results of fitting the distribution to the data.
-            Note that the [`FitResult`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats._result_classes.FitResult.html) class was added to SciPy in version `1.10.0`. In the same release, this `anderson` function from SciPy had the outputs extended to include the `fit_result` object. The SciPy version `1.10.0` requires Python version `>=3.8`.<br><br>Therefore, when this function is executed on Python `3.7`, it will default to the highest compatible SciPy version, which is `1.7.0`. Hence, to ensure that this algorithm can still be used in Python `3.7`, the type of this output object is changed to `Any`, and is only returned when the Python version is `>=3.8`.
+        significance_level (list[float]):
+            The significance levels for the corresponding critical values in percents.
 
     ???+ example "Examples"
 

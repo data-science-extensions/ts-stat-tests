@@ -113,7 +113,7 @@ def stationarity(
         ValueError: When the given value for `algorithm` is not valid.
 
     Returns:
-        (Union[tuple, dict]):
+        (tuple[Union[float, int, dict, ResultsStore, None], ...]):
             The result of the stationarity test.
 
     !!! Success "Credit"
@@ -200,13 +200,13 @@ def is_stationary(
             Additional arguments to pass to the underlying algorithm.
 
     Returns:
-        (dict):
+        (dict[str, Union[str, float, bool, None]]):
             A dictionary containing:
-            - `result`: Boolean indicating if the series is stationary.
-            - `statistic`: The test statistic.
-            - `pvalue`: The p-value of the test.
-            - `alpha`: The significance level used.
-            - `algorithm`: The algorithm used.
+            - `"result"` (bool): Indicator if the series is stationary.
+            - `"statistic"` (float): The test statistic.
+            - `"pvalue"` (float): The p-value of the test.
+            - `"alpha"` (float): The significance level used.
+            - `"algorithm"` (str): The algorithm used.
 
     ???+ example "Examples"
 

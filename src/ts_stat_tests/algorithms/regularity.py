@@ -125,8 +125,8 @@ def approx_entropy(
         None: This function does not explicitly raise any exceptions.
 
     Returns:
-        entropy (float):
-            Approximate Entropy score.
+        (float):
+            The approximate entropy score.
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Prepare data"}
@@ -241,8 +241,8 @@ def sample_entropy(
         None: This function does not explicitly raise any exceptions.
 
     Returns:
-        entropy (float):
-            Sample Entropy score.
+        (float):
+            The sample entropy score.
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Prepare data"}
@@ -377,7 +377,7 @@ def permutation_entropy(
         None: This function does not explicitly raise any exceptions.
 
     Returns:
-        entropy (float):
+        (float):
             The permutation entropy of the data set.
 
     ???+ example "Examples"
@@ -512,8 +512,8 @@ def spectral_entropy(
         None: This function does not explicitly raise any exceptions.
 
     Returns:
-        entropy (Union[float, np.ndarray]):
-            Spectral Entropy score. Returned as a float for 1D input, or a numpy array for N-dimensional input.
+        (Union[float, np.ndarray]):
+            The spectral entropy score. Returned as a float for 1D input, or a numpy array for N-dimensional input.
 
     ???+ example "Examples"
         ```pycon {.py .python linenums="1" title="Prepare data"}
@@ -630,7 +630,7 @@ def svd_entropy(
         None: This function does not explicitly raise any exceptions.
 
     Returns:
-        entropy (float):
+        (float):
             The SVD entropy of the data set.
 
     ???+ example "Examples"

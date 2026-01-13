@@ -186,20 +186,15 @@ def adf(
             Default: `False`
 
     Returns:
-        adf (float):
-            The test statistic.
-        pvalue (float):
-            MacKinnon's approximate p-value based on MacKinnon (1994, 2010).
-        uselag (int):
-            The number of lags used.
-        nobs (int):
-            The number of observations used for the ADF regression and calculation of the critical values.
-        critical_values (dict):
-            Critical values for the test statistic at the $1\\%$, $5\\%$, and $10\\%$ levels. Based on MacKinnon (2010).
-        icbest (float):
-            The maximized information criterion if `autolag` is not `None`.
-        resstore (Optional[ResultStore]):
-            A dummy class with results attached as attributes.
+        (Union[tuple[float, float, dict, ResultsStore], tuple[float, float, int, int, dict], tuple[float, float, int, int, dict, float]]):
+            Depending on parameters, returns a tuple containing:
+            - `adf` (float): The test statistic.
+            - `pvalue` (float): MacKinnon's approximate p-value.
+            - `uselag` (int): The number of lags used.
+            - `nobs` (int): The number of observations used.
+            - `critical_values` (dict): Critical values at the 1%, 5%, and 10% levels.
+            - `icbest` (float): The maximized information criterion (if `autolag` is not `None`).
+            - `resstore` (Optional[ResultsStore]): Result instance (if `store` is `True`).
 
     ???+ example "Examples"
 
@@ -412,16 +407,13 @@ def kpss(
             Defaults to `False`.
 
     Returns:
-        kpss_stat (float):
-            The KPSS test statistic.
-        p_value (float):
-            The p-value of the test. The p-value is interpolated from Table 1 in Kwiatkowski et al. (1992), and a boundary point is returned if the test statistic is outside the table of critical values, that is, if the p-value is outside the interval (0.01, 0.1).
-        lags (int):
-            The truncation lag parameter.
-        crit (dict):
-            The critical values at $10\\%$, $5\\%$, $2.5\\%$ and $1\\%$. Based on Kwiatkowski et al. (1992).
-        resstore (Optional[ResultStore]):
-            An instance of a dummy class with results attached as attributes.
+        (Union[tuple[float, float, int, dict, ResultsStore], tuple[float, float, int, dict]]):
+            Returns a tuple containing:
+            - `stat` (float): The KPSS test statistic.
+            - `pvalue` (float): The p-value of the test.
+            - `lags` (int): The truncation lag parameter.
+            - `crit` (dict): The critical values at 10%, 5%, 2.5%, and 1%.
+            - `resstore` (Optional[ResultsStore]): Result instance (if `store` is `True`).
 
     ??? note "Notes"
         To estimate $sigma^2$ the Newey-West estimator is used. If `lags` is `"legacy"`, the truncation lag parameter is set to $int(12 \\times (\\frac{n}{100})^{\\frac{1}{4}})$, as outlined in Schwert (1989). The p-values are interpolated from Table 1 of Kwiatkowski et al. (1992). If the computed statistic is outside the table of critical values, then a warning message is generated.
@@ -596,14 +588,12 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
             Defaults to `False`.
 
     Returns:
-        rur_stat (float):
-            The RUR test statistic.
-        p_value (float):
-            The p-value of the test. The p-value is interpolated from Table 1 in Aparicio et al. (2006), and a boundary point is returned if the test statistic is outside the table of critical values, that is, if the p-value is outside the interval (0.01, 0.1).
-        crit (dict):
-            The critical values at $10\%$, $5\%$, $2.5\%$ and $1\%$. Based on Aparicio et al. (2006).
-        resstore (Optional[ResultStore]):
-            An instance of a dummy class with results attached as attributes.
+        (Union[tuple[float, float, dict, ResultsStore], tuple[float, float, dict]]):
+            Returns a tuple containing:
+            - `stat` (float): The RUR test statistic.
+            - `pvalue` (float): The p-value of the test.
+            - `crit` (dict): The critical values at 10%, 5%, 2.5%, and 1%.
+            - `resstore` (Optional[ResultsStore]): Result instance (if `store` is `True`).
 
     !!! example "Examples"
 
@@ -800,21 +790,13 @@ def za(
             Default: `"AIC"`
 
     Returns:
-        zastat (float):
-            The test statistic.
-        pvalue (float):
-            The pvalue based on MC-derived critical values.
-        cvdict (dict):
-            The critical values for the test statistic at the $1\\%$, $5\\%$, and $10\\%$ levels.
-        baselag (int):
-            The number of lags used for period regressions.
-        pbidx (int):
-            The index of `x` corresponding to endogenously calculated break period with values in the range $[0..nobs-1]$.
-
-    ??? note "Notes"
-        H0 = unit root with a single structural break
-
-        Algorithm follows Baum (2004/2015) approximation to original Zivot-Andrews method. Rather than performing an autolag regression at each candidate break period (as per the original paper), a single autolag regression is run up-front on the base model (constant + trend with no dummies) to determine the best lag length. This lag length is then used for all subsequent break-period regressions. This results in significant run time reduction but also slightly more pessimistic test statistics than the original Zivot-Andrews method, although no attempt has been made to characterize the size/power trade-off.
+        (tuple[float, float, dict, int, int]):
+            Returns a tuple containing:
+            - `zastat` (float): The test statistic.
+            - `pvalue` (float): The p-value.
+            - `cvdict` (dict): Critical values at the $1\%$, $5\%$, and $10\%$ levels.
+            - `baselag` (int): Lags used for period regressions.
+            - `pbidx` (int): Break period index.
 
     ??? equation "Calculation"
 
@@ -1007,15 +989,12 @@ def pp(
             Defaults to `"tau"`.
 
     Returns:
-        stat (float):
-            The test statistic.
-        pvalue (float):
-            The p-value for the test statistic.
-
-    ??? note "Notes"
-        This test is generally used indirectly via the [`pmdarima.arima.ndiffs()`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ndiffs.html) function, which computes the differencing term, `d`.
-
-        The R code allows for two types of tests: `'Z(alpha)'` and `'Z(t_alpha)'`. Since sklearn does not allow extraction of std errors from the linear model fit, `t_alpha` is much more difficult to achieve, so we do not allow that variant.
+        (tuple[float, float, int, dict]):
+            Returns a tuple containing:
+            - `stat` (float): The test statistic.
+            - `pvalue` (float): The p-value for the test statistic.
+            - `lags` (int): The number of lags used in the test.
+            - `crit` (dict): The critical values at 1%, 5%, and 10%.
 
     ??? equation "Calculation"
 
@@ -1199,17 +1178,12 @@ def ers(
             Defaults to `None`.
 
     Returns:
-        stat (float):
-            The test statistic for a unit root.
-        pvalue (float):
-            The p-value for the test statistic.
-
-    ??? note "Notes"
-        The null hypothesis of the Dickey-Fuller GLS is that there is a unit root, with the alternative that there is no unit root. If the pvalue is above a critical size, then the null cannot be rejected and the series appears to be a unit root.
-
-        DFGLS differs from the ADF test in that an initial GLS detrending step is used before a trend-less ADF regression is run.
-
-        Critical values and p-values when trend is "c" are identical to the ADF. When trend is set to "ct", they are from Elliott, Rothenberg, and Stock (1996).
+        (tuple[float, float, int, dict]):
+            Returns a tuple containing:
+            - `stat` (float): The test statistic for a unit root.
+            - `pvalue` (float): The p-value for the test statistic.
+            - `lags` (int): The number of lags used in the test.
+            - `crit` (dict): The critical values for the test statistic at the 1%, 5%, and 10% levels.
 
     ??? equation "Calculation"
 
@@ -1377,12 +1351,11 @@ def vr(
             Defaults to `True`.
 
     Returns:
-        stat (float):
-            The test statistic for a unit root.
-        pvalue (float):
-            The p-value for the test statistic.
-        vr (float):
-            The ratio of the long block lags-period variance.
+        (tuple[float, float, float]):
+            Returns a tuple containing:
+            - `stat` (float): The test statistic for a unit root.
+            - `pvalue` (float): The p-value for the test statistic.
+            - `vr` (float): The ratio of the long block lags-period variance.
 
     ??? note "Notes"
         The null hypothesis of a VR is that the process is a random walk, possibly plus drift. Rejection of the null with a positive test statistic indicates the presence of positive serial correlation in the time series.

@@ -125,7 +125,7 @@ def entropy(
 
     Returns:
         (float):
-            The Entropy value.
+            The calculated entropy value.
 
     !!! Success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
@@ -254,7 +254,7 @@ def regularity(
 
     Returns:
         (float):
-            The Regularity value.
+            The calculated regularity (entropy) value.
 
     !!! Success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
@@ -389,17 +389,12 @@ def is_regular(
             - The value `None`.
 
     Returns:
-        (Dict[str, Union[str, float, bool]]):
-            A dictionary with only 3 keys containing the results of the test:
-            ```python
-            {
-                "result": ...,
-                "entropy": ...,
-                "tolerance": ...,
-            }
-            ```
+        (dict[str, Union[str, float, bool]]):
+            A dictionary containing the test results:
 
-    !!! Success "Credit"
+            - `result` (bool): `True` if `entropy < tolerance`.
+            - `entropy` (float): The calculated entropy value.
+            - `tolerance` (float): The threshold used for regularity.
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
     ???+ Example "Examples"
