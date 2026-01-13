@@ -266,6 +266,27 @@ def check_complexity() -> None:
     run(f"complexipy ./src/{DIRECTORY_NAME}")
 
 
+def check_doctest() -> None:
+    run(
+        "pytest --verbose  --verbose --doctest-modules --doctest-continue-on-failure",
+        *[file for file in get_all_files(".py") if "ts_stat_tests" in file],
+    )
+
+
+def check_doctest_module(module_name: str) -> None:
+    run(
+        "pytest --verbose  --verbose --doctest-modules --doctest-continue-on-failure",
+        *[file for file in get_all_files(".py") if "ts_stat_tests" in file and module_name in file],
+    )
+
+
+def check_doctest_cli() -> None:
+    if len(sys.argv) < 3:
+        print("Requires argument: <module_name>")
+        sys.exit(1)
+    check_doctest_module(sys.argv[2])
+
+
 def check() -> None:
     check_black()
     check_blacken_docs()
@@ -277,6 +298,7 @@ def check() -> None:
     check_pyright()
     check_complexity()
     check_docstrings()
+    check_doctest()
     check_pytest()
     check_build()
     check_mkdocs()

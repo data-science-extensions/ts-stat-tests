@@ -152,7 +152,9 @@ disable = [
     "C0301",  # line-too-long
     "C0302",  # too-many-lines
     "R0801",  # duplicate-code
+    "R0911",  # too-many-return-statements
     "R0913",  # too-many-arguments
+    "R0914",  # too-many-locals
     "R0917",  # too-many-positional-arguments
     "W0622",  # redefined-builtin
 ]
@@ -177,10 +179,11 @@ sections = [
     { name = "returns",     type = "list_name_and_type", order = 5,  required = false                                              },
     { name = "yields",      type = "list_type",          order = 6,  required = false                                              },
     { name = "examples",    type = "free_text",          order = 7,  required = false, admonition = "example",     prefix = "???+" },
-    { name = "notes",       type = "free_text",          order = 8,  required = false, admonition = "note",        prefix = "???"  },
-    { name = "credit",      type = "free_text",          order = 9,  required = false, admonition = "success",     prefix = "???"  },
-    { name = "references",  type = "free_text",          order = 10, required = false, admonition = "question",    prefix = "???"  },
-    { name = "see also",    type = "free_text",          order = 11, required = false, admonition = "tip",         prefix = "???"  },
+    { name = "calculation", type = "free_text",          order = 8,  required = false, admonition = "equation",    prefix = "???"  },
+    { name = "notes",       type = "free_text",          order = 9,  required = false, admonition = "note",        prefix = "???"  },
+    { name = "credit",      type = "free_text",          order = 10, required = false, admonition = "success",     prefix = "???"  },
+    { name = "references",  type = "free_text",          order = 11, required = false, admonition = "question",    prefix = "???"  },
+    { name = "see also",    type = "free_text",          order = 12, required = false, admonition = "tip",         prefix = "???"  },
     { name = "deprecation", type = "free_text",                      required = false, admonition = "deprecation", prefix = "!!!"  },
 ]
 

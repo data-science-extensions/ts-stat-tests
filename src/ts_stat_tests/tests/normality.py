@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Union
+from typing import Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -79,7 +79,7 @@ def normality(
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> Any:
+) -> Union[tuple[float, float], object]:
     """
     !!! note "Summary"
         Perform a normality test on the given data.
@@ -102,38 +102,58 @@ def normality(
             - `sw()`: `["sw", "shapiro", "shapiro-wilk"]`<br>
             - `dp()`: `["dp", "dagostino", "dagostino-pearson"]`<br>
             - `ad()`: `["ad", "anderson", "anderson-darling"]`<br>
-            Defaults to `"dp"`.
+            Default: `"dp"`
         axis (int):
-            Axis along which to compute the test. Default is `0`.
+            Axis along which to compute the test.
+            Default: `0`
         nan_policy (VALID_DP_NAN_POLICY_OPTIONS):
             Defines how to handle when input contains `NaN`.<br>
             - `propagate`: returns `NaN`<br>
             - `raise`: throws an error<br>
             - `omit`: performs the calculations ignoring `NaN` values<br>
-            Defaults to `"propagate"`.
+            Default: `"propagate"`
         dist (VALID_AD_DIST_OPTIONS):
             The type of distribution to test against.<br>
             Only relevant when `algorithm=anderson`.<br>
-            Defaults to `"norm"`.
+            Default: `"norm"`
 
     Raises:
-        ValueError: When the given value for `algorithm` is not valid.
+        (ValueError):
+            When the given value for `algorithm` is not valid.
 
     Returns:
-        (Any):
-            The result of the normality test.
+        (Union[tuple[float, float], tuple[float, list[float], list[float]]]):
+            If not `"ad"`, returns a `tuple` of `(stat, pvalue)`.
+            If `"ad"`, returns a `tuple` of `(stat, critical_values, significance_level)`.
 
-    !!! Success "Credit"
+    !!! success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.
 
     ???+ example "Examples"
 
-        `normality` with `dagostino-pearson` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> import numpy as np
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.normality import normality
-        >>> data = np.random.normal(0, 1, 100)
-        >>> result = normality(data, algorithm="dp")
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: D'Agostino-Pearson test"}
+        >>> stat, pvalue = normality(normal, algorithm="dp")
+        >>> print(f"DP statistic: {stat:.4f}")
+        DP statistic: 1.3537
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.5082
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Jarque-Bera test"}
+        >>> stat, pvalue = normality(normal, algorithm="jb")
+        >>> print(f"JB statistic: {stat:.4f}")
+        JB statistic: 1.4168
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.4924
+
         ```
     """
     options: dict[str, tuple[str, ...]] = {
@@ -144,7 +164,8 @@ def normality(
         "ad": ("ad", "anderson", "anderson-darling"),
     }
     if algorithm in options["jb"]:
-        return _jb(x=x, axis=axis)
+        res_jb = _jb(x=x, axis=axis)
+        return (res_jb[0], res_jb[1])
     if algorithm in options["ob"]:
         return _ob(x=x, axis=axis)
     if algorithm in options["sw"]:
@@ -171,7 +192,7 @@ def is_normal(
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> dict[str, Union[str, float, bool, Any]]:
+) -> dict[str, Union[str, float, bool, None]]:
     """
     !!! note "Summary"
         Test whether a given data set is `normal` or not.
@@ -197,39 +218,59 @@ def is_normal(
             - `sw()`: `["sw", "shapiro", "shapiro-wilk"]`<br>
             - `dp()`: `["dp", "dagostino", "dagostino-pearson"]`<br>
             - `ad()`: `["ad", "anderson", "anderson-darling"]`<br>
-            Defaults to `"dp"`.
+            Default: `"dp"`
         alpha (float):
-            Significance level. Default is `0.05`.
+            Significance level.
+            Default: `0.05`
         axis (int):
-            Axis along which to compute the test. Default is `0`.
+            Axis along which to compute the test.
+            Default: `0`
         nan_policy (VALID_DP_NAN_POLICY_OPTIONS):
             Defines how to handle when input contains `NaN`.<br>
             - `propagate`: returns `NaN`<br>
             - `raise`: throws an error<br>
             - `omit`: performs the calculations ignoring `NaN` values<br>
-            Defaults to `"propagate"`.
+            Default: `"propagate"`
         dist (VALID_AD_DIST_OPTIONS):
             The type of distribution to test against.<br>
             Only relevant when `algorithm=anderson`.<br>
-            Defaults to `"norm"`.
+            Default: `"norm"`
 
     Returns:
-        (dict):
-            A dictionary containing the results of the test.
+        (dict[str, Union[str, float, bool, None]]):
+            A dictionary containing:
+            - `"result"` (bool): Indicator if the series is normal.
+            - `"statistic"` (float): The test statistic.
+            - `"p_value"` (float): The p-value of the test (if applicable).
+            - `"alpha"` (float): The significance level used.
 
-    !!! Success "Credit"
+    !!! success "Credit"
         Calculations are performed by `scipy.stats` and `statsmodels.stats`.
 
     ???+ example "Examples"
 
-        `is_normal` with `dagostino-pearson` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> import numpy as np
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.normality import is_normal
-        >>> data = np.random.normal(0, 1, 100)
-        >>> result = is_normal(data, algorithm="dp")
-        >>> result["result"]
+        >>> from ts_stat_tests.utils.data import data_normal, data_random
+        >>> normal = data_normal
+        >>> random = data_random
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Test normal data"}
+        >>> res = is_normal(normal, algorithm="dp")
+        >>> res["result"]
         True
+        >>> print(f"p-value: {res['p_value']:.4f}")
+        p-value: 0.5082
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Test non-normal (random) data"}
+        >>> res = is_normal(random, algorithm="sw")
+        >>> res["result"]
+        False
+
         ```
     """
     res = normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist)
@@ -242,36 +283,52 @@ def is_normal(
     if algorithm in options["ad"]:
         # res is AndersonResult(statistic, critical_values, significance_level, fit_result)
         # indexing only gives the first 3 elements
-        stat, crit, sig = res[0], res[1], res[2]
+        res_tuple = cast(tuple[float, np.ndarray, np.ndarray], res)
+        stat = res_tuple[0]
+        crit = res_tuple[1]
+        sig = res_tuple[2]
+
         # sig is something like [15. , 10. ,  5. ,  2.5,  1. ]
         # alpha is something like 0.05 (which is 5%)
-        idx = np.argmin(np.abs(sig - (alpha * 100)))
-        critical_value = crit[idx]
+        sig_arr = np.asarray(sig)
+        crit_arr = np.asarray(crit)
+        idx = np.argmin(np.abs(sig_arr - (alpha * 100)))
+        critical_value = crit_arr[idx]
         is_norm = stat < critical_value
         return {
             "result": bool(is_norm),
             "statistic": float(stat),
             "critical_value": float(critical_value),
-            "significance_level": float(sig[idx]),
+            "significance_level": float(sig_arr[idx]),
             "alpha": float(alpha),
         }
 
     # For others, they return (statistic, pvalue) or similar
-    if hasattr(res, "pvalue"):
-        p_val = res.pvalue
-        stat = res.statistic
-    elif isinstance(res, (tuple, list)):
-        stat, p_val = res[0], res[1]
+    p_val: Union[float, None] = None
+    stat_val: Union[float, None] = None
+
+    # Use getattr to avoid type checker attribute issues
+    p_val_attr = getattr(res, "pvalue", None)
+    stat_val_attr = getattr(res, "statistic", None)
+
+    if p_val_attr is not None and stat_val_attr is not None:
+        p_val = float(p_val_attr)
+        stat_val = float(stat_val_attr)
+    elif isinstance(res, (tuple, list)) and len(res) >= 2:
+        res_tuple = cast(tuple[float, float], res)
+        stat_val = float(res_tuple[0])
+        p_val = float(res_tuple[1])
     else:
         # Fallback
-        stat = res
+        if isinstance(res, (float, int)):
+            stat_val = float(res)
         p_val = None
 
-    is_norm = p_val >= alpha if p_val is not None else False
+    is_norm_val = p_val >= alpha if p_val is not None else False
 
     return {
-        "result": bool(is_norm),
-        "statistic": float(stat) if isinstance(stat, (float, int)) else stat,
-        "p_value": float(p_val) if p_val is not None else None,
+        "result": bool(is_norm_val),
+        "statistic": stat_val,
+        "p_value": p_val,
         "alpha": float(alpha),
     }

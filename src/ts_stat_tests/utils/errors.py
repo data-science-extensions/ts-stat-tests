@@ -39,7 +39,7 @@
 
 # ## Python StdLib Imports ----
 from collections.abc import Collection, Mapping
-from typing import Any, Optional, Union, overload
+from typing import Optional, Union, overload
 
 # ## Python Third Party Imports ----
 from typeguard import typechecked
@@ -65,7 +65,7 @@ from typeguard import typechecked
 @typechecked
 def generate_error_message(
     parameter_name: str,
-    value_parsed: Any,
+    value_parsed: object,
     options: Union[
         Mapping[str, str],
         Mapping[str, Collection[Union[str, int, float]]],
@@ -78,7 +78,7 @@ def generate_error_message(
     Params:
         parameter_name (str):
             The name of the parameter.
-        value_parsed (Any):
+        value_parsed (object):
             The invalid value provided.
         options (Union[Mapping[str, str], Mapping[str, Collection[Union[str, int, float]]]]):
             A dictionary mapping valid option keys to their acceptable values.
@@ -124,9 +124,8 @@ def is_almost_equal(
         (bool):
             `True` if the values are almost equal, `False` otherwise.
 
-    ??? success "Credit":
-        Inspiration from Python's UnitTest function `assertAlmostEqual`.
-        See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
+    !!! success "Credit"
+        Inspiration from Python's UnitTest function [`assertAlmostEqual`](https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py).
     """
     if places is not None and delta is not None:
         raise ValueError(f"Specify `delta` or `places`, not both.")
@@ -174,11 +173,10 @@ def assert_almost_equal(
 
     Returns:
         (None):
-            Raises an `AssertionError` if the values are not almost equal to within the tolerances specified.
+            None. Raises an `AssertionError` if the values are not almost equal to within the tolerances specified.
 
-    ??? success "Credit":
-        Inspiration from Python's UnitTest function `assertAlmostEqual`.
-        See: https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py
+    !!! success "Credit"
+        Inspiration from Python's UnitTest function [`assertAlmostEqual`](https://github.com/python/cpython/blob/3.11/Lib/unittest/case.py).
     """
     params: dict[str, Optional[Union[float, int]]] = {
         "first": first,

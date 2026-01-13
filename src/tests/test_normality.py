@@ -10,6 +10,9 @@
 # ---------------------------------------------------------------------------- #
 
 
+# ## Python StdLib Imports ----
+from unittest.mock import patch
+
 # ## Python Third Party Imports ----
 import numpy as np
 from pytest import raises
@@ -116,3 +119,29 @@ class TestNormality(BaseTester):
             # When pvalue is None, result should be False
             assert result["result"] is False
             assert result["p_value"] is None
+
+    def test_is_normal_stat_pvalue_attrs(self) -> None:
+        """Test branch coverage for objects with statistic/pvalue attributes in is_normal."""
+
+        class AttrResult:
+            def __init__(self, stat, pval):
+                self.statistic = stat
+                self.pvalue = pval
+
+        with patch("ts_stat_tests.tests.normality.normality") as mock_norm:
+            mock_norm.return_value = AttrResult(0.5, 0.6)
+            res = is_normal(self.data_normal, algorithm="dp")
+            assert res["statistic"] == 0.5
+            assert res["p_value"] == 0.6
+
+    def test_is_normal_float_fallback_two(self) -> None:
+        """Test branch coverage for res being a simple float in is_normal."""
+        # ## Python StdLib Imports ----
+        from unittest.mock import patch
+
+        with patch("ts_stat_tests.tests.normality.normality") as mock_norm:
+            # Return just a float (non-tuple, non-attr)
+            mock_norm.return_value = 0.8
+            res = is_normal(self.data_normal, algorithm="dp")
+            assert res["statistic"] == 0.8
+            assert res["p_value"] is None

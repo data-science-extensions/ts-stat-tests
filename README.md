@@ -29,7 +29,7 @@
 
 Time Series Analysis has been around for a long time, especially for doing Statistical Testing. Some Python packages are going a long way to make this even easier than it has ever been before. Such as [`sktime`](https://sktime.org/) and [`pycaret`](https://pycaret.org/) and [`pmdarima`](https://www.google.com/search?q=pmdarima) and [`statsmodels`](https://www.statsmodels.org/).
 
-There are some typical Statistical Tests which are accessible in these Python ([QS](#), [Normality](#), [Stability](#), etc). However, there are still some statistical tests which are not yet ported over to Python, but which have been written in R and are quite stable.
+There are some typical Statistical Tests which are accessible in these Python ([Normality](../code/normality.md), [Stationarity](../code/stationarity.md), [Correlation](../code/correlation.md), etc). However, there are still some statistical tests which are not yet ported over to Python, but which have been written in R and are quite stable.
 
 Moreover, there is no one single library package for doing time-series statistical tests in Python.
 
@@ -63,13 +63,13 @@ Full credit goes to the packages listed in this table.
 | Seasonality        | Spikiness                                                                     | `tsfeatures`   | Python          | 🔲           |
 | Stability          | Stability                                                                     | `tsfeatures`   | Python          | 🔲           |
 | Stability          | Lumpiness                                                                     | `tsfeatures`   | Python          | 🔲           |
-| Stationarity       | Augmented Dickey-Fuller test for stationarity (ADF)                           | `statsmodels`  | Python          | 🔲           |
-| Stationarity       | Kwiatkowski-Phillips-Schmidt-Shin test for stationarity (KPSS)                | `statsmodels`  | Python          | 🔲           |
-| Stationarity       | Range unit-root test for stationarity (RUR)                                   | `statsmodels`  | Python          | 🔲           |
-| Stationarity       | Zivot-Andrews structural-break unit-root test (ZA)                            | `statsmodels`  | Python          | 🔲           |
-| Stationarity       | Phillips-Peron test for stationarity (PP)                                     | `pmdarima`     | Python          | 🔲           |
-| Stationarity       | Elliott-Rothenberg-Stock (ERS) de-trended Dickey-Fuller test                  | `arch`         | Python          | 🔲           |
-| Stationarity       | Variance Ratio (VR) test for a random walk                                    | `arch`         | Python          | 🔲           |
+| Stationarity       | Augmented Dickey-Fuller test for stationarity (ADF)                           | `statsmodels`  | Python          | ✅           |
+| Stationarity       | Kwiatkowski-Phillips-Schmidt-Shin test for stationarity (KPSS)                | `statsmodels`  | Python          | ✅           |
+| Stationarity       | Range unit-root test for stationarity (RUR)                                   | `statsmodels`  | Python          | ✅           |
+| Stationarity       | Zivot-Andrews structural-break unit-root test (ZA)                            | `statsmodels`  | Python          | ✅           |
+| Stationarity       | Phillips-Peron test for stationarity (PP)                                     | `arch`         | Python          | ✅           |
+| Stationarity       | Elliott-Rothenberg-Stock (ERS) de-trended Dickey-Fuller test                  | `arch`         | Python          | ✅           |
+| Stationarity       | Variance Ratio (VR) test for a random walk                                    | `arch`         | Python          | ✅           |
 | Normality          | Jarque-Bera test of normality (JB)                                            | `statsmodels`  | Python          | ✅           |
 | Normality          | Omnibus test for normality (OB)                                               | `statsmodels`  | Python          | ✅           |
 | Normality          | Shapiro-Wilk test for normality (SW)                                          | `scipy`        | Python          | ✅           |

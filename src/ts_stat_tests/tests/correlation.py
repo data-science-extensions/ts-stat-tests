@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Literal, Union, overload
+from typing import Literal, Union, overload
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -83,31 +83,31 @@ __all__: list[str] = ["correlation", "is_correlated"]
 def correlation(
     x: ArrayLike,
     algorithm: Literal["acf", "auto", "ac"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike1D,
     algorithm: Literal["pacf", "partial", "pc"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["ccf", "cross", "cross-correlation", "cc"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["lb", "alb", "acorr_ljungbox", "acor_lb", "a_lb", "ljungbox"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> pd.DataFrame: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["lm", "alm", "acorr_lm", "a_lm"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -116,7 +116,7 @@ def correlation(
 def correlation(
     x: Union[RegressionResults, RegressionResultsWrapper],
     algorithm: Literal["bglm", "breusch_godfrey", "bg"],
-    **kwargs: Any,
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -125,11 +125,29 @@ def correlation(
 def correlation(
     x: Union[ArrayLike, ArrayLike1D, RegressionResults, RegressionResultsWrapper],
     algorithm: str = "acf",
-    **kwargs: Any,
-) -> Any:
+    **kwargs: Union[float, int, str, bool, ArrayLike, None],
+) -> Union[
+    np.ndarray,
+    tuple[np.ndarray, ...],
+    pd.DataFrame,
+    tuple[float, float, float, float],
+    tuple[float, float, float, float, ResultsStore],
+]:
     """
     !!! note "Summary"
         A unified interface for various correlation tests.
+
+    ???+ abstract "Details"
+        This function acts as a dispatcher for several correlation measures and tests, allowing users to access them through a single, consistent API. Depending on the `algorithm` parameter, it routes the call to the appropriate implementation in `ts_stat_tests.algorithms.correlation`.
+
+        The supported algorithms include:
+
+        - **Autocorrelation Function (ACF)**: Measures the correlation of a signal with a delayed copy of itself.
+        - **Partial Autocorrelation Function (PACF)**: Measures the correlation between a signal and its lagged values after removing the effects of intermediate lags.
+        - **Cross-Correlation Function (CCF)**: Measures the correlation between two signals at different lags.
+        - **Ljung-Box Test**: Tests for the presence of autocorrelation in the residuals of a model.
+        - **Lagrange Multiplier (LM) Test**: A generic test for autocorrelation, often used for ARCH effects.
+        - **Breusch-Godfrey Test**: A more general version of the LM test for serial correlation in residuals.
 
     Params:
         x (Union[ArrayLike, ArrayLike1D, RegressionResults, RegressionResultsWrapper]):
@@ -142,12 +160,44 @@ def correlation(
             - "lb", "alb", "acorr_ljungbox", "acor_lb", "a_lb", "ljungbox": Ljung-Box Test
             - "lm", "alm", "acorr_lm", "a_lm": Lagrange Multiplier Test
             - "bglm", "breusch_godfrey", "bg": Breusch-Godfrey Test
-        kwargs (Any):
+        kwargs (Union[float, int, str, bool, ArrayLike, None]):
             Additional keyword arguments specific to the chosen algorithm.
 
     Returns:
-        (Any):
-            The result of the specified correlation test.
+        (Union[np.ndarray, tuple[np.ndarray, ...], pd.DataFrame, tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+            Returns the result of the specified correlation test.
+
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.tests.correlation import correlation
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Autocorrelation (ACF)"}
+        >>> res = correlation(normal, algorithm="acf", nlags=10)
+        >>> print(f"Lag 1 ACF: {res[1]:.4f}")
+        Lag 1 ACF: 0.0236
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Ljung-Box test"}
+        >>> res = correlation(normal, algorithm="lb", lags=[5])
+        >>> print(res)
+            lb_stat  lb_pvalue
+        5  7.882362   0.162839
+
+        ```
+
+    ??? tip "See Also"
+        - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Autocorrelation Function algorithm.
+        - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial Autocorrelation Function algorithm.
+        - [`ts_stat_tests.algorithms.correlation.ccf`][ts_stat_tests.algorithms.correlation.ccf]: Cross-Correlation Function algorithm.
+        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box Test algorithm.
+        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier Test algorithm.
+        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Test algorithm.
     """
 
     options: dict[str, tuple[str, ...]] = {

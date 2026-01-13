@@ -121,60 +121,52 @@ def entropy(
             Defaults to `True`.
 
     Raises:
-        ValueError: When the given value for `algorithm` is not valid.
+        (ValueError):
+            When the given value for `algorithm` is not valid.
 
     Returns:
         (float):
-            The Entropy value.
+            The calculated entropy value.
 
-    !!! Success "Credit"
+    ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
-    ???+ Example "Examples"
+    ???+ example "Examples"
 
-        `approx_entropy`:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> entropy(x=data, algorithm="approx")
-        0.6451264780416452
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.tests.regularity import entropy
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
+        >>> entropy(x=normal, algorithm="sample")
+        2.23743099781426
 
-        `sample_entropy`:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> entropy(x=data, algorithm="sample")
-        0.6177074729583698
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
+        >>> entropy(x=normal, algorithm="approx")
+        1.6643808251518548
 
-        `spectral_entropy`:
-        ```pycon {.py .python linenums="1"  title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> entropy(x=data, algorithm="spectral", sf=1)
-        2.6538040647031726
         ```
 
-        ```pycon {.py .python linenums="1"  title="Advanced usage"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> spectral_entropy(data, 2, "welch", normalize=True)
-        0.3371369604224553
+        ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
+        >>> res = entropy(x=normal, algorithm="spectral", sf=1)
+        >>> print(f"{res:.13f}")
+        0.9329810712950
+
         ```
 
-    ??? Question "References"
+    ??? question "References"
         - Richman, J. S. et al. (2000). Physiological time-series analysis using approximate entropy and sample entropy. American Journal of Physiology-Heart and Circulatory Physiology, 278(6), H2039-H2049.
         - https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
         - Inouye, T. et al. (1991). Quantification of EEG irregularity by use of the entropy of the power spectrum. Electroencephalography and clinical neurophysiology, 79(3), 204-210.
         - https://en.wikipedia.org/wiki/Spectral_density
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
-    ??? Tip "See Also"
+    ??? tip "See Also"
         - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
@@ -254,60 +246,47 @@ def regularity(
 
     Returns:
         (float):
-            The Regularity value.
+            The calculated regularity (entropy) value.
 
-    !!! Success "Credit"
+    ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
-    ???+ Example "Examples"
+    ???+ example "Examples"
 
-        `regularity` with `approx_entropy` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
+        ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(x=data, algorithm="approx_entropy")
-        0.6451264780416452
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
+        >>> regularity(x=normal, algorithm="sample")
+        2.23743099781426
 
-        `regularity` with `sample_entropy` algorithm:
-        ```pycon {.py .python linenums="1" title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(x=data, algorithm="sample_entropy")
-        0.6177074729583698
         ```
 
-        ---
+        ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
+        >>> regularity(x=normal, algorithm="approx")
+        1.6643808251518548
 
-        `regularity` with `spectral_entropy` algorithm:
-        ```pycon {.py .python linenums="1"  title="Basic usage"}
-        >>> from sktime.datasets import load_airline
-        >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(x=data, algorithm="spectral_entropy", sf=1)
-        2.6538040647031726
         ```
 
-        ```pycon {.py .python linenums="1"  title="Advanced usage"}
-        >>> from sktime.datasets import load_airline
-        >>> from ts_stat_tests.tests.regularity import regularity
-        >>> data = load_airline()
-        >>> regularity(data, algorithm="spectral_entropy", sf=2, method="welch", normalize=True)
-        0.3371369604224553
+        ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
+        >>> res = regularity(x=normal, algorithm="spectral", sf=1)
+        >>> print(f"{res:.13f}")
+        0.9329810712950
+
         ```
 
-    ??? Question "References"
+    ??? question "References"
         - Richman, J. S. et al. (2000). Physiological time-series analysis using approximate entropy and sample entropy. American Journal of Physiology-Heart and Circulatory Physiology, 278(6), H2039-H2049.
         - https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
         - Inouye, T. et al. (1991). Quantification of EEG irregularity by use of the entropy of the power spectrum. Electroencephalography and clinical neurophysiology, 79(3), 204-210.
         - https://en.wikipedia.org/wiki/Spectral_density
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
-    ??? Tip "See Also"
+    ??? tip "See Also"
         - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
         - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
@@ -380,7 +359,8 @@ def is_regular(
             Defaults to `"default"`.
 
     Raises:
-        (ValueError): If the given `tolerance` parameter is invalid.
+        (ValueError):
+            If the given `tolerance` parameter is invalid.
 
             Valid options are:
 
@@ -389,50 +369,45 @@ def is_regular(
             - The value `None`.
 
     Returns:
-        (Dict[str, Union[str, float, bool]]):
-            A dictionary with only 3 keys containing the results of the test:
-            ```python
-            {
-                "result": ...,
-                "entropy": ...,
-                "tolerance": ...,
-            }
-            ```
+        (dict[str, Union[str, float, bool]]):
+            A dictionary containing the test results:
 
-    !!! Success "Credit"
+            - `result` (bool): `True` if `entropy < tolerance`.
+            - `entropy` (float): The calculated entropy value.
+            - `tolerance` (float): The threshold used for regularity.
+
+    ??? success "Credit"
         All credit goes to the [`AntroPy`](https://raphaelvallat.com/antropy/) library.
 
-    ???+ Example "Examples"
+    ???+ example "Examples"
 
-        ```pycon {.py .python linenums="1" title="Sample Entropy"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> is_regular(x=data, algorithm="sample")
-        {"entropy": 0.6177074729583698, "tolerance": 23.909808306554297, "result": True}
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> from ts_stat_tests.tests.regularity import is_regular
+        >>> from ts_stat_tests.utils.data import data_normal
+        >>> normal = data_normal
+
         ```
 
-        ```pycon {.py .python linenums="1" title="Approx Entropy"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> is_regular(x=data, algorithm="approx", tolerance=20)
-        {"entropy": 0.6451264780416452, "tolerance": 20, "result": True}
+        ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
+        >>> is_regular(x=normal, algorithm="sample")
+        {'result': False, 'entropy': 2.23743099781426, 'tolerance': 0.20294652904313437}
+
         ```
 
-        ```pycon {.py .python linenums="1"  title="Spectral Entropy"}
-        >>> from sktime.datasets import load_airline
-        >>> data = load_airline()
-        >>> is_regular(x=data, algorithm="spectral", sf=1)
-        {"entropy": 0.4287365561752448, "tolerance": 23.909808306554297, "result": True}
+        ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
+        >>> is_regular(x=normal, algorithm="approx", tolerance=0.5)
+        {'result': False, 'entropy': 1.6643808251518548, 'tolerance': 0.5}
+
         ```
 
-    ??? Question "References"
+    ??? question "References"
         - Richman, J. S. et al. (2000). Physiological time-series analysis using approximate entropy and sample entropy. American Journal of Physiology-Heart and Circulatory Physiology, 278(6), H2039-H2049.
         - https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
         - Inouye, T. et al. (1991). Quantification of EEG irregularity by use of the entropy of the power spectrum. Electroencephalography and clinical neurophysiology, 79(3), 204-210.
         - https://en.wikipedia.org/wiki/Spectral_density
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
-    ??? Tip "See Also"
+    ??? tip "See Also"
         - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
         - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
         - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
