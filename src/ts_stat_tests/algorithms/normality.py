@@ -37,13 +37,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Union
+from typing import Literal
 
 # ## Python Third Party Imports ----
 from numpy.typing import ArrayLike
 from scipy.stats import anderson as _ad, normaltest as _dp, shapiro as _sw
-from scipy.stats._morestats import AndersonResult, ShapiroResult
-from scipy.stats._stats_py import NormaltestResult
 from statsmodels.stats.stattools import jarque_bera as _jb, omni_normtest as _ob
 from typeguard import typechecked
 
@@ -80,13 +78,8 @@ VALID_AD_DIST_OPTIONS = Literal[
 def jb(
     x: ArrayLike,
     axis: int = 0,
-) -> tuple[
-    Union[float, ArrayLike],
-    Union[float, ArrayLike],
-    Union[float, ArrayLike],
-    Union[float, ArrayLike],
-]:
-    """
+) -> tuple[float, float, float, float]:
+    r"""
     !!! note "Summary"
         The Jarque-Bera test is a statistical test used to determine whether a dataset follows a normal distribution. In time series forecasting, the test can be used to evaluate whether the residuals of a model follow a normal distribution.
 
@@ -218,8 +211,8 @@ def jb(
 def ob(
     x: ArrayLike,
     axis: int = 0,
-) -> Union[tuple[float, float], NormaltestResult]:
-    """
+) -> tuple[float, float]:
+    r"""
     !!! note "Summary"
         The Omnibus test is a statistical test used to evaluate the normality of a dataset, including time series data. In time series forecasting, the Omnibus test can be used to assess whether the residuals of a model follow a normal distribution.
 
@@ -312,8 +305,8 @@ def ob(
 @typechecked
 def sw(
     x: ArrayLike,
-) -> Union[tuple[float, float], ShapiroResult]:
-    """
+) -> tuple[float, float]:
+    r"""
     !!! note "Summary"
         The Shapiro-Wilk test is a statistical test used to determine whether a dataset follows a normal distribution.
 
@@ -424,11 +417,8 @@ def dp(
     x: ArrayLike,
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
-) -> Union[
-    tuple[Union[float, ArrayLike], Union[float, ArrayLike]],
-    NormaltestResult,
-]:
-    """
+) -> tuple[float, float]:
+    r"""
     !!! note "Summary"
         The D'Agostino and Pearson's test is a statistical test used to evaluate whether a dataset follows a normal distribution.
 
@@ -443,11 +433,11 @@ def dp(
             Default: `0`
         nan_policy (VALID_DP_NAN_POLICY_OPTIONS):
             Defines how to handle when input contains nan.
-            
+
             - `"propagate"`: returns nan
             - `"raise"`: throws an error
             - `"omit"`: performs the calculations ignoring nan values
-            
+
             Default: `"propagate"`
 
     Raises:
@@ -588,8 +578,8 @@ def dp(
 def ad(
     x: ArrayLike,
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> AndersonResult:
-    """
+) -> tuple[float, list[float], list[float]]:
+    r"""
     !!! note "Summary"
         The Anderson-Darling test is a statistical test used to evaluate whether a dataset follows a normal distribution.
 

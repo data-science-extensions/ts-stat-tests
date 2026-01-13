@@ -141,7 +141,7 @@ def adf(
     tuple[float, float, int, int, dict],
     tuple[float, float, int, int, dict, float],
 ]:
-    """
+    r"""
     !!! note "Summary"
         The Augmented Dickey-Fuller test can be used to test for a unit root in a univariate process in the presence of serial correlation.
 
@@ -369,7 +369,7 @@ def kpss(
     tuple[float, float, int, dict, ResultsStore],
     tuple[float, float, int, dict],
 ]:
-    """
+    r"""
     !!! note "Summary"
         Computes the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test for the null hypothesis that `x` is level or trend stationary.
 
@@ -757,7 +757,7 @@ def za(
     regression: VALID_ZA_REGRESSION_OPTIONS = "c",
     autolag: Optional[VALID_ZA_AUTOLAG_OPTIONS] = "AIC",
 ) -> tuple[float, float, dict, int, int]:
-    """
+    r"""
     !!! note "Summary"
         The Zivot-Andrews (ZA) test tests for a unit root in a univariate process in the presence of serial correlation and a single structural break.
 
@@ -962,7 +962,7 @@ def pp(
     trend: VALID_PP_TREND_OPTIONS = "c",
     test_type: VALID_PP_TEST_TYPE_OPTIONS = "tau",
 ) -> tuple[float, float, int, dict]:
-    """
+    r"""
     !!! note "Summary"
         Conduct a Phillips-Perron (PP) test for stationarity.
 
@@ -1157,7 +1157,7 @@ def ers(
     method: VALID_ERS_METHOD_OPTIONS = "aic",
     low_memory: Optional[bool] = None,
 ) -> tuple[float, float, int, dict]:
-    """
+    r"""
     !!! note "Summary"
         Elliott, Rothenberg and Stock's GLS detrended Dickey-Fuller.
 
@@ -1347,7 +1347,7 @@ def vr(
     robust: bool = True,
     overlap: bool = True,
 ) -> tuple[float, float, float]:
-    """
+    r"""
     !!! note "Summary"
         Variance Ratio test of a random walk.
 

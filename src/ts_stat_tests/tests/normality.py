@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Union, cast
+from typing import Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np

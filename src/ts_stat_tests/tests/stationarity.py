@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Union, cast
+from typing import Callable, Union, cast
 
 # ## Python Third Party Imports ----
 from numpy.typing import ArrayLike
