@@ -298,7 +298,7 @@ def check() -> None:
     check_pyright()
     check_complexity()
     check_docstrings()
-    # check_doctest()
+    check_doctest()
     check_pytest()
     check_build()
     check_mkdocs()
