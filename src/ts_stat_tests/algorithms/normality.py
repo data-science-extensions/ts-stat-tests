@@ -110,11 +110,12 @@ def jb(
             Estimated kurtosis of the data.
 
     ???+ example "Examples"
+
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.algorithms.normality import jb
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
-        >>> noise = data_noise.values
+        >>> noise = data_noise
 
         ```
 
@@ -128,13 +129,13 @@ def jb(
         ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
         >>> jb_value, p_value, skew, kurt = jb(noise)
         >>> print(f"{jb_value:.4f}")
-        0.7321
+        0.7478
         >>> print(f"{p_value:.4f}")
-        0.6923
+        0.6881
         >>> print(f"{skew:.4f}")
-        0.1234
+        -0.0554
         >>> print(f"{kurt:.4f}")
-        2.9876
+        3.0753
 
         ```
 
@@ -204,20 +205,22 @@ def ob(
         >>> from ts_stat_tests.algorithms.normality import ob
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
-        >>> noise = data_noise.values
+        >>> noise = data_noise
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
         >>> stat, p_val = ob(airline)
-        >>> print(f"{stat:.3f}")
-        8.655
+        >>> print(f"{stat:.4f}")
+        8.6554
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
         >>> stat, p_val = ob(noise)
-        >>> # p_val should be > 0.05 for normal data
+        >>> print(f"{stat:.4f}")
+        0.8637
+
         ```
 
     ??? equation "Calculation"
@@ -281,19 +284,22 @@ def sw(
         >>> from ts_stat_tests.algorithms.normality import sw
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
-        >>> noise = data_noise.values
+        >>> noise = data_noise
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
         >>> stat, p_val = sw(airline)
-        >>> # p_val for airline is often small
+        >>> print(f"{stat:.4f}")
+        0.9520
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
         >>> stat, p_val = sw(noise)
-        >>> # p_val should be > 0.05 for normal data
+        >>> print(f"{stat:.4f}")
+        0.9985
+
         ```
 
     ??? equation "Calculation"
@@ -371,19 +377,22 @@ def dp(
         >>> from ts_stat_tests.algorithms.normality import dp
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
-        >>> noise = data_noise.values
+        >>> noise = data_noise
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Using the airline dataset"}
         >>> stat, p_val = dp(airline)
-        >>> # p_val depends on the specific airline sample
+        >>> print(f"{stat:.4f}")
+        8.6554
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Using random noise"}
         >>> stat, p_val = dp(noise)
-        >>> # p_val should be > 0.05 for normal data
+        >>> print(f"{stat:.4f}")
+        0.8637
+
         ```
 
     ??? equation "Calculation"
@@ -453,7 +462,7 @@ def ad(
         >>> from ts_stat_tests.algorithms.normality import ad
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
-        >>> noise = data_noise.values
+        >>> noise = data_noise
 
         ```
 
@@ -466,7 +475,9 @@ def ad(
 
         ```pycon {.py .python linenums="1" title="Example 2: Using random normal data"}
         >>> stat, cv, sl = ad(noise)
-        >>> # Compare stat to critical values in cv
+        >>> print(f"{stat:.4f}")
+        0.2325
+
         ```
 
     ??? equation "Calculation"

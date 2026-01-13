@@ -134,25 +134,25 @@ def normality(
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.normality import normality
         >>> from ts_stat_tests.utils.data import data_normal
-        >>> normal = data_normal.values
+        >>> normal = data_normal
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: D'Agostino-Pearson test"}
         >>> stat, pvalue = normality(normal, algorithm="dp")
         >>> print(f"DP statistic: {stat:.4f}")
-        DP statistic: 0.1845
+        DP statistic: 1.3537
         >>> print(f"p-value: {pvalue:.4f}")
-        p-value: 0.9119
+        p-value: 0.5082
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Jarque-Bera test"}
         >>> stat, pvalue = normality(normal, algorithm="jb")
         >>> print(f"JB statistic: {stat:.4f}")
-        JB statistic: 0.3671
+        JB statistic: 1.4168
         >>> print(f"p-value: {pvalue:.4f}")
-        p-value: 0.8323
+        p-value: 0.4924
 
         ```
     """
@@ -251,9 +251,9 @@ def is_normal(
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.tests.normality import is_normal
-        >>> from ts_stat_tests.utils.data import data_normal, data_uniform
-        >>> normal = data_normal.values
-        >>> uniform = data_uniform.values
+        >>> from ts_stat_tests.utils.data import data_normal, data_random
+        >>> normal = data_normal
+        >>> random = data_random
 
         ```
 
@@ -262,12 +262,12 @@ def is_normal(
         >>> res["result"]
         True
         >>> print(f"p-value: {res['p_value']:.4f}")
-        p-value: 0.9119
+        p-value: 0.5082
 
         ```
 
-        ```pycon {.py .python linenums="1" title="Example 2: Test non-normal (uniform) data"}
-        >>> res = is_normal(uniform, algorithm="sw")
+        ```pycon {.py .python linenums="1" title="Example 2: Test non-normal (random) data"}
+        >>> res = is_normal(random, algorithm="sw")
         >>> res["result"]
         False
 
