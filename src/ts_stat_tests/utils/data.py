@@ -56,7 +56,9 @@ __all__: list[str] = [
     "get_random_numbers",
     "get_random_numbers_2d",
     "get_sine_wave",
+    "get_normal_curve",
     "get_straight_line",
+    "get_trend_data",
     "get_noise_data",
     "load_airline",
     "load_macrodata",
@@ -65,7 +67,9 @@ __all__: list[str] = [
     "data_random",
     "data_random_2d",
     "data_sine",
+    "data_normal",
     "data_line",
+    "data_trend",
     "data_noise",
 ]
 
@@ -152,6 +156,20 @@ def get_sine_wave() -> np.ndarray:
 
 
 @lru_cache
+def get_normal_curve(seed: int) -> np.ndarray:
+    """
+    !!! note "Summary"
+        Generates a normal distribution curve dataset.
+
+    Returns:
+        (np.ndarray):
+            An array representing a normal distribution curve with shape (1000,).
+    """
+    rng: RandomGenerator = get_random_generator(seed)
+    return rng.normal(loc=0.0, scale=1.0, size=1000)
+
+
+@lru_cache
 def get_straight_line() -> np.ndarray:
     """
     !!! note "Summary"
@@ -162,6 +180,37 @@ def get_straight_line() -> np.ndarray:
             An array representing a straight line with shape (1000,).
     """
     return np.arange(1000)
+
+
+@lru_cache
+def get_trend_data() -> np.ndarray:
+    """
+    !!! note "Summary"
+        Generates trend data.
+
+    Returns:
+        (np.ndarray):
+            An array representing trend data with shape (1000,).
+    """
+    return np.arange(1000) + 0.5 * np.arange(1000)
+
+
+@lru_cache
+def get_uniform_data(seed: int) -> np.ndarray:
+    """
+    !!! note "Summary"
+        Generates uniform random data with a specified seed for reproducibility.
+
+    Params:
+        seed (int):
+            The seed value for the random number generator.
+
+    Returns:
+        (np.ndarray):
+            An array of uniform random data with shape (1000,).
+    """
+    rng: RandomGenerator = get_random_generator(seed)
+    return rng.uniform(low=0.0, high=1.0, size=1000)
 
 
 @lru_cache
@@ -259,5 +308,7 @@ data_macrodata: pd.DataFrame = load_macrodata()
 data_random: np.ndarray = get_random_numbers(SEED)
 data_random_2d: np.ndarray = get_random_numbers_2d(SEED)
 data_sine: np.ndarray = get_sine_wave()
+data_normal: np.ndarray = get_normal_curve(SEED)
 data_line: np.ndarray = get_straight_line()
+data_trend: np.ndarray = get_trend_data()
 data_noise: np.ndarray = get_noise_data(SEED)
