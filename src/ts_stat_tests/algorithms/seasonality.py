@@ -186,7 +186,7 @@ def qs(
         - [StackOverflow/Simple tests for seasonality in Python](https://stackoverflow.com/questions/62754218/simple-tests-for-seasonality-in-python)
     """
 
-    _x: np.ndarray = x if isinstance(x, np.ndarray) else np.asarray(x)
+    _x: np.ndarray = np.asarray(x, dtype=float)
     if np.isnan(_x).all():
         raise AttributeError("All observations are NaN.")
     if diff and residuals:
@@ -253,7 +253,7 @@ def qs(
 
 
 @typechecked
-def ocsb(x: np.ndarray, m: int, lag_method: str = "aic", max_lag: int = 3) -> int:
+def ocsb(x: ArrayLike, m: int, lag_method: str = "aic", max_lag: int = 3) -> int:
     """
     !!! note "Summary"
 
@@ -291,7 +291,7 @@ def ocsb(x: np.ndarray, m: int, lag_method: str = "aic", max_lag: int = 3) -> in
         The null hypothesis of the $OCSB$ test is that there is no seasonality in the time series, and the alternative hypothesis is that there is seasonality. The test statistic is compared to a critical value from a chi-squared distribution with degrees of freedom equal to the number of possible pairs of halves. If the test statistic is larger than the critical value, then the null hypothesis is rejected, and it is concluded that there is evidence of seasonality in the time series.
 
     Params:
-        x (np.ndarray):
+        x (ArrayLike):
             The time series vector.
         m (int):
             The seasonal differencing term. For monthly data, e.g., this would be 12. For quarterly, 4, etc. For the OCSB test to work, `m` must exceed `1`.
@@ -330,7 +330,7 @@ def ocsb(x: np.ndarray, m: int, lag_method: str = "aic", max_lag: int = 3) -> in
 
 
 @typechecked
-def ch(x: np.ndarray, m: int) -> int:
+def ch(x: ArrayLike, m: int) -> int:
     """
     !!! note "Summary"
 
@@ -374,7 +374,7 @@ def ch(x: np.ndarray, m: int) -> int:
         The $CH$ test is a powerful test for seasonality in time series data, as it accounts for both the presence and the nature of seasonality. However, it assumes that the time series data is stationary, and it may not be effective for detecting seasonality in non-stationary or irregular time series data. Additionally, it may not work well for time series data with short seasonal periods or with low seasonal amplitudes. Therefore, it should be used in conjunction with other tests and techniques for detecting seasonality in time series data.
 
     Params:
-        x (np.ndarray):
+        x (ArrayLike):
             The time series vector.
         m (int):
             The seasonal differencing term. For monthly data, e.g., this would be 12. For quarterly, 4, etc. For the Canova-Hansen test to work, `m` must exceed 1.
@@ -422,7 +422,7 @@ def ch(x: np.ndarray, m: int) -> int:
 
 
 @typechecked
-def seasonal_strength(x: np.ndarray, m: int) -> float:
+def seasonal_strength(x: ArrayLike, m: int) -> float:
     """
     !!! note "Summary"
         The seasonal strength test is a statistical test for detecting the strength of seasonality in time series data. It measures the extent to which the seasonal component of a time series explains the variation in the data.
@@ -457,7 +457,7 @@ def seasonal_strength(x: np.ndarray, m: int) -> float:
         The seasonal strength test is a useful tool for identifying the strength of seasonality in time series data, and it can be used in conjunction with other tests and techniques for detecting seasonality. However, it assumes that the time series data is stationary and that the seasonal component is additive rather than multiplicative. Additionally, it may not be effective for time series data with short seasonal periods or with low seasonal amplitudes. Therefore, it should be used in conjunction with other tests and techniques for detecting seasonality in time series data.
 
     Params:
-        x (np.ndarray):
+        x (ArrayLike):
             The time series data set.
         m (int):
             The frequency of the time series data set.
@@ -495,7 +495,7 @@ def seasonal_strength(x: np.ndarray, m: int) -> float:
 
 
 @typechecked
-def trend_strength(x: np.ndarray, m: int) -> float:
+def trend_strength(x: ArrayLike, m: int) -> float:
     """
     !!! note "Summary"
 
@@ -531,7 +531,7 @@ def trend_strength(x: np.ndarray, m: int) -> float:
         The trend strength test is a useful tool for identifying the strength of trend in time series data, and it can be used in conjunction with other tests and techniques for detecting trend. However, it assumes that the time series data is stationary and that the trend component is linear. Additionally, it may not be effective for time series data with short time spans or with nonlinear trends. Therefore, it should be used in conjunction with other tests and techniques for detecting trend in time series data.
 
     Params:
-        x (np.ndarray):
+        x (ArrayLike):
             The time series data set.
         m (int):
             The frequency of the time series data set.
@@ -566,7 +566,7 @@ def trend_strength(x: np.ndarray, m: int) -> float:
 
 
 @typechecked
-def spikiness(x: np.ndarray, m: int) -> float:
+def spikiness(x: ArrayLike, m: int) -> float:
     """
     !!! note "Summary"
 
@@ -601,7 +601,7 @@ def spikiness(x: np.ndarray, m: int) -> float:
         The spikiness test can be used in conjunction with other tests and techniques for detecting spikes in time series data, such as change point analysis and outlier detection. However, it assumes that the time series data is stationary and that the spikes are abrupt and sudden. Additionally, it may not be effective for time series data with long-term trends or cyclical patterns. Therefore, it should be used in conjunction with other tests and techniques for detecting spikes in time series data.
 
     Params:
-        x (np.ndarray):
+        x (ArrayLike):
             The time series data set.
         m (int):
             The frequency of the time series data set.
