@@ -167,7 +167,7 @@ def get_random_numbers(seed: int) -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.float64
+        float64
         >>> print(data[:5])
         [0.77395605 0.43887844 0.85859792 0.69736803 0.09417735]
 
@@ -213,12 +213,12 @@ def get_random_numbers_2d(seed: int) -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.float64
+        float64
         >>> print(data[:, :5])
-        [[0.77395605 0.43887844 0.85859792 0.69736803 0.09417735]
-         [0.97562235 0.7611397  0.78606419 0.12811363 0.45038594]
-         [0.37079802 0.92676499 0.64386512 0.82276148 0.4434142 ]
-         [0.33089802 0.06355835 0.31098232 0.32518332 0.72960618]]
+        [[0.06206311 0.45826204 0.12903006 0.15232671 0.63228281]
+         [0.71609997 0.3571156  0.85186786 0.24097716 0.53839349]
+         [0.74315144 0.90157433 0.59866347 0.52857443 0.89016256]
+         [0.72072839 0.71123776 0.20269503 0.0366554  0.30379952]]
 
         ```
 
@@ -258,7 +258,7 @@ def get_sine_wave() -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.float64
+        float64
         >>> print(data[:5])
         [0.         0.06279052 0.12533323 0.18738131 0.24868989]
 
@@ -303,9 +303,9 @@ def get_normal_curve(seed: int) -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.float64
+        float64
         >>> print(data[:5])
-        [ 0.49671415 -0.1382643   0.64768854  1.52302986 -0.23415337]
+        [ 0.12993113 -0.75691222 -0.33007356 -1.88579735 -0.37064992]
 
         ```
 
@@ -345,7 +345,7 @@ def get_straight_line() -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.int64
+        int64
         >>> print(data[:5])
         [0 1 2 3 4]
 
@@ -386,9 +386,9 @@ def get_trend_data() -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.int64
+        float64
         >>> print(data[:5])
-        [0 1 3 4 6]
+        [0.  1.5 3.  4.5 6. ]
 
         ```
 
@@ -431,15 +431,11 @@ def get_uniform_data(seed: int) -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.float64
+        float64
         >>> print(data[:5])
-        [0.77395605 0.43887844 0.85859792 0.69736803 0.09417735]
+        [0.80227457 0.81857128 0.87962986 0.11378193 0.29263938]
 
         ```
-
-    ??? equation "Calculation"
-
-        Draws 1000 samples from a continuous uniform distribution over $[0, 1)$.
 
     ??? question "References"
         1. [NumPy Random Uniform](https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.uniform.html)
@@ -481,9 +477,9 @@ def get_noise_data(seed: int) -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        np.float64
+        float64
         >>> print(data[:5])
-        [ 0.49671415 -0.1382643   0.64768854  1.52302986 -0.23415337]
+        [-0.05413957 -0.0007609  -0.00177524  0.00909899 -0.03044404]
 
         ```
 
@@ -536,7 +532,7 @@ def load_airline() -> pd.Series:
         1949-03    132.0
         1949-04    129.0
         1949-05    121.0
-        Name: Number of airline passengers, dtype: float64
+        Freq: M, Name: Number of airline passengers, dtype: float64
 
         ```
 
@@ -581,17 +577,17 @@ def load_macrodata() -> pd.DataFrame:
         ```pycon {.py .python linenums="1" title="Example 1: Loading Macrodata"}
         >>> data = load_macrodata()
         >>> print(data.shape)
-        (204, 9)
+        (203, 14)
         >>> print(type(data))
         <class 'pandas.core.frame.DataFrame'>
-        >>> print(data.head())
-                 year  quarter      realgdp     realcons     realinv      realgovt  \
+        >>> print(data[["year", "quarter", "realgdp"]].head())
+                year  quarter   realgdp
         Period
-        1959Q1  1959        1  2713.600000  2206.100000  473.900000  524.200000
-        1959Q2  1959        2  2732.700000  2215.300000  482.400000  525.500000
-        1959Q3  1959        3  2753.200000  2225.600000  490.200000  526.800000
-        1959Q4  1959        4  2775.300000  2236.400000  498.500000  528.200000
-        1960Q1  1960        1  2796.400000  2245.700000  505.900000  529.500000
+        1959Q1  1959        1  2710.349
+        1959Q2  1959        2  2778.801
+        1959Q3  1959        3  2775.488
+        1959Q4  1959        4  2785.204
+        1960Q1  1960        1  2847.699
 
         ```
 

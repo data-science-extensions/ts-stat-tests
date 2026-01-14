@@ -268,14 +268,14 @@ def check_complexity() -> None:
 
 def check_doctest() -> None:
     run(
-        "pytest --verbose  --verbose --doctest-modules --doctest-continue-on-failure",
+        "pytest --config-file=pyproject.toml",
         *[file for file in get_all_files(".py") if "ts_stat_tests" in file],
     )
 
 
 def check_doctest_module(module_name: str) -> None:
     run(
-        "pytest --verbose  --verbose --doctest-modules --doctest-continue-on-failure",
+        "pytest --config-file=pyproject.toml",
         *[file for file in get_all_files(".py") if "ts_stat_tests" in file and module_name in file],
     )
 
