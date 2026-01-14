@@ -46,7 +46,7 @@ from typing import Literal, Optional, Union, overload
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from statsmodels.regression.linear_model import (
     RegressionResults,
     RegressionResultsWrapper,
@@ -90,7 +90,7 @@ VALID_PACF_METHOD_OPTIONS = Literal[
 ]
 
 
-VALID_LM_COV_TYPE_OPTIONS = Literal["HC0", "HC1", "HC2", "HC3"]
+VALID_LM_COV_TYPE_OPTIONS = Literal["nonrobust", "HC0", "HC1", "HC2", "HC3"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -111,7 +111,7 @@ def acf(
     *,
     qstat: Literal[False] = False,
     alpha: None = None,
-) -> np.ndarray: ...
+) -> NDArray[np.float64]: ...
 @overload
 def acf(
     x: ArrayLike,
@@ -123,7 +123,7 @@ def acf(
     *,
     qstat: Literal[False] = False,
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 @overload
 def acf(
     x: ArrayLike,
@@ -135,7 +135,7 @@ def acf(
     *,
     qstat: Literal[True],
     alpha: None = None,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
 @overload
 def acf(
     x: ArrayLike,
@@ -147,7 +147,7 @@ def acf(
     *,
     qstat: Literal[True],
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
 @typechecked
 def acf(
     x: ArrayLike,
@@ -160,10 +160,10 @@ def acf(
     qstat: bool = False,
     alpha: Optional[float] = None,
 ) -> Union[
-    np.ndarray,
-    tuple[np.ndarray, np.ndarray],
-    tuple[np.ndarray, np.ndarray, np.ndarray],
-    tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
+    NDArray[np.float64],
+    tuple[NDArray[np.float64], NDArray[np.float64]],
+    tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]],
+    tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]],
 ]:
     r"""
     !!! note "Summary"
@@ -223,12 +223,12 @@ def acf(
             Defaults to `"none"`.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]], tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]], tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `qstat` and `alpha`, returns the following values:
-            - `acf` (np.ndarray): The autocorrelation function for lags `0, 1, ..., nlags`.
-            - `confint` (np.ndarray, optional): Confidence intervals for the ACF (returned if `alpha` is not `None`).
-            - `qstat` (np.ndarray, optional): The Ljung-Box Q-Statistic (returned if `qstat` is `True`).
-            - `pvalues` (np.ndarray, optional): P-values associated with the Q-statistics (returned if `qstat` is `True`).
+            - `acf` (NDArray[np.float64]): The autocorrelation function for lags `0, 1, ..., nlags`.
+            - `confint` (NDArray[np.float64], optional): Confidence intervals for the ACF (returned if `alpha` is not `None`).
+            - `qstat` (NDArray[np.float64], optional): The Ljung-Box Q-Statistic (returned if `qstat` is `True`).
+            - `pvalues` (NDArray[np.float64], optional): P-values associated with the Q-statistics (returned if `qstat` is `True`).
 
     ???+ example "Examples"
 
@@ -346,7 +346,7 @@ def pacf(
     method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
     *,
     alpha: None = None,
-) -> np.ndarray: ...
+) -> NDArray[np.float64]: ...
 @overload
 def pacf(
     x: ArrayLike1D,
@@ -354,7 +354,7 @@ def pacf(
     method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
     *,
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 @typechecked
 def pacf(
     x: ArrayLike1D,
@@ -362,7 +362,7 @@ def pacf(
     method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
     *,
     alpha: Optional[float] = None,
-) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]:
     r"""
     !!! note "Summary"
 
@@ -407,10 +407,10 @@ def pacf(
             Defaults to `None`.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, np.ndarray]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `alpha`, returns the following values:
-            - `pacf` (np.ndarray): The partial autocorrelations for lags `0, 1, ..., nlags`.
-            - `confint` (np.ndarray, optional): Confidence intervals for the PACF (returned if `alpha` is not `None`).
+            - `pacf` (NDArray[np.float64]): The partial autocorrelations for lags `0, 1, ..., nlags`.
+            - `confint` (NDArray[np.float64], optional): Confidence intervals for the PACF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
 
@@ -499,7 +499,7 @@ def ccf(
     *,
     nlags: Optional[int] = None,
     alpha: None = None,
-) -> np.ndarray: ...
+) -> NDArray[np.float64]: ...
 @overload
 def ccf(
     x: ArrayLike,
@@ -509,7 +509,7 @@ def ccf(
     *,
     nlags: Optional[int] = None,
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 @typechecked
 def ccf(
     x: ArrayLike,
@@ -519,7 +519,7 @@ def ccf(
     *,
     nlags: Optional[int] = None,
     alpha: Optional[float] = None,
-) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]:
     r"""
     !!! note "Summary"
 
@@ -560,10 +560,10 @@ def ccf(
             Defaults to `None`.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, np.ndarray]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `alpha`, returns the following values:
-            - `ccf` (np.ndarray): The cross-correlation function of `x` and `y` for lags `0, 1, ..., nlags`.
-            - `confint` (np.ndarray, optional): Confidence intervals for the CCF (returned if `alpha` is not `None`).
+            - `ccf` (NDArray[np.float64]): The cross-correlation function of `x` and `y` for lags `0, 1, ..., nlags`.
+            - `confint` (NDArray[np.float64], optional): Confidence intervals for the CCF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
 
@@ -715,12 +715,12 @@ def lb(
             Defaults to `False`.
 
     Returns:
-        (Union[pd.DataFrame, tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]):
+        (Union[pd.DataFrame, tuple[NDArray[np.float64], NDArray[np.float64]], tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `return_df` and `boxpierce`, returns the following values:
-            - `lb_stat` (np.ndarray): The Ljung-Box test statistic.
-            - `lb_pvalue` (np.ndarray): The p-value for the Ljung-Box test.
-            - `bp_stat` (np.ndarray, optional): The Box-Pierce test statistic (returned if `boxpierce` is `True`).
-            - `bp_pvalue` (np.ndarray, optional): The p-value for the Box-Pierce test (returned if `boxpierce` is `True`).
+            - `lb_stat` (NDArray[np.float64]): The Ljung-Box test statistic.
+            - `lb_pvalue` (NDArray[np.float64]): The p-value for the Ljung-Box test.
+            - `bp_stat` (NDArray[np.float64], optional): The Box-Pierce test statistic (returned if `boxpierce` is `True`).
+            - `bp_pvalue` (NDArray[np.float64], optional): The p-value for the Box-Pierce test (returned if `boxpierce` is `True`).
 
     ???+ example "Examples"
 
@@ -812,7 +812,7 @@ def lm(
     ddof: int = 0,
     cov_type: Literal["nonrobust"] = "nonrobust",
     cov_kwargs: Optional[dict] = None,
-) -> tuple[float, float, float, float]: ...
+) -> tuple[float, NDArray[np.float64], float, float]: ...
 @overload
 def lm(
     resid: ArrayLike,
@@ -857,10 +857,8 @@ def lm(
     cov_type: Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS] = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> Union[
-    tuple[np.ndarray, np.ndarray, float, float],
-    tuple[np.ndarray, np.ndarray, float, float, ResultsStore],
-    tuple[float, float, float, float],
-    tuple[float, float, float, float, ResultsStore],
+    tuple[float, Union[float, NDArray[np.float64]], float, float],
+    tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore],
 ]:
     r"""
     !!! note "Summary"
@@ -904,10 +902,10 @@ def lm(
             Dictionary of covariance options passed to `OLS.fit`. See [`OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html) for more details. Defaults to `None`.
 
     Returns:
-        (Union[tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+        (Union[tuple[float, Union[float, NDArray[np.float64]], float, float], tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore]]):
             Returns the following values:
             - `lm` (float): Lagrange multiplier test statistic.
-            - `lmpval` (float): The p-value for the Lagrange multiplier test.
+            - `lmpval` (Union[float, NDArray[np.float64]]): The p-value for the Lagrange multiplier test.
             - `fval` (float): The f-statistic of the F test.
             - `fpval` (float): The p-value of the F test.
             - `res_store` (ResultsStore, optional): Intermediate results (returned if `store` is `True`).
@@ -1005,14 +1003,14 @@ def bglm(
     nlags: Optional[int] = None,
     *,
     store: Literal[False] = False,
-) -> tuple[float, float, float, float]: ...
+) -> tuple[float, Union[float, NDArray[np.float64]], float, float]: ...
 @overload
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
     *,
     store: Literal[True],
-) -> tuple[float, float, float, float, ResultsStore]: ...
+) -> tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore]: ...
 @typechecked
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
@@ -1020,8 +1018,8 @@ def bglm(
     *,
     store: bool = False,
 ) -> Union[
-    tuple[float, float, float, float],
-    tuple[float, float, float, float, ResultsStore],
+    tuple[float, Union[float, NDArray[np.float64]], float, float],
+    tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore],
 ]:
     r"""
     !!! note "Summary"
