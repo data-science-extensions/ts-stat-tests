@@ -177,17 +177,18 @@ check_private = true
 sections = [
     { name = "summary",     type = "free_text",          order = 1,  required = true,  admonition = "note",        prefix = "!!!"  },
     { name = "details",     type = "free_text",          order = 2,  required = false, admonition = "abstract",    prefix = "???+" },
-    { name = "params",      type = "list_name_and_type", order = 3,  required = false                                              },
+    { name = "params",      type = "list_name_and_type", order = 3,  required = true                                               },
     { name = "raises",      type = "list_type",          order = 4,  required = false                                              },
     { name = "returns",     type = "list_name_and_type", order = 5,  required = false                                              },
     { name = "yields",      type = "list_type",          order = 6,  required = false                                              },
-    { name = "examples",    type = "free_text",          order = 7,  required = false, admonition = "example",     prefix = "???+" },
-    { name = "calculation", type = "free_text",          order = 8,  required = false, admonition = "equation",    prefix = "???"  },
+    { name = "examples",    type = "free_text",          order = 7,  required = true,  admonition = "example",     prefix = "???+" },
+    { name = "calculation", type = "free_text",          order = 8,  required = true,  admonition = "equation",    prefix = "???"  },
     { name = "notes",       type = "free_text",          order = 9,  required = false, admonition = "note",        prefix = "???"  },
     { name = "credit",      type = "free_text",          order = 10, required = false, admonition = "success",     prefix = "???"  },
     { name = "references",  type = "free_text",          order = 11, required = false, admonition = "question",    prefix = "???"  },
     { name = "see also",    type = "free_text",          order = 12, required = false, admonition = "tip",         prefix = "???"  },
     { name = "deprecation", type = "free_text",                      required = false, admonition = "deprecation", prefix = "!!!"  },
+    { name = "warning",     type = "free_text",                      required = false, admonition = "warning",     prefix = "!!!"  },
 ]
 
 [build-system]
