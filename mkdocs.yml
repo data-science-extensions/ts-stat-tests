@@ -92,10 +92,10 @@ extra:
     default: latest
 
 extra_css:
-  - assets/stylesheets/style.css
-  - assets/stylesheets/admonitions.css
-  - assets/stylesheets/code_chunks.css
-  - assets/stylesheets/shortcodes.css
+  - assets/css/style.css
+  - assets/css/admonitions.css
+  - assets/css/code_chunks.css
+  - assets/css/shortcodes.css
   - https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css
 
 plugins:
