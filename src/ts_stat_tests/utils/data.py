@@ -157,11 +157,11 @@ def get_random_numbers(seed: int) -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_random_numbers
+        >>> data = get_random_numbers(42)
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating Random Numbers"}
-        >>> data = get_random_numbers(42)
         >>> print(data.shape)
         (1000,)
         >>> print(type(data))
@@ -203,11 +203,11 @@ def get_random_numbers_2d(seed: int) -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_random_numbers_2d
+        >>> data = get_random_numbers_2d(42)
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating 2D Random Numbers"}
-        >>> data = get_random_numbers_2d(42)
         >>> print(data.shape)
         (4, 3000)
         >>> print(type(data))
@@ -248,11 +248,11 @@ def get_sine_wave() -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_sine_wave
+        >>> data = get_sine_wave()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating a Sine Wave"}
-        >>> data = get_sine_wave()
         >>> print(data.shape)
         (3000,)
         >>> print(type(data))
@@ -293,11 +293,11 @@ def get_normal_curve(seed: int) -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_normal_curve
+        >>> data = get_normal_curve(42)
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating Normal Curve Data"}
-        >>> data = get_normal_curve(42)
         >>> print(data.shape)
         (1000,)
         >>> print(type(data))
@@ -335,11 +335,11 @@ def get_straight_line() -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_straight_line
+        >>> data = get_straight_line()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating Straight Line Data"}
-        >>> data = get_straight_line()
         >>> print(data.shape)
         (1000,)
         >>> print(type(data))
@@ -376,11 +376,11 @@ def get_trend_data() -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_trend_data
+        >>> data = get_trend_data()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating Trend Data"}
-        >>> data = get_trend_data()
         >>> print(data.shape)
         (1000,)
         >>> print(type(data))
@@ -421,11 +421,11 @@ def get_uniform_data(seed: int) -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_uniform_data
+        >>> data = get_uniform_data(42)
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating Uniform Data"}
-        >>> data = get_uniform_data(42)
         >>> print(data.shape)
         (1000,)
         >>> print(type(data))
@@ -467,11 +467,11 @@ def get_noise_data(seed: int) -> np.ndarray:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import get_noise_data
+        >>> data = get_noise_data(42)
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Generating Noise Data"}
-        >>> data = get_noise_data(42)
         >>> print(data.shape)
         (1000,)
         >>> print(type(data))
@@ -516,11 +516,11 @@ def load_airline() -> pd.Series:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import load_airline
+        >>> data = load_airline()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Loading Airline Data"}
-        >>> data = load_airline()
         >>> print(len(data))
         144
         >>> print(type(data))
@@ -571,11 +571,11 @@ def load_macrodata() -> pd.DataFrame:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import load_macrodata
+        >>> data = load_macrodata()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Loading Macrodata"}
-        >>> data = load_macrodata()
         >>> print(data.shape)
         (203, 14)
         >>> print(type(data))
