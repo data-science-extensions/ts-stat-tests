@@ -51,17 +51,9 @@ from statsmodels.regression.linear_model import (
     RegressionResults,
     RegressionResultsWrapper,
 )
-from statsmodels.stats.api import (
-    acorr_breusch_godfrey,
-    acorr_ljungbox,
-    acorr_lm,
-)
+from statsmodels.stats.api import acorr_breusch_godfrey, acorr_ljungbox, acorr_lm
 from statsmodels.stats.diagnostic import ResultsStore
-from statsmodels.tsa.api import (
-    acf as st_acf,
-    ccf as st_ccf,
-    pacf as st_pacf,
-)
+from statsmodels.tsa.api import acf as st_acf, ccf as st_ccf, pacf as st_pacf
 from statsmodels.tsa.stattools import ArrayLike1D
 from typeguard import typechecked
 

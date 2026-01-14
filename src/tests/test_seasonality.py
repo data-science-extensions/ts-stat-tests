@@ -14,7 +14,7 @@
 import numpy as np
 import pandas as pd
 from pmdarima.arima import ARIMA
-from pytest import fixture, mark, raises
+from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester

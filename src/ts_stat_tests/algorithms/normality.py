@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Protocol
+from typing import Literal, Protocol, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
