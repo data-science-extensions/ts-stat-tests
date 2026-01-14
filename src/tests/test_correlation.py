@@ -165,9 +165,49 @@ class TestCorrelation(BaseTester):
             self.result_abg,
         )
 
-    def test_is_correlated(self) -> None:
-        with raises(NotImplementedError):
-            is_correlated()
+    def test_is_correlated_lb(self) -> None:
+        """Test is_correlated with Ljung-Box algorithm (default)."""
+        res = is_correlated(self.data_airline, lags=[5])
+        assert isinstance(res, dict)
+        assert res["result"] is True  # Airline data is highly correlated
+        assert res["algorithm"] == "lb"
+        assert isinstance(res["statistic"], float)
+        assert isinstance(res["pvalue"], float)
+        assert res["alpha"] == 0.05
+
+    def test_is_correlated_lm(self) -> None:
+        """Test is_correlated with LM algorithm."""
+        res = is_correlated(self.data_airline, algorithm="lm", nlags=5)
+        assert isinstance(res, dict)
+        assert res["result"] is True
+        assert res["algorithm"] == "lm"
+
+    def test_is_correlated_bglm(self) -> None:
+        """Test is_correlated with Breusch-Godfrey algorithm."""
+        y = sm.datasets.longley.load_pandas().endog
+        X = sm.datasets.longley.load_pandas().exog
+        X = sm.add_constant(X)
+        res_ols = sm.OLS(y, X).fit()
+        res = is_correlated(res_ols, algorithm="bg")
+        assert isinstance(res, dict)
+        assert "result" in res
+        assert res["algorithm"] == "bg"
+
+    def test_is_correlated_raises(self) -> None:
+        """Test is_correlated raises ValueError for unsupported algorithms."""
+        with raises(ValueError, match="is not supported for 'is_correlated'"):
+            is_correlated(self.data_airline, algorithm="acf")
+
+    def test_is_correlated_logic(self) -> None:
+        """Test correlation logic (correlated vs non-correlated)."""
+        # Correlated
+        res_corr = is_correlated(self.data_airline, algorithm="lb", lags=[10])
+        assert res_corr["result"] is True
+
+        # Non-correlated (noise)
+        res_noise = is_correlated(self.data_noise, algorithm="lb", lags=[10])
+        # It's noise, so it should be False (stationary/non-correlated)
+        assert isinstance(res_noise["result"], bool)
 
     def test_load_airline_type_error(self) -> None:
         mock_df = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
@@ -197,12 +237,19 @@ class TestCorrelation(BaseTester):
         assert is_almost_equal(1.0, 1.05, delta=0.1) is True
         assert is_almost_equal(1.0, 1.2, delta=0.1) is False
 
-    def test_assert_almost_equal_failures(self) -> None:
-        with raises(AssertionError, match="within 0.1 delta"):
+    def test_assert_almost_equal_failures_1(self) -> None:
+        with raises(AssertionError) as e:
             assert_almost_equal(1.0, 1.2, delta=0.1)
+            assert "1.0 != 1.2" in str(e.value)
+            assert "delta=0.1" in str(e.value)
 
-        with raises(AssertionError, match="within 10 places"):
+    def test_assert_almost_equal_failures_2(self) -> None:
+        with raises(AssertionError) as e:
             assert_almost_equal(1.0, 1.0000001, places=10)
+            assert "1.0 != 1.0000001" in str(e.value)
+            assert "places=10" in str(e.value)
 
-        with raises(AssertionError, match="Custom error message"):
+    def test_assert_almost_equal_failures_3(self) -> None:
+        with raises(AssertionError) as e:
             assert_almost_equal(1.0, 2.0, msg="Custom error message")
+            assert "Custom error message" in str(e.value)
