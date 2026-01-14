@@ -152,6 +152,22 @@ def seasonality(
         """
         !!! note "Summary"
             Internal helper to call the test function.
+
+        Params:
+            func (Callable[..., Union[float, int, tuple[Union[float, int, object, None], ...]]]):
+                The function to call.
+            args (Union[float, int, str, bool, ArrayLike, None]):
+                The arguments to pass.
+
+        Returns:
+            (Union[float, int, tuple]):
+                The result.
+
+        ???+ example "Examples"
+
+            ```python
+            # Internal helper.
+            ```
         """
         return func(**args)
 
