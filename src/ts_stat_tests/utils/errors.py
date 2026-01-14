@@ -275,8 +275,9 @@ def assert_almost_equal(
 
         ```pycon {.py .python linenums="1" title="Example 3: AssertionError Raised"}
         >>> assert_almost_equal(1.0, 1.1, places=3)
-        AssertionError: Assertion failed: 1.0 != 1.1 (tol: p=3, d=None)
+        Traceback (most recent call last):
             ...
+        AssertionError: Assertion failed: 1.0 != 1.1 (tol: p=3, d=None)
 
         ```
 
