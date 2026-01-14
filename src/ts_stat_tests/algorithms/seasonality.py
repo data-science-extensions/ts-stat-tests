@@ -152,7 +152,7 @@ def qs(
         >>> data = load_airline().values
         >>> qs(data, freq=12, diff=True, residuals=True, autoarima=True)
         The differences of the residuals of a non-seasonal ARIMA model are computed and used. It may be better to either only take the differences or use the residuals.
-        (101.859294..., 7.612639..., ARIMA(order=(1, 1, 1), scoring_args={}, suppress_warnings=True))
+        (101.85929..., 7.61263..., ARIMA(order=(1, 1, 1), scoring_args={}, suppress_warnings=True))
 
         ```
 
