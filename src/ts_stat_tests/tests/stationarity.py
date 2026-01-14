@@ -204,6 +204,31 @@ def stationarity(
         """
         !!! note "Summary"
             Internal helper to call the test function.
+
+        Params:
+            func (Callable[..., tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]]):
+                The function to call.
+            args (Union[float, int, str, bool, ArrayLike, None]):
+                The arguments to pass to the function.
+
+        Returns:
+            (tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]):
+                The result of the function call.
+
+        ???+ example "Examples"
+
+            ```pycon {.py .python linenums="1" title="Setup"}
+            >>> from ts_stat_tests.tests.stationarity import stationarity
+            >>> from ts_stat_tests.utils.data import data_normal
+            >>> normal = data_normal
+            ```
+
+            ```pycon {.py .python linenums="1" title="Example 1: ADF test via internal helper"}
+            >>> result = stationarity(normal, algorithm="adf")
+            >>> print(f"ADF statistic: {result[0]:.4f}")
+            ADF statistic: -30.7838
+
+            ```
         """
         return func(**args)
 
