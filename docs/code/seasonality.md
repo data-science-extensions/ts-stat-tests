@@ -5,46 +5,44 @@
 
 !!! abstract "Summary"
 
-    !!! quote "As stated by [Rob Hyndman and George Athanasopoulos](https://otexts.com/fpp2/)"
+    !!! quote "As stated by [Rob Hyndman and George Athanasopoulos](https://otexts.com/fpp2/tspatterns.html)"
 
         In describing these time series, we have used words such as "trend" and "seasonal" which need to be defined more carefully.
 
         **Trend**
-
-        - A _trend_ exists when there is a long-term increase or decrease in the data. It does not have to be linear. Sometimes we will refer to a trend as "changing direction", when it might go from an increasing trend to a decreasing trend.
+        A _trend_ exists when there is a long-term increase or decrease in the data. It does not have to be linear. Sometimes we will refer to a trend as "changing direction", when it might go from an increasing trend to a decreasing trend.
 
         **Seasonal**
-
-        - A _seasonal_ pattern occurs when a time series is affected by seasonal factors such as the time of the year or the day of the week. Seasonality is always of a fixed and known frequency. The monthly sales of antidiabetic drugs above shows seasonality which is induced partly by the change in the cost of the drugs at the end of the calendar year.
+        A _seasonal_ pattern occurs when a time series is affected by seasonal factors such as the time of the year or the day of the week. Seasonality is always of a fixed and known frequency.
 
         **Cyclic**
-
-        - A _cycle_ occurs when the data exhibit rises and falls that are not of a fixed frequency. These fluctuations are usually due to economic conditions, and are often related to the "business cycle". The duration of these fluctuations is usually at least 2 years.
-
-        Many people confuse cyclic behaviour with seasonal behaviour, but they are really quite different. If the fluctuations are not of a fixed frequency then they are cyclic; if the frequency is unchanging and associated with some aspect of the calendar, then the pattern is seasonal. In general, the average length of cycles is longer than the length of a seasonal pattern, and the magnitudes of cycles tend to be more variable than the magnitudes of seasonal patterns.
-
-        Many time series include trend, cycles and seasonality. When choosing a forecasting method, we will first need to identify the time series patterns in the data, and then choose a method that is able to capture the patterns properly.
+        A _cycle_ occurs when the data exhibit rises and falls that are not of a fixed frequency. These fluctuations are usually due to economic conditions, and are often related to the "business cycle". The duration of these fluctuations is usually at least 2 years.
 
         ---
 
         :material-arrow-right-bold: For more info, see: [Forecasting: Principles and Practice - Time Series Patterns](https://otexts.com/fpp2/tspatterns.html)
 
-    !!! info "Info"
+    | Information        | Details                                                                                                                       |
+    | :----------------- | :---------------------------------------------------------------------------------------------------------------------------- |
+    | **Module**         | [ts_stat_tests.tests.seasonality](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/seasonality.py) |
+    | **Algorithms**     | `qs`, `ocsb`, `ch`, `seasonal_strength`, `trend_strength`, `spikiness`                                                        |
+    | **Complexity**     | $O(n \log n)$ to $O(n^2)$ depending on algorithm                                                                              |
+    | **Implementation** | `statsmodels`, `pmdarima`, `tsfeatures`                                                                                       |
 
-        For a really good article on CH & OCSB tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
+    !!! info "Source Library"
 
-        By declaring that the data is 'seasonal' is to say that the peaks and troughs are the same for each of the periods, and that the future seasonal periods could be predicted with a reasonable level of confidence.
+        We leverage several industry-standard libraries for the underlying statistical tests in this module.
 
-    !!! question "Source Library"
+        1.  **[`pmdarima`](https://alkaline-ml.com/pmdarima)**: Provides the implementation for the Canova-Hansen (`ch`) and Osborn-Chui-Smith-Birchenhall (`ocsb`) tests through its `nsdiffs` and estimator classes.
+        1.  **[`tsfeatures`](https://github.com/Nixtla/tsfeatures)**: Used as the basis for calculating seasonal strength, trend strength, and spikiness, following the approach popularized by the R `feasts` and `tsfeatures` packages.
+        1.  **[`seastests`](https://rdrr.io/cran/seastests)**: An R package that served as the primary reference and inspiration for our Python implementation of the Quenouille-Sarle (`qs`) test.
 
-        The [`pmdarima`](https://alkaline-ml.com/pmdarima) package was chosen for the `ch` and `ocsb` tests, while the [`tsfeatures`](https://github.com/Nixtla/tsfeatures/blob/master/tsfeatures/tsfeatures.py) package was chosen for the `seasonal_strength`, `trend_strength` and `spikiness` tests. Because **REASONS**. The [`seastests`](https://rdrr.io/cran/seastests) package (from the R language) was chosen as inspiration for the `qs` test.
+    !!! info "Source Module"
 
-    !!! example "Source Module"
+        The source code for the seasonality tests is organized into two primary layers:
 
-        All of the source code can be found within the modules:
-
-        - [`src.ts_stat_tests.algorithms.seasonality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/seasonality.py).
-        - [`src.ts_stat_tests.tests.seasonality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/seasonality.py).
+        - **[`src.ts_stat_tests.algorithms.seasonality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/seasonality.py)**: Contains the core mathematical implementations and wrappers for third-party libraries.
+        - **[`src.ts_stat_tests.tests.seasonality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/seasonality.py)**: Provides the top-level user interface, including the `seasonality` dispatcher and the `is_seasonal` boolean check.
 
 
 ## Seasonality Tests
