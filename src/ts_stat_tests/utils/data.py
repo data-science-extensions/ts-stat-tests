@@ -601,13 +601,16 @@ def load_macrodata() -> pd.DataFrame:
     data_source = (
         "https://raw.githubusercontent.com/statsmodels/statsmodels/main/statsmodels/datasets/macrodata/macrodata.csv"
     )
-    _data = pd.read_csv(data_source, index_col=None, dtype={1: float})
-    if not isinstance(_data, pd.DataFrame):
-        raise TypeError("Expected a pandas DataFrame from the data source.")
-    data: pd.DataFrame = _data
-    data.index = data.year
+    data: pd.DataFrame = pd.read_csv(
+        data_source,
+        index_col=None,
+        dtype={
+            "year": int,
+            "quarter": int,
+        },
+    )
     data.index = pd.PeriodIndex(
-        data=data.index,
+        data=data.year.astype(str) + "Q" + data.quarter.astype(str),
         freq="Q",
         name="Period",
     )
