@@ -53,6 +53,10 @@ def run_command(*command, expand: bool = True) -> None:
     subprocess.run(_command, check=True, encoding="utf-8")
 
 
+def print_label(label: str) -> None:
+    print(f"\n{'_' * 78}\n{label}", flush=True)
+
+
 run = run_command
 
 
@@ -118,6 +122,7 @@ def get_all_files(*suffixes) -> list[str]:
 
 
 def run_black() -> None:
+    print_label("Lint `black` to reformat code formatting.")
     run("black --config=pyproject.toml ./")
 
 
@@ -130,6 +135,8 @@ def run_blacken_docs() -> None:
         Automatically re-run if files are rewritten to ensure formatting is stable.
         Only halt if there's a parsing error (cannot parse error message).
     """
+
+    print_label("Lint `blacken-docs` to reformat code chunks in docstrings.")
 
     max_attempts: int = 3
     attempt: int = 0
@@ -180,14 +187,17 @@ def run_blacken_docs() -> None:
 
 
 def run_isort() -> None:
+    print_label("Lint `isort` to reformat import sorting.")
     run("isort --settings-file=pyproject.toml ./")
 
 
 def run_pycln() -> None:
+    print_label("Lint `pycln` to remove unused imports.")
     run("pycln --config=pyproject.toml src/")
 
 
 def run_pyupgrade() -> None:
+    print_label("Lint `pyupgrade` to refactor Python syntax to modern standards.")
     run("pyupgrade --py3-plus", *get_all_files(".py"))
 
 
@@ -204,56 +214,69 @@ def lint() -> None:
 
 
 def check_black() -> None:
+    print_label("Check `black` to ensure code style formatting is consistent.")
     run("black --check --config=pyproject.toml ./")
 
 
 def check_blacken_docs() -> None:
+    print_label("Check `blacken-docs` to ensure code chunks in docstrings are consistently formatted.")
     run("blacken-docs --check", *get_all_files(".md", ".py", ".ipynb"))
 
 
 def check_ty() -> None:
+    print_label("Check `ty` to ensure type annotations are correct.")
     run(f"ty check ./src/{DIRECTORY_NAME}")
 
 
 def check_isort() -> None:
+    print_label("Check `isort` to ensure import sorting is consistent.")
     run("isort --check --settings-file=pyproject.toml ./")
 
 
 def check_codespell() -> None:
+    print_label("Check `codespell` to find common spelling errors.")
     run("codespell --toml=pyproject.toml src/ *.py")
 
 
 def check_pylint() -> None:
+    print_label("Check `pylint` to ensure code quality and style.")
     run(f"pylint --rcfile=pyproject.toml src/{DIRECTORY_NAME}")
 
 
 def check_pyright() -> None:
+    print_label("Check `pyright` to ensure type checking is consistent.")
     run(f"pyright src/{DIRECTORY_NAME}")
 
 
 def check_pycln() -> None:
+    print_label("Check `pycln` to ensure no unused imports are present.")
     run("pycln --check --config=pyproject.toml src/")
 
 
 def check_build() -> None:
+    print_label("Check build process to ensure package builds correctly.")
     run("uv build --out-dir=dist")
     run("rm -r dist")
 
 
 def check_mkdocs() -> None:
+    print_label("Check `mkdocs` to ensure documentation builds correctly.")
     run("mkdocs build --site-dir=temp")
     run("rm -r temp")
 
 
 def check_pytest() -> None:
+    print_label("Check `pytest` to ensure all unit tests pass.")
     run("pytest --config-file=pyproject.toml")
 
 
 def check_docstrings() -> None:
+    print_label("Check `docstring-format-checker` to ensure docstrings follow the specified format.")
     run(f"dfc --output=table ./src/{DIRECTORY_NAME}")
 
 
 def check_complexity() -> None:
+    print_label("Check `complexipy` to assess code complexity.")
     notes: str = dedent(
         """
         Notes from: https://rohaquinlop.github.io/complexipy/#running-the-analysis
@@ -267,6 +290,9 @@ def check_complexity() -> None:
 
 
 def check_doctest() -> None:
+    print_label(
+        "Check `doctest` against code chunks in all docstrings to ensure they are correct and valid and executable."
+    )
     run(
         "pytest --config-file=pyproject.toml",
         *[file for file in get_all_files(".py") if "ts_stat_tests" in file],
@@ -274,6 +300,7 @@ def check_doctest() -> None:
 
 
 def check_doctest_module(module_name: str) -> None:
+    print_label(f"Check `doctest` against code chunks in docstrings for module: {module_name}.")
     run(
         "pytest --config-file=pyproject.toml",
         *[file for file in get_all_files(".py") if "ts_stat_tests" in file and module_name in file],
@@ -282,7 +309,7 @@ def check_doctest_module(module_name: str) -> None:
 
 def check_doctest_cli() -> None:
     if len(sys.argv) < 3:
-        print("Requires argument: <module_name>")
+        print("\nRequires argument: <module_name>")
         sys.exit(1)
     check_doctest_module(sys.argv[2])
 
@@ -330,7 +357,7 @@ def git_checkout_branch(branch_name: str) -> None:
 
 def git_switch_to_branch() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <branch_name>")
+        print("\nRequires argument: <branch_name>")
         sys.exit(1)
     git_checkout_branch(sys.argv[2])
 
@@ -361,7 +388,7 @@ def git_update_version(version: str) -> None:
 
 def git_update_version_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     git_update_version(sys.argv[2])
 
@@ -373,7 +400,7 @@ def git_fix_tag_reference(version: str) -> None:
 
 def git_fix_tag_reference_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     git_fix_tag_reference(sys.argv[2])
 
@@ -404,7 +431,7 @@ def docs_build_versioned(version: str) -> None:
 
 def docs_build_versioned_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     docs_build_versioned(sys.argv[2])
 
@@ -417,7 +444,7 @@ def update_git_docs(version: str) -> None:
 
 def update_git_docs_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     update_git_docs(sys.argv[2])
 
@@ -432,7 +459,7 @@ def docs_delete_version(version: str) -> None:
 
 def docs_delete_version_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     docs_delete_version(sys.argv[2])
 
@@ -448,7 +475,7 @@ def build_static_docs(version: str) -> None:
 
 def build_static_docs_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     build_static_docs(sys.argv[2])
 
@@ -460,7 +487,7 @@ def build_versioned_docs(version: str) -> None:
 
 def build_versioned_docs_cli() -> None:
     if len(sys.argv) < 2:
-        print("Requires argument: <version>")
+        print("\nRequires argument: <version>")
         sys.exit(1)
     build_versioned_docs(sys.argv[2])
 
@@ -472,7 +499,7 @@ def build_versioned_docs_cli() -> None:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python scripts.py <command> [args...]")
+        print("\nUsage: python scripts.py <command> [args...]")
         sys.exit(1)
     command: str = sys.argv[1].replace("-", "_")
     if command in globals():
