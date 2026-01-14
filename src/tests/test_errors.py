@@ -17,8 +17,10 @@ class TestErrors(unittest.TestCase):
     def test_generate_error_message(self) -> None:
         options = {"key1": ["val1", "val2"], "key2": ["val3"]}
         msg = generate_error_message("param", "bad_val", options)
-        assert "Invalid option for `param` parameter: 'bad_val'" in msg
-        assert "For the 'key1' option, use one of: '['val1', 'val2']'" in msg
+        assert "Invalid 'param'" in msg
+        assert "bad_val" in msg
+        assert "['val1', 'val2']" in msg
+        assert "'key2': ['val3']" in msg
 
     def test_is_almost_equal(self) -> None:
         assert is_almost_equal(1.0, 1.0)
