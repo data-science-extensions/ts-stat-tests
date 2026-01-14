@@ -28,6 +28,7 @@ from statsmodels.tsa.stattools import (
     ccf as st_ccf,
     pacf as st_pacf,
 )
+from typeguard import TypeCheckError
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
@@ -220,8 +221,12 @@ class TestCorrelation(BaseTester):
     def test_load_macrodata_type_error(self) -> None:
         load_macrodata.cache_clear()
         with patch("pandas.read_csv", return_value=pd.Series(dtype=float)):
-            with raises(TypeError, match="Expected a pandas DataFrame from the data source."):
+            with raises(TypeCheckError) as e:
                 load_macrodata()
+                assert "value assigned to data (pandas.core.series.Series)" in str(e.value)
+                assert "is not an instance of" in str(e.value)
+                assert "pandas.core.frame.DataFrame" in str(e.value)
+
         load_macrodata.cache_clear()
 
     def test_get_uniform_data(self) -> None:
