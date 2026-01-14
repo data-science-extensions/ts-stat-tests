@@ -633,6 +633,6 @@ def spikiness(x: ArrayLike, m: int) -> float:
         - [`tsfeatures.stl_features`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py)
     """
     decomposition = seasonal_decompose(x=x, model="additive", period=m)
-    madr = np.mean(np.abs(decomposition.resid))
-    mads = np.mean(np.abs(decomposition.seasonal))
+    madr = np.nanmean(np.abs(decomposition.resid))
+    mads = np.nanmean(np.abs(decomposition.seasonal))
     return float(madr / mads)
