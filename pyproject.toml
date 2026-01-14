@@ -182,7 +182,7 @@ sections = [
     { name = "returns",     type = "list_name_and_type", order = 5,  required = false                                              },
     { name = "yields",      type = "list_type",          order = 6,  required = false                                              },
     { name = "examples",    type = "free_text",          order = 7,  required = true,  admonition = "example",     prefix = "???+" },
-    { name = "calculation", type = "free_text",          order = 8,  required = true,  admonition = "equation",    prefix = "???"  },
+    { name = "calculation", type = "free_text",          order = 8,  required = false, admonition = "equation",    prefix = "???"  },
     { name = "notes",       type = "free_text",          order = 9,  required = false, admonition = "note",        prefix = "???"  },
     { name = "credit",      type = "free_text",          order = 10, required = false, admonition = "success",     prefix = "???"  },
     { name = "references",  type = "free_text",          order = 11, required = false, admonition = "question",    prefix = "???"  },
