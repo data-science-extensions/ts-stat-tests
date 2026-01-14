@@ -294,7 +294,7 @@ def check_doctest() -> None:
         "Check `doctest` against code chunks in all docstrings to ensure they are correct and valid and executable."
     )
     run(
-        "pytest --config-file=pyproject.toml",
+        "pytest --config-file=pyproject.toml --doctest-modules --doctest-continue-on-failure",
         *[file for file in get_all_files(".py") if "ts_stat_tests" in file],
     )
 
@@ -302,7 +302,7 @@ def check_doctest() -> None:
 def check_doctest_module(module_name: str) -> None:
     print_label(f"Check `doctest` against code chunks in docstrings for module: {module_name}.")
     run(
-        "pytest --config-file=pyproject.toml",
+        "pytest --config-file=pyproject.toml --doctest-modules --doctest-continue-on-failure",
         *[file for file in get_all_files(".py") if "ts_stat_tests" in file and module_name in file],
     )
 
