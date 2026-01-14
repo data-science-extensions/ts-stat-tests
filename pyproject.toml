@@ -130,7 +130,7 @@ addopts = [
 ]
 doctest_optionflags = [
     "NORMALIZE_WHITESPACE",
-    # "ELLIPSIS",
+    "ELLIPSIS",
 ]
 testpaths = [
     "src/tests",

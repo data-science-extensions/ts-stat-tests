@@ -128,10 +128,10 @@ def seasonality(
         >>> data = load_airline().values
         >>> # Using the default QS test
         >>> seasonality(x=data, freq=12)
-        (194.46928920877465, 5.9092232580147965e-43)
+        (194.469289..., 5.909223...-43)
         >>> # Using seasonal strength
         >>> seasonality(x=data, algorithm="ss", m=12)
-        0.7787219427520644
+        0.778721...
 
         ```
     """
