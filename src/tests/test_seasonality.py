@@ -121,65 +121,54 @@ class TestSeasonality(BaseTester):
         assert trend_strength(np.arange(1000), 1) == 1
 
     def test_spikiness(self) -> None:
-        print(f"DEBUG spikiness value: {self.result_spikiness}")
         assert_almost_equal(self.result_spikiness, 0.4842215684522644, places=7)
 
-    def test_seasonality(self) -> None:
-        """
-        !!! note "Summary"
-            Test for seasonality dispatcher.
-        """
-        # Test QS
+    def test_seasonality_qs(self) -> None:
         res_qs = seasonality(self.data_airline, algorithm="qs", freq=12)
         assert isinstance(res_qs, tuple)
         assert_almost_equal(res_qs[0], self.result_qs_simple[0], places=5)
 
-        # Test OCSB
+    def test_seasonality_ocsb(self) -> None:
         res_ocsb = seasonality(self.data_airline, algorithm="ocsb", m=12)
         assert res_ocsb == self.result_ocsb
 
-        # Test CH
+    def test_seasonality_ch(self) -> None:
         res_ch = seasonality(self.data_airline, algorithm="ch", m=12)
         assert res_ch == self.result_ch
 
-        # Test Seasonal Strength
+    def test_seasonality_ss(self) -> None:
         res_ss = seasonality(self.data_airline, algorithm="seasonal_strength", m=12)
         assert res_ss == self.result_seasonal_strength
 
-        # Test Trend Strength
+    def test_seasonality_ts(self) -> None:
         res_ts = seasonality(self.data_airline, algorithm="trend_strength", m=12)
         assert res_ts == self.result_trend_strength
 
-        # Test Spikiness
+    def test_seasonality_s(self) -> None:
         res_sp = seasonality(self.data_airline, algorithm="spikiness", m=12)
         assert res_sp == self.result_spikiness
 
-        # Test error
+    def test_seasonality_error(self) -> None:
         with raises(ValueError):
             seasonality(self.data_airline, algorithm="invalid")
 
-    def test_is_seasonal(self) -> None:
-        """
-        !!! note "Summary"
-            Test for is_seasonal dispatcher.
-        """
-        # Test QS
+    def test_is_seasonal_qs(self) -> None:
         res_qs = is_seasonal(self.data_airline, algorithm="qs", freq=12)
         assert res_qs["result"] is True
         assert res_qs["algorithm"] == "qs"
 
-        # Test OCSB
+    def test_is_seasonal_ocsb(self) -> None:
         res_ocsb = is_seasonal(self.data_airline, algorithm="ocsb", m=12)
         assert res_ocsb["result"] is True
 
-        # Test CH
+    def test_is_seasonal_ch(self) -> None:
         res_ch = is_seasonal(self.data_airline, algorithm="ch", m=12)
         assert res_ch["result"] is False
 
-        # Test Seasonal Strength
+    def test_is_seasonal_ss(self) -> None:
         res_ss = is_seasonal(self.data_airline, algorithm="seasonal_strength", m=12)
         assert res_ss["result"] is True  # 0.77 > 0.64
 
-        # Test Spikiness (fallback to > 0)
+    def test_is_seasonal_ts(self) -> None:
         res_sp = is_seasonal(self.data_airline, algorithm="spikiness", m=12)
         assert res_sp["result"] is True
