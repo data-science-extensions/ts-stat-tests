@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Optional, Union, cast
+from typing import Literal, Optional, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -48,7 +48,7 @@ from antropy import (
     spectral_entropy as a_spectral_entropy,
     svd_entropy as a_svd_entropy,
 )
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from typeguard import typechecked
 
 
@@ -180,13 +180,11 @@ def approx_entropy(
         - [`antropy.perm_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html)
         - [`antropy.spectral_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html)
     """
-    return float(
-        a_app_entropy(
-            x=x,
-            order=order,
-            tolerance=tolerance,
-            metric=metric,
-        )
+    return a_app_entropy(
+        x=x,
+        order=order,
+        tolerance=tolerance,
+        metric=metric,
     )
 
 
@@ -294,13 +292,11 @@ def sample_entropy(
         - [`sklearn.metrics.pairwise_distances`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html)
         - [`scipy.spatial.distance`](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)
     """
-    return float(
-        a_sample_entropy(
-            x=x,
-            order=order,
-            tolerance=tolerance,
-            metric=metric,
-        )
+    return a_sample_entropy(
+        x=x,
+        order=order,
+        tolerance=tolerance,
+        metric=metric,
     )
 
 
@@ -308,7 +304,7 @@ def sample_entropy(
 def permutation_entropy(
     x: ArrayLike,
     order: int = 3,
-    delay: Union[int, list, np.ndarray] = 1,
+    delay: Union[int, list, NDArray[np.int64]] = 1,
     normalize: bool = False,
 ) -> float:
     r"""
@@ -330,7 +326,7 @@ def permutation_entropy(
         order (int, optional):
             Order of permutation entropy.<br>
             Defaults to `3`.
-        delay (Union[int, list, np.ndarray], optional):
+        delay (Union[int, list, NDArray[np.int64]], optional):
             Time delay (lag). If multiple values are passed, the average permutation entropy across all these delays is calculated.<br>
             Defaults to `1`.
         normalize (bool, optional):
@@ -338,7 +334,7 @@ def permutation_entropy(
             Defaults to `False`.
 
     Returns:
-        (float):
+        (Union[float, NDArray[np.float64]]):
             The permutation entropy of the data set.
 
     ???+ example "Examples"
@@ -399,13 +395,11 @@ def permutation_entropy(
         - [`antropy.sample_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html)
         - [`antropy.spectral_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.spectral_entropy.html)
     """
-    return float(
-        a_perm_entropy(
-            x=x,
-            order=order,
-            delay=cast(int, delay),
-            normalize=normalize,
-        )
+    return a_perm_entropy(
+        x=x,
+        order=order,
+        delay=delay,  # type: ignore[arg-type]  # antropy function can handle Union[int, list[int], NDArray[np.int64]], however the function signature is not annotated as such
+        normalize=normalize,
     )
 
 
@@ -417,7 +411,7 @@ def spectral_entropy(
     nperseg: Optional[int] = None,
     normalize: bool = False,
     axis: int = -1,
-) -> Union[float, np.ndarray]:
+) -> Union[float, NDArray[np.float64]]:
     r"""
     !!! note "Summary"
         Spectral entropy is a measure of the amount of complexity or unpredictability in a signal's frequency domain representation. It is used to quantify the degree of randomness or regularity in the power spectrum of a signal.
@@ -453,7 +447,7 @@ def spectral_entropy(
             Defaults to `-1`.
 
     Returns:
-        (Union[float, np.ndarray]):
+        (Union[float, NDArray[np.float64]]):
             The spectral entropy score. Returned as a float for 1D input, or a numpy array for N-dimensional input.
 
     ???+ example "Examples"
@@ -507,7 +501,7 @@ def spectral_entropy(
         - [`antropy.sample_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.sample_entropy.html)
         - [`antropy.perm_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.perm_entropy.html)
     """
-    res = a_spectral_entropy(
+    return a_spectral_entropy(
         x=x,
         sf=sf,
         method=method,
@@ -515,9 +509,6 @@ def spectral_entropy(
         normalize=normalize,
         axis=axis,
     )
-    if isinstance(res, np.ndarray):
-        return res
-    return float(res)
 
 
 @typechecked
@@ -584,11 +575,9 @@ def svd_entropy(
         - [`ts_stat_tests.algorithms.regularity.permutation_entropy`][ts_stat_tests.algorithms.regularity.permutation_entropy]
         - [`ts_stat_tests.algorithms.regularity.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
     """
-    return float(
-        a_svd_entropy(
-            x=x,
-            order=order,
-            delay=delay,
-            normalize=normalize,
-        )
+    return a_svd_entropy(
+        x=x,
+        order=order,
+        delay=delay,
+        normalize=normalize,
     )
