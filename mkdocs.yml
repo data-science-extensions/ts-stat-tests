@@ -61,6 +61,9 @@ nav:
       - Normality: code/normality.md
       - Stationarity: code/stationarity.md
       - Seasonality: code/seasonality.md
+      - Utilities:
+          - Data: code/data.md
+          - Errors: code/errors.md
   - Data Science Extensions: https://data-science-extensions.com/
 
 
