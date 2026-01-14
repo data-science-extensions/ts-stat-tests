@@ -37,12 +37,14 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Protocol, cast
+from typing import Literal
 
 # ## Python Third Party Imports ----
 import numpy as np
 from numpy.typing import ArrayLike
 from scipy.stats import anderson as _ad, normaltest as _dp, shapiro as _sw
+from scipy.stats._morestats import AndersonResult, ShapiroResult
+from scipy.stats._stats_py import NormaltestResult
 from statsmodels.stats.stattools import jarque_bera as _jb, omni_normtest as _ob
 from typeguard import typechecked
 
@@ -70,41 +72,13 @@ VALID_AD_DIST_OPTIONS = Literal[
 
 # ---------------------------------------------------------------------------- #
 #                                                                              #
-#     Classes                                                               ####
-#                                                                              #
-# ---------------------------------------------------------------------------- #
-
-
-class AndersonResult(Protocol):
-    """
-    !!! note "Summary"
-        Protocol for Anderson-Darling test result.
-
-    ???+ example "Examples"
-
-        ```python
-        def my_func(res: AndersonResult) -> None:
-            print(res.statistic)
-        ```
-    """
-
-    statistic: float
-    critical_values: np.ndarray
-    significance_level: np.ndarray
-
-
-# ---------------------------------------------------------------------------- #
-#                                                                              #
 #    Algorithms                                                             ####
 #                                                                              #
 # ---------------------------------------------------------------------------- #
 
 
 @typechecked
-def jb(
-    x: ArrayLike,
-    axis: int = 0,
-) -> tuple[float, float, float, float]:
+def jb(x: ArrayLike, axis: int = 0) -> tuple[np.float64, np.float64, np.float64, np.float64]:
     r"""
     !!! note "Summary"
         The Jarque-Bera test is a statistical test used to determine whether a dataset follows a normal distribution. In time series forecasting, the test can be used to evaluate whether the residuals of a model follow a normal distribution.
@@ -194,15 +168,11 @@ def jb(
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    res = _jb(resids=x, axis=axis)
-    return (float(res[0]), float(res[1]), float(res[2]), float(res[3]))
+    return _jb(resids=x, axis=axis)  # type: ignore[return-value]
 
 
 @typechecked
-def ob(
-    x: ArrayLike,
-    axis: int = 0,
-) -> tuple[float, float]:
+def ob(x: ArrayLike, axis: int = 0) -> tuple[float, float]:
     r"""
     !!! note "Summary"
         The Omnibus test is a statistical test used to evaluate the normality of a dataset, including time series data. In time series forecasting, the Omnibus test can be used to assess whether the residuals of a model follow a normal distribution.
@@ -279,14 +249,11 @@ def ob(
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    res = _ob(resids=x, axis=axis)
-    return (float(res[0]), float(res[1]))
+    return _ob(resids=x, axis=axis)
 
 
 @typechecked
-def sw(
-    x: ArrayLike,
-) -> tuple[float, float]:
+def sw(x: ArrayLike) -> ShapiroResult:
     r"""
     !!! note "Summary"
         The Shapiro-Wilk test is a statistical test used to determine whether a dataset follows a normal distribution.
@@ -303,10 +270,10 @@ def sw(
             If the input data `x` is invalid.
 
     Returns:
-        statistic (float):
-            The test statistic.
-        pvalue (float):
-            The p-value for the hypothesis test.
+        (ShapiroResult):
+            A named tuple containing the test statistic and p-value:
+            - statistic (float): The test statistic.
+            - pvalue (float): The p-value for the hypothesis test.
 
     ???+ example "Examples"
 
@@ -361,8 +328,7 @@ def sw(
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    res = _sw(x=x)
-    return (float(res[0]), float(res[1]))
+    return _sw(x=x)
 
 
 @typechecked
@@ -370,7 +336,7 @@ def dp(
     x: ArrayLike,
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
-) -> tuple[float, float]:
+) -> NormaltestResult:
     r"""
     !!! note "Summary"
         The D'Agostino and Pearson's test is a statistical test used to evaluate whether a dataset follows a normal distribution.
@@ -398,10 +364,10 @@ def dp(
             If the input data `x` is invalid.
 
     Returns:
-        statistic (float):
-            The test statistic ($K^2$).
-        pvalue (float):
-            A 2-sided chi-squared probability for the hypothesis test.
+        (NormaltestResult):
+            A named tuple containing the test statistic and p-value:
+            - statistic (float): The test statistic ($K^2$).
+            - pvalue (float): A 2-sided chi-squared probability for the hypothesis test.
 
     ???+ example "Examples"
 
@@ -455,15 +421,14 @@ def dp(
         - [`sw()`][ts_stat_tests.algorithms.normality.sw]
         - [`ad()`][ts_stat_tests.algorithms.normality.ad]
     """
-    res = _dp(a=x, axis=axis, nan_policy=nan_policy)
-    return (float(res[0]), float(res[1]))
+    return _dp(a=x, axis=axis, nan_policy=nan_policy)
 
 
 @typechecked
 def ad(
     x: ArrayLike,
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> tuple[float, list[float], list[float]]:
+) -> AndersonResult:
     r"""
     !!! note "Summary"
         The Anderson-Darling test is a statistical test used to evaluate whether a dataset follows a normal distribution.
@@ -483,12 +448,11 @@ def ad(
             If the input data `x` is invalid.
 
     Returns:
-        statistic (float):
-            The Anderson-Darling test statistic.
-        critical_values (list[float]):
-            The critical values for this distribution.
-        significance_level (list[float]):
-            The significance levels for the corresponding critical values in percents.
+        (AndersonResult):
+            A named tuple containing the test statistic, critical values, and significance levels:
+            - statistic (float): The Anderson-Darling test statistic.
+            - critical_values (list[float]): The critical values for this distribution.
+            - significance_level (list[float]): The significance levels for the corresponding critical values in percents.
 
     ???+ example "Examples"
 
@@ -545,9 +509,4 @@ def ad(
         - [`sw()`][ts_stat_tests.algorithms.normality.sw]
         - [`dp()`][ts_stat_tests.algorithms.normality.dp]
     """
-    res = cast(AndersonResult, _ad(x=x, dist=dist))
-    return (
-        float(res.statistic),
-        res.critical_values.tolist(),
-        res.significance_level.tolist(),
-    )
+    return _ad(x=x, dist=dist)
