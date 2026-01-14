@@ -21,7 +21,7 @@
 import re
 import unittest
 from functools import lru_cache
-from typing import Any, Callable, Union
+from typing import Callable, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -69,7 +69,7 @@ __all__: list[str] = [
 def name_func_flat_list(
     func: Callable,
     idx: int,
-    params: Union[tuple[Any, ...], list[Any]],
+    params: Union[tuple[object, ...], list[object]],
 ) -> str:
     return f"{func.__name__}_{int(idx)+1:02}_{'_'.join([str(param) for param in params[0]])}"
 
@@ -78,8 +78,8 @@ def name_func_nested_list(
     func: Callable,
     idx: int,
     params: Union[
-        list[Union[tuple[Any, ...], list[Any]]],
-        tuple[Union[tuple[Any, ...], list[Any]], ...],
+        list[Union[tuple[object, ...], list[object]]],
+        tuple[Union[tuple[object, ...], list[object]], ...],
     ],
 ) -> str:
     return f"{func.__name__}_{int(idx)+1:02}_{params[0][0]}_{params[0][1]}"
@@ -88,7 +88,7 @@ def name_func_nested_list(
 def name_func_predefined_name(
     func: Callable,
     idx: int,
-    params: Union[tuple[Any, ...], list[Any]],
+    params: Union[tuple[object, ...], list[object]],
 ) -> str:
     return f"{func.__name__}_{int(idx)+1:02}_{params[0][0]}"
 
@@ -159,7 +159,7 @@ clean: Callable[[str], str] = strip_ansi_codes
 
 
 @lru_cache
-def data_dict() -> dict[str, int | list[int] | str]:
+def data_dict() -> dict[str, Union[int, list[int], str]]:
     return {"first": 1, "second": 2, "third": [3, 4, 5], "four": "6"}
 
 
@@ -180,7 +180,7 @@ class BaseTester(unittest.TestCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
         cls.data_airline: pd.Series = data_airline
-        cls.data_dict: dict[str, int | list[int] | str] = data_dict()
+        cls.data_dict: dict[str, Union[int, list[int], str]] = data_dict()
         cls.data_random: np.ndarray = data_random
         cls.data_sine: np.ndarray = data_sine
         cls.data_line: np.ndarray = data_line
