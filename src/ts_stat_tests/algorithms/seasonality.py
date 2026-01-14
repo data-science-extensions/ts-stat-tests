@@ -142,7 +142,7 @@ def qs(
         >>> from ts_stat_tests.algorithms.seasonality import qs
         >>> data = load_airline().values
         >>> qs(data, freq=12)
-        (194.46..., 5.90...)
+        (194.46928920877465, 5.9092232580147965e-43)
 
         ```
 
@@ -152,7 +152,7 @@ def qs(
         >>> data = load_airline().values
         >>> qs(data, freq=12, diff=True, residuals=True, autoarima=True)
         The differences of the residuals of a non-seasonal ARIMA model are computed and used. It may be better to either only take the differences or use the residuals.
-        (101.859..., 7.612..., ARIMA(order=(1, 1, 1), ...))
+        (101.85929444989219, 7.612639164478182e-23, ARIMA(order=(1, 1, 1), scoring_args={}, suppress_warnings=True))
 
         ```
 
@@ -466,7 +466,7 @@ def seasonal_strength(x: ArrayLike, m: int) -> float:
         >>> from ts_stat_tests.algorithms.seasonality import seasonal_strength
         >>> data = load_airline().values
         >>> seasonal_strength(x=data, m=12)
-        0.7787...
+        0.7787219427520644
 
         ```
 
@@ -541,7 +541,7 @@ def trend_strength(x: ArrayLike, m: int) -> float:
         >>> from ts_stat_tests.algorithms.seasonality import trend_strength
         >>> data = load_airline().values
         >>> trend_strength(x=data, m=12)
-        0.9656...
+        0.965679739099362
 
         ```
 
@@ -613,7 +613,7 @@ def spikiness(x: ArrayLike, m: int) -> float:
         >>> from ts_stat_tests.algorithms.seasonality import spikiness
         >>> data = load_airline().values
         >>> spikiness(x=data, m=12)
-        0.4842...
+        0.4842215684522643
 
         ```
 
