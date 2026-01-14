@@ -810,7 +810,7 @@ def lm(
     store: Literal[False] = False,
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: Literal["nonrobust"] = "nonrobust",
+    cov_type: VALID_LM_COV_TYPE_OPTIONS = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> tuple[float, NDArray[np.float64], float, float]: ...
 @overload
@@ -821,29 +821,7 @@ def lm(
     store: Literal[True],
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: Literal["nonrobust"] = "nonrobust",
-    cov_kwargs: Optional[dict] = None,
-) -> tuple[np.ndarray, np.ndarray, float, float, ResultsStore]: ...
-@overload
-def lm(
-    resid: ArrayLike,
-    nlags: Optional[int] = None,
-    *,
-    store: Literal[False] = False,
-    period: Optional[int] = None,
-    ddof: int = 0,
-    cov_type: VALID_LM_COV_TYPE_OPTIONS,
-    cov_kwargs: Optional[dict] = None,
-) -> tuple[np.ndarray, np.ndarray, float, float]: ...
-@overload
-def lm(
-    resid: ArrayLike,
-    nlags: Optional[int] = None,
-    *,
-    store: Literal[True],
-    period: Optional[int] = None,
-    ddof: int = 0,
-    cov_type: VALID_LM_COV_TYPE_OPTIONS,
+    cov_type: VALID_LM_COV_TYPE_OPTIONS = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
@@ -854,7 +832,7 @@ def lm(
     store: bool = False,
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS] = "nonrobust",
+    cov_type: VALID_LM_COV_TYPE_OPTIONS = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> Union[
     tuple[float, Union[float, NDArray[np.float64]], float, float],
@@ -896,7 +874,7 @@ def lm(
             The period of a Seasonal time series. Used to compute the max lag for seasonal data which uses $\min(2 \times period, \lfloor \frac{n_{obs}}{5} \rfloor)$ (calculated with: `min(2*period,nobs//5)`) if set. If `None`, then the default rule is used to set the number of lags. When set, must be $\ge 2$. Defaults to `None`.
         ddof (int, optional):
             The number of degrees of freedom consumed by the model used to produce `resid`. Defaults to `0`.
-        cov_type (Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS], optional):
+        cov_type (VALID_LM_COV_TYPE_OPTIONS, optional):
             Covariance type. The default is `"nonrobust"` which uses the classic OLS covariance estimator. Specify one of `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"` to use White's covariance estimator. All covariance types supported by `OLS.fit` are accepted. Defaults to `"nonrobust"`.
         cov_kwargs (Optional[dict], optional):
             Dictionary of covariance options passed to `OLS.fit`. See [`OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html) for more details. Defaults to `None`.
@@ -986,7 +964,7 @@ def lm(
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
-    return acorr_lm(  # type: ignore # statsmodels typing is incomplete/incompatible
+    return acorr_lm(
         resid=resid,
         nlags=nlags,
         store=store,
@@ -1118,7 +1096,7 @@ def bglm(
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
     """
-    return acorr_breusch_godfrey(  # type: ignore # statsmodels typing is incomplete/incompatible
+    return acorr_breusch_godfrey(
         res=res,
         nlags=nlags,
         store=store,
