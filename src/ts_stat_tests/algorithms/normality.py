@@ -168,7 +168,9 @@ def jb(
     ??? equation "Calculation"
         The Jarque-Bera test statistic is defined as:
 
-        $$JB = \frac{n}{6} \left( S^2 + \frac{(K-3)^2}{4} \right)$$
+        $$
+        JB = \frac{n}{6} \left( S^2 + \frac{(K-3)^2}{4} \right)
+        $$
 
         where:
 
@@ -252,7 +254,9 @@ def ob(
     ??? equation "Calculation"
         The D'Agostino's $K^2$ test statistic is defined as:
 
-        $$K^2 = Z_1(g_1)^2 + Z_2(g_2)^2$$
+        $$
+        K^2 = Z_1(g_1)^2 + Z_2(g_2)^2
+        $$
 
         where:
 
@@ -331,7 +335,9 @@ def sw(
     ??? equation "Calculation"
         The Shapiro-Wilk test statistic is defined as:
 
-        $$W = \frac{\left( \sum_{i=1}^n a_i x_{(i)} \right)^2}{\sum_{i=1}^n (x_i - \bar{x})^2}$$
+        $$
+        W = \frac{\left( \sum_{i=1}^n a_i x_{(i)} \right)^2}{\sum_{i=1}^n (x_i - \bar{x})^2}
+        $$
 
         where:
 
@@ -424,7 +430,9 @@ def dp(
     ??? equation "Calculation"
         The D'Agostino's $K^2$ test statistic is defined as:
 
-        $$K^2 = Z_1(g_1)^2 + Z_2(g_2)^2$$
+        $$
+        K^2 = Z_1(g_1)^2 + Z_2(g_2)^2
+        $$
 
         where:
 
@@ -509,7 +517,9 @@ def ad(
     ??? equation "Calculation"
         The Anderson-Darling test statistic $A^2$ is defined as:
 
-        $$A^2 = -n - \sum_{i=1}^n \frac{2i-1}{n} \left[ \ln(F(x_i)) + \ln(1 - F(x_{n-i+1})) \right]$$
+        $$
+        A^2 = -n - \sum_{i=1}^n \frac{2i-1}{n} \left[ \ln(F(x_i)) + \ln(1 - F(x_{n-i+1})) \right]
+        $$
 
         where:
 
