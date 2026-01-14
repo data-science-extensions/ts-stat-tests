@@ -277,7 +277,7 @@ def assert_almost_equal(
         >>> assert_almost_equal(1.0, 1.1, places=3)
         Traceback (most recent call last):
             ...
-        AssertionError: Assertion failed: 1.0 != 1.1 (tol: p=3, d=None)
+        AssertionError: Assertion failed: 1.0 != 1.1 (places=3, delta=None)
 
         ```
 
@@ -300,7 +300,5 @@ def assert_almost_equal(
         is_equal = is_almost_equal(first, second, places=places_val)
 
     if not is_equal:
-        error_msg: str = (
-            msg if msg is not None else f"Assertion failed: {first} != {second} (tol: p={places}, d={delta})"
-        )
+        error_msg: str = msg if msg is not None else f"Assertion failed: {first} != {second} ({places=}, {delta=})"
         raise AssertionError(error_msg)
