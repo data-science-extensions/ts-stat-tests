@@ -79,6 +79,13 @@ class AndersonResult(Protocol):
     """
     !!! note "Summary"
         Protocol for Anderson-Darling test result.
+
+    ???+ example "Examples"
+
+        ```python
+        def my_func(res: AndersonResult) -> None:
+            print(res.statistic)
+        ```
     """
 
     statistic: float
