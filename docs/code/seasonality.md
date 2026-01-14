@@ -49,7 +49,7 @@
 
 ## Seasonality Tests
 
-::: src.ts_stat_tests.tests.seasonality
+::: ts_stat_tests.tests.seasonality
     options:
         extra:
             show_root_heading: false
@@ -63,10 +63,10 @@
 
 ## Seasonality Algorithms
 
-::: src.ts_stat_tests.algorithms.seasonality
+::: ts_stat_tests.algorithms.seasonality
     options:
         extra:
-        show_root_heading: false
+            show_root_heading: false
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
