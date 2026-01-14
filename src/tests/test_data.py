@@ -36,7 +36,7 @@ from ts_stat_tests.utils.data import get_uniform_data, load_airline, load_macrod
 # ---------------------------------------------------------------------------- #
 
 
-class TestCorrelation(BaseTester):
+class TestData(BaseTester):
 
     @classmethod
     def setUpClass(cls) -> None:
