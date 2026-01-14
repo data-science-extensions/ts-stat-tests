@@ -167,11 +167,13 @@ def acf(
 ]:
     r"""
     !!! note "Summary"
+
         The autocorrelation function (ACF) is a statistical tool used to study the correlation between a time series and its lagged values. In time series forecasting, the ACF is used to identify patterns and relationships between values in a time series at different lags, which can then be used to make predictions about future values.
 
         This function will implement the [`acf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         The acf at lag `0` (ie., `1`) is returned.
 
         For very long time series it is recommended to use `fft` convolution instead. When `fft` is `False` uses a simple, direct estimator of the autocovariances that only computes the first $nlags + 1$ values. This can be much faster when the time series is long and only a small number of autocovariances are needed.
@@ -290,6 +292,7 @@ def acf(
         ```
 
     ??? equation "Calculation"
+
         The ACF at lag $k$ is defined as:
 
         $$
@@ -313,8 +316,8 @@ def acf(
 
     ??? question "References"
         1. Parzen, E., 1963. On spectral analysis with missing observations and amplitude modulation. Sankhya: The Indian Journal of Statistics, Series A, pp.383-392.
-        1. Brockwell and Davis, 1987. Time Series Theory and Methods.
-        1. Brockwell and Davis, 2010. Introduction to Time Series and Forecasting, 2nd edition.
+        2. Brockwell and Davis, 1987. Time Series Theory and Methods.
+        3. Brockwell and Davis, 2010. Introduction to Time Series and Forecasting, 2nd edition.
 
     ??? tip "See Also"
         - [`statsmodels.tsa.stattools.acf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html): Estimate the autocorrelation function.
@@ -362,11 +365,13 @@ def pacf(
 ) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
     r"""
     !!! note "Summary"
+
         The partial autocorrelation function (PACF) is a statistical tool used in time series forecasting to identify the direct relationship between two variables, controlling for the effect of the other variables in the time series. In other words, the PACF measures the correlation between a time series and its lagged values, while controlling for the effects of other intermediate lags.
 
         This function will implement the [`pacf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         Based on simulation evidence across a range of low-order ARMA models, the best methods based on root MSE are Yule-Walker (MLW), Levinson-Durbin (MLE) and Burg, respectively. The estimators with the lowest bias included these three in addition to OLS and OLS-adjusted. Yule-Walker (adjusted) and Levinson-Durbin (adjusted) performed consistently worse than the other options.
 
         The PACF is a plot of the correlation between a time series and its lagged values, controlling for the effect of other lags. The PACF is useful for identifying the order of an autoregressive (AR) model, which is a type of model used in time series forecasting. The order of an AR model is the number of lags that are used to predict future values.
@@ -446,6 +451,7 @@ def pacf(
         ```
 
     ??? equation "Calculation"
+
         The PACF at lag $k$ is defined as:
 
         $$
@@ -463,7 +469,7 @@ def pacf(
 
     ??? question "References"
         1. Box, G. E., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). Time series analysis: forecasting and control. John Wiley & Sons, p. 66.
-        1. Brockwell, P.J. and Davis, R.A., 2016. Introduction to time series and forecasting. Springer.
+        2. Brockwell, P.J. and Davis, R.A., 2016. Introduction to time series and forecasting. Springer.
 
     ??? tip "See Also"
         - [`statsmodels.tsa.stattools.acf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html): Estimate the autocorrelation function.
@@ -516,11 +522,13 @@ def ccf(
 ) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
     r"""
     !!! note "Summary"
+
         The cross-correlation function (CCF) is a statistical tool used in time series forecasting to measure the correlation between two time series at different lags. It is used to study the relationship between two time series, and can help to identify lead-lag relationships and causal effects.
 
         This function will implement the [`ccf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         If `adjusted` is `True`, the denominator for the autocovariance is adjusted.
 
         The CCF measures the correlation between two time series at different lags. It is calculated as the ratio of the covariance between the two series at lag $k$ to the product of their standard deviations. The CCF is typically plotted as a graph, with the lag on the `x`-axis and the correlation coefficient on the `y`-axis.
@@ -601,6 +609,7 @@ def ccf(
         ```
 
     ??? equation "Calculation"
+
         The CCF at lag $k$ is defined as:
 
         $$
@@ -645,11 +654,13 @@ def lb(
 ) -> pd.DataFrame:
     r"""
     !!! note "Summary"
+
         The Ljung-Box test is a statistical test used in time series forecasting to test for the presence of autocorrelation in the residuals of a model. The test is based on the autocorrelation function (ACF) of the residuals, and can be used to assess the adequacy of a time series model and to identify areas for improvement.
 
         This function will implement the [`acorr_ljungbox()`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         The Ljung-Box and Box-Pierce statistics differ in how they scale the autocorrelation function; the Ljung-Box test has better finite-sample properties.
 
         Under the null hypothesis, the test statistic follows a chi-squared distribution with degrees of freedom equal to $m-p$, where $p$ is the number of parameters estimated in fitting the time series model.
@@ -671,13 +682,17 @@ def lb(
             If lags is an integer (`int`) then this is taken to be the largest lag that is included, the test result is reported for all smaller lag length. If lags is a list or array, then all lags are included up to the largest lag in the list, however only the tests for the lags in the list are reported. If lags is `None`, then the default maxlag is currently $\min(\lfloor \frac{n_{obs}}{2} \rfloor - 2, 40)$ (calculated with: `min(nobs // 2 - 2, 40)`). The default number of `lags` changes if `period` is set.
             !!! deprecation "Deprecation"
                 After `statsmodels` version `0.12`, this calculation will change from
+
                 $$
                 \min\left(\lfloor \frac{n_{obs}}{2} \rfloor - 2, 40\right)
                 $$
+
                 to
+
                 $$
                 \min\left(10, \frac{n_{obs}}{5}\right)
                 $$
+
             Defaults to `None`.
         boxpierce (bool, optional):
             If `True`, then additional to the results of the Ljung-Box test also the Box-Pierce test results are returned.<br>
@@ -690,8 +705,10 @@ def lb(
             Defaults to `None`.
         return_df (bool, optional):
             Flag indicating whether to return the result as a single DataFrame with columns `lb_stat`, `lb_pvalue`, and optionally `bp_stat` and `bp_pvalue`. Set to `True` to return the DataFrame or `False` to continue returning the $2-4$ output. If `None` (the default), a warning is raised.
+
             !!! deprecation "Deprecation"
                 After `statsmodels` version `0.12`, this will become the only return method.
+
             Defaults to `True`.
         auto_lag (bool, optional):
             Flag indicating whether to automatically determine the optimal lag length based on threshold of maximum correlation value.<br>
@@ -743,6 +760,7 @@ def lb(
         ```
 
     ??? equation "Calculation"
+
         The Ljung-Box test statistic is calculated as:
 
         $$
@@ -760,8 +778,8 @@ def lb(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     ??? question "References"
-        - Green, W. "Econometric Analysis," 5th ed., Pearson, 2003.
-        - J. Carlos Escanciano, Ignacio N. Lobato "An automatic Portmanteau test for serial correlation"., Volume 151, 2009.
+        1. Green, W. "Econometric Analysis," 5th ed., Pearson, 2003.
+        2. J. Carlos Escanciano, Ignacio N. Lobato "An automatic Portmanteau test for serial correlation"., Volume 151, 2009.
 
     ??? tip "See Also"
         - [`statsmodels.regression.linear_model.OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html): Fit a linear model.
@@ -868,7 +886,6 @@ def lm(
         The LM test is a generalization of the Durbin-Watson test, which is a simpler test that only tests for first-order autocorrelation.
 
     Params:
-
         resid (ArrayLike):
             Time series to test.
         nlags (Optional[int], optional):
@@ -964,11 +981,9 @@ def lm(
         - $ddof$ is the model degrees of freedom lost due to parameter estimation.
 
     ??? success "Credit"
-
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     ??? tip "See Also"
-
         - [`statsmodels.stats.diagnostic.acorr_lm`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html): Lagrange Multiplier tests for autocorrelation.
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
@@ -1026,7 +1041,6 @@ def bglm(
         If the test statistic is greater than the critical value from the chi-squared distribution, then the null hypothesis of no autocorrelation is rejected, indicating that there is evidence of autocorrelation in the residuals.
 
     Params:
-
         res (Union[RegressionResults, RegressionResultsWrapper]):
             Estimation results for which the residuals are tested for serial correlation.
         nlags (Optional[int], optional):
@@ -1096,15 +1110,12 @@ def bglm(
         - $R^2$ is the coefficient of determination from a regression of the residuals on the lagged values of the residuals and the lagged values of the predictor variable.
 
     ??? success "Credit"
-
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     ??? question "References"
-
-        - Greene, W. H. Econometric Analysis. New Jersey. Prentice Hall; 5th edition. (2002).
+        1. Greene, W. H. Econometric Analysis. New Jersey. Prentice Hall; 5th edition. (2002).
 
     ??? tip "See Also"
-
         - [`statsmodels.stats.diagnostic.acorr_breusch_godfrey`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html): Breusch-Godfrey test for serial correlation.
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
