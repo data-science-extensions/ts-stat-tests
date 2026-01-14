@@ -182,7 +182,7 @@ def stationarity(
         >>> stationarity(normal, algorithm="invalid")
         Traceback (most recent call last):
             ...
-        ValueError: Invalid option for `algorithm` parameter: 'invalid'...
+        ValueError: Invalid 'algorithm': invalid. Options: {'adf': ('adf', 'augmented_dickey_fuller'), 'kpss': ('kpss', 'kwiatkowski_phillips_schmidt_shin'), 'pp': ('pp', 'phillips_perron'), 'za': ('za', 'zivot_andrews'), 'ers': ('ers', 'elliott_rothenberg_stock'), 'vr': ('vr', 'variance_ratio'), 'rur': ('rur', 'range_unit_root')}
 
         ```
     """
