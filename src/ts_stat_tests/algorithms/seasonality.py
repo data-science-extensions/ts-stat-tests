@@ -341,7 +341,7 @@ def ch(x: ArrayLike, m: int) -> int:
     !!! note "Summary"
         The Canova-Hansen test for seasonal differences. Canova and Hansen (1995) proposed a test statistic for the null hypothesis that the seasonal pattern is stable. The test statistic can be formulated in terms of seasonal dummies or seasonal cycles. The former allows us to identify seasons (e.g. months or quarters) that are not stable, while the latter tests the stability of seasonal cycles (e.g. cycles of period 2 and 4 quarters in quarterly data).
 
-        !!! warning "Note"
+        !!! warning "Warning"
             This test is generally not used directly, but in conjunction with `pmdarima.arima.nsdiffs()`, which directly estimates the number of seasonal differences.
 
     ???+ abstract "Details"
