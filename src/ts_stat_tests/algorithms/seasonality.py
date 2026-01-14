@@ -215,17 +215,17 @@ def qs(
                     max_order=max_order,
                     allow_drift=allow_drift,
                 )
-            except Exception:  # TODO: specify exception
+            except (ValueError, RuntimeError, IndexError):
                 try:
                     model = ARIMA(order=(0, 1, 1)).fit(y=_x)
-                except Exception:  # TODO: specify exception
+                except (ValueError, RuntimeError, IndexError):
                     print("Could not estimate any ARIMA model, original data series is used.")
             if model is not None:
                 _x = model.resid()
         else:
             try:
                 model = ARIMA(order=(0, 1, 1)).fit(y=_x)
-            except Exception:  # TODO: specify exception
+            except (ValueError, RuntimeError, IndexError):
                 print("Could not estimate any ARIMA model, original data series is used.")
             if model is not None:
                 _x = model.resid()
