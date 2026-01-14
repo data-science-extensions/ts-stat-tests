@@ -1,28 +1,38 @@
-<div align="center">
+<h1 align="center"><u><code>ts-stat-tests</code></u></h1>
 
-# Time Series Statistical Tests
-
-### `ts-stat-tests`
-
-[![PyPI version](https://img.shields.io/pypi/v/ts-stat-tests?label=version&logo=git&color=blue)](https://pypi.org/project/ts-stat-tests/)
-[![Released](https://img.shields.io/github/release-date/data-science-extensions/ts-stat-tests?label=released&color=blue&logo=google-calendar&logoColor=FF7143)](https://pypi.org/project/ts-stat-tests/#history)
-[![Python](https://img.shields.io/pypi/pyversions/ts-stat-tests.svg?style=flat&logo=python&logoColor=FFDE50&color=blue)](https://pypi.org/project/ts-stat-tests/)
-[![OS](https://img.shields.io/static/v1?label=os&message=ubuntu+|+macos+|+windows&color=blue&logo=ubuntu&logoColor=green)](https://pypi.org/project/ts-stat-tests/)<br>
-[![Build Tests](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/ci-build-package.yml?logo=github&logoColor=white&label=build+tests)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-build-package.yml)
-[![MyPy Tests](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/ci-mypy-tests.yml?logo=github&logoColor=white&label=mypy+tests)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-mypy-tests.yml)
-[![Unit Tests](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/ci-unit-tests.yml?logo=github&logoColor=white&label=unit+tests)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-unit-tests.yml)
-[![codecov](https://codecov.io/gh/data-science-extensions/ts-stat-tests/branch/main/graph/badge.svg)](https://codecov.io/gh/data-science-extensions/ts-stat-tests)<br>
-[![Deploy Docs](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/cd-deploy-docs.yml?logo=github&logoColor=white&label=deploy+docs)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/cd-deploy-docs.yml)
-[![Publish Package](https://img.shields.io/github/actions/workflow/status/data-science-extensions/ts-stat-tests/cd-publish-package.yml?logo=github&logoColor=white&label=publish+package)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci-publish-package.yml)
-[![CodeQL](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main&label=code+ql)](https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/github-code-scanning/codeql)<br>
-[![License][badge-license]](https://github.com/data-science-extensions/ts-stat-tests/blob/master/LICENSE)
-[![Downloads][badge-downloads]](https://piptrends.com/package/ts-stat-tests)
-[![Code Style][badge-style]](https://github.com/psf/black)<br>
-[![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/data-science-extensions/ts-stat-tests/issues)
-
-<!-- [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/data-science-extensions/ts-stat-tests?color=green)](https://github.com/data-science-extensions/ts-stat-tests) -->
-
-</div>
+<p align="center">
+<a href="https://github.com/data-science-extensions/ts-stat-tests/releases">
+    <img src="https://img.shields.io/github/v/release/data-science-extensions/ts-stat-tests?logo=github" alt="github-release"></a>
+<a href="https://pypi.org/project/ts-stat-tests">
+    <img src="https://img.shields.io/pypi/implementation/ts-stat-tests?logo=pypi&logoColor=ffde57" alt="implementation"></a>
+<a href="https://pypi.org/project/ts-stat-tests">
+    <img src="https://img.shields.io/pypi/v/ts-stat-tests?label=version&logo=python&logoColor=ffde57&color=blue" alt="version"></a>
+<a href="https://pypi.org/project/ts-stat-tests">
+    <img src="https://img.shields.io/pypi/pyversions/ts-stat-tests?logo=python&logoColor=ffde57" alt="python-versions"></a>
+<br>
+<a href="https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci.yml">
+    <img src="https://img.shields.io/static/v1?label=os&message=ubuntu+|+macos+|+windows&color=blue&logo=ubuntu&logoColor=green" alt="os"></a>
+<a href="https://pypi.org/project/ts-stat-tests">
+    <img src="https://img.shields.io/pypi/status/ts-stat-tests?color=green" alt="pypi-status"></a>
+<a href="https://pypi.org/project/ts-stat-tests">
+    <img src="https://img.shields.io/pypi/format/ts-stat-tests?color=green" alt="pypi-format"></a>
+<a href="https://github.com/data-science-extensions/ts-stat-tests/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/data-science-extensions/ts-stat-tests?color=green" alt="github-license"></a>
+<a href="https://piptrends.com/package/ts-stat-tests">
+    <img src="https://img.shields.io/pypi/dm/ts-stat-tests?color=green" alt="pypi-downloads"></a>
+<a href="https://codecov.io/gh/data-science-extensions/ts-stat-tests">
+    <img src="https://codecov.io/gh/data-science-extensions/ts-stat-tests/graph/badge.svg" alt="codecov-repo"></a>
+<a href="https://github.com/psf/black">
+    <img src="https://img.shields.io/static/v1?label=style&message=black&color=black&logo=windows-terminal&logoColor=white" alt="style"></a>
+<br>
+<a href="https://github.com/data-science-extensions/ts-stat-tests">
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions"></a>
+<br>
+<a href="https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci.yml">
+    <img src="https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/ci.yml/badge.svg?event=pull_request" alt="CI"></a>
+<a href="https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/cd.yml">
+    <img src="https://github.com/data-science-extensions/ts-stat-tests/actions/workflows/cd.yml/badge.svg?event=release" alt="CD"></a>
+</p>
 
 
 ## Motivation
@@ -55,12 +65,12 @@ Full credit goes to the packages listed in this table.
 | Regularity         | Permutation Entropy                                                           | `antropy`      | python          | ✅           |
 | Regularity         | Spectral Entropy                                                              | `antropy`      | python          | ✅           |
 | Regularity         | SVD Entropy                                                                   | `antropy`      | python          | ✅           |
-| Seasonality        | QS                                                                            | `seastests`    | R               | 🔲           |
-| Seasonality        | Osborn-Chui-Smith-Birchenhall test of seasonality (OCSB)                      | `pmdarima`     | Python          | 🔲           |
-| Seasonality        | Canova-Hansen test for seasonal differences (CH)                              | `pmdarima`     | Python          | 🔲           |
-| Seasonality        | Seasonal Strength                                                             | `tsfeatures`   | Python          | 🔲           |
-| Seasonality        | Trend Strength                                                                | `tsfeatures`   | Python          | 🔲           |
-| Seasonality        | Spikiness                                                                     | `tsfeatures`   | Python          | 🔲           |
+| Seasonality        | QS                                                                            | `seastests`    | R               | ✅           |
+| Seasonality        | Osborn-Chui-Smith-Birchenhall test of seasonality (OCSB)                      | `pmdarima`     | Python          | ✅           |
+| Seasonality        | Canova-Hansen test for seasonal differences (CH)                              | `pmdarima`     | Python          | ✅           |
+| Seasonality        | Seasonal Strength                                                             | `tsfeatures`   | Python          | ✅           |
+| Seasonality        | Trend Strength                                                                | `tsfeatures`   | Python          | ✅           |
+| Seasonality        | Spikiness                                                                     | `tsfeatures`   | Python          | ✅           |
 | Stability          | Stability                                                                     | `tsfeatures`   | Python          | 🔲           |
 | Stability          | Lumpiness                                                                     | `tsfeatures`   | Python          | 🔲           |
 | Stationarity       | Augmented Dickey-Fuller test for stationarity (ADF)                           | `statsmodels`  | Python          | ✅           |
