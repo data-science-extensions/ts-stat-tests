@@ -506,10 +506,7 @@ def kpss(
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     _nlags: Union[VALID_KPSS_NLAGS_OPTIONS, int] = nlags if nlags is not None else "auto"
-    return cast(
-        Union[tuple[float, float, int, dict, ResultsStore], tuple[float, float, int, dict]],
-        _kpss(x=x, regression=regression, nlags=_nlags, store=store),
-    )
+    return _kpss(x=x, regression=regression, nlags=_nlags, store=store)
 
 
 @overload
@@ -687,10 +684,7 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    return cast(
-        Union[tuple[float, float, dict, ResultsStore], tuple[float, float, dict]],
-        _rur(x=x, store=store),
-    )
+    return _rur(x=x, store=store)
 
 
 @typechecked
@@ -865,19 +859,19 @@ def za(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    res = _za(
+    res: Any = _za(
         x=x,
         trim=trim,
         maxlag=maxlag,
         regression=regression,
-        autolag=cast(Literal["AIC"], autolag),
+        autolag=autolag,  # type: ignore[arg-type] # statsmodels stubs are often missing None
     )
     return (
-        float(cast(float, res[0])),
-        float(cast(float, res[1])),
-        cast(dict, res[2]),
-        int(cast(int, res[3])),
-        int(cast(int, res[4])),
+        float(res[0]),
+        float(res[1]),
+        dict(res[2]),
+        int(res[3]),
+        int(res[4]),
     )
 
 
@@ -1461,7 +1455,7 @@ def vr(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    res = _vr(
+    res: VarianceRatio = _vr(
         y=np.asarray(y),
         lags=lags,
         trend=trend,
@@ -1469,4 +1463,4 @@ def vr(
         robust=robust,
         overlap=overlap,
     )
-    return (float(res.stat), float(res.pvalue), float(res.vr))
+    return float(res.stat), float(res.pvalue), float(res.vr)
