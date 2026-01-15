@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, Optional, Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -342,7 +342,7 @@ def is_stationary(
 
         ```
     """
-    res: Any = cast(Any, stationarity(x=x, algorithm=algorithm, **kwargs))
+    res: Any = stationarity(x=x, algorithm=algorithm, **kwargs)
 
     stat: Union[float, int, dict[str, float]]
     pvalue: Union[float, int, dict[str, float], bool, str, None]
