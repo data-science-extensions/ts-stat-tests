@@ -10,6 +10,9 @@
 # ---------------------------------------------------------------------------- #
 
 
+# ## Python StdLib Imports ----
+from unittest.mock import patch
+
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
@@ -172,3 +175,50 @@ class TestSeasonality(BaseTester):
     def test_is_seasonal_ts(self) -> None:
         res_sp = is_seasonal(self.data_airline, algorithm="spikiness", m=12)
         assert res_sp["result"] is True
+
+    def test_is_seasonal_list_branches(self) -> None:
+        """Test the list-based result branches in is_seasonal for coverage."""
+        with patch("ts_stat_tests.tests.seasonality.seasonality") as mock_sea:
+            # Test ocsb list branch
+            mock_sea.return_value = [1.0]
+            res = is_seasonal(self.data_airline, algorithm="ocsb")
+            assert res["result"] is True
+            assert res["statistic"] == 1.0
+
+            # Test ss list branch
+            mock_sea.return_value = [0.8]
+            res = is_seasonal(self.data_airline, algorithm="ss", m=12)
+            assert res["result"] is True
+            assert res["statistic"] == 0.8
+
+            # Test else list branch (e.g. trend_strength)
+            mock_sea.return_value = [0.5]
+            res = is_seasonal(self.data_airline, algorithm="ts", m=12)
+            assert res["result"] is True
+            assert res["statistic"] == 0.5
+
+    def test_is_seasonal_invalid_inner_types(self) -> None:
+        """Test the fallback for non-numeric types inside the result list."""
+        with patch("ts_stat_tests.tests.seasonality.seasonality") as mock_sea:
+            mock_sea.return_value = ["not a number"]
+            res = is_seasonal(self.data_airline, algorithm="ocsb")
+            assert res["statistic"] == 0.0
+
+            res = is_seasonal(self.data_airline, algorithm="ss", m=12)
+            assert res["statistic"] == 0.0
+
+            res = is_seasonal(self.data_airline, algorithm="ts", m=12)
+            assert res["statistic"] == 0.0
+
+    def test_is_seasonal_invalid_scalar_types(self) -> None:
+        """Test the fallback for non-numeric scalar result types."""
+        with patch("ts_stat_tests.tests.seasonality.seasonality") as mock_sea:
+            mock_sea.return_value = "not a number"
+            res = is_seasonal(self.data_airline, algorithm="ocsb")
+            assert res["statistic"] == 0.0
+
+            res = is_seasonal(self.data_airline, algorithm="ss", m=12)
+            assert res["statistic"] == 0.0
+
+            res = is_seasonal(self.data_airline, algorithm="ts", m=12)
+            assert res["statistic"] == 0.0
