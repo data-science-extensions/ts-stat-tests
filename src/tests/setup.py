@@ -26,6 +26,7 @@ from typing import Callable, Union
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
+from numpy.typing import NDArray
 
 # ## Local First Party Imports ----
 from ts_stat_tests.utils.data import (
@@ -181,12 +182,12 @@ class BaseTester(unittest.TestCase):
         super().setUpClass()
         cls.data_airline: pd.Series = data_airline
         cls.data_dict: dict[str, Union[int, list[int], str]] = data_dict()
-        cls.data_random: np.ndarray = data_random
-        cls.data_sine: np.ndarray = data_sine
-        cls.data_line: np.ndarray = data_line
+        cls.data_random: NDArray[np.float64] = data_random
+        cls.data_sine: NDArray[np.float64] = data_sine
+        cls.data_line: NDArray[np.float64] = data_line
         cls.data_basic: list[int] = data_basic()
-        cls.data_noise: np.ndarray = data_noise
-        cls.data_2d: np.ndarray = data_random_2d
+        cls.data_noise: NDArray[np.float64] = data_noise
+        cls.data_2d: NDArray[np.float64] = data_random_2d
 
     @classmethod
     def tearDownClass(cls) -> None:
