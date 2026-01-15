@@ -142,19 +142,19 @@ def entropy(
 
         ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
         >>> print(entropy(x=normal, algorithm="sample"))
-        2.23743099781426
+        2.2374...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
         >>> print(entropy(x=normal, algorithm="approx"))
-        1.6643808251518548
+        1.6643...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
         >>> print(entropy(x=normal, algorithm="spectral", sf=1))
-        0.932981071295013
+        0.9329...
 
         ```
 
@@ -261,19 +261,19 @@ def regularity(
 
         ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
         >>> print(regularity(x=normal, algorithm="sample"))
-        2.23743099781426
+        2.2374...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
         >>> print(regularity(x=normal, algorithm="approx"))
-        1.6643808251518548
+        1.6643...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
         >>> print(regularity(x=normal, algorithm="spectral", sf=1))
-        0.932981071295013
+        0.9329...
 
         ```
 
