@@ -37,11 +37,13 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Union, cast
+from typing import Any, Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+from scipy.stats._morestats import AndersonResult, ShapiroResult
+from scipy.stats._stats_py import NormaltestResult
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -79,7 +81,7 @@ def normality(
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> Union[tuple[float, float], object]:
+) -> Union[tuple[float, float], NormaltestResult, ShapiroResult, AndersonResult]:
     """
     !!! note "Summary"
         Perform a normality test on the given data.
@@ -273,7 +275,7 @@ def is_normal(
 
         ```
     """
-    res = normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist)
+    res: Any = cast(Any, normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist))
 
     # Anderson-Darling is a bit different
     options: dict[str, tuple[str, ...]] = {
@@ -283,7 +285,7 @@ def is_normal(
     if algorithm in options["ad"]:
         # res is AndersonResult(statistic, critical_values, significance_level, fit_result)
         # indexing only gives the first 3 elements
-        res_tuple = cast(tuple[float, NDArray[np.float64], NDArray[np.float64]], res)
+        res_tuple: Any = res
         stat = res_tuple[0]
         crit = res_tuple[1]
         sig = res_tuple[2]
@@ -315,7 +317,7 @@ def is_normal(
         p_val = float(p_val_attr)
         stat_val = float(stat_val_attr)
     elif isinstance(res, (tuple, list)) and len(res) >= 2:
-        res_tuple = cast(tuple[float, float], res)
+        res_tuple: Any = res
         stat_val = float(res_tuple[0])
         p_val = float(res_tuple[1])
     else:
