@@ -25,14 +25,9 @@
     There are several different types of stationarity tests, including the Augmented Dickey-Fuller (ADF) test, the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test, the Phillips-Perron (PP) test, the Elliott-Rothenberg-Stock (ERS) test, and the Variance Ratio (VR) test. Each of these tests has its own strengths and weaknesses, and the choice of which test to use will depend on the specific characteristics of the time series being analyzed.
 
     Overall, stationarity tests are an important tool in time series analysis and forecasting, as they help identify whether a time series is stationary or non-stationary, which can have implications for the choice of forecasting models and methods.
+
+    For a really good article on ADF & KPSS tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
 """
-
-
-# from pmdarima.arima.stationarity import PPTest, ADFTest, KPSSTest
-# from statsmodels.tsa.api import adfuller, kpss
-# """
-# For a really good article on ADF & KPSS tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
-# """
 
 
 # ---------------------------------------------------------------------------- #
@@ -48,11 +43,15 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Optional, Union, cast, overload
+from typing import Any, Literal, Optional, Union, overload
 
 # ## Python Third Party Imports ----
 import numpy as np
-from arch.unitroot import DFGLS as _ers, PhillipsPerron as _pp, VarianceRatio as _vr
+from arch.unitroot import (
+    DFGLS as _ers,
+    PhillipsPerron as _pp,
+    VarianceRatio as _vr,
+)
 from numpy.typing import ArrayLike
 from statsmodels.stats.diagnostic import ResultsStore
 from statsmodels.tsa.stattools import (
@@ -222,6 +221,20 @@ def adf(
 
         ```
 
+        ```pycon {.py .python linenums="1" title="Example 3: Store Result Instance"}
+        >>> res = adf(x=airline, store=True)
+        >>> print(res)
+        (0.8153..., 0.9918..., {'1%': np.float64(-3.4816...), '5%': np.float64(-2.8840...), '10%': np.float64(-2.5787...)}, <statsmodels.stats.diagnostic.ResultsStore object at ...>)
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: No Autolag"}
+        >>> stat, pvalue, lags, nobs, crit = adf(x=airline, autolag=None, maxlag=5)
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.7670
+
+        ```
+
     ??? equation "Calculation"
 
         The mathematical equation for the Augmented Dickey-Fuller (ADF) test for stationarity in time series forecasting is:
@@ -298,20 +311,37 @@ def adf(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    return cast(
-        Union[
-            tuple[float, float, dict, ResultsStore],
-            tuple[float, float, int, int, dict],
-            tuple[float, float, int, int, dict, float],
-        ],
-        _adfuller(
-            x=x,
-            maxlag=maxlag,
-            regression=regression,
-            autolag=cast(Literal["AIC"], autolag),
-            store=store,
-            regresults=regresults,
-        ),
+    res: Any = _adfuller(  # Using `Any` to avoid ty issues with statsmodels stubs
+        x=x,
+        maxlag=maxlag,
+        regression=regression,
+        autolag=autolag,  # type: ignore[arg-type] # statsmodels stubs are often missing `None`
+        store=store,
+        regresults=regresults,
+    )
+
+    if store:
+        # returns (stat, pval, crit, store)
+        return float(res[0]), float(res[1]), dict(res[2]), res[3]
+
+    if autolag is None:
+        # returns (stat, pval, lags, nobs, crit)
+        return (
+            float(res[0]),
+            float(res[1]),
+            int(res[2]),
+            int(res[3]),
+            dict(res[4]),
+        )
+
+    # returns (stat, pval, lags, nobs, crit, icbest)
+    return (
+        float(res[0]),
+        float(res[1]),
+        int(res[2]),
+        int(res[3]),
+        dict(res[4]),
+        float(res[5]),
     )
 
 
@@ -494,10 +524,7 @@ def kpss(
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
     _nlags: Union[VALID_KPSS_NLAGS_OPTIONS, int] = nlags if nlags is not None else "auto"
-    return cast(
-        Union[tuple[float, float, int, dict, ResultsStore], tuple[float, float, int, dict]],
-        _kpss(x=x, regression=regression, nlags=_nlags, store=store),
-    )
+    return _kpss(x=x, regression=regression, nlags=_nlags, store=store)
 
 
 @overload
@@ -675,10 +702,7 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    return cast(
-        Union[tuple[float, float, dict, ResultsStore], tuple[float, float, dict]],
-        _rur(x=x, store=store),
-    )
+    return _rur(x=x, store=store)
 
 
 @typechecked
@@ -853,19 +877,19 @@ def za(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    res = _za(
+    res: Any = _za(
         x=x,
         trim=trim,
         maxlag=maxlag,
         regression=regression,
-        autolag=cast(Literal["AIC"], autolag),
+        autolag=autolag,  # type: ignore[arg-type] # statsmodels stubs are often missing None
     )
     return (
-        float(cast(float, res[0])),
-        float(cast(float, res[1])),
-        cast(dict, res[2]),
-        int(cast(int, res[3])),
-        int(cast(int, res[4])),
+        float(res[0]),
+        float(res[1]),
+        dict(res[2]),
+        int(res[3]),
+        int(res[4]),
     )
 
 
@@ -1457,4 +1481,4 @@ def vr(
         robust=robust,
         overlap=overlap,
     )
-    return (float(res.stat), float(res.pvalue), float(res.vr))
+    return float(res.stat), float(res.pvalue), float(res.vr)

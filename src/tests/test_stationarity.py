@@ -151,6 +151,25 @@ class TestStationarityADF(BaseTester):
     def test_stationarity_adf_noise(self) -> None:
         assert self.result_adf_noise == self.result_sm_adf_noise
 
+    def test_stationarity_adf_store(self) -> None:
+        """Test adf with store=True."""
+        res = adf(x=self.data_airline, store=True)
+        assert len(res) == 4
+        assert isinstance(res[0], float)
+        assert isinstance(res[1], float)
+        assert isinstance(res[2], dict)
+        assert hasattr(res[3], "nobs")
+
+    def test_stationarity_adf_autolag_none(self) -> None:
+        """Test adf with autolag=None."""
+        res = adf(x=self.data_airline, autolag=None)
+        assert len(res) == 5
+        assert isinstance(res[0], float)
+        assert isinstance(res[1], float)
+        assert isinstance(res[2], int)
+        assert isinstance(res[3], int)
+        assert isinstance(res[4], dict)
+
 
 class TestStationarityKPSS(BaseTester):
 

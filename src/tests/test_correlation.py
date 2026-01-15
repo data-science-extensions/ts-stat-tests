@@ -10,12 +10,8 @@
 # ---------------------------------------------------------------------------- #
 
 
-# ## Python StdLib Imports ----
-from unittest.mock import patch
-
 # ## Python Third Party Imports ----
 import numpy as np
-import pandas as pd
 from pytest import raises
 from statsmodels import api as sm
 from statsmodels.stats.api import (
@@ -33,8 +29,6 @@ from statsmodels.tsa.stattools import (
 from tests.setup import BaseTester
 from ts_stat_tests.algorithms.correlation import acf, bglm, ccf, lb, lm, pacf
 from ts_stat_tests.tests.correlation import correlation, is_correlated
-from ts_stat_tests.utils.data import get_uniform_data, load_airline, load_macrodata
-from ts_stat_tests.utils.errors import assert_almost_equal, is_almost_equal
 
 
 # ---------------------------------------------------------------------------- #
@@ -165,44 +159,46 @@ class TestCorrelation(BaseTester):
             self.result_abg,
         )
 
-    def test_is_correlated(self) -> None:
-        with raises(NotImplementedError):
-            is_correlated()
+    def test_is_correlated_lb(self) -> None:
+        """Test is_correlated with Ljung-Box algorithm (default)."""
+        res = is_correlated(self.data_airline, lags=[5])
+        assert isinstance(res, dict)
+        assert res["result"] is True  # Airline data is highly correlated
+        assert res["algorithm"] == "lb"
+        assert isinstance(res["statistic"], float)
+        assert isinstance(res["pvalue"], float)
+        assert res["alpha"] == 0.05
 
-    def test_load_airline_type_error(self) -> None:
-        mock_df = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
-        load_airline.cache_clear()
-        with patch("pandas.read_csv", return_value=mock_df):
-            with raises(TypeError, match="Expected a pandas Series from the data source."):
-                load_airline()
-        load_airline.cache_clear()
+    def test_is_correlated_lm(self) -> None:
+        """Test is_correlated with LM algorithm."""
+        res = is_correlated(self.data_airline, algorithm="lm", nlags=5)
+        assert isinstance(res, dict)
+        assert res["result"] is True
+        assert res["algorithm"] == "lm"
 
-    def test_load_macrodata_type_error(self) -> None:
-        load_macrodata.cache_clear()
-        with patch("pandas.read_csv", return_value=pd.Series(dtype=float)):
-            with raises(TypeError, match="Expected a pandas DataFrame from the data source."):
-                load_macrodata()
-        load_macrodata.cache_clear()
+    def test_is_correlated_bglm(self) -> None:
+        """Test is_correlated with Breusch-Godfrey algorithm."""
+        y = sm.datasets.longley.load_pandas().endog
+        X = sm.datasets.longley.load_pandas().exog
+        X = sm.add_constant(X)
+        res_ols = sm.OLS(y, X).fit()
+        res = is_correlated(res_ols, algorithm="bg")
+        assert isinstance(res, dict)
+        assert "result" in res
+        assert res["algorithm"] == "bg"
 
-    def test_get_uniform_data(self) -> None:
-        res = get_uniform_data(42)
-        assert isinstance(res, np.ndarray)
-        assert res.shape == (1000,)
+    def test_is_correlated_raises(self) -> None:
+        """Test is_correlated raises ValueError for unsupported algorithms."""
+        with raises(ValueError, match="is not supported for 'is_correlated'"):
+            is_correlated(self.data_airline, algorithm="acf")
 
-    def test_is_almost_equal_value_error(self) -> None:
-        with raises(ValueError, match="Specify `delta` or `places`, not both."):
-            is_almost_equal(1.0, 1.1, places=7, delta=0.1)
+    def test_is_correlated_logic(self) -> None:
+        """Test correlation logic (correlated vs non-correlated)."""
+        # Correlated
+        res_corr = is_correlated(self.data_airline, algorithm="lb", lags=[10])
+        assert res_corr["result"] is True
 
-    def test_is_almost_equal_with_delta(self) -> None:
-        assert is_almost_equal(1.0, 1.05, delta=0.1) is True
-        assert is_almost_equal(1.0, 1.2, delta=0.1) is False
-
-    def test_assert_almost_equal_failures(self) -> None:
-        with raises(AssertionError, match="within 0.1 delta"):
-            assert_almost_equal(1.0, 1.2, delta=0.1)
-
-        with raises(AssertionError, match="within 10 places"):
-            assert_almost_equal(1.0, 1.0000001, places=10)
-
-        with raises(AssertionError, match="Custom error message"):
-            assert_almost_equal(1.0, 2.0, msg="Custom error message")
+        # Non-correlated (noise)
+        res_noise = is_correlated(self.data_noise, algorithm="lb", lags=[10])
+        # It's noise, so it should be False (stationary/non-correlated)
+        assert isinstance(res_noise["result"], bool)

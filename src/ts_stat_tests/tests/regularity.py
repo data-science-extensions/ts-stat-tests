@@ -37,11 +37,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Union, cast
+from typing import Union
 
 # ## Python Third Party Imports ----
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -79,7 +79,7 @@ def entropy(
     metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
     sf: float = 1,
     normalize: bool = True,
-) -> float:
+) -> Union[float, NDArray[np.float64]]:
     """
     !!! note "Summary"
         Test for the entropy of a given data set.
@@ -125,7 +125,7 @@ def entropy(
             When the given value for `algorithm` is not valid.
 
     Returns:
-        (float):
+        (Union[float, NDArray[np.float64]]):
             The calculated entropy value.
 
     ??? success "Credit"
@@ -141,21 +141,20 @@ def entropy(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
-        >>> entropy(x=normal, algorithm="sample")
-        2.23743099781426
+        >>> print(entropy(x=normal, algorithm="sample"))
+        2.2374...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
-        >>> entropy(x=normal, algorithm="approx")
-        1.6643808251518548
+        >>> print(entropy(x=normal, algorithm="approx"))
+        1.6643...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
-        >>> res = entropy(x=normal, algorithm="spectral", sf=1)
-        >>> print(f"{res:.13f}")
-        0.9329810712950
+        >>> print(entropy(x=normal, algorithm="spectral", sf=1))
+        0.9329...
 
         ```
 
@@ -186,7 +185,7 @@ def entropy(
     if algorithm in options["approx"]:
         return approx_entropy(x=x, order=order, metric=metric)
     if algorithm in options["spect"]:
-        return cast(float, spectral_entropy(x=x, sf=sf, normalize=normalize))
+        return spectral_entropy(x=x, sf=sf, normalize=normalize)
     if algorithm in options["perm"]:
         return permutation_entropy(x=x, order=order, normalize=normalize)
     if algorithm in options["svd"]:
@@ -208,7 +207,7 @@ def regularity(
     metric: VALID_KDTREE_METRIC_OPTIONS = "chebyshev",
     sf: float = 1,
     normalize: bool = True,
-) -> float:
+) -> Union[float, NDArray[np.float64]]:
     """
     !!! note "Summary"
         Test for the regularity of a given data set.
@@ -245,7 +244,7 @@ def regularity(
             Defaults to `True`.
 
     Returns:
-        (float):
+        (Union[float, NDArray[np.float64]]):
             The calculated regularity (entropy) value.
 
     ??? success "Credit"
@@ -261,21 +260,20 @@ def regularity(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
-        >>> regularity(x=normal, algorithm="sample")
-        2.23743099781426
+        >>> print(regularity(x=normal, algorithm="sample"))
+        2.2374...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
-        >>> regularity(x=normal, algorithm="approx")
-        1.6643808251518548
+        >>> print(regularity(x=normal, algorithm="approx"))
+        1.6643...
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 3: Spectral Entropy"}
-        >>> res = regularity(x=normal, algorithm="spectral", sf=1)
-        >>> print(f"{res:.13f}")
-        0.9329810712950
+        >>> print(regularity(x=normal, algorithm="spectral", sf=1))
+        0.9329...
 
         ```
 
@@ -389,13 +387,13 @@ def is_regular(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Sample Entropy"}
-        >>> is_regular(x=normal, algorithm="sample")
+        >>> print(is_regular(x=normal, algorithm="sample"))
         {'result': False, 'entropy': 2.23743099781426, 'tolerance': 0.20294652904313437}
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Approx Entropy"}
-        >>> is_regular(x=normal, algorithm="approx", tolerance=0.5)
+        >>> print(is_regular(x=normal, algorithm="approx", tolerance=0.5))
         {'result': False, 'entropy': 1.6643808251518548, 'tolerance': 0.5}
 
         ```

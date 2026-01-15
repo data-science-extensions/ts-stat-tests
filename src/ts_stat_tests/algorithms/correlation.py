@@ -46,22 +46,14 @@ from typing import Literal, Optional, Union, overload
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from statsmodels.regression.linear_model import (
     RegressionResults,
     RegressionResultsWrapper,
 )
-from statsmodels.stats.api import (
-    acorr_breusch_godfrey,
-    acorr_ljungbox,
-    acorr_lm,
-)
+from statsmodels.stats.api import acorr_breusch_godfrey, acorr_ljungbox, acorr_lm
 from statsmodels.stats.diagnostic import ResultsStore
-from statsmodels.tsa.api import (
-    acf as st_acf,
-    ccf as st_ccf,
-    pacf as st_pacf,
-)
+from statsmodels.tsa.api import acf as st_acf, ccf as st_ccf, pacf as st_pacf
 from statsmodels.tsa.stattools import ArrayLike1D
 from typeguard import typechecked
 
@@ -98,7 +90,7 @@ VALID_PACF_METHOD_OPTIONS = Literal[
 ]
 
 
-VALID_LM_COV_TYPE_OPTIONS = Literal["HC0", "HC1", "HC2", "HC3"]
+VALID_LM_COV_TYPE_OPTIONS = Literal["nonrobust", "HC0", "HC1", "HC2", "HC3"]
 
 
 # ---------------------------------------------------------------------------- #
@@ -119,7 +111,7 @@ def acf(
     *,
     qstat: Literal[False] = False,
     alpha: None = None,
-) -> np.ndarray: ...
+) -> NDArray[np.float64]: ...
 @overload
 def acf(
     x: ArrayLike,
@@ -131,7 +123,7 @@ def acf(
     *,
     qstat: Literal[False] = False,
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 @overload
 def acf(
     x: ArrayLike,
@@ -143,7 +135,7 @@ def acf(
     *,
     qstat: Literal[True],
     alpha: None = None,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
 @overload
 def acf(
     x: ArrayLike,
@@ -155,7 +147,7 @@ def acf(
     *,
     qstat: Literal[True],
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
 @typechecked
 def acf(
     x: ArrayLike,
@@ -168,18 +160,20 @@ def acf(
     qstat: bool = False,
     alpha: Optional[float] = None,
 ) -> Union[
-    np.ndarray,
-    tuple[np.ndarray, np.ndarray],
-    tuple[np.ndarray, np.ndarray, np.ndarray],
-    tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray],
+    NDArray[np.float64],
+    tuple[NDArray[np.float64], NDArray[np.float64]],
+    tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]],
+    tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]],
 ]:
     r"""
     !!! note "Summary"
+
         The autocorrelation function (ACF) is a statistical tool used to study the correlation between a time series and its lagged values. In time series forecasting, the ACF is used to identify patterns and relationships between values in a time series at different lags, which can then be used to make predictions about future values.
 
         This function will implement the [`acf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         The acf at lag `0` (ie., `1`) is returned.
 
         For very long time series it is recommended to use `fft` convolution instead. When `fft` is `False` uses a simple, direct estimator of the autocovariances that only computes the first $nlags + 1$ values. This can be much faster when the time series is long and only a small number of autocovariances are needed.
@@ -229,12 +223,12 @@ def acf(
             Defaults to `"none"`.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]], tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]], tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `qstat` and `alpha`, returns the following values:
-            - `acf` (np.ndarray): The autocorrelation function for lags `0, 1, ..., nlags`.
-            - `confint` (np.ndarray, optional): Confidence intervals for the ACF (returned if `alpha` is not `None`).
-            - `qstat` (np.ndarray, optional): The Ljung-Box Q-Statistic (returned if `qstat` is `True`).
-            - `pvalues` (np.ndarray, optional): P-values associated with the Q-statistics (returned if `qstat` is `True`).
+            - `acf` (NDArray[np.float64]): The autocorrelation function for lags `0, 1, ..., nlags`.
+            - `confint` (NDArray[np.float64], optional): Confidence intervals for the ACF (returned if `alpha` is not `None`).
+            - `qstat` (NDArray[np.float64], optional): The Ljung-Box Q-Statistic (returned if `qstat` is `True`).
+            - `pvalues` (NDArray[np.float64], optional): P-values associated with the Q-statistics (returned if `qstat` is `True`).
 
     ???+ example "Examples"
 
@@ -298,6 +292,7 @@ def acf(
         ```
 
     ??? equation "Calculation"
+
         The ACF at lag $k$ is defined as:
 
         $$
@@ -321,8 +316,8 @@ def acf(
 
     ??? question "References"
         1. Parzen, E., 1963. On spectral analysis with missing observations and amplitude modulation. Sankhya: The Indian Journal of Statistics, Series A, pp.383-392.
-        1. Brockwell and Davis, 1987. Time Series Theory and Methods.
-        1. Brockwell and Davis, 2010. Introduction to Time Series and Forecasting, 2nd edition.
+        2. Brockwell and Davis, 1987. Time Series Theory and Methods.
+        3. Brockwell and Davis, 2010. Introduction to Time Series and Forecasting, 2nd edition.
 
     ??? tip "See Also"
         - [`statsmodels.tsa.stattools.acf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html): Estimate the autocorrelation function.
@@ -351,7 +346,7 @@ def pacf(
     method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
     *,
     alpha: None = None,
-) -> np.ndarray: ...
+) -> NDArray[np.float64]: ...
 @overload
 def pacf(
     x: ArrayLike1D,
@@ -359,7 +354,7 @@ def pacf(
     method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
     *,
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 @typechecked
 def pacf(
     x: ArrayLike1D,
@@ -367,14 +362,16 @@ def pacf(
     method: VALID_PACF_METHOD_OPTIONS = "ywadjusted",
     *,
     alpha: Optional[float] = None,
-) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]:
     r"""
     !!! note "Summary"
+
         The partial autocorrelation function (PACF) is a statistical tool used in time series forecasting to identify the direct relationship between two variables, controlling for the effect of the other variables in the time series. In other words, the PACF measures the correlation between a time series and its lagged values, while controlling for the effects of other intermediate lags.
 
         This function will implement the [`pacf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.pacf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         Based on simulation evidence across a range of low-order ARMA models, the best methods based on root MSE are Yule-Walker (MLW), Levinson-Durbin (MLE) and Burg, respectively. The estimators with the lowest bias included these three in addition to OLS and OLS-adjusted. Yule-Walker (adjusted) and Levinson-Durbin (adjusted) performed consistently worse than the other options.
 
         The PACF is a plot of the correlation between a time series and its lagged values, controlling for the effect of other lags. The PACF is useful for identifying the order of an autoregressive (AR) model, which is a type of model used in time series forecasting. The order of an AR model is the number of lags that are used to predict future values.
@@ -410,10 +407,10 @@ def pacf(
             Defaults to `None`.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, np.ndarray]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `alpha`, returns the following values:
-            - `pacf` (np.ndarray): The partial autocorrelations for lags `0, 1, ..., nlags`.
-            - `confint` (np.ndarray, optional): Confidence intervals for the PACF (returned if `alpha` is not `None`).
+            - `pacf` (NDArray[np.float64]): The partial autocorrelations for lags `0, 1, ..., nlags`.
+            - `confint` (NDArray[np.float64], optional): Confidence intervals for the PACF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
 
@@ -454,6 +451,7 @@ def pacf(
         ```
 
     ??? equation "Calculation"
+
         The PACF at lag $k$ is defined as:
 
         $$
@@ -471,7 +469,7 @@ def pacf(
 
     ??? question "References"
         1. Box, G. E., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). Time series analysis: forecasting and control. John Wiley & Sons, p. 66.
-        1. Brockwell, P.J. and Davis, R.A., 2016. Introduction to time series and forecasting. Springer.
+        2. Brockwell, P.J. and Davis, R.A., 2016. Introduction to time series and forecasting. Springer.
 
     ??? tip "See Also"
         - [`statsmodels.tsa.stattools.acf`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.acf.html): Estimate the autocorrelation function.
@@ -501,7 +499,7 @@ def ccf(
     *,
     nlags: Optional[int] = None,
     alpha: None = None,
-) -> np.ndarray: ...
+) -> NDArray[np.float64]: ...
 @overload
 def ccf(
     x: ArrayLike,
@@ -511,7 +509,7 @@ def ccf(
     *,
     nlags: Optional[int] = None,
     alpha: float,
-) -> tuple[np.ndarray, np.ndarray]: ...
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 @typechecked
 def ccf(
     x: ArrayLike,
@@ -521,14 +519,16 @@ def ccf(
     *,
     nlags: Optional[int] = None,
     alpha: Optional[float] = None,
-) -> Union[np.ndarray, tuple[np.ndarray, np.ndarray]]:
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]:
     r"""
     !!! note "Summary"
+
         The cross-correlation function (CCF) is a statistical tool used in time series forecasting to measure the correlation between two time series at different lags. It is used to study the relationship between two time series, and can help to identify lead-lag relationships and causal effects.
 
         This function will implement the [`ccf()`](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.ccf.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         If `adjusted` is `True`, the denominator for the autocovariance is adjusted.
 
         The CCF measures the correlation between two time series at different lags. It is calculated as the ratio of the covariance between the two series at lag $k$ to the product of their standard deviations. The CCF is typically plotted as a graph, with the lag on the `x`-axis and the correlation coefficient on the `y`-axis.
@@ -560,10 +560,10 @@ def ccf(
             Defaults to `None`.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, np.ndarray]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `alpha`, returns the following values:
-            - `ccf` (np.ndarray): The cross-correlation function of `x` and `y` for lags `0, 1, ..., nlags`.
-            - `confint` (np.ndarray, optional): Confidence intervals for the CCF (returned if `alpha` is not `None`).
+            - `ccf` (NDArray[np.float64]): The cross-correlation function of `x` and `y` for lags `0, 1, ..., nlags`.
+            - `confint` (NDArray[np.float64], optional): Confidence intervals for the CCF (returned if `alpha` is not `None`).
 
     ???+ example "Examples"
 
@@ -609,6 +609,7 @@ def ccf(
         ```
 
     ??? equation "Calculation"
+
         The CCF at lag $k$ is defined as:
 
         $$
@@ -653,11 +654,13 @@ def lb(
 ) -> pd.DataFrame:
     r"""
     !!! note "Summary"
+
         The Ljung-Box test is a statistical test used in time series forecasting to test for the presence of autocorrelation in the residuals of a model. The test is based on the autocorrelation function (ACF) of the residuals, and can be used to assess the adequacy of a time series model and to identify areas for improvement.
 
         This function will implement the [`acorr_ljungbox()`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_ljungbox.html) function from the [`statsmodels`](https://www.statsmodels.org) library.
 
     ???+ abstract "Details"
+
         The Ljung-Box and Box-Pierce statistics differ in how they scale the autocorrelation function; the Ljung-Box test has better finite-sample properties.
 
         Under the null hypothesis, the test statistic follows a chi-squared distribution with degrees of freedom equal to $m-p$, where $p$ is the number of parameters estimated in fitting the time series model.
@@ -679,13 +682,17 @@ def lb(
             If lags is an integer (`int`) then this is taken to be the largest lag that is included, the test result is reported for all smaller lag length. If lags is a list or array, then all lags are included up to the largest lag in the list, however only the tests for the lags in the list are reported. If lags is `None`, then the default maxlag is currently $\min(\lfloor \frac{n_{obs}}{2} \rfloor - 2, 40)$ (calculated with: `min(nobs // 2 - 2, 40)`). The default number of `lags` changes if `period` is set.
             !!! deprecation "Deprecation"
                 After `statsmodels` version `0.12`, this calculation will change from
+
                 $$
                 \min\left(\lfloor \frac{n_{obs}}{2} \rfloor - 2, 40\right)
                 $$
+
                 to
+
                 $$
                 \min\left(10, \frac{n_{obs}}{5}\right)
                 $$
+
             Defaults to `None`.
         boxpierce (bool, optional):
             If `True`, then additional to the results of the Ljung-Box test also the Box-Pierce test results are returned.<br>
@@ -698,20 +705,22 @@ def lb(
             Defaults to `None`.
         return_df (bool, optional):
             Flag indicating whether to return the result as a single DataFrame with columns `lb_stat`, `lb_pvalue`, and optionally `bp_stat` and `bp_pvalue`. Set to `True` to return the DataFrame or `False` to continue returning the $2-4$ output. If `None` (the default), a warning is raised.
+
             !!! deprecation "Deprecation"
                 After `statsmodels` version `0.12`, this will become the only return method.
+
             Defaults to `True`.
         auto_lag (bool, optional):
             Flag indicating whether to automatically determine the optimal lag length based on threshold of maximum correlation value.<br>
             Defaults to `False`.
 
     Returns:
-        (Union[pd.DataFrame, tuple[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]]):
+        (Union[pd.DataFrame, tuple[NDArray[np.float64], NDArray[np.float64]], tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]]):
             Depending on `return_df` and `boxpierce`, returns the following values:
-            - `lb_stat` (np.ndarray): The Ljung-Box test statistic.
-            - `lb_pvalue` (np.ndarray): The p-value for the Ljung-Box test.
-            - `bp_stat` (np.ndarray, optional): The Box-Pierce test statistic (returned if `boxpierce` is `True`).
-            - `bp_pvalue` (np.ndarray, optional): The p-value for the Box-Pierce test (returned if `boxpierce` is `True`).
+            - `lb_stat` (NDArray[np.float64]): The Ljung-Box test statistic.
+            - `lb_pvalue` (NDArray[np.float64]): The p-value for the Ljung-Box test.
+            - `bp_stat` (NDArray[np.float64], optional): The Box-Pierce test statistic (returned if `boxpierce` is `True`).
+            - `bp_pvalue` (NDArray[np.float64], optional): The p-value for the Box-Pierce test (returned if `boxpierce` is `True`).
 
     ???+ example "Examples"
 
@@ -751,6 +760,7 @@ def lb(
         ```
 
     ??? equation "Calculation"
+
         The Ljung-Box test statistic is calculated as:
 
         $$
@@ -768,8 +778,8 @@ def lb(
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     ??? question "References"
-        - Green, W. "Econometric Analysis," 5th ed., Pearson, 2003.
-        - J. Carlos Escanciano, Ignacio N. Lobato "An automatic Portmanteau test for serial correlation"., Volume 151, 2009.
+        1. Green, W. "Econometric Analysis," 5th ed., Pearson, 2003.
+        2. J. Carlos Escanciano, Ignacio N. Lobato "An automatic Portmanteau test for serial correlation"., Volume 151, 2009.
 
     ??? tip "See Also"
         - [`statsmodels.regression.linear_model.OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html): Fit a linear model.
@@ -800,9 +810,9 @@ def lm(
     store: Literal[False] = False,
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: Literal["nonrobust"] = "nonrobust",
+    cov_type: VALID_LM_COV_TYPE_OPTIONS = "nonrobust",
     cov_kwargs: Optional[dict] = None,
-) -> tuple[float, float, float, float]: ...
+) -> tuple[float, NDArray[np.float64], float, float]: ...
 @overload
 def lm(
     resid: ArrayLike,
@@ -811,29 +821,7 @@ def lm(
     store: Literal[True],
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: Literal["nonrobust"] = "nonrobust",
-    cov_kwargs: Optional[dict] = None,
-) -> tuple[np.ndarray, np.ndarray, float, float, ResultsStore]: ...
-@overload
-def lm(
-    resid: ArrayLike,
-    nlags: Optional[int] = None,
-    *,
-    store: Literal[False] = False,
-    period: Optional[int] = None,
-    ddof: int = 0,
-    cov_type: VALID_LM_COV_TYPE_OPTIONS,
-    cov_kwargs: Optional[dict] = None,
-) -> tuple[np.ndarray, np.ndarray, float, float]: ...
-@overload
-def lm(
-    resid: ArrayLike,
-    nlags: Optional[int] = None,
-    *,
-    store: Literal[True],
-    period: Optional[int] = None,
-    ddof: int = 0,
-    cov_type: VALID_LM_COV_TYPE_OPTIONS,
+    cov_type: VALID_LM_COV_TYPE_OPTIONS = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
@@ -844,13 +832,11 @@ def lm(
     store: bool = False,
     period: Optional[int] = None,
     ddof: int = 0,
-    cov_type: Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS] = "nonrobust",
+    cov_type: VALID_LM_COV_TYPE_OPTIONS = "nonrobust",
     cov_kwargs: Optional[dict] = None,
 ) -> Union[
-    tuple[np.ndarray, np.ndarray, float, float],
-    tuple[np.ndarray, np.ndarray, float, float, ResultsStore],
-    tuple[float, float, float, float],
-    tuple[float, float, float, float, ResultsStore],
+    tuple[float, Union[float, NDArray[np.float64]], float, float],
+    tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore],
 ]:
     r"""
     !!! note "Summary"
@@ -876,7 +862,6 @@ def lm(
         The LM test is a generalization of the Durbin-Watson test, which is a simpler test that only tests for first-order autocorrelation.
 
     Params:
-
         resid (ArrayLike):
             Time series to test.
         nlags (Optional[int], optional):
@@ -889,16 +874,16 @@ def lm(
             The period of a Seasonal time series. Used to compute the max lag for seasonal data which uses $\min(2 \times period, \lfloor \frac{n_{obs}}{5} \rfloor)$ (calculated with: `min(2*period,nobs//5)`) if set. If `None`, then the default rule is used to set the number of lags. When set, must be $\ge 2$. Defaults to `None`.
         ddof (int, optional):
             The number of degrees of freedom consumed by the model used to produce `resid`. Defaults to `0`.
-        cov_type (Union[Literal["nonrobust"], VALID_LM_COV_TYPE_OPTIONS], optional):
+        cov_type (VALID_LM_COV_TYPE_OPTIONS, optional):
             Covariance type. The default is `"nonrobust"` which uses the classic OLS covariance estimator. Specify one of `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"` to use White's covariance estimator. All covariance types supported by `OLS.fit` are accepted. Defaults to `"nonrobust"`.
         cov_kwargs (Optional[dict], optional):
             Dictionary of covariance options passed to `OLS.fit`. See [`OLS.fit`](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.fit.html) for more details. Defaults to `None`.
 
     Returns:
-        (Union[tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+        (Union[tuple[float, Union[float, NDArray[np.float64]], float, float], tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore]]):
             Returns the following values:
             - `lm` (float): Lagrange multiplier test statistic.
-            - `lmpval` (float): The p-value for the Lagrange multiplier test.
+            - `lmpval` (Union[float, NDArray[np.float64]]): The p-value for the Lagrange multiplier test.
             - `fval` (float): The f-statistic of the F test.
             - `fpval` (float): The p-value of the F test.
             - `res_store` (ResultsStore, optional): Intermediate results (returned if `store` is `True`).
@@ -972,16 +957,14 @@ def lm(
         - $ddof$ is the model degrees of freedom lost due to parameter estimation.
 
     ??? success "Credit"
-
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     ??? tip "See Also"
-
         - [`statsmodels.stats.diagnostic.acorr_lm`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_lm.html): Lagrange Multiplier tests for autocorrelation.
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation.
     """
-    return acorr_lm(  # type: ignore # statsmodels typing is incomplete/incompatible
+    return acorr_lm(
         resid=resid,
         nlags=nlags,
         store=store,
@@ -998,14 +981,14 @@ def bglm(
     nlags: Optional[int] = None,
     *,
     store: Literal[False] = False,
-) -> tuple[float, float, float, float]: ...
+) -> tuple[float, Union[float, NDArray[np.float64]], float, float]: ...
 @overload
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
     nlags: Optional[int] = None,
     *,
     store: Literal[True],
-) -> tuple[float, float, float, float, ResultsStore]: ...
+) -> tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore]: ...
 @typechecked
 def bglm(
     res: Union[RegressionResults, RegressionResultsWrapper],
@@ -1013,8 +996,8 @@ def bglm(
     *,
     store: bool = False,
 ) -> Union[
-    tuple[float, float, float, float],
-    tuple[float, float, float, float, ResultsStore],
+    tuple[float, Union[float, NDArray[np.float64]], float, float],
+    tuple[float, Union[float, NDArray[np.float64]], float, float, ResultsStore],
 ]:
     r"""
     !!! note "Summary"
@@ -1034,7 +1017,6 @@ def bglm(
         If the test statistic is greater than the critical value from the chi-squared distribution, then the null hypothesis of no autocorrelation is rejected, indicating that there is evidence of autocorrelation in the residuals.
 
     Params:
-
         res (Union[RegressionResults, RegressionResultsWrapper]):
             Estimation results for which the residuals are tested for serial correlation.
         nlags (Optional[int], optional):
@@ -1104,20 +1086,17 @@ def bglm(
         - $R^2$ is the coefficient of determination from a regression of the residuals on the lagged values of the residuals and the lagged values of the predictor variable.
 
     ??? success "Credit"
-
         - All credit goes to the [`statsmodels`](https://www.statsmodels.org/) library.
 
     ??? question "References"
-
-        - Greene, W. H. Econometric Analysis. New Jersey. Prentice Hall; 5th edition. (2002).
+        1. Greene, W. H. Econometric Analysis. New Jersey. Prentice Hall; 5th edition. (2002).
 
     ??? tip "See Also"
-
         - [`statsmodels.stats.diagnostic.acorr_breusch_godfrey`](https://www.statsmodels.org/stable/generated/statsmodels.stats.diagnostic.acorr_breusch_godfrey.html): Breusch-Godfrey test for serial correlation.
         - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box test of autocorrelation in residuals.
         - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier tests for autocorrelation.
     """
-    return acorr_breusch_godfrey(  # type: ignore # statsmodels typing is incomplete/incompatible
+    return acorr_breusch_godfrey(
         res=res,
         nlags=nlags,
         store=store,

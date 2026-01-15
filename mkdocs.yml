@@ -36,6 +36,9 @@ theme:
     - toc.follow
     - content.action.edit
     - content.action.view
+    - content.code.select
+    - content.code.copy
+    - content.code.annotate
   logo: ./assets/icons/1205526.svg
   icon:
     repo: material/github
@@ -57,6 +60,11 @@ nav:
       - Regularity: code/regularity.md
       - Normality: code/normality.md
       - Stationarity: code/stationarity.md
+      - Seasonality: code/seasonality.md
+      - Utilities:
+          - Data: code/data.md
+          - Errors: code/errors.md
+  - Data Science Extensions: https://data-science-extensions.com/
 
 
 markdown_extensions:
@@ -91,11 +99,16 @@ extra:
     default: latest
 
 extra_css:
-  - assets/stylesheets/style.css
-  - assets/stylesheets/admonitions.css
-  - assets/stylesheets/code_chunks.css
-  - assets/stylesheets/shortcodes.css
+  - assets/css/style.css
+  - assets/css/admonitions.css
+  - assets/css/code_chunks.css
+  - assets/css/shortcodes.css
+  - assets/css/progress_bar.css
   - https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - assets/js/mathjax.js
 
 plugins:
   - search:

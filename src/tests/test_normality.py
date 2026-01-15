@@ -145,3 +145,12 @@ class TestNormality(BaseTester):
             res = is_normal(self.data_normal, algorithm="dp")
             assert res["statistic"] == 0.8
             assert res["p_value"] is None
+
+    def test_is_normal_ad_fallback(self) -> None:
+        """Test fallback branch for Anderson-Darling in is_normal."""
+        with patch("ts_stat_tests.tests.normality.normality") as mock_norm:
+            # Return something that doesn't meet length requirement
+            mock_norm.return_value = [1.0, 2.0]
+            res = is_normal(self.data_normal, algorithm="ad")
+            assert res["result"] is False
+            assert res["statistic"] == 0.0
