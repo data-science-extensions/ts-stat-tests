@@ -217,6 +217,20 @@ def adf(
 
         ```
 
+        ```pycon {.py .python linenums="1" title="Example 3: Store Result Instance"}
+        >>> res = adf(x=airline, store=True)
+        >>> print(res)
+        (0.8153688792060498, 0.991880243437641, {'1%': np.float64(-3.4816817173418295), '5%': np.float64(-2.8840418343195267), '10%': np.float64(-2.578770059171598)}, <statsmodels.stats.diagnostic.ResultsStore object at ...>)
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 4: No Autolag"}
+        >>> stat, pvalue, lags, nobs, crit = adf(x=airline, autolag=None, maxlag=5)
+        >>> print(f"p-value: {pvalue:.4f}")
+        p-value: 0.7670
+
+        ```
+
     ??? equation "Calculation"
 
         The mathematical equation for the Augmented Dickey-Fuller (ADF) test for stationarity in time series forecasting is:
