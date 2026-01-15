@@ -293,20 +293,37 @@ def adf(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    return cast(
-        Union[
-            tuple[float, float, dict, ResultsStore],
-            tuple[float, float, int, int, dict],
-            tuple[float, float, int, int, dict, float],
-        ],
-        _adfuller(
-            x=x,
-            maxlag=maxlag,
-            regression=regression,
-            autolag=cast(Literal["AIC"], autolag),
-            store=store,
-            regresults=regresults,
-        ),
+    res: Any = _adfuller(  # Using `Any` to avoid ty issues with statsmodels stubs
+        x=x,
+        maxlag=maxlag,
+        regression=regression,
+        autolag=autolag,  # type: ignore[arg-type] # statsmodels stubs are often missing `None`
+        store=store,
+        regresults=regresults,
+    )
+
+    if store:
+        # returns (stat, pval, crit, store)
+        return float(res[0]), float(res[1]), dict(res[2]), res[3]
+
+    if autolag is None:
+        # returns (stat, pval, lags, nobs, crit)
+        return (
+            float(res[0]),
+            float(res[1]),
+            int(res[2]),
+            int(res[3]),
+            dict(res[4]),
+        )
+
+    # returns (stat, pval, lags, nobs, crit, icbest)
+    return (
+        float(res[0]),
+        float(res[1]),
+        int(res[2]),
+        int(res[3]),
+        dict(res[4]),
+        float(res[5]),
     )
 
 
