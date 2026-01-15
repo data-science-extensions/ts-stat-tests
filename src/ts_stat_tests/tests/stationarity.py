@@ -38,10 +38,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Callable, Union, cast
+from typing import Callable, Optional, Union, cast
 
 # ## Python Third Party Imports ----
-from numpy.typing import ArrayLike
+import numpy as np
+from numpy.typing import ArrayLike, NDArray
 from statsmodels.stats.diagnostic import ResultsStore
 from typeguard import typechecked
 
@@ -67,6 +68,18 @@ __all__: list[str] = ["stationarity", "is_stationary"]
 
 
 # ---------------------------------------------------------------------------- #
+# Type Aliases                                                              ####
+# ---------------------------------------------------------------------------- #
+
+
+STATIONARITY_ITEM = Union[float, int, dict[str, float], NDArray[np.float64], ResultsStore]
+"""Type alias for the items in the stationarity test result tuple."""
+
+STATIONARITY_RETURN_TYPE = tuple[STATIONARITY_ITEM, ...]
+"""Type alias for the return type of stationarity tests."""
+
+
+# ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Tests                                                                  ####
 #                                                                              #
@@ -78,7 +91,7 @@ def stationarity(
     x: ArrayLike,
     algorithm: str = "adf",
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]:
+) -> STATIONARITY_RETURN_TYPE:
     """
     !!! note "Summary"
         Perform a stationarity test on the given data.
@@ -198,21 +211,21 @@ def stationarity(
 
     # Internal helper to handle kwargs casting for ty
     def _call(
-        func: Callable[..., tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]],
+        func: Callable[..., STATIONARITY_RETURN_TYPE],
         **args: Union[float, int, str, bool, ArrayLike, None],
-    ) -> tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]:
+    ) -> STATIONARITY_RETURN_TYPE:
         """
         !!! note "Summary"
             Internal helper to call the test function.
 
         Params:
-            func (Callable[..., tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]]):
+            func (Callable[..., STATIONARITY_RETURN_TYPE]):
                 The function to call.
             args (Union[float, int, str, bool, ArrayLike, None]):
                 The arguments to pass to the function.
 
         Returns:
-            (tuple[Union[float, int, dict[str, float], ResultsStore, None], ...]):
+            (STATIONARITY_RETURN_TYPE):
                 The result of the function call.
 
         ???+ example "Examples"
@@ -262,7 +275,7 @@ def is_stationary(
     algorithm: str = "adf",
     alpha: float = 0.05,
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> dict[str, Union[str, float, bool, None]]:
+) -> dict[str, Optional[Union[str, int, float, dict[str, Union[int, float]]]]]:
     """
     !!! note "Summary"
         Test whether a given data set is `stationary` or not.
@@ -357,13 +370,10 @@ def is_stationary(
         else:
             is_stat = bool(pvalue < alpha)
 
-    return cast(
-        dict[str, Union[str, float, bool, None]],
-        {
-            "result": bool(is_stat),
-            "statistic": float(stat) if isinstance(stat, (int, float)) else stat,
-            "pvalue": float(pvalue) if isinstance(pvalue, (int, float)) else pvalue,
-            "alpha": float(alpha),
-            "algorithm": str(algorithm),
-        },
-    )
+    return {
+        "result": bool(is_stat),
+        "statistic": float(stat) if isinstance(stat, (int, float)) else stat,
+        "pvalue": float(pvalue) if isinstance(pvalue, (int, float)) else pvalue,
+        "alpha": float(alpha),
+        "algorithm": str(algorithm),
+    }
