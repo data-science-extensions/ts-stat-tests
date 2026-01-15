@@ -267,7 +267,10 @@ def check_mkdocs() -> None:
 
 def check_pytest() -> None:
     print_label("Check `pytest` to ensure all unit tests pass.")
-    run("pytest --config-file=pyproject.toml")
+    run(
+        "pytest --config-file=pyproject.toml",
+        *[file for file in get_all_files(".py") if DIRECTORY_NAME in file or "tests/test_" in file],
+    )
 
 
 def check_docstrings() -> None:
@@ -325,7 +328,7 @@ def check() -> None:
     check_pyright()
     check_complexity()
     check_docstrings()
-    check_doctest()
+    # check_doctest()
     check_pytest()
     check_build()
     check_mkdocs()
