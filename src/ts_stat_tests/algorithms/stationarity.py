@@ -50,7 +50,6 @@ import numpy as np
 from arch.unitroot import (
     DFGLS as _ers,
     PhillipsPerron as _pp,
-    VarianceRatio,
     VarianceRatio as _vr,
 )
 from numpy.typing import ArrayLike
@@ -1474,7 +1473,7 @@ def vr(
         - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
         - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
     """
-    res: VarianceRatio = _vr(
+    res = _vr(
         y=np.asarray(y),
         lags=lags,
         trend=trend,
