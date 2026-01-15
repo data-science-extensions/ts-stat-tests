@@ -41,7 +41,7 @@ from typing import Union, cast
 
 # ## Python Third Party Imports ----
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -283,7 +283,7 @@ def is_normal(
     if algorithm in options["ad"]:
         # res is AndersonResult(statistic, critical_values, significance_level, fit_result)
         # indexing only gives the first 3 elements
-        res_tuple = cast(tuple[float, np.ndarray, np.ndarray], res)
+        res_tuple = cast(tuple[float, NDArray[np.float64], NDArray[np.float64]], res)
         stat = res_tuple[0]
         crit = res_tuple[1]
         sig = res_tuple[2]

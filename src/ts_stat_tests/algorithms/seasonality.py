@@ -47,7 +47,7 @@ from typing import Optional, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from pmdarima.arima.arima import ARIMA
 from pmdarima.arima.auto import auto_arima
 from pmdarima.arima.seasonality import CHTest, OCSBTest
@@ -190,7 +190,7 @@ def qs(
         - [StackOverflow/Simple tests for seasonality in Python](https://stackoverflow.com/questions/62754218/simple-tests-for-seasonality-in-python)
     """
 
-    _x: np.ndarray = np.asarray(x, dtype=float)
+    _x: NDArray[np.float64] = np.asarray(x, dtype=float)
     if np.isnan(_x).all():
         raise AttributeError("All observations are NaN.")
     if diff and residuals:
@@ -235,7 +235,7 @@ def qs(
                 _x = model.resid()
 
     # Do diff
-    y: np.ndarray = np.diff(_x) if diff else _x
+    y: NDArray[np.float64] = np.diff(_x) if diff else _x
 
     # Pre-check
     if np.nanvar(y[~np.isnan(y)]) == 0:
@@ -244,9 +244,9 @@ def qs(
         )
 
     # Test Statistic
-    acf_output: np.ndarray = _acf(x=y, nlags=freq * 2, missing="drop")
-    rho_output: np.ndarray = acf_output[[freq, freq * 2]]
-    rho: np.ndarray = np.array([0, 0]) if np.any(np.array(rho_output) <= 0) else rho_output
+    acf_output: NDArray[np.float64] = _acf(x=y, nlags=freq * 2, missing="drop")
+    rho_output: NDArray[np.float64] = acf_output[[freq, freq * 2]]
+    rho: NDArray[np.float64] = np.array([0, 0]) if np.any(np.array(rho_output) <= 0) else rho_output
     N: int = len(y[~np.isnan(y)])
     QS: float = float(N * (N + 2) * (rho[0] ** 2 / (N - freq) + rho[1] ** 2 / (N - freq * 2)))
     Pval: float = float(chi2.sf(QS, 2))

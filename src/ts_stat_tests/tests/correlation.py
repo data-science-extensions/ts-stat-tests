@@ -43,7 +43,7 @@ from typing import Literal, Union, cast, overload
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from statsmodels.regression.linear_model import (
     RegressionResults,
     RegressionResultsWrapper,
@@ -84,19 +84,19 @@ def correlation(
     x: ArrayLike,
     algorithm: Literal["acf", "auto", "ac"],
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], ...]]: ...
 @overload
 def correlation(
     x: ArrayLike1D,
     algorithm: Literal["pacf", "partial", "pc"],
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
     algorithm: Literal["ccf", "cross", "cross-correlation", "cc"],
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> Union[np.ndarray, tuple[np.ndarray, ...]]: ...
+) -> Union[NDArray[np.float64], tuple[NDArray[np.float64], ...]]: ...
 @overload
 def correlation(
     x: ArrayLike,
@@ -127,8 +127,8 @@ def correlation(
     algorithm: str = "acf",
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[
-    np.ndarray,
-    tuple[np.ndarray, ...],
+    NDArray[np.float64],
+    tuple[NDArray[np.float64], ...],
     pd.DataFrame,
     tuple[float, float, float, float],
     tuple[float, float, float, float, ResultsStore],
@@ -168,7 +168,7 @@ def correlation(
             If an unsupported algorithm is specified.
 
     Returns:
-        (Union[np.ndarray, tuple[np.ndarray, ...], pd.DataFrame, tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
+        (Union[NDArray[np.float64], tuple[NDArray[np.float64], ...], pd.DataFrame, tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
             Returns the result of the specified correlation test.
 
     ???+ example "Examples"
