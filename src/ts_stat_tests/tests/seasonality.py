@@ -249,7 +249,7 @@ def is_seasonal(
 
         ```
     """
-    res: Any = cast(Any, seasonality(x=x, algorithm=algorithm, **kwargs))
+    res: Any = seasonality(x=x, algorithm=algorithm, **kwargs)
 
     is_sea: bool = False
     stat: float = 0.0

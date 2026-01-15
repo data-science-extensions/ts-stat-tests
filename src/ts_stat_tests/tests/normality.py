@@ -37,11 +37,11 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Union, cast
+from typing import Any, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from scipy.stats._morestats import AndersonResult, ShapiroResult
 from scipy.stats._stats_py import NormaltestResult
 from typeguard import typechecked
@@ -275,7 +275,7 @@ def is_normal(
 
         ```
     """
-    res: Any = cast(Any, normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist))
+    res: Any = normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist)
 
     # Anderson-Darling is a bit different
     options: dict[str, tuple[str, ...]] = {
