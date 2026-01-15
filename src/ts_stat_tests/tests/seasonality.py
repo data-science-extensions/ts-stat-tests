@@ -52,6 +52,7 @@ from typing import Any, Callable, Optional, Union
 
 # ## Python Third Party Imports ----
 from numpy.typing import ArrayLike
+from pmdarima.arima import ARIMA
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -86,7 +87,7 @@ def seasonality(
     x: ArrayLike,
     algorithm: str = "qs",
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> Union[float, int, tuple[Union[float, int, object, None], ...]]:
+) -> Union[float, int, tuple[Union[float, int, ARIMA, None], ...]]:
     """
     !!! note "Summary"
         Dispatcher for seasonality algorithms. This function provides a unified interface to call various seasonality tests.
@@ -146,21 +147,21 @@ def seasonality(
 
     # Internal helper to handle kwargs casting for ty
     def _call(
-        func: Callable[..., Union[float, int, tuple[Union[float, int, object, None], ...]]],
-        **args: Union[float, int, str, bool, ArrayLike, None],
-    ) -> Union[float, int, tuple[Union[float, int, object, None], ...]]:
+        func: Callable[..., Any],
+        **args: Any,
+    ) -> Any:
         """
         !!! note "Summary"
             Internal helper to call the test function.
 
         Params:
-            func (Callable[..., Union[float, int, tuple[Union[float, int, object, None], ...]]]):
+            func (Callable[..., Any]):
                 The function to call.
-            args (Union[float, int, str, bool, ArrayLike, None]):
+            args (Any):
                 The arguments to pass.
 
         Returns:
-            (Union[float, int, tuple]):
+            (Any):
                 The result.
 
         ???+ example "Examples"
@@ -256,19 +257,36 @@ def is_seasonal(
     pval: Optional[float] = None
 
     if algorithm in ("qs",):
-        res_tuple: Any = res
-        stat = float(res_tuple[0])
-        pval = float(res_tuple[1])
-        is_sea = bool(pval < alpha)
+        if isinstance(res, (tuple, list)):
+            v0: Any = res[0]
+            v1: Any = res[1]
+            stat = float(v0) if isinstance(v0, (int, float)) else 0.0
+            pval = float(v1) if isinstance(v1, (int, float)) else 1.0
+            is_sea = bool(pval < alpha)
     elif algorithm in ("ocsb", "ch"):
-        stat = float(res)
+        if isinstance(res, (tuple, list)):
+            v0: Any = res[0]
+            stat = float(v0) if isinstance(v0, (int, float)) else 0.0
+        else:
+            v_any: Any = res
+            stat = float(v_any) if isinstance(res, (int, float)) else 0.0
         is_sea = bool(stat == 1)
     elif algorithm in ("seasonal_strength", "ss"):
-        stat = float(res)
+        if isinstance(res, (tuple, list)):
+            v0: Any = res[0]
+            stat = float(v0) if isinstance(v0, (int, float)) else 0.0
+        else:
+            v_any: Any = res
+            stat = float(v_any) if isinstance(res, (int, float)) else 0.0
         # Default threshold of 0.64 is often used for seasonal strength
         is_sea = bool(stat > 0.64)
     else:
-        stat = float(res)
+        if isinstance(res, (tuple, list)):
+            v0: Any = res[0]
+            stat = float(v0) if isinstance(v0, (int, float)) else 0.0
+        else:
+            v_any: Any = res
+            stat = float(v_any) if isinstance(res, (int, float)) else 0.0
         is_sea = bool(stat > 0)
 
     return {

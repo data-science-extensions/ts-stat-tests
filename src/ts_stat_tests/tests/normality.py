@@ -81,7 +81,7 @@ def normality(
     axis: int = 0,
     nan_policy: VALID_DP_NAN_POLICY_OPTIONS = "propagate",
     dist: VALID_AD_DIST_OPTIONS = "norm",
-) -> Union[tuple[float, float], NormaltestResult, ShapiroResult, AndersonResult]:
+) -> Union[tuple[float, ...], NormaltestResult, ShapiroResult, AndersonResult]:
     """
     !!! note "Summary"
         Perform a normality test on the given data.
@@ -277,31 +277,36 @@ def is_normal(
     """
     res: Any = normality(x=x, algorithm=algorithm, axis=axis, nan_policy=nan_policy, dist=dist)
 
-    # Anderson-Darling is a bit different
-    options: dict[str, tuple[str, ...]] = {
-        "ad": ("ad", "anderson", "anderson-darling"),
-    }
-
-    if algorithm in options["ad"]:
+    if algorithm in ("ad", "anderson", "anderson-darling"):
         # res is AndersonResult(statistic, critical_values, significance_level, fit_result)
         # indexing only gives the first 3 elements
-        res_tuple: Any = res
-        stat = res_tuple[0]
-        crit = res_tuple[1]
-        sig = res_tuple[2]
+        res_list: list[Any] = list(res) if isinstance(res, (tuple, list)) else []
+        if len(res_list) >= 3:
+            v0: Any = res_list[0]
+            v1: Any = res_list[1]
+            v2: Any = res_list[2]
+            stat = v0
+            crit = v1
+            sig = v2
 
-        # sig is something like [15. , 10. ,  5. ,  2.5,  1. ]
-        # alpha is something like 0.05 (which is 5%)
-        sig_arr = np.asarray(sig)
-        crit_arr = np.asarray(crit)
-        idx = np.argmin(np.abs(sig_arr - (alpha * 100)))
-        critical_value = crit_arr[idx]
-        is_norm = stat < critical_value
+            # sig is something like [15. , 10. ,  5. ,  2.5,  1. ]
+            # alpha is something like 0.05 (which is 5%)
+            sig_arr = np.asarray(sig)
+            crit_arr = np.asarray(crit)
+            idx = np.argmin(np.abs(sig_arr - (alpha * 100)))
+            critical_value = crit_arr[idx]
+            is_norm = stat < critical_value
+            return {
+                "result": bool(is_norm),
+                "statistic": float(stat),
+                "critical_value": float(critical_value),
+                "significance_level": float(sig_arr[idx]),
+                "alpha": float(alpha),
+            }
+        # Fallback for unexpected return format
         return {
-            "result": bool(is_norm),
-            "statistic": float(stat),
-            "critical_value": float(critical_value),
-            "significance_level": float(sig_arr[idx]),
+            "result": False,
+            "statistic": 0.0,
             "alpha": float(alpha),
         }
 
