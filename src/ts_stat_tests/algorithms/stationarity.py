@@ -43,11 +43,16 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Optional, Union, cast, overload
+from typing import Any, Literal, Optional, Union, overload
 
 # ## Python Third Party Imports ----
 import numpy as np
-from arch.unitroot import DFGLS as _ers, PhillipsPerron as _pp, VarianceRatio as _vr
+from arch.unitroot import (
+    DFGLS as _ers,
+    PhillipsPerron as _pp,
+    VarianceRatio,
+    VarianceRatio as _vr,
+)
 from numpy.typing import ArrayLike
 from statsmodels.stats.diagnostic import ResultsStore
 from statsmodels.tsa.stattools import (
