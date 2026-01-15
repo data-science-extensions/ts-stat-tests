@@ -275,7 +275,7 @@ def is_stationary(
     algorithm: str = "adf",
     alpha: float = 0.05,
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> dict[str, Union[str, float, int, bool, dict[str, float], None]]:
+) -> dict[str, Union[str, bool, STATIONARITY_ITEM, None]]:
     """
     !!! note "Summary"
         Test whether a given data set is `stationary` or not.
@@ -370,10 +370,13 @@ def is_stationary(
         else:
             is_stat = bool(pvalue < alpha)
 
-    return {
+    # Define return dict explicitly to match return type hint
+    ret: dict[str, Union[str, bool, STATIONARITY_ITEM, None]] = {
         "result": bool(is_stat),
         "statistic": float(stat) if isinstance(stat, (int, float)) else stat,
-        "pvalue": float(pvalue) if isinstance(pvalue, (int, float)) else pvalue,
+        "pvalue": float(pvalue) if pvalue is not None else None,
         "alpha": float(alpha),
         "algorithm": str(algorithm),
     }
+
+    return ret
