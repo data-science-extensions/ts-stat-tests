@@ -46,6 +46,7 @@ from functools import lru_cache
 import numpy as np
 import pandas as pd
 from numpy.random import Generator as RandomGenerator
+from numpy.typing import NDArray
 from stochastic.processes.noise import FractionalGaussianNoise
 from typeguard import typechecked
 
@@ -137,7 +138,7 @@ def get_random_generator(seed: int) -> RandomGenerator:
 
 @lru_cache
 @typechecked
-def get_random_numbers(seed: int) -> np.ndarray:
+def get_random_numbers(seed: int) -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates an array of random numbers with a specified seed for reproducibility.
@@ -150,7 +151,7 @@ def get_random_numbers(seed: int) -> np.ndarray:
             The seed value for the random number generator.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array of random numbers with shape (1000,).
 
     ???+ example "Examples"
@@ -183,7 +184,7 @@ def get_random_numbers(seed: int) -> np.ndarray:
 
 @lru_cache
 @typechecked
-def get_random_numbers_2d(seed: int) -> np.ndarray:
+def get_random_numbers_2d(seed: int) -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates a 2D array of random numbers with a specified seed for reproducibility.
@@ -196,7 +197,7 @@ def get_random_numbers_2d(seed: int) -> np.ndarray:
             The seed value for the random number generator.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             A 2D array of random numbers with shape (4, 3000).
 
     ???+ example "Examples"
@@ -232,16 +233,16 @@ def get_random_numbers_2d(seed: int) -> np.ndarray:
 
 @lru_cache
 @typechecked
-def get_sine_wave() -> np.ndarray:
+def get_sine_wave() -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates a sine wave dataset.
 
     ???+ abstract "Details"
-        Generates a discrete sine wave signal of 3000 points.
+        Produces a 1D array of 1000 samples of a sine wave with amplitude 1.0 and period 1000.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array representing a sine wave with shape (3000,).
 
     ???+ example "Examples"
@@ -273,7 +274,7 @@ def get_sine_wave() -> np.ndarray:
 
 @lru_cache
 @typechecked
-def get_normal_curve(seed: int) -> np.ndarray:
+def get_normal_curve(seed: int) -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates a normal distribution curve dataset.
@@ -286,7 +287,7 @@ def get_normal_curve(seed: int) -> np.ndarray:
             The seed value for the random number generator.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array representing a normal distribution curve with shape (1000,).
 
     ???+ example "Examples"
@@ -319,7 +320,7 @@ def get_normal_curve(seed: int) -> np.ndarray:
 
 @lru_cache
 @typechecked
-def get_straight_line() -> np.ndarray:
+def get_straight_line() -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates a straight line dataset.
@@ -328,7 +329,7 @@ def get_straight_line() -> np.ndarray:
         Returns a sequence of integers from 0 to 999.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array representing a straight line with shape (1000,).
 
     ???+ example "Examples"
@@ -345,9 +346,9 @@ def get_straight_line() -> np.ndarray:
         >>> print(type(data))
         <class 'numpy.ndarray'>
         >>> print(data.dtype)
-        int64
+        float64
         >>> print(data[:5])
-        [0 1 2 3 4]
+        [0. 1. 2. 3. 4.]
 
         ```
 
@@ -355,12 +356,12 @@ def get_straight_line() -> np.ndarray:
         1. [NumPy Arange](https://numpy.org/doc/stable/reference/generated/numpy.arange.html)
 
     """
-    return np.arange(1000)
+    return np.arange(1000).astype(np.float64)
 
 
 @lru_cache
 @typechecked
-def get_trend_data() -> np.ndarray:
+def get_trend_data() -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates trend data.
@@ -369,7 +370,7 @@ def get_trend_data() -> np.ndarray:
         Generates an array with a linear trend by combining two ramp functions.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array representing trend data with shape (1000,).
 
     ???+ example "Examples"
@@ -401,7 +402,7 @@ def get_trend_data() -> np.ndarray:
 
 @lru_cache
 @typechecked
-def get_uniform_data(seed: int) -> np.ndarray:
+def get_uniform_data(seed: int) -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates uniform random data with a specified seed for reproducibility.
@@ -414,7 +415,7 @@ def get_uniform_data(seed: int) -> np.ndarray:
             The seed value for the random number generator.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array of uniform random data with shape (1000,).
 
     ???+ example "Examples"
@@ -447,7 +448,7 @@ def get_uniform_data(seed: int) -> np.ndarray:
 
 @lru_cache
 @typechecked
-def get_noise_data(seed: int) -> np.ndarray:
+def get_noise_data(seed: int) -> NDArray[np.float64]:
     r"""
     !!! note "Summary"
         Generates fractional Gaussian noise data with a specified seed for reproducibility.
@@ -460,7 +461,7 @@ def get_noise_data(seed: int) -> np.ndarray:
             The seed value for the random number generator.
 
     Returns:
-        (np.ndarray):
+        (NDArray[np.float64]):
             An array of fractional Gaussian noise data with shape (1000,).
 
     ???+ example "Examples"
@@ -626,10 +627,10 @@ def load_macrodata() -> pd.DataFrame:
 
 data_airline: pd.Series = load_airline()
 data_macrodata: pd.DataFrame = load_macrodata()
-data_random: np.ndarray = get_random_numbers(SEED)
-data_random_2d: np.ndarray = get_random_numbers_2d(SEED)
-data_sine: np.ndarray = get_sine_wave()
-data_normal: np.ndarray = get_normal_curve(SEED)
-data_line: np.ndarray = get_straight_line()
-data_trend: np.ndarray = get_trend_data()
-data_noise: np.ndarray = get_noise_data(SEED)
+data_random: NDArray[np.float64] = get_random_numbers(SEED)
+data_random_2d: NDArray[np.float64] = get_random_numbers_2d(SEED)
+data_sine: NDArray[np.float64] = get_sine_wave()
+data_normal: NDArray[np.float64] = get_normal_curve(SEED)
+data_line: NDArray[np.float64] = get_straight_line()
+data_trend: NDArray[np.float64] = get_trend_data()
+data_noise: NDArray[np.float64] = get_noise_data(SEED)
