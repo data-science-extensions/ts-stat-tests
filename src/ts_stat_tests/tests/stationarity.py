@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -275,7 +275,7 @@ def is_stationary(
     algorithm: str = "adf",
     alpha: float = 0.05,
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> dict[str, Optional[Union[str, int, float, dict[str, Union[int, float]]]]]:
+) -> dict[str, Union[str, float, int, bool, dict[str, float], None]]:
     """
     !!! note "Summary"
         Test whether a given data set is `stationary` or not.
@@ -344,8 +344,8 @@ def is_stationary(
     """
     res: Any = stationarity(x=x, algorithm=algorithm, **kwargs)
 
-    stat: Union[float, int, dict[str, float]]
-    pvalue: Union[float, int, dict[str, float], bool, str, None]
+    stat: Any
+    pvalue: Any
 
     # stationarity() always returns a tuple
     res_tuple: Any = res
