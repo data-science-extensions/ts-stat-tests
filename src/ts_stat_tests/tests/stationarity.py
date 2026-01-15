@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Callable, Optional, Union, cast
+from typing import Any, Callable, Optional, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -342,14 +342,14 @@ def is_stationary(
 
         ```
     """
-    res = stationarity(x=x, algorithm=algorithm, **kwargs)
+    res: Any = cast(Any, stationarity(x=x, algorithm=algorithm, **kwargs))
 
     stat: Union[float, int, dict[str, float]]
     pvalue: Union[float, int, dict[str, float], bool, str, None]
 
     # stationarity() always returns a tuple
-    res_tuple = res
-    stat = cast(Union[float, int, dict[str, float]], res_tuple[0])
+    res_tuple: Any = res
+    stat = res_tuple[0]
     pvalue_or_bool = res_tuple[1]
 
     # Handle H0 logic

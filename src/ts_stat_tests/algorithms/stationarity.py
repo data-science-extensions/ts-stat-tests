@@ -224,7 +224,7 @@ def adf(
         ```pycon {.py .python linenums="1" title="Example 3: Store Result Instance"}
         >>> res = adf(x=airline, store=True)
         >>> print(res)
-        (0.8153688792060498, 0.991880243437641, {'1%': np.float64(-3.4816817173418295), '5%': np.float64(-2.8840418343195267), '10%': np.float64(-2.578770059171598)}, <statsmodels.stats.diagnostic.ResultsStore object at ...>)
+        (0.8153..., 0.9918..., {'1%': np.float64(-3.4816...), '5%': np.float64(-2.8840...), '10%': np.float64(-2.5787...)}, <statsmodels.stats.diagnostic.ResultsStore object at ...>)
 
         ```
 

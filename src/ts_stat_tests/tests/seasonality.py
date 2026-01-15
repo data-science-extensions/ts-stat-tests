@@ -48,7 +48,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Callable, Union, cast
+from typing import Any, Callable, Optional, Union
 
 # ## Python Third Party Imports ----
 from numpy.typing import ArrayLike
@@ -249,26 +249,26 @@ def is_seasonal(
 
         ```
     """
-    res = seasonality(x=x, algorithm=algorithm, **kwargs)
+    res: Any = cast(Any, seasonality(x=x, algorithm=algorithm, **kwargs))
 
     is_sea: bool = False
     stat: float = 0.0
-    pval: Union[float, None] = None
+    pval: Optional[float] = None
 
     if algorithm in ("qs",):
-        res_tuple = cast(tuple[float, float, object], res)
+        res_tuple: Any = res
         stat = float(res_tuple[0])
         pval = float(res_tuple[1])
         is_sea = bool(pval < alpha)
     elif algorithm in ("ocsb", "ch"):
-        stat = float(cast(int, res))
+        stat = float(res)
         is_sea = bool(stat == 1)
     elif algorithm in ("seasonal_strength", "ss"):
-        stat = float(cast(float, res))
+        stat = float(res)
         # Default threshold of 0.64 is often used for seasonal strength
         is_sea = bool(stat > 0.64)
     else:
-        stat = float(cast(float, res))
+        stat = float(res)
         is_sea = bool(stat > 0)
 
     return {

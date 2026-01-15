@@ -38,7 +38,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Union, cast, overload
+from typing import Literal, Union, overload
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -330,7 +330,7 @@ def is_correlated(
     pval: Union[float, None] = None
 
     if algorithm in options["lb"]:
-        df = cast(pd.DataFrame, res)
+        df = res
         # Check if any p-value is significant
         pval = float(df["lb_pvalue"].min())
         # Metric: if any lag shows correlation, the series is correlated
@@ -341,7 +341,7 @@ def is_correlated(
 
     elif algorithm in options["lm"] or algorithm in options["bglm"]:
         # returns (lm, lmpval, fval, fpval)
-        res_tuple = cast(tuple[float, float, float, float], res)
+        res_tuple = res
         stat = float(res_tuple[0])
         pval = float(res_tuple[1])
         is_corr = bool(pval < alpha)
