@@ -61,9 +61,6 @@
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
-            filters:
-                - "^is"
-                - "^correlation"
 
 ## Correlation Algorithms
 
@@ -74,6 +71,3 @@
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
-            filters:
-                - "!^is"
-                - "!^_"
