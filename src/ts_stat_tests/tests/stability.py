@@ -1,3 +1,5 @@
+"""Stability tests for determining time series stability and lumpiness."""
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Setup                                                                  ####
@@ -16,6 +18,7 @@ from typing import Union
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
+from numpy.typing import NDArray
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -46,7 +49,11 @@ __all__: list[str] = ["is_stable", "is_lumpy"]
 
 
 @typechecked
-def is_stable(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5) -> bool:
+def is_stable(
+    data: Union[NDArray[np.float64], pd.DataFrame, pd.Series],
+    freq: int = 1,
+    alpha: float = 0.5,
+) -> bool:
     r"""
     !!! note "Summary"
         Determine if a time series is stable based on a variance threshold.
@@ -55,7 +62,7 @@ def is_stable(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, a
         A time series is considered stable if the variance of its windowed means (the stability metric) is below a specified threshold (`alpha`). High stability values indicate that the mean level of the series changes significantly over time (e.g., due to trends or structural breaks).
 
     Params:
-        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
+        data (Union[NDArray[np.float64], pd.DataFrame, pd.Series]):
             The time series data to analyse.
         freq (int):
             The number of observations per seasonal period or the desired window size for tiling.
@@ -104,7 +111,11 @@ def is_stable(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, a
 
 
 @typechecked
-def is_lumpy(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5) -> bool:
+def is_lumpy(
+    data: Union[NDArray[np.float64], pd.DataFrame, pd.Series],
+    freq: int = 1,
+    alpha: float = 0.5,
+) -> bool:
     r"""
     !!! note "Summary"
         Determine if a time series is lumpy based on a variance threshold.
@@ -113,7 +124,7 @@ def is_lumpy(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, al
         A time series is considered lumpy if the variance of its windowed variances (the lumpiness metric) exceeds a specified threshold (`alpha`). High lumpiness values indicate that the volatility of the series is inconsistently distributed across time.
 
     Params:
-        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
+        data (Union[NDArray[np.float64], pd.DataFrame, pd.Series]):
             The time series data to analyse.
         freq (int):
             The number of observations per seasonal period or the desired window size for tiling.

@@ -1,3 +1,5 @@
+"""Stability algorithms for time series analysis."""
+
 # ---------------------------------------------------------------------------- #
 #                                                                              #
 #    Setup                                                                  ####
@@ -16,6 +18,7 @@ from typing import Union
 # ## Python Third Party Imports ----
 import numpy as np
 import pandas as pd
+from numpy.typing import NDArray
 from tsfeatures import lumpiness as ts_lumpiness, stability as ts_stability
 from typeguard import typechecked
 
@@ -41,7 +44,7 @@ __all__: list[str] = ["stability", "lumpiness"]
 
 
 @typechecked
-def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
+def stability(data: Union[NDArray[np.float64], pd.DataFrame, pd.Series], freq: int = 1) -> float:
     r"""
     !!! note "Summary"
         Measure the stability of a time series by calculating the variance of the means across non-overlapping windows.
@@ -52,7 +55,7 @@ def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -
         The series is divided into non-overlapping "tiles" (windows) of length equal to the specified frequency. The mean of each tile is computed, and the stability is defined as the variance of these means. A higher value indicates lower stability (greater changes in the mean level).
 
     Params:
-        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
+        data (Union[NDArray[np.float64], pd.DataFrame, pd.Series]):
             The time series data to analyse.
         freq (int):
             The number of observations per seasonal period or the desired window size for tiling.
@@ -113,7 +116,7 @@ def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -
 
 
 @typechecked
-def lumpiness(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
+def lumpiness(data: Union[NDArray[np.float64], pd.DataFrame, pd.Series], freq: int = 1) -> float:
     r"""
     !!! note "Summary"
         Measure the lumpiness of a time series by calculating the variance of the variances across non-overlapping windows.
@@ -124,7 +127,7 @@ def lumpiness(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -
         Similar to stability, the series is divided into non-overlapping tiles of length `freq`. Instead of means, the variance of each tile is computed. The lumpiness is defined as the variance of these tile variances. A higher value indicates greater "lumpiness" or inconsistent volatility.
 
     Params:
-        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
+        data (Union[NDArray[np.float64], pd.DataFrame, pd.Series]):
             The time series data to analyse.
         freq (int):
             The number of observations per seasonal period or the desired window size for tiling.

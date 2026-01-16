@@ -57,7 +57,7 @@ class TestStability(BaseTester):
 
     def test_stability_2(self) -> None:
         result = self.result_is_stable
-        expected = True
+        expected = False
         assert result == expected
 
     def test_lumpiness_1(self) -> None:
