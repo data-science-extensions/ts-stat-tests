@@ -9,6 +9,342 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.5.3"
+
+    ## **v0.5.3 - Seasonality Module**
+
+    <!-- md:tag v0.5.3 --><br>
+    <!-- md:date 2026-01-16 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.5.3](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.5.3) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                        Introduce the `seasonality` module, the fourth major component of the `ts-stat-tests` library, while simultaneously achieving a significant architectural milestone: the total elimination of `typing.cast()` and the attainment of 100% global code coverage. This release transforms the library into a strictly typed, fully validated suite for time-series analysis. By integrating six new seasonality algorithms, standardising on `NDArray` type hints, and implementing MathJax for professional mathematical rendering, this version provides the most robust and accessible interface for statistical testing to date.                        ### 🛠️ Implementation details                        #### Seasonality module implementation                        * Implement six core seasonality algorithms in `src/ts_stat_tests/algorithms/seasonality.py`:            * `qs()`: The Ljung-Box test for seasonality.            * `ocsb()`: The Osborn-Chui-Smith-Birchenhall test for seasonal differencing.            * `ch()`: The Canova-Hansen test for seasonal stability.            * `seasonal_strength()` and `trend_strength()`: Measures based on STL decomposition.            * `spikiness()`: A measure of variance in the remainder component.        * Provide a unified dispatcher in `src/ts_stat_tests/tests/seasonality.py`:            * `seasonality()`: Central entry point for all seasonality-related measurements.            * `is_seasonal()`: Standardised Boolean checker returning result dictionaries with interpreted statistics and alpha thresholds.                        #### Type safety and architectural hardening                        * Remove all usages of `typing.cast()` throughout the codebase, replacing them with safer type-narrowing patterns and intermediate `Any` assignments to satisfy strict `pyright` checks without sacrificing runtime safety.        * Standardise internal data structures to use `NDArray[np.float64]` for improved type specificity and interoperability with `numpy` ecosystem.        * Refactor normality and stationarity modules to use protocol-based result handling for third-party library outputs (e.g., `scipy` and `statsmodels`).        * Implement output rounding across all statistical tests to ensure consistent return values and stable documentation examples.                        #### Documentation and visual enhancements                        * Integrate `MathJax` into the `mkdocs` pipeline to enable high-quality rendering of mathematical equations in the documentation site.        * Introduce custom CSS-based implementation progress bars to the documentation landing pages.        * Standardise all docstrings to follow the strict Google-style format with full `dfc` (Docstring Format Checker) compliance.        * Update `README.md` and `docs/index.md` status tables to reflect the completed seasonality module.                        ### ✅ Checklist                        * [x] Implement core seasonality algorithms and unified dispatcher.        * [x] Achieve 100% code coverage across the entire `ts_stat_tests` package.        * [x] Remove all `typing.cast()` calls to satisfy strict Pylint 10/10 and Pyright requirements.        * [x] Integrate MathJax for KaTeX math rendering in the documentation.        * [x] Standardise all return types and implement numerical rounding for consistency.        * [x] Update data utility functions with improved type safety and expanded synthetic generators.                        ### 📊 Changes                        | Metric            | Value         |        | :---------------- | :------------ |        | **Files Changed** | 34            |        | **Lines Added**   | 2645          |        | **Lines Deleted** | 532           |        | **Commit Count**  | 86            |        | **Contributors**  | Chris Mahoney |                        ### 💪 Pull requests                        * #28: [Implement seasonality module](https://github.com/data-science-extensions/ts-stat-tests/pull/28) (Includes module implementation and global type safety hardening).                        ### 🆕 New contributors                        * This release was developed by the core maintenance team.        
+
+    ??? abstract "Updates"
+
+        * [`e54021f`](https://github.com/data-science-extensions/ts-stat-tests/commit/e54021fbfa5efe6274c0da6c1b7faaa70c5003bf): Refactor return types and handling in normality and seasonality tests<br>
+            - Update return type of `normality()` function to support variable-length tuples.<br>
+            - Simplify handling of results in `is_normal()` function for better clarity.<br>
+            - Enhance return structure in `seasonality()` function to accommodate ARIMA objects.<br>
+            - Improve type handling in internal helper functions for robustness.
+            (by [chrimaho](https://github.com/chrimaho))        * [`699a777`](https://github.com/data-science-extensions/ts-stat-tests/commit/699a77745380133ccd09002366d4348d0863de0f): Refactor return type and structure of `is_stationary()` function<br>
+            - Update return type hint to use `STATIONARITY_ITEM` for clarity.<br>
+            - Explicitly define return dictionary to match the new type hint.<br>
+            - Adjust handling of `pvalue` to return `None` when applicable.
+            (by [chrimaho](https://github.com/chrimaho))        * [`dd5445a`](https://github.com/data-science-extensions/ts-stat-tests/commit/dd5445a9d2987e5f8ce99af15650c4431d098a8b): Add tests for seasonality and normality algorithms<br>
+            - Implement fallback tests for Anderson-Darling in `is_normal()` function.<br>
+            - Add coverage for list-based result branches in `is_seasonal()` function.<br>
+            - Test fallback for non-numeric types in `is_seasonal()` function.<br>
+            - Test fallback for non-numeric scalar types in `is_seasonal()` function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`7b6daf2`](https://github.com/data-science-extensions/ts-stat-tests/commit/7b6daf227098769386c12bf25e79141fa916c3ab): Enhance pytest configuration and update check functions.<br>
+            - Add `--doctest-modules` and `--doctest-continue-on-failure` options to pytest in `pyproject.toml`.<br>
+            - Modify `check_pytest()` function to dynamically include Python files for testing.<br>
+            - Comment out `check_doctest()` in the `check()` function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`0c1da06`](https://github.com/data-science-extensions/ts-stat-tests/commit/0c1da0620a880cda9298ceefadabb062f8546383): Refactor type hints in stationarity module<br>
+            - Remove unnecessary `Optional` from return type of `is_stationary()` function.<br>
+            - Simplify type hints for `stat` and `pvalue` variables to `Any`.
+            (by [chrimaho](https://github.com/chrimaho))        * [`8bf8b36`](https://github.com/data-science-extensions/ts-stat-tests/commit/8bf8b365b831ba563ec088fbd7959ef762b634f7): Refactor type hints to remove `cast()` usage<br>
+            - Remove `cast()` from `normality` mofule.<br>
+            - Remove `cast()` from `seasonality` module.<br>
+            - Remove `cast()` from `stationarity` module.
+            (by [chrimaho](https://github.com/chrimaho))        * [`74bf5f8`](https://github.com/data-science-extensions/ts-stat-tests/commit/74bf5f8899377dc449c9052d29e128534159438a): Remove `cast()` from stationarity module<br>
+            - Remove unnecessary `cast()` in the `is_stationary()` function.<br>
+            - Simplify the return type assignment to directly use the result of `stationarity()` function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`aa51207`](https://github.com/data-science-extensions/ts-stat-tests/commit/aa512070c92d84381e896ac7d52878f74140fc79): Enhance normality test return types and type hints.<br>
+            - Update return type of `normality()` to include `NormaltestResult`, `ShapiroResult`, and `AndersonResult`.<br>
+            - Replace `cast()` with direct type annotations for improved clarity.<br>
+            - Adjust variable types in `is_normal()` for consistency and readability.
+            (by [chrimaho](https://github.com/chrimaho))        * [`49203f7`](https://github.com/data-science-extensions/ts-stat-tests/commit/49203f7a12db57e43e1e1e328685f57c04ed8c96): Refactor type hints to remove `cast()` in stationarity and seasonality modules<br>
+            - Update type hints to use `Any` for better flexibility.<br>
+            - Remove unnecessary `cast()` calls to simplify code.<br>
+            - Ensure consistent handling of return types across functions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`2ccd1bd`](https://github.com/data-science-extensions/ts-stat-tests/commit/2ccd1bd6ce870e55e4a56d187d722e609d8bd8aa): Round numerical outputs in the `adf()` function for improved readability.<br>
+            - Update output formatting to display rounded values.<br>
+            - Enhance clarity of example output in documentation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`e6fe3af`](https://github.com/data-science-extensions/ts-stat-tests/commit/e6fe3af89f1d4c84ff491765f50ee92dcdf1d03a): Round numerical outputs in entropy and regularity functions for improved readability.<br>
+            - Update example outputs in `entropy()` function to show rounded values.<br>
+            - Update example outputs in `regularity()` function to show rounded values.
+            (by [chrimaho](https://github.com/chrimaho))        * [`d9ac474`](https://github.com/data-science-extensions/ts-stat-tests/commit/d9ac474c4458d17d0955e66fb335e12758d606d0): Refactor numpy type hints to use `NDArray` instead of `np.ndarray`<br>
+            - Update type hints in `seasonality.py` to use `NDArray[np.float64]`<br>
+            - Modify return types in `correlation.py` to use `NDArray[np.float64]`<br>
+            - Adjust type casting in `normality.py` to reflect new type hints
+            (by [chrimaho](https://github.com/chrimaho))        * [`b2ffd98`](https://github.com/data-science-extensions/ts-stat-tests/commit/b2ffd981be121e96319ecf01a61314bb94e31643): Refactor data types in test setup for consistency<br>
+            - Change data types of test data attributes to use `NDArray[np.float64]`<br>
+            - Update `cls.data_random`, `cls.data_sine`, `cls.data_line`, `cls.data_noise`, and `cls.data_2d` attributes
+            (by [chrimaho](https://github.com/chrimaho))        * [`9a75913`](https://github.com/data-science-extensions/ts-stat-tests/commit/9a75913da9609b233e79219f449b26f4a141e25b): Fix import issue for `VarianceRatio` in the `stationarity` module<br>
+            - Remove explicit type annotation for `res` in `vr()` function.<br>
+            - Simplify assignment to `res` by directly using `_vr()`.
+            (by [chrimaho](https://github.com/chrimaho))        * [`bff495e`](https://github.com/data-science-extensions/ts-stat-tests/commit/bff495eececae556f79c4c5eb4b45602ad2b29d9): Refactor return types in data utility functions for improved type safety<br>
+            - Change return type of `get_random_numbers()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_random_numbers_2d()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_sine_wave()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_normal_curve()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_straight_line()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_trend_data()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_uniform_data()` to `NDArray[np.float64]`<br>
+            - Change return type of `get_noise_data()` to `NDArray[np.float64]`<br>
+            - Update variable types in data loading to reflect new return types
+            (by [chrimaho](https://github.com/chrimaho))        * [`13d0c18`](https://github.com/data-science-extensions/ts-stat-tests/commit/13d0c1838ff29bfd174a808c206d098e42013396): Refactor type handling in stationarity functions<br>
+            - Introduce type aliases for improved clarity and maintainability.<br>
+            - Update function signatures to use new type aliases.<br>
+            - Simplify return statements in `is_stationary()` function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`0cec5c4`](https://github.com/data-science-extensions/ts-stat-tests/commit/0cec5c4c6495ebd4c5658c9ab553c1a288e7e700): Refactor imports in `stationarity.py` for consistency and clarity.<br>
+            - Standardise import statements for `VarianceRatio`.<br>
+            - Group related imports together for better readability.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a15a06c`](https://github.com/data-science-extensions/ts-stat-tests/commit/a15a06caaca00cc798a5758112794aa52e137e3b): Add examples to `adf()` function docs<br>
+            - Include example usage for storing results with `adf(x=airline, store=True)`<br>
+            - Add example for using `adf()` without autolag: `adf(x=airline, autolag=None, maxlag=5)`
+            (by [chrimaho](https://github.com/chrimaho))        * [`1d300e9`](https://github.com/data-science-extensions/ts-stat-tests/commit/1d300e9dcab4c55de61b67e48ff804f81cb94d34): Refactor return statements in stationarity functions for clarity and efficiency.<br>
+            - Simplify return statements in `kpss()`, `rur()`, and `za()` functions by removing unnecessary `cast()`.<br>
+            - Enhance readability by directly returning results from `_kpss()`, `_rur()`, and `_za()`.<br>
+            - Maintain type safety while improving code clarity in the `vr()` function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`feb0ace`](https://github.com/data-science-extensions/ts-stat-tests/commit/feb0ace2911b7d4716296bf94c7f0482b308d961): Refactor `adf()` function for improved type handling and return structure<br>
+            - Change return type handling to use `Any` for compatibility with statsmodels stubs<br>
+            - Simplify return statements based on `store` and `autolag` parameters<br>
+            - Ensure consistent float and integer conversions for returned values
+            (by [chrimaho](https://github.com/chrimaho))        * [`5479ac7`](https://github.com/data-science-extensions/ts-stat-tests/commit/5479ac791f206c080f8638a6a30d28d3b6d8119c): Add tests for ADF stationarity function<br>
+            - Introduce `test_stationarity_adf_store()` to validate ADF with `store=True`<br>
+            - Introduce `test_stationarity_adf_autolag_none()` to validate ADF with `autolag=None`
+            (by [chrimaho](https://github.com/chrimaho))        * [`aaba18f`](https://github.com/data-science-extensions/ts-stat-tests/commit/aaba18f4e3319b0c87865882d93e56ad774790cc): Refactor type annotations in the `regularity` module<br>
+            - Update type annotations in `regularity.py` and `tests/regularity.py` to use `NDArray` where appropriate.<br>
+            - Simplify return statements in `approx_entropy()`, `sample_entropy()`, `permutation_entropy()`, `spectral_entropy()`, and `svd_entropy()` functions.<br>
+            - Ensure all functions return consistent types, enhancing type safety and readability.
+            (by [chrimaho](https://github.com/chrimaho))        * [`8f90a8c`](https://github.com/data-science-extensions/ts-stat-tests/commit/8f90a8c50d85a1aeb129ac8678ebcf46c08d8599): Refactor `normality` module for improved type annotations in all functions<br>
+            - Remove unnecessary class definitions and simplify return types.<br>
+            - Update function signatures to use specific return types like `ShapiroResult` and `NormaltestResult`.<br>
+            - Streamline the implementation of statistical tests by returning results directly from their respective functions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`f8d4c7e`](https://github.com/data-science-extensions/ts-stat-tests/commit/f8d4c7ee3e2fe68826b544389e5aa12494c16754): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`d9f458d`](https://github.com/data-science-extensions/ts-stat-tests/commit/d9f458d585579235f3973462bc0b7d5a7352c6c0): Refactor example outputs in `qs()` function<br>
+            - Adjust precision of output values in the docstring.<br>
+            - Ensure clarity in the representation of ARIMA model output.
+            (by [chrimaho](https://github.com/chrimaho))        * [`340f63c`](https://github.com/data-science-extensions/ts-stat-tests/commit/340f63c92fbc61f8734b400dc2018647aaf127d6): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`74fec0b`](https://github.com/data-science-extensions/ts-stat-tests/commit/74fec0b5c08387f74216c50e09fe4a68230b7ee9): Refactor seasonality tests for clarity and consistency.<br>
+            - Rename test methods for better readability.<br>
+            - Remove debug print statements.<br>
+            - Update assertions to ensure accuracy.<br>
+            - Improve documentation for test cases.
+            (by [chrimaho](https://github.com/chrimaho))        * [`006a7b2`](https://github.com/data-science-extensions/ts-stat-tests/commit/006a7b2b8e45f72f1c8ad0b67618efde4c08ef18): Refactor correlation tests and add new data tests<br>
+            - Remove unused imports and redundant tests from `test_correlation.py`<br>
+            - Create `test_data.py` with tests for `load_airline()` and `load_macrodata()`<br>
+            - Enhance error handling tests in `test_errors.py`
+            (by [chrimaho](https://github.com/chrimaho))        * [`ece6d42`](https://github.com/data-science-extensions/ts-stat-tests/commit/ece6d423eb4b7ae71bc7f04b56c2334c88d75b5b): Refactor covariance type handling in `lm()` function<br>
+            - Standardise `cov_type` parameter to use `VALID_LM_COV_TYPE_OPTIONS`<br>
+            - Remove redundant overloads for `lm()` function<br>
+            - Update docstring for clarity on `cov_type` options
+            (by [chrimaho](https://github.com/chrimaho))        * [`46fdb01`](https://github.com/data-science-extensions/ts-stat-tests/commit/46fdb01abaf2ebc3089cf2c5b2dbfa63279bdd46): Refactor type hints for `correlation` algorithms<br>
+            - Update type hints to use `NDArray[np.float64]` for better type clarity.<br>
+            - Modify return types in `acf()`, `pacf()`, `ccf()`, `lb()`, `lm()`, and `bglm()` functions.<br>
+            - Standardise covariance type options in `VALID_LM_COV_TYPE_OPTIONS`.
+            (by [chrimaho](https://github.com/chrimaho))        * [`41ddcd0`](https://github.com/data-science-extensions/ts-stat-tests/commit/41ddcd09115226890c6a59e3dde6302ef83f35b5): Update seasonality tests and documentation for improved readability<br>
+            - Modify `doctest_optionflags` in `pyproject.toml` to include "ELLIPSIS"<br>
+            - Update expected output in `qs()` function examples for clarity<br>
+            - Shorten numerical outputs in `qs()`, `seasonal_strength()`, `trend_strength()`, and `spikiness()` functions<br>
+            - Adjust expected output in `seasonality()` test cases for consistency
+            (by [chrimaho](https://github.com/chrimaho))        * [`0138dd4`](https://github.com/data-science-extensions/ts-stat-tests/commit/0138dd4c284d04df1d99945df74e70ff9570cf5d): Enhance equation formatting in `normality` algorithms<br>
+            - Improve readability of equations in the Jarque-Bera, D'Agostino's K², Shapiro-Wilk, and Anderson-Darling tests.<br>
+            - Update equations to use consistent formatting with `$$` for better display.
+            (by [chrimaho](https://github.com/chrimaho))        * [`4219a53`](https://github.com/data-science-extensions/ts-stat-tests/commit/4219a5318436cf2d8c9865545fdfd109b323a79f): Update `pytest` command in `check_doctest()` functions to include doctest options.<br>
+            - Add `--doctest-modules` and `--doctest-continue-on-failure` flags to enhance doctest execution.
+            (by [chrimaho](https://github.com/chrimaho))        * [`5e776f6`](https://github.com/data-science-extensions/ts-stat-tests/commit/5e776f6c104f55366fa952615fc3a98e94ed9524): Fix type checking for `load_macrodata()` function<br>
+            - Introduce `TypeCheckError` for more specific error handling.<br>
+            - Update error assertions to check for expected messages.<br>
+            - Enhance test coverage for type errors in data loading.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a8a4ec3`](https://github.com/data-science-extensions/ts-stat-tests/commit/a8a4ec3c9abaa01e78283b672a4ae28e86722dc6): Add `print_label` functionality for improved checking output readability<br>
+            - Introduce `print_label()` function to format command output labels.<br>
+            - Enhance linting functions with descriptive labels for better user feedback.<br>
+            - Update command usage messages for clarity and consistency.
+            (by [chrimaho](https://github.com/chrimaho))        * [`382bafe`](https://github.com/data-science-extensions/ts-stat-tests/commit/382bafec1224afb9d55eebe7dc979c9a2acc7e72): Add tests for `is_correlated()` function with various algorithms<br>
+            - Implement tests for Ljung-Box, LM, and Breusch-Godfrey algorithms.<br>
+            - Validate results and types for correlation checks.<br>
+            - Ensure proper error handling for unsupported algorithms.<br>
+            - Test correlation logic for both correlated and non-correlated data.<br>
+            - Refactor failure assertions in `assert_almost_equal()` method tests.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a1fa2eb`](https://github.com/data-science-extensions/ts-stat-tests/commit/a1fa2eb4a377ce9f65745d3071daed63cb56e54f): Refactor error message assertions in `test_generate_error_message()` method.<br>
+            - Update assertions to check for specific error message components.<br>
+            - Ensure clarity in error reporting for invalid parameters.
+            (by [chrimaho](https://github.com/chrimaho))        * [`4fcee28`](https://github.com/data-science-extensions/ts-stat-tests/commit/4fcee2854c3c2f5a9105adeb8a435bf8cd3177e3): Refactor error message formatting in `assert_almost_equal()` function.<br>
+            - Update error message to use clearer variable names.<br>
+            - Change `tol: p={places}, d={delta}` to `({places=}, {delta=})` for consistency.
+            (by [chrimaho](https://github.com/chrimaho))        * [`7ade057`](https://github.com/data-science-extensions/ts-stat-tests/commit/7ade057e8ff8e80d0cc4ecb460ad6606ea6373f8): Add `ELLIPSIS` option to doctest flags<br>
+            - Include `# "ELLIPSIS"` in the `doctest_optionflags` section of `pyproject.toml`<br>
+            - Enhance flexibility for doctest output matching
+            (by [chrimaho](https://github.com/chrimaho))        * [`0a86247`](https://github.com/data-science-extensions/ts-stat-tests/commit/0a86247d5e16f867c88908f14c735985eb25d118): Improve error message for invalid algorithm parameter in `stationarity()` function.<br>
+            - Clarify the options available for the `algorithm` parameter in the error message.<br>
+            - Enhance user experience by providing detailed feedback on valid options.
+            (by [chrimaho](https://github.com/chrimaho))        * [`47a14a5`](https://github.com/data-science-extensions/ts-stat-tests/commit/47a14a5ae3691c0519fe8fec8f009adf217eb6ef): Update example outputs in seasonality tests<br>
+            - Update expected output for `qs()` function to reflect precise values:<br>
+            `qs(data, freq=12)` now returns `(194.46928920877465, 5.9092232580147965e-43)`<br>
+            - Update expected output for `seasonality()` function using seasonal strength:<br>
+            `seasonality(x=data, algorithm="ss", m=12)` now returns `0.7787219427520644`
+            (by [chrimaho](https://github.com/chrimaho))        * [`3fc4004`](https://github.com/data-science-extensions/ts-stat-tests/commit/3fc40041d7f74b47b0a9ef1238cadcacd9dde774): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`e3d5993`](https://github.com/data-science-extensions/ts-stat-tests/commit/e3d59935c269a5c9a6fb1252ccc69dd26e64bdab): Add parameter and return type documentation for `stationarity()` function<br>
+            - Document parameters and return types for clarity.<br>
+            - Include examples for better understanding of usage.
+            (by [chrimaho](https://github.com/chrimaho))        * [`8cfe9df`](https://github.com/data-science-extensions/ts-stat-tests/commit/8cfe9df39b48db1425c5f725b60a0a588a14499d): Add parameter and return type documentation for `seasonality()` function<br>
+            - Document parameters `func` and `args` with types.<br>
+            - Specify return type as a union of possible result types.<br>
+            - Include example usage in the docstring.
+            (by [chrimaho](https://github.com/chrimaho))        * [`8a4cd9d`](https://github.com/data-science-extensions/ts-stat-tests/commit/8a4cd9d2a0c606bd379e6cf2959c2aabd3d559d3): Add example to `AndersonResult` protocol documentation<br>
+            - Include an example of how to use the `AndersonResult` protocol.<br>
+            - Enhance clarity for users implementing the protocol.<br>
+            - Provide a code snippet demonstrating usage:<br>
+            ```python<br>
+            def my_func(res: AndersonResult) -> None:<br>
+            print(res.statistic)
+            (by [chrimaho](https://github.com/chrimaho))        * [`73fa21d`](https://github.com/data-science-extensions/ts-stat-tests/commit/73fa21d3b0454de4955239ba2cc16244340c9f1e): Refactor `is_correlated()` function to enhance correlation testing<br>
+            - Update function signature to accept parameters for correlation algorithm and significance level.<br>
+            - Implement logic for various correlation tests including Ljung-Box, LM, and Breusch-Godfrey.<br>
+            - Raise `ValueError` for unsupported algorithms.<br>
+            - Add detailed docstring with examples and parameter descriptions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`e52debc`](https://github.com/data-science-extensions/ts-stat-tests/commit/e52debcc9cb4ef12e60aafdfc628228c2e93b980): Enhance docs structure for all `correlation` functions<br>
+            - Add summary and details for the `acf()`, `pacf()`, `ccf()`, and `lb()` functions.<br>
+            - Update references formatting for clarity.<br>
+            - Improve readability by adding line breaks in the documentation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`5a183f7`](https://github.com/data-science-extensions/ts-stat-tests/commit/5a183f78047e2e15c8ec171f98e163fcfeddcad2): Refactor `load_macrodata()` function to improve data loading<br>
+            - Update data types for `year` and `quarter` columns to `int`.<br>
+            - Simplify data loading process using `pd.read_csv()`.<br>
+            - Adjust index creation to use a combined string format for quarterly periods.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a740fd6`](https://github.com/data-science-extensions/ts-stat-tests/commit/a740fd6b04fb08915254e0ab95330052f79ff5a0): Update doctest examples in data utilities<br>
+            - Move the `data = ...` section from the `Example` chunk to the `Setup` chunk for each function in the `utils/data` module
+            (by [chrimaho](https://github.com/chrimaho))        * [`bfd3af1`](https://github.com/data-science-extensions/ts-stat-tests/commit/bfd3af189d853035dac5aae8d321ed7632657b48): Add doctest config to `pyproject.toml`<br>
+            - Include `--doctest-modules` and `--doctest-continue-on-failure` options in `pytest` configuration.<br>
+            - Update test command in `check_doctest()` and `check_doctest_module()` functions to use `--config-file=pyproject.toml`.<br>
+            - Standardise data type outputs in docstrings from `np.float64` to `float64` for consistency.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a5bb4e8`](https://github.com/data-science-extensions/ts-stat-tests/commit/a5bb4e898df101a9ecc8b8f243a50dcc78f53be5): Update error message formatting in `assert_almost_equal()` function<br>
+            - Modify the traceback output for clarity in error reporting.<br>
+            - Ensure the assertion error message is displayed correctly.
+            (by [chrimaho](https://github.com/chrimaho))        * [`2a3ec92`](https://github.com/data-science-extensions/ts-stat-tests/commit/2a3ec92750f4614f49cbf67a4fee4d1c22f4f7fe): Add  `__init__.py` module to the `utils` namespace
+            (by [chrimaho](https://github.com/chrimaho))        * [`d03c7f0`](https://github.com/data-science-extensions/ts-stat-tests/commit/d03c7f0afa7dd8c2acf67593b52b0df4bcae4a77): Refactor data utility documentation for clarity and consistency.<br>
+            - Standardise docstring formatting across functions.<br>
+            - Add detailed examples and references for better understanding.<br>
+            - Introduce type checking for improved type safety.<br>
+            - Enhance descriptions to clarify functionality and usage.
+            (by [chrimaho](https://github.com/chrimaho))        * [`0754d8b`](https://github.com/data-science-extensions/ts-stat-tests/commit/0754d8b97c32f0034a95fcf240e748486c8ac8f1): Refactor error utility documentation for clarity and consistency.<br>
+            - Update docstrings to provide clearer summaries and details.<br>
+            - Enhance examples for better understanding of usage.<br>
+            - Standardise formatting across all functions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ab48087`](https://github.com/data-science-extensions/ts-stat-tests/commit/ab48087cace18e1a1ff8ea8e28e4b79ba34ed22e): Add utils docs pages to MkDocs navigation<br>
+            - Create `data.md` file for data utilities documentation<br>
+            - Create `errors.md` file for error utilities documentation<br>
+            - Update `mkdocs.yml` to include new documentation in navigation
+            (by [chrimaho](https://github.com/chrimaho))        * [`0050943`](https://github.com/data-science-extensions/ts-stat-tests/commit/0050943e4fd0ceb4c046b13a70fdfa276244d2ef): Modify 'calculation' of docstrings section to be optional<br>
+            - Change 'required' attribute of 'calculation' from true to false<br>
+            - Ensure flexibility in documentation requirements
+            (by [chrimaho](https://github.com/chrimaho))        * [`26174f2`](https://github.com/data-science-extensions/ts-stat-tests/commit/26174f2ed4ee0cea6611891714b28c6161f7f2c1): Refactor table formatting for clarity in implementation progress<br>
+            - Adjust column headers for better alignment<br>
+            - Enhance readability of the implementation progress table
+            (by [chrimaho](https://github.com/chrimaho))        * [`d4c3fcb`](https://github.com/data-science-extensions/ts-stat-tests/commit/d4c3fcb255aba330ba79062d1f70399959009974): Update README.md for improved link formatting and clarity<br>
+            - Correct link formatting for Statistical Tests references<br>
+            - Add direct links for [Normality], [Stationarity], and [Correlation]
+            (by [chrimaho](https://github.com/chrimaho))        * [`d080631`](https://github.com/data-science-extensions/ts-stat-tests/commit/d080631a4144277e00ad4902048952d13cc16252): Add navigation link to Data Science Extensions page<br>
+            - Include a link to Data Science Extensions in the navigation menu.
+            (by [chrimaho](https://github.com/chrimaho))        * [`77204b4`](https://github.com/data-science-extensions/ts-stat-tests/commit/77204b4a250f09ee315ec14a3c0fa93fad8950de): Add additional code features to MkDocs configuration<br>
+            - Include `content.code.select` feature for enhanced code selection<br>
+            - Include `content.code.copy` feature for improved code copying<br>
+            - Ensure `content.code.annotate` feature is available for code annotations
+            (by [chrimaho](https://github.com/chrimaho))        * [`1f29834`](https://github.com/data-science-extensions/ts-stat-tests/commit/1f298347ff45c9733599e57266e2e7a44af152df): Add MathJax integration for enhanced mathematical rendering<br>
+            - Introduce `mathjax.js` for MathJax configuration<br>
+            - Subscribe to document changes to clear cache and typeset<br>
+            - Update `mkdocs.yml` to include MathJax scripts
+            (by [chrimaho](https://github.com/chrimaho))        * [`f0c979c`](https://github.com/data-science-extensions/ts-stat-tests/commit/f0c979c988880e33ba8a82a9f99b1ed7ba1ab31f): Add progress bar styles and integrate into MkDocs configuration<br>
+            - Create `progress_bar.css` with styles for progress bars and labels<br>
+            - Include progress bar styles in `mkdocs.yml` under `extra_css`
+            (by [chrimaho](https://github.com/chrimaho))        * [`27b17bd`](https://github.com/data-science-extensions/ts-stat-tests/commit/27b17bdf53b28ef68b959c4508da28de240ae93b): Move CSS styles from `stylesheets` sub-dir to the `css` sub-dir<br>
+            - Introduce styles for various admonition types including `pro-tip`, `deprecation`, `observation`, and `calculation`<br>
+            - Implement styles for code chunk filenames with appropriate icons<br>
+            - Update `mkdocs.yml` to reference new CSS file paths
+            (by [chrimaho](https://github.com/chrimaho))        * [`4df11e7`](https://github.com/data-science-extensions/ts-stat-tests/commit/4df11e761836fa7c78a14f068d188c6f4e66f4cb): Update README and Code docs pages<br>
+            - Enhance `README` structure and badge visibility<br>
+            - Update seasonality test results in the implementation progress table<br>
+            - Correct overall test statistics for seasonality
+            (by [chrimaho](https://github.com/chrimaho))        * [`9d43aa2`](https://github.com/data-science-extensions/ts-stat-tests/commit/9d43aa22385447162c617f98760885503ccaca04): Refactor pytest imports for clarity<br>
+            - Remove unused `fixture` and `mark` imports from pytest<br>
+            - Simplify import statements for better readability
+            (by [chrimaho](https://github.com/chrimaho))        * [`155879f`](https://github.com/data-science-extensions/ts-stat-tests/commit/155879f848a0df9776ca36dd4931b6c8bc1ddcdd): Refactor assertions and enhance seasonality tests<br>
+            - Update `assert_almost_equal()` calls to use `places` parameter for precision.<br>
+            - Add detailed test cases for `seasonality()` and `is_seasonal()` functions.<br>
+            - Include summaries for `test_seasonality()` and `test_is_seasonal()` methods.<br>
+            - Improve test coverage for seasonal algorithms: QS, OCSB, CH, seasonal strength, trend strength, and spikiness.
+            (by [chrimaho](https://github.com/chrimaho))        * [`c6de989`](https://github.com/data-science-extensions/ts-stat-tests/commit/c6de989edac04f59e86667525463072eb5e5a5e6): Update seasonality documentation for clarity and accuracy<br>
+            - Correct quote reference to Rob Hyndman and George Athanasopoulos.<br>
+            - Refine definitions of trend, seasonal, and cyclic patterns for better understanding.<br>
+            - Enhance information on source libraries and modules used in the implementation.<br>
+            - Improve overall structure and readability of the documentation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`5631240`](https://github.com/data-science-extensions/ts-stat-tests/commit/5631240701d61e9cbf369174b8f44f279bb9cd83): Fill out the `seasonality()` and `is_seasonal()` functions<br>
+            - Introduce `seasonality()` function as a dispatcher for various seasonality algorithms.<br>
+            - Enhance `is_seasonal()` function to provide a standardized output.<br>
+            - Update docstrings for better understanding and usage examples.<br>
+            - Implement type checking for function parameters.
+            (by [chrimaho](https://github.com/chrimaho))        * [`c6a8d15`](https://github.com/data-science-extensions/ts-stat-tests/commit/c6a8d15674c278736108c2964ba853a80193d55b): Enhance documentation requirements for sections<br>
+            - Require 'params', 'examples', and 'calculation' sections to be mandatory.<br>
+            - Add 'warning' section with optional requirement.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a289db6`](https://github.com/data-science-extensions/ts-stat-tests/commit/a289db6bab49a91393b2ed006528501b02a40883): Refactor seasonality documentation for clarity and consistency<br>
+            - Improve descriptions and examples for the `qs()`, `ocsb()`, `ch()`, `seasonal_strength()`, and `spikiness()` functions.<br>
+            - Standardise parameter descriptions and default values.<br>
+            - Enhance mathematical equations and their explanations.<br>
+            - Update example usage for better clarity and accuracy.
+            (by [chrimaho](https://github.com/chrimaho))        * [`c6afda0`](https://github.com/data-science-extensions/ts-stat-tests/commit/c6afda0b338337184dc3bcbb1f17bb5d20ce5eeb): Refactor seasonality documentation paths for consistency<br>
+            - Update paths in the seasonality tests section to remove the `src.` prefix<br>
+            - Adjust paths in the seasonality algorithms section for uniformity
+            (by [chrimaho](https://github.com/chrimaho))        * [`b716147`](https://github.com/data-science-extensions/ts-stat-tests/commit/b716147ca0bcd76a98bc92e6eaaec3d8d715b96f): Refactor spikiness function to handle NaN values<br>
+            - Replace `np.mean()` with `np.nanmean()` for robust calculation of mean<br>
+            - Ensure proper handling of missing values in seasonal decomposition
+            (by [chrimaho](https://github.com/chrimaho))        * [`739cc65`](https://github.com/data-science-extensions/ts-stat-tests/commit/739cc659e0cd1b8090bbf0422bd71de71d6c3e1e): Refactor type hints and input handling for seasonality functions<br>
+            - Change input type from `np.ndarray` to `ArrayLike` for improved flexibility.<br>
+            - Update input conversion to `np.asarray(x, dtype=float)` for consistent handling of input data.
+            (by [chrimaho](https://github.com/chrimaho))        * [`91dfc47`](https://github.com/data-science-extensions/ts-stat-tests/commit/91dfc471228576946ab5a7ef3f8790dc88945aac): Specify exceptions in ARIMA model fitting error handling<br>
+            - Replace generic exception handling with specific exceptions: `ValueError`, `RuntimeError`, and `IndexError`<br>
+            - Improve error handling clarity and robustness in the `qs()` function
+            (by [chrimaho](https://github.com/chrimaho))        * [`4f6a078`](https://github.com/data-science-extensions/ts-stat-tests/commit/4f6a0785ec7732fa0a3a85c074499bdd84776102): Refactor type hints across unit tests for improved clarity and consistency<br>
+            - Update type hints in `setup.py` to use `object` instead of `Any`<br>
+            - Modify return type of `data_dict()` function for better type specificity<br>
+            - Ensure consistency in type annotations across various functions
+            (by [chrimaho](https://github.com/chrimaho))        * [`c0f5e6f`](https://github.com/data-science-extensions/ts-stat-tests/commit/c0f5e6f89f58bb443b38c4678996ed333264bc3c): Add comprehensive documentation pages for seasonality analysis<br>
+            - Introduce an overview of seasonality in time series datasets<br>
+            - Define key concepts such as trend, seasonal, and cyclic patterns<br>
+            - Provide references for further reading and source libraries<br>
+            - Include links to relevant source modules for clarity
+            (by [chrimaho](https://github.com/chrimaho))        * [`6c9e2e2`](https://github.com/data-science-extensions/ts-stat-tests/commit/6c9e2e2a1bfcc3f606305a3b75a2de0b74b82b4f): Add additional `pylint` disable rules for improved code quality<br>
+            - Include "R0903" for `too-few-public-methods`<br>
+            - Add "R0912" for `too-many-branches`<br>
+            - Add "R1719" for `simplifiable-if-expression`
+            (by [chrimaho](https://github.com/chrimaho))        * [`cb9529f`](https://github.com/data-science-extensions/ts-stat-tests/commit/cb9529f2ef9cab21b24453e553de0b49b742acff): Implement unit tests for seasonality algorithms<br>
+            - Add `TestSeasonality` class to test various seasonality functions<br>
+            - Include tests for `qs()`, `ocsb()`, `ch()`, `seasonal_strength()`, `trend_strength()`, and `spikiness()`<br>
+            - Validate expected outputs and handle failure cases for `qs()`<br>
+            - Ensure proper setup with `setUpClass()` method
+            (by [chrimaho](https://github.com/chrimaho))        * [`5d3b1a1`](https://github.com/data-science-extensions/ts-stat-tests/commit/5d3b1a170053d15a726a44df203d1a3de6b7fd61): Refactor stationarity module header documentation<br>
+            - Remove unnecessary comments and clean up the docstring.<br>
+            - Enhance the clarity of the purpose and usage of stationarity tests.<br>
+            - Include a relevant article link for further reading on ADF & KPSS tests.
+            (by [chrimaho](https://github.com/chrimaho))        * [`9bbc9cb`](https://github.com/data-science-extensions/ts-stat-tests/commit/9bbc9cb18ab61c780a6dadaf8d794c26de1ca4b2): Enhance docs for `seasonality` module<br>
+            - Introduce the `qs()` function for the Ljung-Box test to detect seasonality in time series data.<br>
+            - Implement the `ocsb()` function for the Osborn, Chui, Smith, and Birchenhall test for seasonal differencing.<br>
+            - Add the `ch()` function for the Canova-Hansen test to assess seasonal stability.<br>
+            - Include the `seasonal_strength()` function to measure the strength of seasonality in time series data.<br>
+            - Implement the `trend_strength()` function to evaluate the strength of the trend component.<br>
+            - Add the `spikiness()` function to detect spikes or volatility in time series data.<br>
+            - Enhance docstrings with detailed descriptions, parameters, return values, and examples for each function.
+            (by [chrimaho](https://github.com/chrimaho))        * [`cde3717`](https://github.com/data-science-extensions/ts-stat-tests/commit/cde3717df357cba6684b324088fb2badfe1fc01a): Add detailed headers and descriptions for seasonality modules<br>
+            - Include a summary of seasonality tests in the `seasonality.py` module.<br>
+            - Document the purpose and functionality of each implemented algorithm.<br>
+            - Enhance clarity for users regarding the statistical tests available.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ebfeac7`](https://github.com/data-science-extensions/ts-stat-tests/commit/ebfeac7d13401680ec7d45bd9ede7a82f669084c): Add `AndersonResult` protocol and improve type casting<br>
+            - Introduce `AndersonResult` protocol for better type safety.<br>
+            - Enhance type casting in `ad()` function to use `cast(AndersonResult, ...)`.<br>
+            - Import `Protocol` from `typing` and `numpy` for type annotations.
+            (by [chrimaho](https://github.com/chrimaho))        * [`341686b`](https://github.com/data-science-extensions/ts-stat-tests/commit/341686b18543f976e0a58379d768132ea4316ff7): Implement seasonality algorithms and tests<br>
+            - Introduce algorithms for seasonality analysis including `qs()`, `ocsb()`, `ch()`, `seasonal_strength()`, `trend_strength()`, and `spikiness()`.<br>
+            - Add placeholder functions `seasonality()` and `is_seasonal()` for future implementation.<br>
+            - Include necessary imports and exports for the new functionality.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ee30457`](https://github.com/data-science-extensions/ts-stat-tests/commit/ee304572f6ad94bd774e7936d7c1d9ff55f13de2): Add seasonality modules and related tests & docs<br>
+            - Introduce `seasonality.py` for seasonality analysis<br>
+            - Create `test_seasonality.py` for unit testing seasonality features<br>
+            - Update `mkdocs.yml` to include seasonality documentation<br>
+            - Add `seasonality.md` documentation file
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.4.5"
 
     ## **v0.4.5 - Add Stationarity Module**
