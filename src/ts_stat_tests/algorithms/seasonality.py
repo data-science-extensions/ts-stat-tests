@@ -1,6 +1,6 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Seasonality                                                       #
+#     Title: Seasonality Algorithms                                            #
 #     Purpose: Algorithms for testing seasonality in time series data.         #
 #                                                                              #
 # ============================================================================ #

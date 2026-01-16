@@ -1,6 +1,6 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Correlation                                                       #
+#     Title: Correlation Algorithms                                            #
 #     Purpose: Algorithms for Correlation Measures in Time Series Analysis     #
 #                                                                              #
 # ============================================================================ #

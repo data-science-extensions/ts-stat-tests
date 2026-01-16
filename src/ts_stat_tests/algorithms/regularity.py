@@ -1,6 +1,6 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Regularity                                                        #
+#     Title: Regularity Algorithms                                             #
 #     Purpose: Functions to compute regularity measures for time series data.  #
 #                                                                              #
 # ============================================================================ #
