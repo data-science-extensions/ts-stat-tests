@@ -16,6 +16,7 @@ import unittest
 # ## Python Third Party Imports ----
 import numpy as np
 import statsmodels.api as sm
+from pytest import raises
 from statsmodels.sandbox.stats.diagnostic import ResultsStore
 
 # ## Local First Party Imports ----
@@ -70,42 +71,42 @@ class TestHeteroscedasticity(unittest.TestCase):
         """Test ARCH test results."""
         # store=False (default)
         res = arch(self.res_arch.resid)
-        self.assertEqual(len(res), 4)
+        assert len(res) == 4
         for val in res:
-            self.assertIsInstance(val, np.float64)
+            assert isinstance(val, float)
 
         # store=True
         res_store = arch(self.res_arch.resid, store=True)
-        self.assertEqual(len(res_store), 5)
-        self.assertIsInstance(res_store[-1], ResultsStore)
+        assert len(res_store) == 5
+        assert isinstance(res_store[-1], ResultsStore)
 
     def test_bpl_results(self) -> None:
         """Test Breusch-Pagan test results."""
         res = bpl(self.res_het.resid, self.x)
-        self.assertEqual(len(res), 4)
+        assert len(res) == 4
         for val in res:
-            self.assertIsInstance(val, np.float64)
+            assert isinstance(val, float)
 
     def test_gq_results(self) -> None:
         """Test Goldfeld-Quandt test results."""
         # store=False (default)
         res = gq(self.y_het, self.x)
-        self.assertEqual(len(res), 3)
-        self.assertIsInstance(res[0], np.float64)
-        self.assertIsInstance(res[1], np.float64)
-        self.assertIsInstance(res[2], str)
+        assert len(res) == 3
+        assert isinstance(res[0], float)
+        assert isinstance(res[1], float)
+        assert isinstance(res[2], str)
 
         # store=True
         res_store = gq(self.y_het, self.x, store=True)
-        self.assertEqual(len(res_store), 4)
-        self.assertIsInstance(res_store[-1], ResultsStore)
+        assert len(res_store) == 4
+        assert isinstance(res_store[-1], ResultsStore)
 
     def test_wlm_results(self) -> None:
         """Test White's test results."""
         res = wlm(self.res_het.resid, self.x)
-        self.assertEqual(len(res), 4)
+        assert len(res) == 4
         for val in res:
-            self.assertIsInstance(val, np.float64)
+            assert isinstance(val, float)
 
     # ## Dispatcher Tests ----
 
@@ -115,41 +116,41 @@ class TestHeteroscedasticity(unittest.TestCase):
         for alg in ["arch", "bp", "gq", "white"]:
             res = heteroscedasticity(self.res_homo, algorithm=alg)
             if alg == "gq":
-                self.assertEqual(len(res), 3)
+                assert len(res) == 3
             else:
-                self.assertEqual(len(res), 4)
+                assert len(res) == 4
 
         # Test invalid algorithm
-        with self.assertRaises(ValueError):
+        with raises(ValueError):
             heteroscedasticity(self.res_homo, algorithm="invalid")
 
     def test_is_heteroscedastic_results(self) -> None:
         """Test is_heteroscedastic function."""
         # Check homoscedastic case
         res_check = is_heteroscedastic(self.res_homo, algorithm="bp")
-        self.assertIsInstance(res_check["result"], bool)
-        self.assertIsInstance(res_check["pvalue"], float)
-        self.assertFalse(res_check["result"])  # Expect False for homoscedastic
+        assert isinstance(res_check["result"], bool)
+        assert isinstance(res_check["pvalue"], float)
+        assert not res_check["result"]  # Expect False for homoscedastic
 
         # Check heteroscedastic case
         res_check_het = is_heteroscedastic(self.res_het, algorithm="bp")
-        self.assertTrue(res_check_het["result"])  # Expect True for heteroscedastic
+        assert res_check_het["result"]  # Expect True for heteroscedastic
 
     def test_is_heteroscedastic_with_store(self) -> None:
         """Test is_heteroscedastic with store=True to cover ResultsStore path."""
         # ARCH with store=True
         res_arch_store = is_heteroscedastic(self.res_arch, algorithm="arch", store=True)
-        self.assertIsInstance(res_arch_store["result"], bool)
-        self.assertIn("statistic", res_arch_store)
+        assert isinstance(res_arch_store["result"], bool)
+        assert "statistic" in res_arch_store
 
         # GQ with store=True
         res_gq_store = is_heteroscedastic(self.res_het, algorithm="gq", store=True)
-        self.assertIsInstance(res_gq_store["result"], bool)
+        assert isinstance(res_gq_store["result"], bool)
 
     def test_is_heteroscedastic_all_algs(self) -> None:
         """Test is_heteroscedastic with all algorithms."""
         for alg in ["arch", "bp", "gq", "white"]:
             res = is_heteroscedastic(self.res_homo, algorithm=alg)
-            self.assertEqual(res["algorithm"], alg)
-            self.assertIn("result", res)
-            self.assertIn("pvalue", res)
+            assert res["algorithm"] == alg
+            assert "result" in res
+            assert "pvalue" in res
