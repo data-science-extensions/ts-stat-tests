@@ -9,6 +9,63 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.7.0"
+
+    ## **v0.7.0 - Linearity Module**
+
+    <!-- md:tag v0.7.0 --><br>
+    <!-- md:date 2026-01-17 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.7.0](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.7.0) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                        Introduce the `linearity` module, the sixth major analytical pillar of the `ts-stat-tests` library. This release provides a suite of econometric tests designed to validate the linear specification of regression models, including the Harvey-Collier, Lagrange Multiplier, Rainbow, and Ramsey RESET tests. These tools enable researchers to identify neglected non-linearity and functional form misspecifications with high precision. Alongside the new algorithms, this version reaches a new quality milestone with 228 passing tests and 100% code coverage across all modules.                        ### 🛠️ Implementation details                        #### Linearity module implementation                        * Implement core linearity algorithms in `src/ts_stat_tests/algorithms/linearity.py`:            * `hc()`: Harvey-Collier test based on recursive residuals.            * `lm()`: Lagrange Multiplier test for checking functional form.            * `rb()`: Rainbow test for linearity using subset comparisons.            * `rr()`: Ramsey RESET test for neglected non-linearity.        * Provide standardised Boolean dispatchers in `src/ts_stat_tests/tests/linearity.py`:            * `linearity()`: Unified high-level interface for all linearity tests.            * `is_linear()`: Boolean checker returning a consistent `"result"` key, standardised against the rest of the library’s API.        * Integrate strict type-checking via `@typechecked` and handle `statsmodels` signature inconsistencies using internal type-narrrowing helpers.                        #### Documentation and navigation                        * Create a comprehensive theoretical guide in `docs/code/linearity.md`, featuring `LaTeX` definitions for all implemented tests.        * Update `README.md` and `docs/code/index.md` status tables to mark the Linearity module as fully supported.        * Optimise navigation in `mkdocs.yml` to include the new diagnostic tools.        * Standardise documentation cross-references to ensure seamless transitions between algorithmic theory and code examples.                        #### Quality assurance and testing                        * Expand the package test suite to 228 passing tests, incorporating 11 new comprehensive unit tests for the Linearity module.        * Maintain 100% path coverage across the entire `ts_stat_tests` codebase.        * Enforce 10.00/10 `Pylint` scores and 0 `Pyright` errors for all new implementations.                        ### ✅ Checklist                        - [x] Implement `hc()`, `lm()`, `rb()`, and `rr()` algorithms.        - [x] Implement `linearity()` and `is_linear()` dispatchers.        - [x] Standardise `is_linear()` return keys for API consistency.        - [x] Author theoretical documentation for linearity diagnostics.        - [x] Update project metadata and status tables in `README.md`.        - [x] Pass 100% coverage and linting quality gates.                        ### 📊 Changes                        | Metric            | Value         |        | :---------------- | :------------ |        | **Files Changed** | 7             |        | **Lines Added**   | 799           |        | **Lines Deleted** | 8             |        | **Contributors**  | 1 (@chrimaho) |        | **Commit Count**  | 11            |                        ### 🆕 Pull Requests                        * #30 - Implement Linearity Module        
+
+    ??? abstract "Updates"
+
+        * [`b78c7dc`](https://github.com/data-science-extensions/ts-stat-tests/commit/b78c7dc02532576d793e2d14c00180a6f843618c): Refactor `is_linear()` function to return keys consistent with the rest of the package<br>
+            - Change return key from `"is_linear"` to `"result"` in `is_linear()` function.<br>
+            - Update related test assertions in `test_linearity.py` to reflect the new key.<br>
+            - Ensure documentation examples are consistent with the updated return structure.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a16b017`](https://github.com/data-science-extensions/ts-stat-tests/commit/a16b017eafa89fab71ba5840edaca1f7a88a0fee): Update progress<br>
+            - Mark linearity tests as implemented in the README.md<br>
+            - Update test status for `Harvey Collier`, `Lagrange Multiplier`, `Rainbow`, and `Ramsey's RESET` tests to ✅<br>
+            - Reflect changes in the index.md documentation for linearity algorithms
+            (by [chrimaho](https://github.com/chrimaho))        * [`63f7847`](https://github.com/data-science-extensions/ts-stat-tests/commit/63f78473f8fc8a0ef80a2893f12895d2e64b087d): Refactor options structure in linearity documentation<br>
+            - Move options under `extras` for clarity<br>
+            - Ensure consistent formatting across sections
+            (by [chrimaho](https://github.com/chrimaho))        * [`457d175`](https://github.com/data-science-extensions/ts-stat-tests/commit/457d175bad4577e1fd82e43100e2f70f8f7456e9): Add documentation for `linearity` modules<br>
+            - Introduce an overview of linearity testing and its significance<br>
+            - Detail the implementation and source library used<br>
+            - Provide examples of source modules related to linearity tests and algorithms
+            (by [chrimaho](https://github.com/chrimaho))        * [`1bef1a7`](https://github.com/data-science-extensions/ts-stat-tests/commit/1bef1a7435eaacf105c169e73a9c9b5071c98b2a): Add unit tests for linearity algorithms<br>
+            - Implement `TestLinearity` class for testing various linearity algorithms.<br>
+            - Include tests for Harvey-Collier, Lagrange Multiplier, Rainbow, and Ramsey RESET tests.<br>
+            - Add dispatcher tests for algorithm selection in linearity checks.<br>
+            - Validate results for linear and non-linear datasets.
+            (by [chrimaho](https://github.com/chrimaho))        * [`4aae6e3`](https://github.com/data-science-extensions/ts-stat-tests/commit/4aae6e3814ad091b52dd95139eeba95af0a31455): Refactor linearity algorithms for improved robustness and clarity.<br>
+            - Remove unnecessary type hints for variables.<br>
+            - Replace direct attribute access with `getattr()` for safer attribute retrieval.<br>
+            - Ensure consistent handling of return values from linearity functions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ce23d16`](https://github.com/data-science-extensions/ts-stat-tests/commit/ce23d1627a0116e6da203de81775b4fcf67c44c1): Add linearity tests and convenience functions<br>
+            - Implement `linearity()` function to perform linearity tests on fitted regression models.<br>
+            - Introduce `is_linear()` function to check if the relationship in a fitted model is linear.<br>
+            - Include detailed docstrings for both functions with usage examples.<br>
+            - Add necessary imports and define module exports.
+            (by [chrimaho](https://github.com/chrimaho))        * [`87f9b3b`](https://github.com/data-science-extensions/ts-stat-tests/commit/87f9b3b9ecce8ebcbdc60d41db106f791160d846): Add docstrings for linearity algorithms<br>
+            - Include summaries, parameters, return types, and examples for the `hc()`, `lm()`, `rb()`, and `rr()` functions.<br>
+            - Enhance documentation clarity for users implementing linearity tests.
+            (by [chrimaho](https://github.com/chrimaho))        * [`03dfb72`](https://github.com/data-science-extensions/ts-stat-tests/commit/03dfb7241fa0be9e33093e00d21cddb6d86ae59a): Add linearity algorithms<br>
+            - Introduce `hc()`, `lm()`, `rb()`, and `rr()` functions for linearity tests.<br>
+            - Define constants `VALID_RR_TEST_TYPE_OPTIONS` and `VALID_RR_COV_TYPE_OPTIONS`.<br>
+            - Include necessary imports from `statsmodels` and `numpy`.
+            (by [chrimaho](https://github.com/chrimaho))        * [`e9eb401`](https://github.com/data-science-extensions/ts-stat-tests/commit/e9eb401946add7ab5a542a1124f524f611a5321d): Add framework for `linearity` modules<br>
+            - Introduce `linearity.py` algorithm implementation.<br>
+            - Create `test_linearity.py` for unit tests.<br>
+            - Add `linearity.md` documentation file.<br>
+            - Update `mkdocs.yml` to include Linearity in navigation.
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.6.2"
 
     ## **v0.6.2 - Stability Module**
