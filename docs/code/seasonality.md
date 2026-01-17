@@ -22,27 +22,27 @@
 
         :material-arrow-right-bold: For more info, see: [Forecasting: Principles and Practice - Time Series Patterns](https://otexts.com/fpp2/tspatterns.html)
 
-    | Information        | Details                                                                                                                       |
-    | :----------------- | :---------------------------------------------------------------------------------------------------------------------------- |
-    | **Module**         | [ts_stat_tests.tests.seasonality](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/seasonality.py) |
-    | **Algorithms**     | `qs`, `ocsb`, `ch`, `seasonal_strength`, `trend_strength`, `spikiness`                                                        |
-    | **Complexity**     | $O(n \log n)$ to $O(n^2)$ depending on algorithm                                                                              |
-    | **Implementation** | `statsmodels`, `pmdarima`, `tsfeatures`                                                                                       |
+    | Information        | Details                                                                |
+    | :----------------- | :--------------------------------------------------------------------- |
+    | **Module**         | [ts_stat_tests.tests.seasonality][ts_stat_tests.tests.seasonality]     |
+    | **Algorithms**     | `qs`, `ocsb`, `ch`, `seasonal_strength`, `trend_strength`, `spikiness` |
+    | **Complexity**     | $O(n \log n)$ to $O(n^2)$ depending on algorithm                       |
+    | **Implementation** | `statsmodels`, `pmdarima`, `tsfeatures`                                |
 
     !!! info "Source Library"
 
         We leverage several industry-standard libraries for the underlying statistical tests in this module.
 
         1.  **[`pmdarima`](https://alkaline-ml.com/pmdarima)**: Provides the implementation for the Canova-Hansen (`ch`) and Osborn-Chui-Smith-Birchenhall (`ocsb`) tests through its `nsdiffs` and estimator classes.
-        1.  **[`tsfeatures`](https://github.com/Nixtla/tsfeatures)**: Used as the basis for calculating seasonal strength, trend strength, and spikiness, following the approach popularized by the R `feasts` and `tsfeatures` packages.
-        1.  **[`seastests`](https://rdrr.io/cran/seastests)**: An R package that served as the primary reference and inspiration for our Python implementation of the Quenouille-Sarle (`qs`) test.
+        2.  **[`tsfeatures`](https://github.com/Nixtla/tsfeatures)**: Used as the basis for calculating seasonal strength, trend strength, and spikiness, following the approach popularized by the R `feasts` and `tsfeatures` packages.
+        3.  **[`seastests`](https://rdrr.io/cran/seastests)**: An R package that served as the primary reference and inspiration for our Python implementation of the Quenouille-Sarle (`qs`) test.
 
     !!! info "Source Module"
 
         The source code for the seasonality tests is organized into two primary layers:
 
-        - **[`src.ts_stat_tests.algorithms.seasonality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/seasonality.py)**: Contains the core mathematical implementations and wrappers for third-party libraries.
-        - **[`src.ts_stat_tests.tests.seasonality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/seasonality.py)**: Provides the top-level user interface, including the `seasonality` dispatcher and the `is_seasonal` boolean check.
+        - **[`src.ts_stat_tests.algorithms.seasonality`][ts_stat_tests.algorithms.seasonality]**: Contains the core mathematical implementations and wrappers for third-party libraries.
+        - **[`src.ts_stat_tests.tests.seasonality`][ts_stat_tests.tests.seasonality]**: Provides the top-level user interface, including the `seasonality` dispatcher and the `is_seasonal` boolean check.
 
 
 ## Seasonality Tests

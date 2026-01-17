@@ -39,8 +39,8 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/stationarity.py).
-        - [`ts_stat_tests.tests.stationarity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/stationarity.py).
+        - [`ts_stat_tests.algorithms.stationarity`][ts_stat_tests.algorithms.stationarity].
+        - [`ts_stat_tests.tests.stationarity`][ts_stat_tests.tests.stationarity].
 
 ## Stationarity Tests
 

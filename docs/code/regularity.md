@@ -46,8 +46,8 @@
 
         All of the source code can be found within the modules:
 
-        - [`ts_stat_tests.algorithms.regularity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/regularity.py).
-        - [`ts_stat_tests.tests.regularity`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/regularity.py).
+        - [`ts_stat_tests.algorithms.regularity`][ts_stat_tests.algorithms.regularity].
+        - [`ts_stat_tests.tests.regularity`][ts_stat_tests.tests.regularity].
 
 ## Regularity Tests
 

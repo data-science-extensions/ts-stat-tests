@@ -124,7 +124,7 @@ def is_stable(
         ```
 
     ??? tip "See Also"
-        - [`stability()`](ts_stat_tests.algorithms.stability.stability)
+        - [`stability()`][ts_stat_tests.algorithms.stability.stability]
     """
     return True if _stability(data=data, freq=freq) < alpha else False
 
@@ -186,6 +186,6 @@ def is_lumpy(
         ```
 
     ??? tip "See Also"
-        - [`lumpiness()`](ts_stat_tests.algorithms.stability.lumpiness)
+        - [`lumpiness()`][ts_stat_tests.algorithms.stability.lumpiness]
     """
     return True if _lumpiness(data=data, freq=freq) > alpha else False

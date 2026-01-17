@@ -30,8 +30,8 @@
 
         All of the source code can be found within this modules:
 
-        - [`ts_stat_tests.algorithms.stability`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/stability.py).
-        - [`ts_stat_tests.tests.stability`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/stability.py).
+        - [`ts_stat_tests.algorithms.stability`][ts_stat_tests.algorithms.stability].
+        - [`ts_stat_tests.tests.stability`][ts_stat_tests.tests.stability].
 
 ## Stability Tests
 
