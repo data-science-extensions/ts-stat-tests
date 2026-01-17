@@ -41,10 +41,15 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Literal, Optional, Union, overload
+from typing import (
+    Literal,
+    Optional,
+    Union,
+    cast,
+    overload,
+)
 
 # ## Python Third Party Imports ----
-import numpy as np
 from numpy.typing import ArrayLike
 from statsmodels.sandbox.stats.diagnostic import ResultsStore
 from statsmodels.stats.diagnostic import (
@@ -61,12 +66,7 @@ from typeguard import typechecked
 # ---------------------------------------------------------------------------- #
 
 
-__all__: list[str] = [
-    "arch",
-    "bpl",
-    "gq",
-    "wlm",
-]
+__all__: list[str] = ["arch", "bpl", "gq", "wlm"]
 
 
 ## --------------------------------------------------------------------------- #
@@ -87,15 +87,15 @@ VALID_GQ_ALTERNATIVES_OPTIONS = Literal["two-sided", "increasing", "decreasing"]
 @overload
 def arch(
     resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store: Literal[False] = False
-) -> tuple[np.float64, np.float64, np.float64, np.float64]: ...
+) -> tuple[float, float, float, float]: ...
 @overload
 def arch(
     resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store: Literal[True]
-) -> tuple[np.float64, np.float64, np.float64, np.float64, ResultsStore]: ...
+) -> tuple[float, float, float, float, ResultsStore]: ...
 @typechecked
 def arch(resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store: bool = False) -> Union[
-    tuple[np.float64, np.float64, np.float64, np.float64],
-    tuple[np.float64, np.float64, np.float64, np.float64, ResultsStore],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float, ResultsStore],
 ]:
     r"""
     !!! note "Summary"
@@ -168,13 +168,28 @@ def arch(resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store:
     ??? question "References"
         - Engle, R. F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. Econometrica, 50(4), 987-1007.
     """
-    return het_arch(resid=resid, nlags=nlags, store=store, ddof=ddof)
+    if store:
+        res_5 = cast(
+            tuple[float, float, float, float, ResultsStore],
+            het_arch(resid=resid, nlags=nlags, store=True, ddof=ddof),
+        )
+        return (
+            float(res_5[0]),
+            float(res_5[1]),
+            float(res_5[2]),
+            float(res_5[3]),
+            res_5[4],
+        )
+
+    res_4 = cast(
+        tuple[float, float, float, float],
+        het_arch(resid=resid, nlags=nlags, store=False, ddof=ddof),
+    )
+    return (float(res_4[0]), float(res_4[1]), float(res_4[2]), float(res_4[3]))
 
 
 @typechecked
-def bpl(
-    resid: ArrayLike, exog_het: ArrayLike, robust: bool = True
-) -> tuple[np.float64, np.float64, np.float64, np.float64]:
+def bpl(resid: ArrayLike, exog_het: ArrayLike, robust: bool = True) -> tuple[float, float, float, float]:
     r"""
     !!! note "Summary"
         Breusch-Pagan Lagrange Multiplier Test for Heteroscedasticity.
@@ -242,7 +257,8 @@ def bpl(
         - Breusch, T. S., & Pagan, A. R. (1979). A Simple Test for Heteroscedasticity and Random Coefficient Variation. Econometrica, 47(5), 1287-1294.
         - Koenker, R. (1981). A Note on Studentizing a Test for Heteroscedasticity. Journal of Econometrics, 17(1), 107-112.
     """
-    return het_breuschpagan(resid=resid, exog_het=exog_het, robust=robust)
+    res = het_breuschpagan(resid=resid, exog_het=exog_het, robust=robust)
+    return (float(res[0]), float(res[1]), float(res[2]), float(res[3]))
 
 
 @overload
@@ -255,7 +271,7 @@ def gq(
     alternative: VALID_GQ_ALTERNATIVES_OPTIONS = "increasing",
     *,
     store: Literal[False] = False,
-) -> tuple[np.float64, np.float64, str]: ...
+) -> tuple[float, float, str]: ...
 @overload
 def gq(
     y: ArrayLike,
@@ -266,7 +282,7 @@ def gq(
     alternative: VALID_GQ_ALTERNATIVES_OPTIONS = "increasing",
     *,
     store: Literal[True],
-) -> tuple[np.float64, np.float64, str, ResultsStore]: ...
+) -> tuple[float, float, str, ResultsStore]: ...
 @typechecked
 def gq(
     y: ArrayLike,
@@ -278,8 +294,8 @@ def gq(
     *,
     store: bool = False,
 ) -> Union[
-    tuple[np.float64, np.float64, str],
-    tuple[np.float64, np.float64, str, ResultsStore],
+    tuple[float, float, str],
+    tuple[float, float, str, ResultsStore],
 ]:
     r"""
     !!! note "Summary"
@@ -357,11 +373,38 @@ def gq(
     ??? question "References"
         - Goldfeld, S. M., & Quandt, R. E. (1965). Some Tests for Homoscedasticity. Journal of the American Statistical Association, 60(310), 539-547.
     """
-    return het_goldfeldquandt(y=y, x=x, idx=idx, split=split, drop=drop, alternative=alternative, store=store)
+    if store:
+        res_4 = cast(
+            tuple[float, float, str, ResultsStore],
+            het_goldfeldquandt(
+                y=y,
+                x=x,
+                idx=idx,
+                split=split,
+                drop=drop,
+                alternative=alternative,
+                store=True,
+            ),
+        )
+        return (float(res_4[0]), float(res_4[1]), str(res_4[2]), res_4[3])
+
+    res_3 = cast(
+        tuple[float, float, str],
+        het_goldfeldquandt(
+            y=y,
+            x=x,
+            idx=idx,
+            split=split,
+            drop=drop,
+            alternative=alternative,
+            store=False,
+        ),
+    )
+    return (float(res_3[0]), float(res_3[1]), str(res_3[2]))
 
 
 @typechecked
-def wlm(resid: ArrayLike, exog_het: ArrayLike) -> tuple[np.float64, np.float64, np.float64, np.float64]:
+def wlm(resid: ArrayLike, exog_het: ArrayLike) -> tuple[float, float, float, float]:
     r"""
     !!! note "Summary"
         White's Test for Heteroscedasticity.
@@ -419,4 +462,5 @@ def wlm(resid: ArrayLike, exog_het: ArrayLike) -> tuple[np.float64, np.float64, 
     ??? question "References"
         - White, H. (1980). A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct Test for Heteroskedasticity. Econometrica, 48(4), 817-838.
     """
-    return het_white(resid=resid, exog_het=exog_het)
+    res = het_white(resid=resid, exog=exog_het)
+    return (float(res[0]), float(res[1]), float(res[2]), float(res[3]))

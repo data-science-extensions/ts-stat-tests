@@ -44,13 +44,11 @@
 from typing import Any, Callable, Union
 
 # ## Python Third Party Imports ----
-import numpy as np
 from numpy.typing import ArrayLike
 from statsmodels.regression.linear_model import (
     RegressionResults,
     RegressionResultsWrapper,
 )
-from statsmodels.sandbox.stats.diagnostic import ResultsStore
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
@@ -78,7 +76,7 @@ def heteroscedasticity(
     res: Union[RegressionResults, RegressionResultsWrapper],
     algorithm: str = "bp",
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
-) -> Union[tuple[float, ...], ResultsStore]:
+) -> tuple[Any, ...]:
     """
     !!! note "Summary"
         Perform a heteroscedasticity test on a fitted regression model.
@@ -152,7 +150,7 @@ def heteroscedasticity(
     def _call(
         func: Callable[..., Any],
         **args: Any,
-    ) -> Union[tuple[float, ...], ResultsStore]:
+    ) -> tuple[Any, ...]:
         """
         !!! note "Summary"
             Internal helper to handle keyword arguments types.
@@ -161,11 +159,14 @@ def heteroscedasticity(
             func (Callable[..., Any]):
                 The function to call.
             args (Any):
-                The arguments to pass.
+                The keyword arguments to pass.
 
         Returns:
-            (Union[tuple[float, ...], ResultsStore]):
-                The result of the function call.
+            (tuple[Any, ...]):
+                The function output.
+
+        ???+ example "Examples"
+            This is an internal function and is not intended to be called directly.
         """
         return func(**args)
 
@@ -245,23 +246,12 @@ def is_heteroscedastic(
 
         ```
     """
-    options: dict[str, tuple[str, ...]] = {
-        "arch": ("arch", "engle"),
-        "bp": ("bp", "breusch-pagan", "breusch-pagan-lagrange-multiplier"),
-        "gq": ("gq", "goldfeld-quandt"),
-        "white": ("white",),
-    }
-
     raw_res = heteroscedasticity(res=res, algorithm=algorithm, **kwargs)
 
-    if isinstance(raw_res, tuple):
-        # Most statsmodels het tests return (lm, lmpval, fval, fpval) or (fval, pval)
-        stat = float(raw_res[0])
-        pvalue = float(raw_res[1])
-    else:
-        # If store=True, ResultsStore is returned
-        stat = float(getattr(raw_res, "statistic", getattr(raw_res, "fvalue", np.nan)))
-        pvalue = float(getattr(raw_res, "pvalue", np.nan))
+    # All heteroscedasticity algorithms return a tuple
+    # (lm, lmpval, fval, fpval) or (fval, pval, ...)
+    stat = float(raw_res[0])
+    pvalue = float(raw_res[1])
 
     return {
         "algorithm": algorithm,
