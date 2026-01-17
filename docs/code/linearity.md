@@ -37,16 +37,18 @@
 
 ::: ts_stat_tests.tests.linearity
     options:
-        show_root_heading: false
-        heading_level: 3
-        show_if_no_docstring: true
-        members_order: source
+        extras:
+            show_root_heading: false
+            heading_level: 3
+            show_if_no_docstring: true
+            members_order: source
 
 ## Linearity Algorithms
 
 ::: ts_stat_tests.algorithms.linearity
     options:
-        show_root_heading: false
-        heading_level: 3
-        show_if_no_docstring: true
-        members_order: source
+        extras:
+            show_root_heading: false
+            heading_level: 3
+            show_if_no_docstring: true
+            members_order: source
