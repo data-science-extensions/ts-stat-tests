@@ -20,8 +20,7 @@
 
 """
 !!! note "Summary"
-    This module contains convenience functions and tests for stability measures,
-    allowing for easy access to stability and lumpiness algorithms.
+    This module contains convenience functions and tests for stability measures, allowing for easy access to stability and lumpiness algorithms.
 """
 
 
