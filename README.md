@@ -85,10 +85,10 @@ Full credit goes to the packages listed in this table.
 | Normality          | Shapiro-Wilk test for normality (SW)                                          | `scipy`        | Python          | ✅           |
 | Normality          | D'Agostino & Pearson's test for normality                                     | `scipy`        | Python          | ✅           |
 | Normality          | Anderson-Darling test for normality                                           | `scipy`        | Python          | ✅           |
-| Linearity          | Harvey Collier test for linearity (HC)                                        | `statsmodels`  | Python          | 🔲           |
-| Linearity          | Lagrange Multiplier test for linearity (LM)                                   | `statsmodels`  | Python          | 🔲           |
-| Linearity          | Rainbow test for linearity (RB)                                               | `statsmodels`  | Python          | 🔲           |
-| Linearity          | Ramsey's RESET test for neglected nonlinearity (RR)                           | `statsmodels`  | Python          | 🔲           |
+| Linearity          | Harvey Collier test for linearity (HC)                                        | `statsmodels`  | Python          | ✅           |
+| Linearity          | Lagrange Multiplier test for linearity (LM)                                   | `statsmodels`  | Python          | ✅           |
+| Linearity          | Rainbow test for linearity (RB)                                               | `statsmodels`  | Python          | ✅           |
+| Linearity          | Ramsey's RESET test for neglected nonlinearity (RR)                           | `statsmodels`  | Python          | ✅           |
 | Heteroscedasticity | Engle's Test for Autoregressive Conditional Heteroscedasticity (ARCH)         | `statsmodels`  | Python          | 🔲           |
 | Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | `statsmodels`  | Python          | 🔲           |
 | Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | `statsmodels`  | Python          | 🔲           |

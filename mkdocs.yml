@@ -63,6 +63,7 @@ nav:
           - Stationarity: code/stationarity.md
           - Seasonality: code/seasonality.md
           - Stability: code/stability.md
+          - Linearity: code/linearity.md
       - Utilities:
           - Data: code/data.md
           - Errors: code/errors.md
