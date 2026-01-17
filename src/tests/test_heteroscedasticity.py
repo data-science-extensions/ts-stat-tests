@@ -17,7 +17,7 @@ import unittest
 import numpy as np
 import statsmodels.api as sm
 from pytest import raises
-from statsmodels.sandbox.stats.diagnostic import ResultsStore
+from statsmodels.stats.diagnostic import ResultsStore
 
 # ## Local First Party Imports ----
 from ts_stat_tests.algorithms.heteroscedasticity import arch, bpl, gq, wlm

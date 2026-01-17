@@ -51,8 +51,8 @@ from typing import (
 
 # ## Python Third Party Imports ----
 from numpy.typing import ArrayLike
-from statsmodels.sandbox.stats.diagnostic import ResultsStore
 from statsmodels.stats.diagnostic import (
+    ResultsStore,
     het_arch,
     het_breuschpagan,
     het_goldfeldquandt,
