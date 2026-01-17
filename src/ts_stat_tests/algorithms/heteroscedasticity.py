@@ -207,12 +207,12 @@ def bpl(resid: ArrayLike, exog_het: ArrayLike, robust: bool = True) -> tuple[flo
             Default: `True`
 
     Returns:
-        (tuple[np.float64, np.float64, np.float64, np.float64]):
+        (tuple[float, float, float, float]):
             A tuple containing:
-            - `lmstat` (np.float64): The Lagrange Multiplier statistic.
-            - `lmpval` (np.float64): The p-value for the LM statistic.
-            - `fstat` (np.float64): The F-statistic.
-            - `fpval` (np.float64): The p-value for the F-statistic.
+            - `lmstat` (float): The Lagrange Multiplier statistic.
+            - `lmpval` (float): The p-value for the LM statistic.
+            - `fstat` (float): The F-statistic.
+            - `fpval` (float): The p-value for the F-statistic.
 
     ???+ example "Examples"
 
