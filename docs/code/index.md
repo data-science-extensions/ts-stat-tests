@@ -183,7 +183,7 @@
 
 ## Testing
 
-This package maintains 100% test coverage with comprehensive tesing against:
+This package maintains 100% test coverage with comprehensive testing against:
 
 1. **Code Style**: All code adheres to [`black`] formatting, including all code chunks in docstrings using the [`blacken-docs`].
 2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`].
