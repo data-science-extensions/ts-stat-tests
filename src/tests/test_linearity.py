@@ -24,10 +24,10 @@ import unittest
 # ## Python Third Party Imports ----
 import numpy as np
 import statsmodels.api as sm
+from pytest import raises
 from statsmodels.stats.contrast import ContrastResults
 
 # ## Local First Party Imports ----
-# ## Local Imports ----
 from ts_stat_tests.algorithms.linearity import hc, lm, rb, rr
 from ts_stat_tests.tests.linearity import is_linear, linearity
 
@@ -134,7 +134,7 @@ class TestLinearity(unittest.TestCase):
 
     def test_linearity_dispatcher_invalid(self) -> None:
         """Test linearity dispatcher with invalid algorithm."""
-        with self.assertRaises(ValueError):
+        with raises(ValueError):
             linearity(self.res_linear, algorithm="invalid")
 
     def test_is_linear_results(self) -> None:
