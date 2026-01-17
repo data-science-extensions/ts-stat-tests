@@ -1,0 +1,3594 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python library for performing statistical tests on time series data.">
+      
+      
+        <meta name="author" content="[Chris Mahoney](mailto:chris@mahoneyconsultingservices.com)">
+      
+      
+      
+        <link rel="prev" href="../stability/">
+      
+      
+        <link rel="next" href="../data/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/icons/1205526.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Linearity - Time Series Statistical Tests</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../assets/css/style.css">
+    
+      <link rel="stylesheet" href="../../assets/css/admonitions.css">
+    
+      <link rel="stylesheet" href="../../assets/css/code_chunks.css">
+    
+      <link rel="stylesheet" href="../../assets/css/shortcodes.css">
+    
+      <link rel="stylesheet" href="../../assets/css/progress_bar.css">
+    
+      <link rel="stylesheet" href="../../assets/css/columns.css">
+    
+      <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#test-the-linearity-of-a-given-time-series-dataset" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../../..">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Time Series Statistical Tests" class="md-header__button md-logo" aria-label="Time Series Statistical Tests" data-md-component="logo">
+      
+  <img src="../../assets/icons/1205526.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Time Series Statistical Tests
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linearity
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/data-science-extensions/ts-stat-tests" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ts-stat-tests
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../usage/overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Code
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://data-science-extensions.com/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Data Science Extensions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Time Series Statistical Tests" class="md-nav__button md-logo" aria-label="Time Series Statistical Tests" data-md-component="logo">
+      
+  <img src="../../assets/icons/1205526.svg" alt="logo">
+
+    </a>
+    Time Series Statistical Tests
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/data-science-extensions/ts-stat-tests" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ts-stat-tests
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Change Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Code
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../correlation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correlation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regularity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../normality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Normality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stationarity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stationarity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../seasonality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seasonality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linearity
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linearity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearity-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearity Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linearity Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.tests.linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;linearity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" linearity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.tests.linearity.linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;linearity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.tests.linearity.is_linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_linear
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearity-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearity Algorithms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linearity Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;linearity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" linearity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.hc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;hc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.lm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;lm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.rb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;rb
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.rr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;rr
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://data-science-extensions.com/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Science Extensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearity-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearity Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linearity Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.tests.linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;linearity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" linearity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.tests.linearity.linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;linearity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.tests.linearity.is_linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_linear
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearity-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearity Algorithms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linearity Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;linearity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" linearity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.hc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;hc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.lm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;lm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.rb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;rb
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts_stat_tests.algorithms.linearity.rr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;rr
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/data-science-extensions/ts-stat-tests/edit/main/docs/code/linearity.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/data-science-extensions/ts-stat-tests/raw/main/docs/code/linearity.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="test-the-linearity-of-a-given-time-series-dataset">Test the <code>linearity</code> of a given Time-Series Dataset<a class="headerlink" href="#test-the-linearity-of-a-given-time-series-dataset" title="Permanent link">🔗</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">🔗</a></h2>
+<div class="admonition abstract">
+<p class="admonition-title">Summary</p>
+<p>Linearity testing evaluates whether the relationship between variables in a model follows a linear specification. In the context of time-series analysis, these tests help determine if linear regression models are appropriate or if non-linear dynamics (such as structural breaks or exponential trends) are present.</p>
+<div class="admonition quote">
+<p class="admonition-title">As stated by <a href="https://doi.org/10.1111/j.2517-6161.1969.tb00796.x">James Ramsey (1969)</a>:</p>
+<p>Specification errors, such as the omission of relevant variables, incorrect functional form, or correlation between the regressor and the error term, can lead to biased and inconsistent estimators. The RESET test provides a robust method for detecting these departures from linearity.</p>
+<hr />
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 15V9h8V4.16L19.84 12 12 19.84V15z"/></svg></span> For more info, see: <a href="https://en.wikipedia.org/wiki/Ramsey_RESET_test">Ramsey RESET test</a>.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Implementation Details</p>
+<p>The suite of tests provided here includes measures based on recursive residuals, subset fitting, and power transformations. These tests are typically applied to the residuals of an estimated OLS model to verify that no significant non-linear information remains in the error term.</p>
+<hr />
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 15V9h8V4.16L19.84 12 12 19.84V15z"/></svg></span> For more info, see: <a href="https://www.statsmodels.org/stable/stats.html#diagnostic-tests">Statsmodels Linearity Tests</a>.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Source Library</p>
+<p>The <a href="https://www.statsmodels.org/stable/index.html"><code>statsmodels</code></a> package was chosen because it provides the industry-standard implementation of econometric diagnostic tests, ensuring mathematical rigor and consistency with well-established statistical literature.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Source Module</p>
+<p>All of the source code can be found within these modules:</p>
+<ul>
+<li><a class="autorefs autorefs-internal" title="            ts_stat_tests.algorithms.linearity" href="#ts_stat_tests.algorithms.linearity"><code>ts_stat_tests.algorithms.linearity</code></a>.</li>
+<li><a class="autorefs autorefs-internal" title="            ts_stat_tests.tests.linearity" href="#ts_stat_tests.tests.linearity"><code>ts_stat_tests.tests.linearity</code></a>.</li>
+</ul>
+</div>
+</div>
+<h2 id="linearity-tests">Linearity Tests<a class="headerlink" href="#linearity-tests" title="Permanent link">🔗</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h3 id="ts_stat_tests.tests.linearity" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">ts_stat_tests.tests.linearity</span>
+
+
+<a href="#ts_stat_tests.tests.linearity" class="headerlink" title="Permanent link">🔗</a></h3>
+
+    <div class="doc doc-contents first">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>This module contains convenience functions and tests for linearity measures, allowing for easy access to different linearity algorithms.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ts_stat_tests.tests.linearity.linearity" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">linearity</span>
+
+
+<a href="#ts_stat_tests.tests.linearity.linearity" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">linearity</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rr&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ContrastResults</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>Perform a linearity test on a fitted regression model.</p>
+</div>
+<details class="abstract" open="open">
+<summary>Details</summary>
+<p>This function is a convenience wrapper around four underlying algorithms:<br>
+- <a class="autorefs autorefs-internal" title="            hc" href="#ts_stat_tests.algorithms.linearity.hc"><code>hc()</code></a><br>
+- <a class="autorefs autorefs-internal" title="            lm" href="#ts_stat_tests.algorithms.linearity.lm"><code>lm()</code></a><br>
+- <a class="autorefs autorefs-internal" title="            rb" href="#ts_stat_tests.algorithms.linearity.rb"><code>rb()</code></a><br>
+- <a class="autorefs autorefs-internal" title="            rr" href="#ts_stat_tests.algorithms.linearity.rr"><code>rr()</code></a></p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>res</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="statsmodels.regression.linear_model.RegressionResults">RegressionResults</span>, <span title="statsmodels.regression.linear_model.RegressionResultsWrapper">RegressionResultsWrapper</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fitted regression model to be checked.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>algorithm</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Which linearity algorithm to use.<br>
+- <code>hc()</code>: <code>["hc", "harvey", "harvey-collier"]</code><br>
+- <code>lm()</code>: <code>["lm", "lagrange", "lagrange-multiplier"]</code><br>
+- <code>rb()</code>: <code>["rb", "rainbow"]</code><br>
+- <code>rr()</code>: <code>["rr", "reset", "ramsey-reset"]</code><br>
+Default: <code>"rr"</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;rr&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>kwargs</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="int">int</span>, <span title="str">str</span>, <span title="bool">bool</span>, <span title="numpy.typing.ArrayLike">ArrayLike</span>, None]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Additional keyword arguments passed to the underlying test function.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>When the given value for <code>algorithm</code> is not valid.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>], <span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="float">float</span>, <span title="float">float</span>], <span title="statsmodels.stats.contrast.ContrastResults">ContrastResults</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li>For <code>"hc"</code>: <code>(statistic, pvalue)</code></li>
+<li>For <code>"lm"</code>: <code>(lm_stat, lm_pval, f_stat, f_pval)</code></li>
+<li>For <code>"rb"</code>: <code>(statistic, pvalue)</code></li>
+<li>For <code>"rr"</code>: <code>ContrastResults</code> object</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <div class="admonition success">
+<p class="admonition-title">Credit</p>
+<p>Calculations are performed by <code>statsmodels</code>.</p>
+</div>
+<details class="example" open="open">
+<summary>Examples</summary>
+<div class="py python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Setup</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ts_stat_tests.tests.linearity</span><span class="w"> </span><span class="kn">import</span> <span class="n">linearity</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<div class="py python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 1: Ramsey RESET test</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">linearity</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;rr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p-value: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">pvalue</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
+<span class="go">p-value: 0.1367</span>
+</code></pre></div></td></tr></table></div>
+<div class="py python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 2: Rainbow test</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">linearity</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rainbow p-value: </span><span class="si">{</span><span class="n">pval</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># doctest: +SKIP</span>
+<span class="go">Rainbow p-value: 0.5432</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/ts_stat_tests/tests/linearity.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">linearity</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rr&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ContrastResults</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        Perform a linearity test on a fitted regression model.</span>
+
+<span class="sd">    ???+ abstract &quot;Details&quot;</span>
+<span class="sd">        This function is a convenience wrapper around four underlying algorithms:&lt;br&gt;</span>
+<span class="sd">        - [`hc()`][ts_stat_tests.algorithms.linearity.hc]&lt;br&gt;</span>
+<span class="sd">        - [`lm()`][ts_stat_tests.algorithms.linearity.lm]&lt;br&gt;</span>
+<span class="sd">        - [`rb()`][ts_stat_tests.algorithms.linearity.rb]&lt;br&gt;</span>
+<span class="sd">        - [`rr()`][ts_stat_tests.algorithms.linearity.rr]</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        res (Union[RegressionResults, RegressionResultsWrapper]):</span>
+<span class="sd">            The fitted regression model to be checked.</span>
+<span class="sd">        algorithm (str):</span>
+<span class="sd">            Which linearity algorithm to use.&lt;br&gt;</span>
+<span class="sd">            - `hc()`: `[&quot;hc&quot;, &quot;harvey&quot;, &quot;harvey-collier&quot;]`&lt;br&gt;</span>
+<span class="sd">            - `lm()`: `[&quot;lm&quot;, &quot;lagrange&quot;, &quot;lagrange-multiplier&quot;]`&lt;br&gt;</span>
+<span class="sd">            - `rb()`: `[&quot;rb&quot;, &quot;rainbow&quot;]`&lt;br&gt;</span>
+<span class="sd">            - `rr()`: `[&quot;rr&quot;, &quot;reset&quot;, &quot;ramsey-reset&quot;]`&lt;br&gt;</span>
+<span class="sd">            Default: `&quot;rr&quot;`</span>
+<span class="sd">        kwargs (Union[float, int, str, bool, ArrayLike, None]):</span>
+<span class="sd">            Additional keyword arguments passed to the underlying test function.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        (ValueError):</span>
+<span class="sd">            When the given value for `algorithm` is not valid.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Union[tuple[float, float], tuple[float, float, float, float], ContrastResults]):</span>
+<span class="sd">            - For `&quot;hc&quot;`: `(statistic, pvalue)`</span>
+<span class="sd">            - For `&quot;lm&quot;`: `(lm_stat, lm_pval, f_stat, f_pval)`</span>
+<span class="sd">            - For `&quot;rb&quot;`: `(statistic, pvalue)`</span>
+<span class="sd">            - For `&quot;rr&quot;`: `ContrastResults` object</span>
+
+<span class="sd">    !!! success &quot;Credit&quot;</span>
+<span class="sd">        Calculations are performed by `statsmodels`.</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+
+<span class="sd">        ```pycon {.py .python linenums=&quot;1&quot; title=&quot;Setup&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; import statsmodels.api as sm</span>
+<span class="sd">        &gt;&gt;&gt; from ts_stat_tests.tests.linearity import linearity</span>
+<span class="sd">        &gt;&gt;&gt; x = sm.add_constant(np.linspace(0, 10, 100))</span>
+<span class="sd">        &gt;&gt;&gt; y = 3 + 2 * x[:, 1] + np.random.normal(size=100)</span>
+<span class="sd">        &gt;&gt;&gt; res = sm.OLS(y, x).fit()</span>
+
+<span class="sd">        ```</span>
+
+<span class="sd">        ```pycon {.py .python linenums=&quot;1&quot; title=&quot;Example 1: Ramsey RESET test&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; result = linearity(res, algorithm=&quot;rr&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(f&quot;p-value: {result.pvalue:.4f}&quot;)  # doctest: +SKIP</span>
+<span class="sd">        p-value: 0.1367</span>
+
+<span class="sd">        ```</span>
+
+<span class="sd">        ```pycon {.py .python linenums=&quot;1&quot; title=&quot;Example 2: Rainbow test&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; stat, pval = linearity(res, algorithm=&quot;rb&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(f&quot;Rainbow p-value: {pval:.4f}&quot;)  # doctest: +SKIP</span>
+<span class="sd">        Rainbow p-value: 0.5432</span>
+
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;hc&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;hc&quot;</span><span class="p">,</span> <span class="s2">&quot;harvey&quot;</span><span class="p">,</span> <span class="s2">&quot;harvey-collier&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;lm&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;lm&quot;</span><span class="p">,</span> <span class="s2">&quot;lagrange&quot;</span><span class="p">,</span> <span class="s2">&quot;lagrange-multiplier&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;rb&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">,</span> <span class="s2">&quot;rainbow&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;rr&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;rr&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;ramsey-reset&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Internal helper to handle kwargs casting for ty</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_call</span><span class="p">(</span>
+        <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ContrastResults</span><span class="p">]],</span>
+        <span class="o">**</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">,</span>
+            <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">ArrayLike</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="n">RegressionResults</span><span class="p">,</span>
+            <span class="n">RegressionResultsWrapper</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ContrastResults</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        !!! note &quot;Summary&quot;</span>
+<span class="sd">            Internal helper to handle keyword arguments types.</span>
+
+<span class="sd">        Params:</span>
+<span class="sd">            func (Callable[..., Union[tuple[float, ...], ContrastResults]]):</span>
+<span class="sd">                The function to call.</span>
+<span class="sd">            args (Union[float, int, str, bool, ArrayLike, None, RegressionResults, RegressionResultsWrapper]):</span>
+<span class="sd">                The arguments to pass.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (Union[tuple[float, ...], ContrastResults]):</span>
+<span class="sd">                The result of the function call.</span>
+
+<span class="sd">        ???+ example &quot;Examples&quot;</span>
+<span class="sd">            ```python</span>
+<span class="sd">            # Internal use only</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;hc&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">_call</span><span class="p">(</span><span class="n">_hc</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;lm&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">_call</span><span class="p">(</span><span class="n">_lm</span><span class="p">,</span> <span class="n">resid</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;rb&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">_call</span><span class="p">(</span><span class="n">_rb</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;rr&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">_call</span><span class="p">(</span><span class="n">_rr</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="n">generate_error_message</span><span class="p">(</span>
+            <span class="n">parameter_name</span><span class="o">=</span><span class="s2">&quot;algorithm&quot;</span><span class="p">,</span>
+            <span class="n">value_parsed</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ts_stat_tests.tests.linearity.is_linear" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_linear</span>
+
+
+<a href="#ts_stat_tests.tests.linearity.is_linear" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_linear</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rr&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>Test whether the relationship in a fitted model is <code>linear</code> or not.</p>
+</div>
+<details class="abstract" open="open">
+<summary>Details</summary>
+<p>This function returns a dictionary containing the test results and a boolean indicating whether the null hypothesis of linearity is rejected at the given significance level.</p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>res</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="statsmodels.regression.linear_model.RegressionResults">RegressionResults</span>, <span title="statsmodels.regression.linear_model.RegressionResultsWrapper">RegressionResultsWrapper</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fitted regression model to be checked.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>algorithm</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Which linearity algorithm to use. See <a class="autorefs autorefs-internal" title="            linearity" href="#ts_stat_tests.tests.linearity.linearity"><code>linearity()</code></a> for options.
+Default: <code>"rr"</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;rr&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The significance level for the test.
+Default: <code>0.05</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>0.05</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>kwargs</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="int">int</span>, <span title="str">str</span>, <span title="bool">bool</span>, <span title="numpy.typing.ArrayLike">ArrayLike</span>, None]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Additional keyword arguments passed to the underlying test function.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Union">Union</span>[<span title="str">str</span>, <span title="float">float</span>, <span title="bool">bool</span>, None]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary with the following keys:
+- <code>"algorithm"</code> (str): The name of the algorithm used.
+- <code>"statistic"</code> (float): The test statistic.
+- <code>"pvalue"</code> (float): The p-value of the test.
+- <code>"alpha"</code> (float): The significance level used.
+- <code>"result"</code> (bool): Whether the relationship is linear (i.e., p-value &gt; alpha).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <details class="example" open="open">
+<summary>Examples</summary>
+<div class="py python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Setup</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ts_stat_tests.tests.linearity</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_linear</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<div class="py python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Example 1: Check linearity with RR</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">is_linear</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;rr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span>  <span class="c1"># doctest: +SKIP</span>
+<span class="go">True</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/ts_stat_tests/tests/linearity.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_linear</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rr&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        Test whether the relationship in a fitted model is `linear` or not.</span>
+
+<span class="sd">    ???+ abstract &quot;Details&quot;</span>
+<span class="sd">        This function returns a dictionary containing the test results and a boolean indicating whether the null hypothesis of linearity is rejected at the given significance level.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        res (Union[RegressionResults, RegressionResultsWrapper]):</span>
+<span class="sd">            The fitted regression model to be checked.</span>
+<span class="sd">        algorithm (str):</span>
+<span class="sd">            Which linearity algorithm to use. See [`linearity()`][ts_stat_tests.tests.linearity.linearity] for options.</span>
+<span class="sd">            Default: `&quot;rr&quot;`</span>
+<span class="sd">        alpha (float):</span>
+<span class="sd">            The significance level for the test.</span>
+<span class="sd">            Default: `0.05`</span>
+<span class="sd">        kwargs (Union[float, int, str, bool, ArrayLike, None]):</span>
+<span class="sd">            Additional keyword arguments passed to the underlying test function.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict[str, Union[str, float, bool, None]]):</span>
+<span class="sd">            A dictionary with the following keys:</span>
+<span class="sd">            - `&quot;algorithm&quot;` (str): The name of the algorithm used.</span>
+<span class="sd">            - `&quot;statistic&quot;` (float): The test statistic.</span>
+<span class="sd">            - `&quot;pvalue&quot;` (float): The p-value of the test.</span>
+<span class="sd">            - `&quot;alpha&quot;` (float): The significance level used.</span>
+<span class="sd">            - `&quot;result&quot;` (bool): Whether the relationship is linear (i.e., p-value &gt; alpha).</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+
+<span class="sd">        ```pycon {.py .python linenums=&quot;1&quot; title=&quot;Setup&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; import statsmodels.api as sm</span>
+<span class="sd">        &gt;&gt;&gt; from ts_stat_tests.tests.linearity import is_linear</span>
+<span class="sd">        &gt;&gt;&gt; x = sm.add_constant(np.linspace(0, 10, 100))</span>
+<span class="sd">        &gt;&gt;&gt; y = 3 + 2 * x[:, 1] + np.random.normal(size=100)</span>
+<span class="sd">        &gt;&gt;&gt; res = sm.OLS(y, x).fit()</span>
+
+<span class="sd">        ```</span>
+
+<span class="sd">        ```pycon {.py .python linenums=&quot;1&quot; title=&quot;Example 1: Check linearity with RR&quot;}</span>
+<span class="sd">        &gt;&gt;&gt; result = is_linear(res, algorithm=&quot;rr&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(result[&quot;result&quot;])  # doctest: +SKIP</span>
+<span class="sd">        True</span>
+
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;hc&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;hc&quot;</span><span class="p">,</span> <span class="s2">&quot;harvey&quot;</span><span class="p">,</span> <span class="s2">&quot;harvey-collier&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;lm&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;lm&quot;</span><span class="p">,</span> <span class="s2">&quot;lagrange&quot;</span><span class="p">,</span> <span class="s2">&quot;lagrange-multiplier&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;rb&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">,</span> <span class="s2">&quot;rainbow&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;rr&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;rr&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;ramsey-reset&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="n">raw_res</span> <span class="o">=</span> <span class="n">linearity</span><span class="p">(</span><span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;hc&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;rb&quot;</span><span class="p">]:</span>
+        <span class="c1"># raw_res is tuple[float, float]</span>
+        <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">raw_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">raw_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;lm&quot;</span><span class="p">]:</span>
+        <span class="c1"># raw_res is tuple[float, float, float, float]</span>
+        <span class="n">stat</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">raw_res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">raw_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># raw_res is ContrastResults (Ramsey RESET)</span>
+        <span class="n">stat</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">raw_res</span><span class="p">,</span> <span class="s2">&quot;statistic&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">raw_res</span><span class="p">,</span> <span class="s2">&quot;fvalue&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)))</span>
+        <span class="n">pvalue</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">raw_res</span><span class="p">,</span> <span class="s2">&quot;pvalue&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;algorithm&quot;</span><span class="p">:</span> <span class="n">algorithm</span><span class="p">,</span>
+        <span class="s2">&quot;statistic&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">stat</span><span class="p">),</span>
+        <span class="s2">&quot;pvalue&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">pvalue</span><span class="p">),</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+        <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pvalue</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">),</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="linearity-algorithms">Linearity Algorithms<a class="headerlink" href="#linearity-algorithms" title="Permanent link">🔗</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h3 id="ts_stat_tests.algorithms.linearity" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">ts_stat_tests.algorithms.linearity</span>
+
+
+<a href="#ts_stat_tests.algorithms.linearity" class="headerlink" title="Permanent link">🔗</a></h3>
+
+    <div class="doc doc-contents first">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>This module provides implementations of various linearity test algorithms using the <code>statsmodels</code> library.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ts_stat_tests.algorithms.linearity.hc" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">hc</span>
+
+
+<a href="#ts_stat_tests.algorithms.linearity.hc" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">hc</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">skip</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>The Harvey-Collier test is a statistical test used to determine whether a dataset follows a linear relationship. In time series forecasting, the test can be used to evaluate whether the residuals of a model follow a linear distribution.</p>
+</div>
+<details class="abstract" open="open">
+<summary>Details</summary>
+<p>The Harvey-Collier test is based on a recursive residuals analysis. The test statistic follows a t-distribution under the null hypothesis of linearity.</p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>res</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="statsmodels.regression.linear_model.RegressionResults">RegressionResults</span>, <span title="statsmodels.regression.linear_model.RegressionResultsWrapper">RegressionResultsWrapper</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The results of a linear regression model from <code>statsmodels</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>order_by</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="numpy.typing.ArrayLike">ArrayLike</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Variable(s) to order by. If <code>None</code>, the original order is used.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>skip</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="int">int</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The number of observations to skip at the beginning of the series.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>statistic</code> (float): The t-statistic of the test.</li>
+<li><code>pvalue</code> (float): The p-value associated with the t-statistic.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <details class="example" open="open">
+<summary>Examples</summary>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ts_stat_tests.algorithms.linearity</span><span class="w"> </span><span class="kn">import</span> <span class="n">hc</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">hc</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="question">
+<summary>References</summary>
+<ul>
+<li>Harvey, A.C. and Collier, P. (1977). "Testing for Functional Form in Regression with Application to an Agricultural Production Function." Journal of Econometrics, 6(1), 103-119.</li>
+</ul>
+</details>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/ts_stat_tests/algorithms/linearity.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">hc</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">skip</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        The Harvey-Collier test is a statistical test used to determine whether a dataset follows a linear relationship. In time series forecasting, the test can be used to evaluate whether the residuals of a model follow a linear distribution.</span>
+
+<span class="sd">    ???+ abstract &quot;Details&quot;</span>
+<span class="sd">        The Harvey-Collier test is based on a recursive residuals analysis. The test statistic follows a t-distribution under the null hypothesis of linearity.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        res (Union[RegressionResults, RegressionResultsWrapper]):</span>
+<span class="sd">            The results of a linear regression model from `statsmodels`.</span>
+<span class="sd">        order_by (Optional[ArrayLike]):</span>
+<span class="sd">            Variable(s) to order by. If `None`, the original order is used.</span>
+<span class="sd">        skip (Optional[int]):</span>
+<span class="sd">            The number of observations to skip at the beginning of the series.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (tuple[float, float]):</span>
+<span class="sd">            - `statistic` (float): The t-statistic of the test.</span>
+<span class="sd">            - `pvalue` (float): The p-value associated with the t-statistic.</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import statsmodels.api as sm</span>
+<span class="sd">        from ts_stat_tests.algorithms.linearity import hc</span>
+
+<span class="sd">        X = sm.add_constant(np.arange(100))</span>
+<span class="sd">        y = 3 + 2 * X[:, 1] + np.random.normal(size=100)</span>
+<span class="sd">        res = sm.OLS(y, X).fit()</span>
+<span class="sd">        hc(res)</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    ??? question &quot;References&quot;</span>
+<span class="sd">        - Harvey, A.C. and Collier, P. (1977). &quot;Testing for Functional Form in Regression with Application to an Agricultural Production Function.&quot; Journal of Econometrics, 6(1), 103-119.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res_hc</span> <span class="o">=</span> <span class="n">linear_harvey_collier</span><span class="p">(</span><span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">res_hc</span><span class="p">,</span> <span class="s2">&quot;statistic&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">res_hc</span><span class="p">,</span> <span class="s2">&quot;pvalue&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ts_stat_tests.algorithms.linearity.lm" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">lm</span>
+
+
+<a href="#ts_stat_tests.algorithms.linearity.lm" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">lm</span><span class="p">(</span>
+    <span class="n">resid</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">exog</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>Lagrange Multiplier test for functional form / linearity.</p>
+</div>
+<details class="abstract" open="open">
+<summary>Details</summary>
+<p>This test checks whether the linear specification is appropriate for the data. It is a general test for functional form misspecification.</p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>resid</code>
+            </td>
+            <td>
+                  <code><span title="numpy.typing.NDArray">NDArray</span>[<span title="numpy.float64">float64</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The residuals from a linear regression.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>exog</code>
+            </td>
+            <td>
+                  <code><span title="numpy.typing.NDArray">NDArray</span>[<span title="numpy.float64">float64</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exogenous variables (predictors) used in the regression.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>func</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Callable">Callable</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A function that takes <code>exog</code> and returns a transformed version of it to test against.
+Default: <code>None</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="float">float</span>, <span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>lm</code> (float): Lagrange multiplier statistic.</li>
+<li><code>lmpval</code> (float): p-value for LM statistic.</li>
+<li><code>fval</code> (float): F-statistic.</li>
+<li><code>fpval</code> (float): p-value for F-statistic.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <details class="example" open="open">
+<summary>Examples</summary>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ts_stat_tests.algorithms.linearity</span><span class="w"> </span><span class="kn">import</span> <span class="n">lm</span>
+
+<span class="n">resid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">exog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">lm</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span> <span class="n">exog</span><span class="p">)</span>
+</code></pre></div>
+</details>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/ts_stat_tests/algorithms/linearity.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span>
+    <span class="n">resid</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">exog</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        Lagrange Multiplier test for functional form / linearity.</span>
+
+<span class="sd">    ???+ abstract &quot;Details&quot;</span>
+<span class="sd">        This test checks whether the linear specification is appropriate for the data. It is a general test for functional form misspecification.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        resid (NDArray[np.float64]):</span>
+<span class="sd">            The residuals from a linear regression.</span>
+<span class="sd">        exog (NDArray[np.float64]):</span>
+<span class="sd">            The exogenous variables (predictors) used in the regression.</span>
+<span class="sd">        func (Optional[Callable]):</span>
+<span class="sd">            A function that takes `exog` and returns a transformed version of it to test against.</span>
+<span class="sd">            Default: `None`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (tuple[float, float, float, float]):</span>
+<span class="sd">            - `lm` (float): Lagrange multiplier statistic.</span>
+<span class="sd">            - `lmpval` (float): p-value for LM statistic.</span>
+<span class="sd">            - `fval` (float): F-statistic.</span>
+<span class="sd">            - `fpval` (float): p-value for F-statistic.</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from ts_stat_tests.algorithms.linearity import lm</span>
+
+<span class="sd">        resid = np.random.normal(size=100)</span>
+<span class="sd">        exog = np.random.normal(size=(100, 2))</span>
+<span class="sd">        lm(resid, exog)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res_lm</span> <span class="o">=</span> <span class="n">linear_lm</span><span class="p">(</span><span class="n">resid</span><span class="o">=</span><span class="n">resid</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="n">exog</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">res_lm</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">res_lm</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">res_lm</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;fvalue&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">res_lm</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;pvalue&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ts_stat_tests.algorithms.linearity.rb" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">rb</span>
+
+
+<a href="#ts_stat_tests.algorithms.linearity.rb" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">rb</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">frac</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_distance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">center</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>The Rainbow test for linearity.</p>
+</div>
+<details class="abstract" open="open">
+<summary>Details</summary>
+<p>The Rainbow test is a test for linearity that is based on the idea that if a relationship is non-linear, it is more likely to be linear in a subset of the data than in the entire dataset.</p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>res</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="statsmodels.regression.linear_model.RegressionResults">RegressionResults</span>, <span title="statsmodels.regression.linear_model.RegressionResultsWrapper">RegressionResultsWrapper</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The results of a linear regression model from <code>statsmodels</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>frac</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fraction of the data to use for the subset.
+Default: <code>0.5</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>0.5</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>order_by</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="numpy.typing.ArrayLike">ArrayLike</span>, <span title="str">str</span>, <span title="list">list</span>[<span title="str">str</span>]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Variable(s) to order by. If <code>None</code>, the original order is used.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>use_distance</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to use distance from the center for ordering.
+Default: <code>False</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>center</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="int">int</span>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The center to use for distance calculation.
+Default: <code>None</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>fstat</code> (float): The F-statistic of the test.</li>
+<li><code>pvalue</code> (float): The p-value associated with the F-statistic.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <details class="example" open="open">
+<summary>Examples</summary>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ts_stat_tests.algorithms.linearity</span><span class="w"> </span><span class="kn">import</span> <span class="n">rb</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">rb</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="question">
+<summary>References</summary>
+<ul>
+<li>Utts, J.M. (1982). "The Rainbow Test for Linearity." Biometrika, 69(2), 319-326.</li>
+</ul>
+</details>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/ts_stat_tests/algorithms/linearity.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rb</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">frac</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">order_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_distance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">center</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        The Rainbow test for linearity.</span>
+
+<span class="sd">    ???+ abstract &quot;Details&quot;</span>
+<span class="sd">        The Rainbow test is a test for linearity that is based on the idea that if a relationship is non-linear, it is more likely to be linear in a subset of the data than in the entire dataset.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        res (Union[RegressionResults, RegressionResultsWrapper]):</span>
+<span class="sd">            The results of a linear regression model from `statsmodels`.</span>
+<span class="sd">        frac (float):</span>
+<span class="sd">            The fraction of the data to use for the subset.</span>
+<span class="sd">            Default: `0.5`</span>
+<span class="sd">        order_by (Optional[Union[ArrayLike, str, list[str]]]):</span>
+<span class="sd">            Variable(s) to order by. If `None`, the original order is used.</span>
+<span class="sd">        use_distance (bool):</span>
+<span class="sd">            Whether to use distance from the center for ordering.</span>
+<span class="sd">            Default: `False`</span>
+<span class="sd">        center (Optional[Union[float, int]]):</span>
+<span class="sd">            The center to use for distance calculation.</span>
+<span class="sd">            Default: `None`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (tuple[float, float]):</span>
+<span class="sd">            - `fstat` (float): The F-statistic of the test.</span>
+<span class="sd">            - `pvalue` (float): The p-value associated with the F-statistic.</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import statsmodels.api as sm</span>
+<span class="sd">        from ts_stat_tests.algorithms.linearity import rb</span>
+
+<span class="sd">        X = sm.add_constant(np.arange(100))</span>
+<span class="sd">        y = 3 + 2 * X[:, 1] + 2 * X[:, 1] ** 2 + np.random.normal(size=100)</span>
+<span class="sd">        res = sm.OLS(y, X).fit()</span>
+<span class="sd">        rb(res)</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    ??? question &quot;References&quot;</span>
+<span class="sd">        - Utts, J.M. (1982). &quot;The Rainbow Test for Linearity.&quot; Biometrika, 69(2), 319-326.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res_rb</span> <span class="o">=</span> <span class="n">linear_rainbow</span><span class="p">(</span><span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span> <span class="n">frac</span><span class="o">=</span><span class="n">frac</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by</span><span class="p">,</span> <span class="n">use_distance</span><span class="o">=</span><span class="n">use_distance</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_rb</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_rb</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="ts_stat_tests.algorithms.linearity.rr" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">rr</span>
+
+
+<a href="#ts_stat_tests.algorithms.linearity.rr" class="headerlink" title="Permanent link">🔗</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">rr</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">power</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">test_type</span><span class="p">:</span> <span class="n">VALID_RR_TEST_TYPE_OPTIONS</span> <span class="o">=</span> <span class="s2">&quot;fitted&quot;</span><span class="p">,</span>
+    <span class="n">use_f</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">cov_type</span><span class="p">:</span> <span class="n">VALID_RR_COV_TYPE_OPTIONS</span> <span class="o">=</span> <span class="s2">&quot;nonrobust&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">cov_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ContrastResults</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <div class="admonition note">
+<p class="admonition-title">Summary</p>
+<p>Ramsey's RESET (Regression Specification Error Test) for linearity.</p>
+</div>
+<details class="abstract" open="open">
+<summary>Details</summary>
+<p>RESET test for functional form misspecification. The test is based on the idea that if the model is correctly specified, then powers of the fitted values (or other variables) should not have any explanatory power when added to the model.</p>
+</details>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>res</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="statsmodels.regression.linear_model.RegressionResults">RegressionResults</span>, <span title="statsmodels.regression.linear_model.RegressionResultsWrapper">RegressionResultsWrapper</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The results of a linear regression model from <code>statsmodels</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>power</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="int">int</span>, <span title="list">list</span>[<span title="int">int</span>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The powers of the fitted values or exogenous variables to include in the auxiliary regression.
+Default: <code>3</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>3</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>test_type</code>
+            </td>
+            <td>
+                  <code><span title="ts_stat_tests.algorithms.linearity.VALID_RR_TEST_TYPE_OPTIONS">VALID_RR_TEST_TYPE_OPTIONS</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of test to perform. Options are <code>"fitted"</code>, <code>"exog"</code>, or <code>"princomp"</code>.
+Default: <code>"fitted"</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;fitted&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>use_f</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to use an F-test or a Chi-squared test.
+Default: <code>False</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>cov_type</code>
+            </td>
+            <td>
+                  <code><span title="ts_stat_tests.algorithms.linearity.VALID_RR_COV_TYPE_OPTIONS">VALID_RR_COV_TYPE_OPTIONS</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of covariance matrix to use in the test.
+Default: <code>"nonrobust"</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;nonrobust&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>cov_kwargs</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="dict">dict</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional keyword arguments for the covariance matrix calculation.
+Default: <code>None</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="statsmodels.stats.contrast.ContrastResults">ContrastResults</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The results of the RESET test.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <details class="example" open="open">
+<summary>Examples</summary>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ts_stat_tests.algorithms.linearity</span><span class="w"> </span><span class="kn">import</span> <span class="n">rr</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">rr</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="question">
+<summary>References</summary>
+<ul>
+<li>Ramsey, J.B. (1969). "Tests for Specification Errors in Classical Linear Least-squares Regression Analysis." Journal of the Royal Statistical Society, Series B, 31(2), 350-371.</li>
+</ul>
+</details>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/ts_stat_tests/algorithms/linearity.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@typechecked</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rr</span><span class="p">(</span>
+    <span class="n">res</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">RegressionResults</span><span class="p">,</span> <span class="n">RegressionResultsWrapper</span><span class="p">],</span>
+    <span class="n">power</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">test_type</span><span class="p">:</span> <span class="n">VALID_RR_TEST_TYPE_OPTIONS</span> <span class="o">=</span> <span class="s2">&quot;fitted&quot;</span><span class="p">,</span>
+    <span class="n">use_f</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">cov_type</span><span class="p">:</span> <span class="n">VALID_RR_COV_TYPE_OPTIONS</span> <span class="o">=</span> <span class="s2">&quot;nonrobust&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">cov_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ContrastResults</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    !!! note &quot;Summary&quot;</span>
+<span class="sd">        Ramsey&#39;s RESET (Regression Specification Error Test) for linearity.</span>
+
+<span class="sd">    ???+ abstract &quot;Details&quot;</span>
+<span class="sd">        RESET test for functional form misspecification. The test is based on the idea that if the model is correctly specified, then powers of the fitted values (or other variables) should not have any explanatory power when added to the model.</span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        res (Union[RegressionResults, RegressionResultsWrapper]):</span>
+<span class="sd">            The results of a linear regression model from `statsmodels`.</span>
+<span class="sd">        power (Union[int, list[int]]):</span>
+<span class="sd">            The powers of the fitted values or exogenous variables to include in the auxiliary regression.</span>
+<span class="sd">            Default: `3`</span>
+<span class="sd">        test_type (VALID_RR_TEST_TYPE_OPTIONS):</span>
+<span class="sd">            The type of test to perform. Options are `&quot;fitted&quot;`, `&quot;exog&quot;`, or `&quot;princomp&quot;`.</span>
+<span class="sd">            Default: `&quot;fitted&quot;`</span>
+<span class="sd">        use_f (bool):</span>
+<span class="sd">            Whether to use an F-test or a Chi-squared test.</span>
+<span class="sd">            Default: `False`</span>
+<span class="sd">        cov_type (VALID_RR_COV_TYPE_OPTIONS):</span>
+<span class="sd">            The type of covariance matrix to use in the test.</span>
+<span class="sd">            Default: `&quot;nonrobust&quot;`</span>
+<span class="sd">        cov_kwargs (Optional[dict]):</span>
+<span class="sd">            Optional keyword arguments for the covariance matrix calculation.</span>
+<span class="sd">            Default: `None`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (ContrastResults):</span>
+<span class="sd">            The results of the RESET test.</span>
+
+<span class="sd">    ???+ example &quot;Examples&quot;</span>
+<span class="sd">        ```python</span>
+<span class="sd">        import statsmodels.api as sm</span>
+<span class="sd">        from ts_stat_tests.algorithms.linearity import rr</span>
+
+<span class="sd">        X = sm.add_constant(np.arange(100))</span>
+<span class="sd">        y = 3 + 2 * X[:, 1] + np.random.normal(size=100)</span>
+<span class="sd">        res = sm.OLS(y, X).fit()</span>
+<span class="sd">        rr(res)</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    ??? question &quot;References&quot;</span>
+<span class="sd">        - Ramsey, J.B. (1969). &quot;Tests for Specification Errors in Classical Linear Least-squares Regression Analysis.&quot; Journal of the Royal Statistical Society, Series B, 31(2), 350-371.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">linear_reset</span><span class="p">(</span>
+        <span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">,</span>
+        <span class="n">power</span><span class="o">=</span><span class="n">power</span><span class="p">,</span>  <span class="c1"># type: ignore[arg-type]</span>
+        <span class="n">test_type</span><span class="o">=</span><span class="n">test_type</span><span class="p">,</span>
+        <span class="n">use_f</span><span class="o">=</span><span class="n">use_f</span><span class="p">,</span>
+        <span class="n">cov_type</span><span class="o">=</span><span class="n">cov_type</span><span class="p">,</span>
+        <span class="n">cov_kwargs</span><span class="o">=</span><span class="n">cov_kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.instant", "search.highlight", "search.suggest", "toc.follow", "content.action.edit", "content.action.view", "content.code.select", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/mathjax.js"></script>
+      
+    
+  </body>
+</html>
