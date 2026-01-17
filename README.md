@@ -89,10 +89,10 @@ Full credit goes to the packages listed in this table.
 | Linearity          | Lagrange Multiplier test for linearity (LM)                                   | `statsmodels`  | Python          | ✅           |
 | Linearity          | Rainbow test for linearity (RB)                                               | `statsmodels`  | Python          | ✅           |
 | Linearity          | Ramsey's RESET test for neglected nonlinearity (RR)                           | `statsmodels`  | Python          | ✅           |
-| Heteroscedasticity | Engle's Test for Autoregressive Conditional Heteroscedasticity (ARCH)         | `statsmodels`  | Python          | 🔲           |
-| Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | `statsmodels`  | Python          | 🔲           |
-| Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | `statsmodels`  | Python          | 🔲           |
-| Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | `statsmodels`  | Python          | 🔲           |
+| Heteroscedasticity | Engle's Test for Autoregressive Conditional Heteroscedasticity (ARCH)         | `statsmodels`  | Python          | ✅           |
+| Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | `statsmodels`  | Python          | ✅           |
+| Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | `statsmodels`  | Python          | ✅           |
+| Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | `statsmodels`  | Python          | ✅           |
 
 
 ## Known limitations
