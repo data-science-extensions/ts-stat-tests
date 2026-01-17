@@ -141,7 +141,7 @@ class TestLinearity(unittest.TestCase):
         """Test is_linear boolean check."""
         # Test linear data
         res = is_linear(self.res_linear, algorithm="rr")
-        assert res["is_linear"] is True
+        assert res["result"] is True
         assert res["algorithm"] == "rr"
         assert "pvalue" in res
         assert "statistic" in res
@@ -149,11 +149,11 @@ class TestLinearity(unittest.TestCase):
         # Test non-linear data
         res_nl = is_linear(self.res_nonlinear, algorithm="rr")
         # RESET is good at picking up quadratic
-        assert res_nl["is_linear"] is False
+        assert res_nl["result"] is False
 
     def test_is_linear_all_algorithms(self) -> None:
         """Test is_linear with all supported algorithms."""
         for alg in ["hc", "lm", "rb", "rr"]:
             res = is_linear(self.res_linear, algorithm=alg)
-            assert isinstance(res["is_linear"], bool)
+            assert isinstance(res["result"], bool)
             assert res["algorithm"] == alg

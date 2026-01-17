@@ -240,7 +240,7 @@ def is_linear(
             - `"statistic"` (float): The test statistic.
             - `"pvalue"` (float): The p-value of the test.
             - `"alpha"` (float): The significance level used.
-            - `"is_linear"` (bool): Whether the relationship is linear (i.e., p-value > alpha).
+            - `"result"` (bool): Whether the relationship is linear (i.e., p-value > alpha).
 
     ???+ example "Examples"
 
@@ -256,7 +256,7 @@ def is_linear(
 
         ```pycon {.py .python linenums="1" title="Example 1: Check linearity with RR"}
         >>> result = is_linear(res, algorithm="rr")
-        >>> print(result["is_linear"])  # doctest: +SKIP
+        >>> print(result["result"])  # doctest: +SKIP
         True
 
         ```
@@ -286,5 +286,5 @@ def is_linear(
         "statistic": float(stat),
         "pvalue": float(pvalue),
         "alpha": alpha,
-        "is_linear": bool(pvalue > alpha),
+        "result": bool(pvalue > alpha),
     }
