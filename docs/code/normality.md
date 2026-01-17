@@ -38,8 +38,8 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.normality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/normality.py).
-        - [`ts_stat_tests.tests.normality`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/normality.py).
+        - [`ts_stat_tests.algorithms.normality`][ts_stat_tests.algorithms.normality].
+        - [`ts_stat_tests.tests.normality`][ts_stat_tests.tests.normality].
 
 ## Normality Tests
 
@@ -50,9 +50,6 @@
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
-            filters:
-                - "^is"
-                - "^normality"
 
 ## Normality Algorithms
 
@@ -63,5 +60,3 @@
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
-            filters:
-                - "!^_"

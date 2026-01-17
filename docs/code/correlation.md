@@ -49,8 +49,8 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/algorithms/correlation.py).
-        - [`ts_stat_tests.tests.correlation`](https://github.com/chrimaho/ts-stat-tests/blob/main/src/ts_stat_tests/tests/correlation.py).
+        - [`ts_stat_tests.algorithms.correlation`][ts_stat_tests.algorithms.correlation].
+        - [`ts_stat_tests.tests.correlation`][ts_stat_tests.tests.correlation].
 
 ## Correlation Tests
 
@@ -61,9 +61,6 @@
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
-            filters:
-                - "^is"
-                - "^correlation"
 
 ## Correlation Algorithms
 
@@ -74,6 +71,3 @@
             heading_level: 3
             show_if_no_docstrings: true
             member_order: source
-            filters:
-                - "!^is"
-                - "!^_"

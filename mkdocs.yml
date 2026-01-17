@@ -54,13 +54,15 @@ nav:
       - Overview: usage/overview.md
       - Contributing: usage/contributing.md
       - Change Log: usage/changelog.md
-  - Modules:
+  - Code:
       - code/index.md
-      - Correlation: code/correlation.md
-      - Regularity: code/regularity.md
-      - Normality: code/normality.md
-      - Stationarity: code/stationarity.md
-      - Seasonality: code/seasonality.md
+      - Modules:
+          - Correlation: code/correlation.md
+          - Regularity: code/regularity.md
+          - Normality: code/normality.md
+          - Stationarity: code/stationarity.md
+          - Seasonality: code/seasonality.md
+          - Stability: code/stability.md
       - Utilities:
           - Data: code/data.md
           - Errors: code/errors.md
@@ -104,6 +106,7 @@ extra_css:
   - assets/css/code_chunks.css
   - assets/css/shortcodes.css
   - assets/css/progress_bar.css
+  - assets/css/columns.css
   - https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css
 
 extra_javascript:

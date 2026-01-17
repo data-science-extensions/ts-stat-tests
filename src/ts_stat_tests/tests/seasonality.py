@@ -1,7 +1,7 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Seasonality                                                       #
-#     Purpose: Seasonality Tests                                               #
+#     Title: Seasonality Tests                                                 #
+#     Purpose: Tests for seasonality detection algorithms.                     #
 #                                                                              #
 # ============================================================================ #
 

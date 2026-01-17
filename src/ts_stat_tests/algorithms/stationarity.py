@@ -1,6 +1,6 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Stationarity                                                      #
+#     Title: Stationarity Algorithms                                           #
 #     Purpose: Algorithms to test for stationarity in time series data.        #
 #                                                                              #
 # ============================================================================ #

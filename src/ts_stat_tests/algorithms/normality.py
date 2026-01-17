@@ -1,6 +1,6 @@
 # ============================================================================ #
 #                                                                              #
-#     Title: Normality                                                         #
+#     Title: Normality Algorithms                                              #
 #     Purpose: Algorithms for testing normality of data.                       #
 #                                                                              #
 # ============================================================================ #

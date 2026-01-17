@@ -24,13 +24,13 @@
 | ------------------ | :----------------------: | :---------------------: | :-------------------------: |
 | Correlation        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=19/19  "19/19    = 100%"] |
 | Regularity         | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=34/34  "34/34    = 100%"] |
-| Seasonality        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=10/10  "10/10    = 100%"] |
-| Stability          | [=0/2   "0/2   =    0%"] | [=0/2   "0/2   =   0%"] | [=0/4    "0/4      =   0%"] |
-| Stationarity       | [=7/7   "7/7   =  100%"] | [=2/2   "2/2   = 100%"] | [=44/44  "44/44    = 100%"] |
-| Normality          | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=12/12  "12/12    = 100%"] |
+| Seasonality        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=23/23  "23/23    = 100%"] |
+| Stability          | [=2/2   "2/2   =  100%"] | [=2/2   "2/2   = 100%"] | [=4/4    "4/4      = 100%"] |
+| Stationarity       | [=7/7   "7/7   =  100%"] | [=2/2   "2/2   = 100%"] | [=51/51  "51/51    = 100%"] |
+| Normality          | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=15/15  "15/15    = 100%"] |
 | Linearity          | [=0/4   "0/4   =    0%"] | [=0/2   "0/2   =   0%"] | [=0/0    "0/0      =   0%"] |
 | Heteroscedasticity | [=0/4   "0/4   =    0%"] | [=0/2   "0/2   =   0%"] | [=0/0    "0/0      =   0%"] |
-| **Overall**        | [=29/41 "29/41 =   71%"] | [=10/16 "10/16 =  63%"] | [=119/123 "119/123 =  89%"] |
+| **Overall**        | [=31/41 "31/41 =   76%"] | [=12/16 "12/16 =  75%"] | [=146/146 "146/146 = 100%"] |
 
 
 ## Tests
@@ -83,8 +83,8 @@
         | Seasonality        | Seasonal Strength                                                             | ✅[`tsfeatures`][tsfeatures]:[`stl_features()`][tsfeatures-stl_features]                                                                                              |
         | Seasonality        | Trend Strength                                                                | ✅[`tsfeatures`][tsfeatures]:[`stl_features()`][tsfeatures-stl_features]                                                                                              |
         | Seasonality        | Spikiness                                                                     | ✅[`tsfeatures`][tsfeatures]:[`stl_features()`][tsfeatures-stl_features]                                                                                              |
-        | Stability          | Stability                                                                     | 🔲[`tsfeatures`][tsfeatures]:[`stability()`][tsfeatures-stability]                                                                                                    |
-        | Stability          | Lumpiness                                                                     | 🔲[`tsfeatures`][tsfeatures]:[`lumpiness()`][tsfeatures-lumpiness]                                                                                                    |
+        | Stability          | Stability                                                                     | ✅[`tsfeatures`][tsfeatures]:[`stability()`][tsfeatures-stability]                                                                                                    |
+        | Stability          | Lumpiness                                                                     | ✅[`tsfeatures`][tsfeatures]:[`lumpiness()`][tsfeatures-lumpiness]                                                                                                    |
         | Stationarity       | Augmented Dickey-Fuller test for stationarity (ADF)                           | ✅[`statsmodels`][statsmodels]:[`adfuller()`][statsmodels-adfuller]<br>❎[`pmdarima`][pmdarima]:[`ADFTest()`][pmdarima-adftest]<br>❎[`arch`][arch]:[`ADF()`][arch-adf] |
         | Stationarity       | Kwiatkowski-Phillips-Schmidt-Shin test for stationarity (KPSS)                | ✅[`statsmodels`][statsmodels]:[`kpss()`][statsmodels-kpss]<br>❎[`pmdarima`][pmdarima]:[`KPSSTest()`][pmdarima-kpss]<br>❎[`arch`][arch]:[`KPSS()`][arch-kpss]         |
         | Stationarity       | Range unit-root test for stationarity (RUR)                                   | ✅[`statsmodels`][statsmodels]:[`range_unit_root_test()`][statsmodels-range_unit_root_test]                                                                           |
