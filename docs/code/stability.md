@@ -28,7 +28,7 @@
 
     !!! example "Source Module"
 
-        All of the source code can be found within this modules:
+        All of the source code can be found within these modules:
 
         - [`ts_stat_tests.algorithms.stability`][ts_stat_tests.algorithms.stability].
         - [`ts_stat_tests.tests.stability`][ts_stat_tests.tests.stability].
