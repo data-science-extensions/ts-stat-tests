@@ -24,7 +24,7 @@
 
     !!! question "Source Library"
 
-        The [`tsfeatures`](https://github.com/Nixtla/tsfeatures/blob/master/tsfeatures/tsfeatures.py) package was chosen because **REASONS**.
+        The [`tsfeatures`](https://github.com/Nixtla/tsfeatures/blob/master/tsfeatures/tsfeatures.py) package was chosen because it provides well-tested implementations of the stability and lumpiness features described in the literature, closely follows the original R `tsfeatures` API, and serves as a reliable reference implementation for our time-series stability tests.
 
     !!! example "Source Module"
 
