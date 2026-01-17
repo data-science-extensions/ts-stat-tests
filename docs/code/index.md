@@ -187,7 +187,7 @@ This package maintains 100% test coverage with comprehensive testing against:
 
 1. **Code Style**: All code adheres to [`black`] formatting, including all code chunks in docstrings using the [`blacken-docs`].
 2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`].
-3. **Type Safety**: All code is type-checked using [`ty`] and [`pyright`] and guarded during runtype by using the [`typeguard`] library.
+3. **Type Safety**: All code is type-checked using [`ty`] and [`pyright`] and guarded during runtime by using the [`typeguard`] library.
 4. **Import Sorting**: All imports are sorted and managed using [`isort`], and unused imports are removed using [`pycln`].
 5. **Code Quality**: All code is checked for quality using [`pylint`], maintaining a score of 10/10, and checked for complexity using [`complexipy`].
 6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`]
