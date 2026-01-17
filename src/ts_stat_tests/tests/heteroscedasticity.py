@@ -79,6 +79,68 @@ def heteroscedasticity(
     algorithm: str = "bp",
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> Union[tuple[float, ...], ResultsStore]:
+    """
+    !!! note "Summary"
+        Perform a heteroscedasticity test on a fitted regression model.
+
+    ???+ abstract "Details"
+        This function is a convenience wrapper around four underlying algorithms:<br>
+        - [`arch()`][ts_stat_tests.algorithms.heteroscedasticity.arch]<br>
+        - [`bp()`][ts_stat_tests.algorithms.heteroscedasticity.bpl]<br>
+        - [`gq()`][ts_stat_tests.algorithms.heteroscedasticity.gq]<br>
+        - [`white()`][ts_stat_tests.algorithms.heteroscedasticity.wlm]
+
+    Params:
+        res (Union[RegressionResults, RegressionResultsWrapper]):
+            The fitted regression model to be checked.
+        algorithm (str):
+            Which heteroscedasticity algorithm to use.<br>
+            - `arch()`: `["arch", "engle"]`<br>
+            - `bp()`: `["bp", "breusch-pagan", "breusch-pagan-lagrange-multiplier"]`<br>
+            - `gq()`: `["gq", "goldfeld-quandt"]`<br>
+            - `white()`: `["white"]`<br>
+            Default: `"bp"`
+        kwargs (Union[float, int, str, bool, ArrayLike, None]):
+            Additional keyword arguments passed to the underlying test function.
+
+    Raises:
+        (ValueError):
+            When the given value for `algorithm` is not valid.
+
+    Returns:
+        (Union[tuple[float, float, float, float], tuple[float, float, str], ResultsStore]):
+            The results of the heteroscedasticity test. The return type depends on the chosen algorithm and `kwargs`.
+
+    !!! success "Credit"
+        Calculations are performed by `statsmodels`.
+
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import numpy as np
+        >>> import statsmodels.api as sm
+        >>> from ts_stat_tests.tests.heteroscedasticity import heteroscedasticity
+        >>> x = np.linspace(0, 10, 100)
+        >>> X = sm.add_constant(x)
+        >>> y = 2 * x + np.random.normal(size=100)
+        >>> res = sm.OLS(y, X).fit()
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Breusch-Pagan test"}
+        >>> result = heteroscedasticity(res, algorithm="bp")
+        >>> print(f"p-value: {result[1]:.4f}")  # doctest: +SKIP
+        p-value: 0.1234
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: ARCH test"}
+        >>> lm, lmp, f, fp = heteroscedasticity(res, algorithm="arch")
+        >>> print(f"ARCH p-value: {lmp:.4f}")  # doctest: +SKIP
+        ARCH p-value: 0.5678
+
+        ```
+    """
     options: dict[str, tuple[str, ...]] = {
         "arch": ("arch", "engle"),
         "bp": ("bp", "breusch-pagan", "breusch-pagan-lagrange-multiplier"),
@@ -88,9 +150,23 @@ def heteroscedasticity(
 
     # Internal helper to handle kwargs casting for ty
     def _call(
-        func: Callable[..., Union[tuple[float, ...], ResultsStore]],
+        func: Callable[..., Any],
         **args: Any,
     ) -> Union[tuple[float, ...], ResultsStore]:
+        """
+        !!! note "Summary"
+            Internal helper to handle keyword arguments types.
+
+        Params:
+            func (Callable[..., Any]):
+                The function to call.
+            args (Any):
+                The arguments to pass.
+
+        Returns:
+            (Union[tuple[float, ...], ResultsStore]):
+                The result of the function call.
+        """
         return func(**args)
 
     if algorithm in options["arch"]:
@@ -121,6 +197,54 @@ def is_heteroscedastic(
     alpha: float = 0.05,
     **kwargs: Union[float, int, str, bool, ArrayLike, None],
 ) -> dict[str, Union[str, float, bool, None]]:
+    """
+    !!! note "Summary"
+        Test whether a given model's residuals exhibit `heteroscedasticity` or not.
+
+    ???+ abstract "Details"
+        This function checks the results of a heteroscedasticity test against a significance level `alpha`. The null hypothesis ($H_0$) for all supported tests is homoscedasticity (constant variance). If the p-value is less than `alpha`, the null hypothesis is rejected in favor of heteroscedasticity.
+
+    Params:
+        res (Union[RegressionResults, RegressionResultsWrapper]):
+            The fitted regression model to be checked.
+        algorithm (str):
+            Which heteroscedasticity algorithm to use. See [`heteroscedasticity()`][ts_stat_tests.tests.heteroscedasticity.heteroscedasticity] for options.
+            Default: `"bp"`
+        alpha (float):
+            The significance level for the test.
+            Default: `0.05`
+        kwargs (Union[float, int, str, bool, ArrayLike, None]):
+            Additional keyword arguments passed to the underlying test function.
+
+    Returns:
+        (dict[str, Union[str, float, bool, None]]):
+            A dictionary containing:
+            - `"result"` (bool): Indicator if the residuals are heteroscedastic (i.e., p-value < alpha).
+            - `"statistic"` (float): The test statistic.
+            - `"pvalue"` (float): The p-value of the test.
+            - `"alpha"` (float): The significance level used.
+            - `"algorithm"` (str): The algorithm used.
+
+    ???+ example "Examples"
+
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import numpy as np
+        >>> import statsmodels.api as sm
+        >>> from ts_stat_tests.tests.heteroscedasticity import is_heteroscedastic
+        >>> x = np.linspace(0, 10, 100)
+        >>> X = sm.add_constant(x)
+        >>> y = 2 * x + np.random.normal(size=100)
+        >>> res = sm.OLS(y, X).fit()
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Check heteroscedasticity with Breusch-Pagan"}
+        >>> res_check = is_heteroscedastic(res, algorithm="bp")
+        >>> print(res_check["result"])  # doctest: +SKIP
+        False
+
+        ```
+    """
     options: dict[str, tuple[str, ...]] = {
         "arch": ("arch", "engle"),
         "bp": ("bp", "breusch-pagan", "breusch-pagan-lagrange-multiplier"),
