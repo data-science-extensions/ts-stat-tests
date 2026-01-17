@@ -118,12 +118,12 @@ def arch(resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store:
             Default: `False`
 
     Returns:
-        (Union[tuple[np.float64, np.float64, np.float64, np.float64], tuple[np.float64, np.float64, np.float64, np.float64, ResultsStore]]):
+        (Union[tuple[float, float, float, float], tuple[float, float, float, float, ResultsStore]]):
             A tuple containing:
-            - `lmstat` (np.float64): The Lagrange Multiplier statistic.
-            - `lmpval` (np.float64): The p-value for the LM statistic.
-            - `fstat` (np.float64): The F-statistic.
-            - `fpval` (np.float64): The p-value for the F-statistic.
+            - `lmstat` (float): The Lagrange Multiplier statistic.
+            - `lmpval` (float): The p-value for the LM statistic.
+            - `fstat` (float): The F-statistic.
+            - `fpval` (float): The p-value for the F-statistic.
             - `resstore` (ResultsStore, optional): Returned only if `store` is `True`.
 
     ???+ example "Examples"
