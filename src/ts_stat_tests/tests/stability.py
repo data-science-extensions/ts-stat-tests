@@ -1,7 +1,7 @@
 # ============================================================================ #
 #                                                                              #
 #     Title: Stability Tests                                                   #
-#     Purpose: Unit tests for stability and lumpiness algorithms.              #
+#     Purpose: Convenience functions for stability algorithms.                 #
 #                                                                              #
 # ============================================================================ #
 
