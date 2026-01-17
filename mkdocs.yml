@@ -54,14 +54,15 @@ nav:
       - Overview: usage/overview.md
       - Contributing: usage/contributing.md
       - Change Log: usage/changelog.md
-  - Modules:
+  - Code:
       - code/index.md
-      - Correlation: code/correlation.md
-      - Regularity: code/regularity.md
-      - Normality: code/normality.md
-      - Stationarity: code/stationarity.md
-      - Seasonality: code/seasonality.md
-      - Stability: code/stability.md
+      - Modules:
+          - Correlation: code/correlation.md
+          - Regularity: code/regularity.md
+          - Normality: code/normality.md
+          - Stationarity: code/stationarity.md
+          - Seasonality: code/seasonality.md
+          - Stability: code/stability.md
       - Utilities:
           - Data: code/data.md
           - Errors: code/errors.md
