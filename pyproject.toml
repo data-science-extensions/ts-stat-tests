@@ -1,6 +1,6 @@
 [project]
 name = "ts-stat-tests"
-version = "0.5.3"
+version = "0.6.0"
 description = "A suite of statistical tests for time-series data."
 readme = "README.md"
 license = "MIT"
