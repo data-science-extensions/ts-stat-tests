@@ -37,7 +37,7 @@
 
 
 # ## Python StdLib Imports ----
-from typing import Any, Callable, Literal, Optional, Union
+from typing import Callable, Literal, Optional, Union
 
 # ## Python Third Party Imports ----
 import numpy as np
@@ -120,8 +120,8 @@ def hc(
     ??? question "References"
         - Harvey, A.C. and Collier, P. (1977). "Testing for Functional Form in Regression with Application to an Agricultural Production Function." Journal of Econometrics, 6(1), 103-119.
     """
-    res_hc: Any = linear_harvey_collier(res=res, order_by=order_by, skip=skip)
-    return float(res_hc.statistic), float(res_hc.pvalue)
+    res_hc = linear_harvey_collier(res=res, order_by=order_by, skip=skip)
+    return float(getattr(res_hc, "statistic", np.nan)), float(getattr(res_hc, "pvalue", np.nan))
 
 
 @typechecked
@@ -161,8 +161,13 @@ def lm(
         lm(resid, exog)
         ```
     """
-    res_lm: Any = linear_lm(resid=resid, exog=exog, func=func)
-    return float(res_lm[0]), float(res_lm[1]), float(res_lm[2].fvalue), float(res_lm[2].pvalue)
+    res_lm = linear_lm(resid=resid, exog=exog, func=func)
+    return (
+        float(res_lm[0]),
+        float(res_lm[1]),
+        float(getattr(res_lm[2], "fvalue", np.nan)),
+        float(getattr(res_lm[2], "pvalue", np.nan)),
+    )
 
 
 @typechecked
@@ -214,7 +219,7 @@ def rb(
     ??? question "References"
         - Utts, J.M. (1982). "The Rainbow Test for Linearity." Biometrika, 69(2), 319-326.
     """
-    res_rb: Any = linear_rainbow(res=res, frac=frac, order_by=order_by, use_distance=use_distance, center=center)
+    res_rb = linear_rainbow(res=res, frac=frac, order_by=order_by, use_distance=use_distance, center=center)
     return float(res_rb[0]), float(res_rb[1])
 
 
@@ -272,10 +277,9 @@ def rr(
     ??? question "References"
         - Ramsey, J.B. (1969). "Tests for Specification Errors in Classical Linear Least-squares Regression Analysis." Journal of the Royal Statistical Society, Series B, 31(2), 350-371.
     """
-    _power: Any = power
     return linear_reset(
         res=res,
-        power=_power,
+        power=power,  # type: ignore[arg-type]
         test_type=test_type,
         use_f=use_f,
         cov_type=cov_type,
