@@ -9,6 +9,89 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.6.2"
+
+    ## **v0.6.2 - Stability Module**
+
+    <!-- md:tag v0.6.2 --><br>
+    <!-- md:date 2026-01-17 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.6.2](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.6.2) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                Introduce the `stability` module, the fifth major analytical component of the `ts-stat-tests` library, providing advanced variance-based metrics for time-series consistency. This release focuses on "Stability" and "Lumpiness"—critical indicators for data quality and forecasting feasibility. Alongside these algorithmic additions, this version implements significant documentation infrastructure improvements, including multi-column layouts for enhanced readability and a comprehensive audit of internal cross-referencing to ensure seamless navigation across the API.                        ### 🛠️ Implementation details                        #### Stability module implementation                * Implement two core stability algorithms in `src/ts_stat_tests/algorithms/stability.py`:            * `stability()`: Measures the variance of the trend component within a time series, providing a quantified metric for structural consistency.            * `lumpiness()`: Calculates the variance of the variance across tiling windows, identifying intermittent "lumpy" patterns in the data.        * Provide standardised Boolean dispatchers in `src/ts_stat_tests/tests/stability.py`:            * `is_stable()`: Evaluates if a series maintains trend stability below a specified significance threshold.            * `is_lumpy()`: Determines if a series exhibit excessive variance variability (lumpiness).                        #### Documentation architecture and UX                * Introduce multi-column CSS layouts to the documentation site to optimise information density and improve the presentation of API references.        * Standardise and audit all internal documentation links, ensuring consistent navigation between algorithm implementations and their corresponding test dispatchers.        * Simplify docstring filtering logic to resolve cross-referencing ambiguities and ensure "Summary" and "Details" sections render correctly under strict `dfc` compliance.        * Update `README.md` and `docs/code/index.md` implementation tables to reflect the 100% completion of the Stability module and the expanded test suite.                        #### Quality assurance and testing                * Expand the global unit test suite to 146 tests, maintaining 100% code coverage across all modules.        * Audit and correct threshold logic in Boolean tests to ensure standard p-value interpretation (rejecting the null hypothesis when statistics are below alpha).        * Standardise all internal variables and public signatures to use `NDArray[np.float64]` for improved type specificity and compatibility with `pyright` strict mode.                        ### ✅ Checklist                * [x] Implement core stability and lumpiness algorithms.        * [x] Provide standardised Boolean convenience functions for stability assessments.        * [x] Achieve 100% coverage for the new stability module.        * [x] Implement multi-column layout support in the documentation site via custom CSS.        * [x] Complete comprehensive audit and fix of internal docstring cross-references.        * [x] Update project progress metrics to reflect 146 total tests across 6 modules.                        ### 📊 Changes                | Metric            | Value     |        | :---------------- | :-------- |        | **Files Changed** | 19        |        | **Lines Added**   | 639       |        | **Lines Deleted** | 69        |        | **Commit Count**  | 20        |        | **Contributors**  | @chrimaho |                        ### 💪 Pull requests                * #29: [Implement stability module](https://github.com/data-science-extensions/ts-stat-tests/pull/29) (Includes module implementation and documentation infrastructure hardening).        
+
+    ??? abstract "Updates"
+
+        * [`8861517`](https://github.com/data-science-extensions/ts-stat-tests/commit/8861517e03b66fd60441e3209abb3a3cece2b194): Update purpose description for stability tests<br>
+            - Change purpose from "Unit tests for stability and lumpiness algorithms." to "Convenience functions for stability algorithms."
+            (by [chrimaho](https://github.com/chrimaho))        * [`2b76084`](https://github.com/data-science-extensions/ts-stat-tests/commit/2b76084e98286e81cb98d74b3dd9e6871337d7ef): Fix docs descriptions<br>
+            The documentation states that stability limits are "between 0 and 1", but this is incorrect. According to the implementation and examples (e.g., airline data has stability of 13428.67), stability can have unbounded positive values as it measures variance. This documentation is misleading and should be corrected to reflect that stability is a non-negative value without an upper bound.
+            (by [chrimaho](https://github.com/chrimaho))        * [`8ff12e1`](https://github.com/data-science-extensions/ts-stat-tests/commit/8ff12e105ab95e975c94e58a4194df7f77f55fa0): Fix typo<br>
+            Grammatical error: "this modules" should be "these modules" to match plural usage.
+            (by [chrimaho](https://github.com/chrimaho))        * [`74c8ccc`](https://github.com/data-science-extensions/ts-stat-tests/commit/74c8cccacc680622c19cf367f084431d64648cd2): Add missing docs justifications<br>
+            The placeholder text "REASONS" should be replaced with an actual explanation of why the tsfeatures package was chosen. This appears to be incomplete documentation left from a template.
+            (by [chrimaho](https://github.com/chrimaho))        * [`a132892`](https://github.com/data-science-extensions/ts-stat-tests/commit/a132892b58cf0f11819f12c611dc363efbe0a7b1): Fix module description<br>
+            The module docstring description is inaccurate. This module contains convenience functions and boolean checkers (is_stable, is_lumpy), not unit tests. It should describe the module's purpose similar to other test modules, such as "This module contains convenience functions and tests for stability measures, allowing for easy access to stability and lumpiness algorithms."
+            (by [chrimaho](https://github.com/chrimaho))        * [`61e84c5`](https://github.com/data-science-extensions/ts-stat-tests/commit/61e84c56658fdc6f18dc74ff04cce4014317f216): Update progress for all docs<br>
+            - Update stability tests to reflect accurate results.<br>
+            - Modify README to include stability in statistical tests.<br>
+            - Enhance documentation for clarity on stability algorithms.
+            (by [chrimaho](https://github.com/chrimaho))        * [`50e3e30`](https://github.com/data-science-extensions/ts-stat-tests/commit/50e3e307339b6fd8b0c4d4437c549f466f8f021d): Restructure navigation pages in docs<br>
+            - Change 'Modules' section to be nested under 'Code'<br>
+            - Improve organisation of documentation for better clarity
+            (by [chrimaho](https://github.com/chrimaho))        * [`45ee3fc`](https://github.com/data-science-extensions/ts-stat-tests/commit/45ee3fc2deb2ddc64a72480e1a2376c90d3978ed): Add CSS for multi-column layouts and button styles<br>
+            - Introduce styles for two, three, and four-column layouts<br>
+            - Implement mobile responsiveness for column layouts<br>
+            - Define button widths and alignment for various button types
+            (by [chrimaho](https://github.com/chrimaho))        * [`43e8ce3`](https://github.com/data-science-extensions/ts-stat-tests/commit/43e8ce3853f036ace61a511e8e523eb822f338e0): Standardise links in documentation for modules<br>
+            - Update links in `correlation.md`, `normality.md`, `regularity.md`, `seasonality.md`, `stability.md`, and `stationarity.md` to use reference-style links.<br>
+            - Modify `stability.py` and `tests/stability.py` to standardise link formatting for `stability()` and `lumpiness()` functions.
+            (by [chrimaho](https://github.com/chrimaho))        * [`87eb94b`](https://github.com/data-science-extensions/ts-stat-tests/commit/87eb94b4aa9c16e6cf56be5d76947e554ccb766e): Update algorithm titles for consistency across modules<br>
+            - Change titles to include 'Algorithms' for clarity in `correlation.py`, `normality.py`, `regularity.py`, `seasonality.py`, and `stationarity.py`.<br>
+            - Update purpose descriptions for better understanding in `seasonality.py` test file.
+            (by [chrimaho](https://github.com/chrimaho))        * [`0e73702`](https://github.com/data-science-extensions/ts-stat-tests/commit/0e737021931a88f44b03a604310b77569fae4c9a): Update module docstrings for stability and tests<br>
+            - Enhance docstrings in the stability module to include a summary.<br>
+            - Add detailed descriptions for the stability algorithms.<br>
+            - Improve docstrings in the stability tests module to clarify their purpose.<br>
+            - Include a summary note in both modules for better documentation clarity.
+            (by [chrimaho](https://github.com/chrimaho))        * [`c1dfa07`](https://github.com/data-science-extensions/ts-stat-tests/commit/c1dfa07e933adf07c807fd000d43d379234b325c): Remove unnecessary filters from docs pages<br>
+            - Eliminate filters for `is` and specific test names<br>
+            - Simplify documentation structure for clarity
+            (by [chrimaho](https://github.com/chrimaho))        * [`5711842`](https://github.com/data-science-extensions/ts-stat-tests/commit/5711842b75f5cdfdff3c5d193ef8f1ccaad1c9d4): Fix stability docs formatting config<br>
+            - Update source module links to remove redundant prefixes<br>
+            - Adjust options formatting for stability tests and algorithms
+            (by [chrimaho](https://github.com/chrimaho))        * [`f6e516f`](https://github.com/data-science-extensions/ts-stat-tests/commit/f6e516fbc0e96a2693d2a979530ee36ce432c470): Refactor stability and lumpiness functions for type consistency<br>
+            - Update type hints in `stability()` and `lumpiness()` functions to use `NDArray[np.float64]`.<br>
+            - Modify `is_stable()` and `is_lumpy()` functions to accept `NDArray[np.float64]` as input type.<br>
+            - Adjust expected result in `test_stability_2()` to reflect correct stability assessment.
+            (by [chrimaho](https://github.com/chrimaho))        * [`de3a1f0`](https://github.com/data-science-extensions/ts-stat-tests/commit/de3a1f09a21914207883cbe66a2626aaeeee3afe): Add docstrings to the `stability` module<br>
+            - Separate imports for `lumpiness` and `stability` for clarity.<br>
+            - Add detailed docstrings for `stability()` and `lumpiness()` functions.<br>
+            - Implement `is_stable()` and `is_lumpy()` functions with comprehensive examples and explanations.<br>
+            - Ensure consistency in parameter descriptions and return values.
+            (by [chrimaho](https://github.com/chrimaho))        * [`7347910`](https://github.com/data-science-extensions/ts-stat-tests/commit/7347910608a738b061d58866fc6e925d6ae4dd9e): Add `stability` documentation<br>
+            - Introduce a new document for testing the stability of time-series datasets.<br>
+            - Include an introduction explaining the concept of stability and its importance.<br>
+            - Describe the tests for stability and lumpiness, including their significance and scoring.<br>
+            - Provide references to source libraries and modules related to stability.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ff5ebd8`](https://github.com/data-science-extensions/ts-stat-tests/commit/ff5ebd8ccf0d64af176bd2fd75d3b1db540105f1): Add stability unittests<br>
+            - Implement `TestStability` class to test stability and lumpiness<br>
+            - Set up class method to initialise test data and results<br>
+            - Add tests for stability and lumpiness calculations<br>
+            - Validate results against expected outputs
+            (by [chrimaho](https://github.com/chrimaho))        * [`5261964`](https://github.com/data-science-extensions/ts-stat-tests/commit/52619642c640ac11dc336fde7ee64d055cd7c7e5): Implement stability and lumpiness algorithms<br>
+            - Add `stability()` function to calculate stability from input data.<br>
+            - Add `lumpiness()` function to calculate lumpiness from input data.<br>
+            - Introduce type checking using `@typechecked` decorator for both functions.<br>
+            - Update imports to include necessary libraries and algorithms.
+            (by [chrimaho](https://github.com/chrimaho))        * [`294a38d`](https://github.com/data-science-extensions/ts-stat-tests/commit/294a38d1d736fb99a4c562ddcaf603e93d40f1ca): Add framework for `stability` module<br>
+            - Create `stability.py` algorithm file for stability tests<br>
+            - Add `test_stability.py` for unit tests related to stability<br>
+            - Include `stability.md` documentation for stability algorithms<br>
+            - Update `mkdocs.yml` to include stability in navigation
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.5.3"
 
     ## **v0.5.3 - Seasonality Module**
