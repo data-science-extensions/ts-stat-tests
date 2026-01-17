@@ -318,20 +318,36 @@ def check_doctest_cli() -> None:
 
 
 def check() -> None:
+
+    # Formatting
     check_black()
     check_blacken_docs()
-    check_ty()
-    check_isort()
+
+    # Spelling
     check_codespell()
-    check_pycln()
-    check_pylint()
+
+    # Type Safety
+    check_ty()
     check_pyright()
+
+    # Imports
+    check_isort()
+    check_pycln()
+
+    # Quality
+    check_pylint()
     check_complexity()
+
+    # Docs
     check_docstrings()
-    # check_doctest()
+
+    # Unit Tests
     check_pytest()
-    check_build()
+    # check_doctest()
+
+    # Building
     check_mkdocs()
+    check_build()
 
 
 ## --------------------------------------------------------------------------- #
