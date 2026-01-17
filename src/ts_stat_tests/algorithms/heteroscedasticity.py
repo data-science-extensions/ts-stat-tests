@@ -326,10 +326,10 @@ def gq(
             Default: `False`
 
     Returns:
-        (Union[tuple[np.float64, np.float64, str], tuple[np.float64, np.float64, str, ResultsStore]]):
+        (Union[tuple[float, float, str], tuple[float, float, str, ResultsStore]]):
             A tuple containing:
-            - `fstat` (np.float64): The F-statistic.
-            - `fpval` (np.float64): The p-value for the F-statistic.
+            - `fstat` (float): The F-statistic.
+            - `fpval` (float): The p-value for the F-statistic.
             - `alternative` (str): The alternative hypothesis used.
             - `resstore` (ResultsStore, optional): Returned only if `store` is `True`.
 
