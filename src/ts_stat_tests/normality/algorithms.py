@@ -112,7 +112,7 @@ def jb(x: ArrayLike, axis: int = 0) -> tuple[np.float64, np.float64, np.float64,
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.normality import jb
+        >>> from ts_stat_tests.normality.algorithms import jb
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
         >>> noise = data_noise
@@ -163,10 +163,10 @@ def jb(x: ArrayLike, axis: int = 0) -> tuple[np.float64, np.float64, np.float64,
         - Jarque, C. and Bera, A. (1980) "Efficient tests for normality, homoscedasticity and serial independence of regression residuals", 6 Econometric Letters 255-259.
 
     ??? tip "See Also"
-        - [`ob()`][ts_stat_tests.algorithms.normality.ob]
-        - [`sw()`][ts_stat_tests.algorithms.normality.sw]
-        - [`dp()`][ts_stat_tests.algorithms.normality.dp]
-        - [`ad()`][ts_stat_tests.algorithms.normality.ad]
+        - [`ob()`][ts_stat_tests.normality.algorithms.ob]
+        - [`sw()`][ts_stat_tests.normality.algorithms.sw]
+        - [`dp()`][ts_stat_tests.normality.algorithms.dp]
+        - [`ad()`][ts_stat_tests.normality.algorithms.ad]
     """
     return _jb(resids=x, axis=axis)  # type: ignore[return-value]
 
@@ -200,7 +200,7 @@ def ob(x: ArrayLike, axis: int = 0) -> tuple[float, float]:
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.normality import ob
+        >>> from ts_stat_tests.normality.algorithms import ob
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
         >>> noise = data_noise
@@ -244,10 +244,10 @@ def ob(x: ArrayLike, axis: int = 0) -> tuple[float, float]:
         - D'Agostino, R. B. and Stephens, M. A. (1986), "Goodness-of-fit techniques," New York: Marcel Dekker.
 
     ??? tip "See Also"
-        - [`jb()`][ts_stat_tests.algorithms.normality.jb]
-        - [`sw()`][ts_stat_tests.algorithms.normality.sw]
-        - [`dp()`][ts_stat_tests.algorithms.normality.dp]
-        - [`ad()`][ts_stat_tests.algorithms.normality.ad]
+        - [`jb()`][ts_stat_tests.normality.algorithms.jb]
+        - [`sw()`][ts_stat_tests.normality.algorithms.sw]
+        - [`dp()`][ts_stat_tests.normality.algorithms.dp]
+        - [`ad()`][ts_stat_tests.normality.algorithms.ad]
     """
     return _ob(resids=x, axis=axis)
 
@@ -278,7 +278,7 @@ def sw(x: ArrayLike) -> ShapiroResult:
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.normality import sw
+        >>> from ts_stat_tests.normality.algorithms import sw
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
         >>> noise = data_noise
@@ -323,10 +323,10 @@ def sw(x: ArrayLike) -> ShapiroResult:
         - Algorithm as R94 Appl. Statist. (1995) VOL. 44, NO. 4.
 
     ??? tip "See Also"
-        - [`jb()`][ts_stat_tests.algorithms.normality.jb]
-        - [`ob()`][ts_stat_tests.algorithms.normality.ob]
-        - [`dp()`][ts_stat_tests.algorithms.normality.dp]
-        - [`ad()`][ts_stat_tests.algorithms.normality.ad]
+        - [`jb()`][ts_stat_tests.normality.algorithms.jb]
+        - [`ob()`][ts_stat_tests.normality.algorithms.ob]
+        - [`dp()`][ts_stat_tests.normality.algorithms.dp]
+        - [`ad()`][ts_stat_tests.normality.algorithms.ad]
     """
     return _sw(x=x)
 
@@ -372,7 +372,7 @@ def dp(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.normality import dp
+        >>> from ts_stat_tests.normality.algorithms import dp
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
         >>> noise = data_noise
@@ -416,10 +416,10 @@ def dp(
         - D'Agostino, R. and Pearson, E. S. (1973), "Tests for departure from normality", Biometrika, 60, 613-622
 
     ??? tip "See Also"
-        - [`jb()`][ts_stat_tests.algorithms.normality.jb]
-        - [`ob()`][ts_stat_tests.algorithms.normality.ob]
-        - [`sw()`][ts_stat_tests.algorithms.normality.sw]
-        - [`ad()`][ts_stat_tests.algorithms.normality.ad]
+        - [`jb()`][ts_stat_tests.normality.algorithms.jb]
+        - [`ob()`][ts_stat_tests.normality.algorithms.ob]
+        - [`sw()`][ts_stat_tests.normality.algorithms.sw]
+        - [`ad()`][ts_stat_tests.normality.algorithms.ad]
     """
     return _dp(a=x, axis=axis, nan_policy=nan_policy)
 
@@ -457,7 +457,7 @@ def ad(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.normality import ad
+        >>> from ts_stat_tests.normality.algorithms import ad
         >>> from ts_stat_tests.utils.data import data_airline, data_noise
         >>> airline = data_airline.values
         >>> noise = data_noise
@@ -504,9 +504,9 @@ def ad(
         - Stephens, M. A. (1974). EDF Statistics for Goodness of Fit and Some Comparisons, Journal of the American Statistical Association, Vol. 69, pp. 730-737.
 
     ??? tip "See Also"
-        - [`jb()`][ts_stat_tests.algorithms.normality.jb]
-        - [`ob()`][ts_stat_tests.algorithms.normality.ob]
-        - [`sw()`][ts_stat_tests.algorithms.normality.sw]
-        - [`dp()`][ts_stat_tests.algorithms.normality.dp]
+        - [`jb()`][ts_stat_tests.normality.algorithms.jb]
+        - [`ob()`][ts_stat_tests.normality.algorithms.ob]
+        - [`sw()`][ts_stat_tests.normality.algorithms.sw]
+        - [`dp()`][ts_stat_tests.normality.algorithms.dp]
     """
     return _ad(x=x, dist=dist)

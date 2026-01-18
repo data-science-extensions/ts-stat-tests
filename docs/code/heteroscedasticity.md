@@ -35,12 +35,12 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.heteroscedasticity`][ts_stat_tests.algorithms.heteroscedasticity].
-        - [`ts_stat_tests.tests.heteroscedasticity`][ts_stat_tests.tests.heteroscedasticity].
+        - [`ts_stat_tests.heteroscedasticity.algorithms`][ts_stat_tests.heteroscedasticity.algorithms].
+        - [`ts_stat_tests.heteroscedasticity.tests`][ts_stat_tests.heteroscedasticity.tests].
 
 ## Heteroscedasticity Tests
 
-::: ts_stat_tests.tests.heteroscedasticity
+::: ts_stat_tests.heteroscedasticity.tests
     options:
         extra:
             show_root_heading: false
@@ -50,7 +50,7 @@
 
 ## Heteroscedasticity Algorithms
 
-::: ts_stat_tests.algorithms.heteroscedasticity
+::: ts_stat_tests.heteroscedasticity.algorithms
     options:
         extra:
             show_root_heading: false

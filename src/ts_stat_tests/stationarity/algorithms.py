@@ -198,7 +198,7 @@ def adf(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.stationarity import adf
+        >>> from ts_stat_tests.stationarity.algorithms import adf
         >>> from ts_stat_tests.utils.data import data_airline, data_normal
         >>> normal = data_normal
         >>> airline = data_airline.values
@@ -303,13 +303,13 @@ def adf(
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     res: Any = _adfuller(  # Using `Any` to avoid ty issues with statsmodels stubs
         x=x,
@@ -421,7 +421,7 @@ def kpss(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.stationarity import kpss
+        >>> from ts_stat_tests.stationarity.algorithms import kpss
         >>> from ts_stat_tests.utils.data import data_airline, data_normal
         >>> normal = data_normal
         >>> airline = data_airline.values
@@ -515,13 +515,13 @@ def kpss(
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     _nlags: Union[VALID_KPSS_NLAGS_OPTIONS, int] = nlags if nlags is not None else "auto"
     return _kpss(x=x, regression=regression, nlags=_nlags, store=store)
@@ -571,7 +571,7 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_trend, data_sine
-        >>> from ts_stat_tests.algorithms.stationarity import rur
+        >>> from ts_stat_tests.stationarity.algorithms import rur
         >>> normal = data_normal
         >>> trend = data_trend
         >>> seasonal = data_sine
@@ -694,13 +694,13 @@ def rur(x: ArrayLike, *, store: bool = False) -> Union[
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     return _rur(x=x, store=store)
 
@@ -766,7 +766,7 @@ def za(
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_noise
-        >>> from ts_stat_tests.algorithms.stationarity import za
+        >>> from ts_stat_tests.stationarity.algorithms import za
         >>> normal = data_normal
         >>> noise = data_noise
         >>> airline = data_airline.values
@@ -869,13 +869,13 @@ def za(
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     res: Any = _za(
         x=x,
@@ -953,7 +953,7 @@ def pp(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.stationarity import pp
+        >>> from ts_stat_tests.stationarity.algorithms import pp
         >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_trend, data_sine
         >>> normal = data_normal
         >>> trend = data_trend
@@ -997,7 +997,7 @@ def pp(
         ```
 
         ```pycon {.py .python linenums="1" title="Example 5: PP test with excessive lags (coverage check)"}
-        >>> from ts_stat_tests.algorithms.stationarity import pp
+        >>> from ts_stat_tests.stationarity.algorithms import pp
         >>> from ts_stat_tests.utils.data import data_normal
         >>> # data_normal has 1000 observations. Force lags = 1000 to trigger adjustment.
         >>> res = pp(data_normal, lags=1000)
@@ -1072,13 +1072,13 @@ def pp(
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     _x = np.asarray(x)
     nobs = _x.shape[0]
@@ -1158,7 +1158,7 @@ def ers(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.stationarity import ers
+        >>> from ts_stat_tests.stationarity.algorithms import ers
         >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_noise
         >>> normal = data_normal
         >>> noise = data_noise
@@ -1255,13 +1255,13 @@ def ers(
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     res = _ers(
         y=np.asarray(y),
@@ -1330,7 +1330,7 @@ def vr(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.stationarity import vr
+        >>> from ts_stat_tests.stationarity.algorithms import vr
         >>> from ts_stat_tests.utils.data import data_airline, data_normal, data_noise, data_sine
         >>> normal = data_normal
         >>> noise = data_noise
@@ -1465,13 +1465,13 @@ def vr(
         - [`pmdarima.arima.PPTest`](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html): Phillips-Perron unit root test.
         - [`arch.unitroot.DFGLS`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.DFGLS.html): Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller.
         - [`arch.unitroot.VarianceRatio`](https://arch.readthedocs.io/en/latest/unitroot/generated/arch.unitroot.VarianceRatio.html): Variance Ratio test of a random walk.
-        - [`ts_stat_tests.algorithms.stationarity.adf`][ts_stat_tests.algorithms.stationarity.adf]: Augmented Dickey-Fuller unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.kpss`][ts_stat_tests.algorithms.stationarity.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
-        - [`ts_stat_tests.algorithms.stationarity.rur`][ts_stat_tests.algorithms.stationarity.rur]: Range Unit-Root test of stationarity.
-        - [`ts_stat_tests.algorithms.stationarity.za`][ts_stat_tests.algorithms.stationarity.za]: Zivot-Andrews structural break unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.pp`][ts_stat_tests.algorithms.stationarity.pp]: Phillips-Perron unit root test.
-        - [`ts_stat_tests.algorithms.stationarity.ers`][ts_stat_tests.algorithms.stationarity.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
-        - [`ts_stat_tests.algorithms.stationarity.vr`][ts_stat_tests.algorithms.stationarity.vr]: Variance Ratio test of a random walk.
+        - [`ts_stat_tests.stationarity.algorithms.adf`][ts_stat_tests.stationarity.algorithms.adf]: Augmented Dickey-Fuller unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.kpss`][ts_stat_tests.stationarity.algorithms.kpss]: Kwiatkowski-Phillips-Schmidt-Shin stationarity test.
+        - [`ts_stat_tests.stationarity.algorithms.rur`][ts_stat_tests.stationarity.algorithms.rur]: Range Unit-Root test of stationarity.
+        - [`ts_stat_tests.stationarity.algorithms.za`][ts_stat_tests.stationarity.algorithms.za]: Zivot-Andrews structural break unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.pp`][ts_stat_tests.stationarity.algorithms.pp]: Phillips-Perron unit root test.
+        - [`ts_stat_tests.stationarity.algorithms.ers`][ts_stat_tests.stationarity.algorithms.ers]: Elliot, Rothenberg and Stock's GLS-detrended Dickey-Fuller test.
+        - [`ts_stat_tests.stationarity.algorithms.vr`][ts_stat_tests.stationarity.algorithms.vr]: Variance Ratio test of a random walk.
     """
     res = _vr(
         y=np.asarray(y),

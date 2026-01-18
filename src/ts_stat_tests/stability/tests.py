@@ -46,7 +46,7 @@ from numpy.typing import NDArray
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.stability import (
+from ts_stat_tests.stability.algorithms import (
     lumpiness as _lumpiness,
     stability as _stability,
 )
@@ -103,7 +103,7 @@ def is_stable(
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import numpy as np
-        >>> from ts_stat_tests.tests.stability import is_stable
+        >>> from ts_stat_tests.stability.tests import is_stable
         >>> from ts_stat_tests.utils.data import load_airline
 
         ```
@@ -124,7 +124,7 @@ def is_stable(
         ```
 
     ??? tip "See Also"
-        - [`stability()`][ts_stat_tests.algorithms.stability.stability]
+        - [`stability()`][ts_stat_tests.stability.algorithms.stability]
     """
     return True if _stability(data=data, freq=freq) < alpha else False
 
@@ -165,7 +165,7 @@ def is_lumpy(
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import numpy as np
-        >>> from ts_stat_tests.tests.stability import is_lumpy
+        >>> from ts_stat_tests.stability.tests import is_lumpy
         >>> from ts_stat_tests.utils.data import load_airline
 
         ```
@@ -186,6 +186,6 @@ def is_lumpy(
         ```
 
     ??? tip "See Also"
-        - [`lumpiness()`][ts_stat_tests.algorithms.stability.lumpiness]
+        - [`lumpiness()`][ts_stat_tests.stability.algorithms.lumpiness]
     """
     return True if _lumpiness(data=data, freq=freq) > alpha else False

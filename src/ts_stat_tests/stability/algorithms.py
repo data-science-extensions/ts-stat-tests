@@ -93,7 +93,7 @@ def stability(data: Union[NDArray[np.float64], pd.DataFrame, pd.Series], freq: i
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import numpy as np
-        >>> from ts_stat_tests.algorithms.stability import stability
+        >>> from ts_stat_tests.stability.algorithms import stability
         >>> from ts_stat_tests.utils.data import load_airline
 
         ```
@@ -129,7 +129,7 @@ def stability(data: Union[NDArray[np.float64], pd.DataFrame, pd.Series], freq: i
         - Hyndman, R.J., Wang, X., & Laptev, N. (2015). Large-scale unusual time series detection. In Proceedings of the IEEE International Conference on Data Mining (ICDM 2015).
 
     ??? tip "See Also"
-        - [`lumpiness()`][ts_stat_tests.algorithms.stability.lumpiness]
+        - [`lumpiness()`][ts_stat_tests.stability.algorithms.lumpiness]
     """
     return ts_stability(x=data, freq=freq)["stability"]
 
@@ -165,7 +165,7 @@ def lumpiness(data: Union[NDArray[np.float64], pd.DataFrame, pd.Series], freq: i
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import numpy as np
-        >>> from ts_stat_tests.algorithms.stability import lumpiness
+        >>> from ts_stat_tests.stability.algorithms import lumpiness
         >>> from ts_stat_tests.utils.data import load_airline
 
         ```
@@ -201,6 +201,6 @@ def lumpiness(data: Union[NDArray[np.float64], pd.DataFrame, pd.Series], freq: i
         - Hyndman, R.J., Wang, X., & Laptev, N. (2015). Large-scale unusual time series detection. In Proceedings of the IEEE International Conference on Data Mining (ICDM 2015).
 
     ??? tip "See Also"
-        - [`stability()`][ts_stat_tests.algorithms.stability.stability]
+        - [`stability()`][ts_stat_tests.stability.algorithms.stability]
     """
     return ts_lumpiness(x=data, freq=freq)["lumpiness"]

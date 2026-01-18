@@ -130,7 +130,7 @@ def arch(resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store:
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import arch
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import arch
         >>> from ts_stat_tests.utils.data import data_line, data_random
         >>> X = sm.add_constant(data_line)
         >>> y = 2 * data_line + data_random
@@ -217,7 +217,7 @@ def bpl(resid: ArrayLike, exog_het: ArrayLike, robust: bool = True) -> tuple[flo
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import bpl
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import bpl
         >>> from ts_stat_tests.utils.data import data_line, data_random
         >>> X = sm.add_constant(data_line)
         >>> y = 2 * data_line + data_random
@@ -336,7 +336,7 @@ def gq(
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.utils.data import data_line, data_random
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import gq
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import gq
         >>> X = sm.add_constant(data_line)
         >>> y = 2 * data_line + data_random
 
@@ -427,7 +427,7 @@ def wlm(resid: ArrayLike, exog_het: ArrayLike) -> tuple[float, float, float, flo
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import wlm
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import wlm
         >>> from ts_stat_tests.utils.data import data_line, data_random
         >>> X = sm.add_constant(data_line)
         >>> y = 2 * data_line + data_random

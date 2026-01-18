@@ -46,7 +46,7 @@ from statsmodels.stats.diagnostic import ResultsStore
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.stationarity import (
+from ts_stat_tests.stationarity.algorithms import (
     adf as _adf,
     ers as _ers,
     kpss as _kpss,
@@ -97,13 +97,13 @@ def stationarity(
 
     ???+ abstract "Details"
         This function is a convenience wrapper around multiple underlying algorithms:<br>
-        - [`adf()`][ts_stat_tests.algorithms.stationarity.adf]<br>
-        - [`kpss()`][ts_stat_tests.algorithms.stationarity.kpss]<br>
-        - [`pp()`][ts_stat_tests.algorithms.stationarity.pp]<br>
-        - [`za()`][ts_stat_tests.algorithms.stationarity.za]<br>
-        - [`ers()`][ts_stat_tests.algorithms.stationarity.ers]<br>
-        - [`vr()`][ts_stat_tests.algorithms.stationarity.vr]<br>
-        - [`rur()`][ts_stat_tests.algorithms.stationarity.rur]
+        - [`adf()`][ts_stat_tests.stationarity.algorithms.adf]<br>
+        - [`kpss()`][ts_stat_tests.stationarity.algorithms.kpss]<br>
+        - [`pp()`][ts_stat_tests.stationarity.algorithms.pp]<br>
+        - [`za()`][ts_stat_tests.stationarity.algorithms.za]<br>
+        - [`ers()`][ts_stat_tests.stationarity.algorithms.ers]<br>
+        - [`vr()`][ts_stat_tests.stationarity.algorithms.vr]<br>
+        - [`rur()`][ts_stat_tests.stationarity.algorithms.rur]
 
     Params:
         x (ArrayLike):
@@ -135,7 +135,7 @@ def stationarity(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.stationarity import stationarity
+        >>> from ts_stat_tests.stationarity.tests import stationarity
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -230,7 +230,7 @@ def stationarity(
         ???+ example "Examples"
 
             ```pycon {.py .python linenums="1" title="Setup"}
-            >>> from ts_stat_tests.tests.stationarity import stationarity
+            >>> from ts_stat_tests.stationarity.tests import stationarity
             >>> from ts_stat_tests.utils.data import data_normal
             >>> normal = data_normal
             ```
@@ -308,7 +308,7 @@ def is_stationary(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.stationarity import is_stationary
+        >>> from ts_stat_tests.stationarity.tests import is_stationary
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 

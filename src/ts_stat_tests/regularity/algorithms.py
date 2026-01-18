@@ -128,7 +128,7 @@ def approx_entropy(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.regularity import approx_entropy
+        >>> from ts_stat_tests.regularity.algorithms import approx_entropy
         >>> from ts_stat_tests.utils.data import data_airline, data_random
         >>> airline = data_airline.values
         >>> random = data_random
@@ -230,7 +230,7 @@ def sample_entropy(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.regularity import sample_entropy
+        >>> from ts_stat_tests.regularity.algorithms import sample_entropy
         >>> from ts_stat_tests.utils.data import data_airline, data_random
         >>> airline = data_airline.values
         >>> random = data_random
@@ -340,7 +340,7 @@ def permutation_entropy(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.regularity import permutation_entropy
+        >>> from ts_stat_tests.regularity.algorithms import permutation_entropy
         >>> from ts_stat_tests.utils.data import data_airline, data_random
         >>> airline = data_airline.values
         >>> random = data_random
@@ -453,7 +453,7 @@ def spectral_entropy(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.regularity import spectral_entropy
+        >>> from ts_stat_tests.regularity.algorithms import spectral_entropy
         >>> from ts_stat_tests.utils.data import data_airline
         >>> airline = data_airline.values
 
@@ -547,7 +547,7 @@ def svd_entropy(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.algorithms.regularity import svd_entropy
+        >>> from ts_stat_tests.regularity.algorithms import svd_entropy
         >>> from ts_stat_tests.utils.data import data_random
         >>> random = data_random
 
@@ -570,10 +570,10 @@ def svd_entropy(
 
     ??? tip "See Also"
         - [`antropy.svd_entropy`](https://raphaelvallat.com/antropy/build/html/generated/antropy.svd_entropy.html)
-        - [`ts_stat_tests.algorithms.regularity.approx_entropy`][ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`ts_stat_tests.algorithms.regularity.sample_entropy`][ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`ts_stat_tests.algorithms.regularity.permutation_entropy`][ts_stat_tests.algorithms.regularity.permutation_entropy]
-        - [`ts_stat_tests.algorithms.regularity.spectral_entropy`][ts_stat_tests.algorithms.regularity.spectral_entropy]
+        - [`ts_stat_tests.regularity.algorithms.approx_entropy`][ts_stat_tests.regularity.algorithms.approx_entropy]
+        - [`ts_stat_tests.regularity.algorithms.sample_entropy`][ts_stat_tests.regularity.algorithms.sample_entropy]
+        - [`ts_stat_tests.regularity.algorithms.permutation_entropy`][ts_stat_tests.regularity.algorithms.permutation_entropy]
+        - [`ts_stat_tests.regularity.algorithms.spectral_entropy`][ts_stat_tests.regularity.algorithms.spectral_entropy]
     """
     return a_svd_entropy(
         x=x,

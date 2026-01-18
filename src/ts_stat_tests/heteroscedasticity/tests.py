@@ -52,7 +52,7 @@ from statsmodels.regression.linear_model import (
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.heteroscedasticity import arch, bpl, gq, wlm
+from ts_stat_tests.heteroscedasticity.algorithms import arch, bpl, gq, wlm
 from ts_stat_tests.utils.errors import generate_error_message
 
 
@@ -83,10 +83,10 @@ def heteroscedasticity(
 
     ???+ abstract "Details"
         This function is a convenience wrapper around four underlying algorithms:<br>
-        - [`arch()`][ts_stat_tests.algorithms.heteroscedasticity.arch]<br>
-        - [`bp()`][ts_stat_tests.algorithms.heteroscedasticity.bpl]<br>
-        - [`gq()`][ts_stat_tests.algorithms.heteroscedasticity.gq]<br>
-        - [`white()`][ts_stat_tests.algorithms.heteroscedasticity.wlm]
+        - [`arch()`][ts_stat_tests.heteroscedasticity.algorithms.arch]<br>
+        - [`bp()`][ts_stat_tests.heteroscedasticity.algorithms.bpl]<br>
+        - [`gq()`][ts_stat_tests.heteroscedasticity.algorithms.gq]<br>
+        - [`white()`][ts_stat_tests.heteroscedasticity.algorithms.wlm]
 
     Params:
         res (Union[RegressionResults, RegressionResultsWrapper]):
@@ -116,7 +116,7 @@ def heteroscedasticity(
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.tests.heteroscedasticity import heteroscedasticity
+        >>> from ts_stat_tests.heteroscedasticity.tests import heteroscedasticity
         >>> from ts_stat_tests.utils.data import data_line, data_random
         >>> X = sm.add_constant(data_line)
         >>> y = 2 * data_line + data_random
@@ -208,7 +208,7 @@ def is_heteroscedastic(
         res (Union[RegressionResults, RegressionResultsWrapper]):
             The fitted regression model to be checked.
         algorithm (str):
-            Which heteroscedasticity algorithm to use. See [`heteroscedasticity()`][ts_stat_tests.tests.heteroscedasticity.heteroscedasticity] for options.
+            Which heteroscedasticity algorithm to use. See [`heteroscedasticity()`][ts_stat_tests.heteroscedasticity.tests.heteroscedasticity] for options.
             Default: `"bp"`
         alpha (float):
             The significance level for the test.
@@ -229,7 +229,7 @@ def is_heteroscedastic(
 
         ```pycon {.py .python linenums="1" title="Setup"}
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.tests.heteroscedasticity import is_heteroscedastic
+        >>> from ts_stat_tests.heteroscedasticity.tests import is_heteroscedastic
         >>> from ts_stat_tests.utils.data import data_line, data_random
         >>> X = sm.add_constant(data_line)
         >>> y = 2 * data_line + data_random

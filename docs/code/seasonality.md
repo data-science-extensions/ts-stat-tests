@@ -24,7 +24,7 @@
 
     | Information        | Details                                                                |
     | :----------------- | :--------------------------------------------------------------------- |
-    | **Module**         | [ts_stat_tests.tests.seasonality][ts_stat_tests.tests.seasonality]     |
+    | **Module**         | [ts_stat_tests.seasonality.tests][ts_stat_tests.seasonality.tests]     |
     | **Algorithms**     | `qs`, `ocsb`, `ch`, `seasonal_strength`, `trend_strength`, `spikiness` |
     | **Complexity**     | $O(n \log n)$ to $O(n^2)$ depending on algorithm                       |
     | **Implementation** | `statsmodels`, `pmdarima`, `tsfeatures`                                |
@@ -41,13 +41,13 @@
 
         The source code for the seasonality tests is organized into two primary layers:
 
-        - **[`src.ts_stat_tests.algorithms.seasonality`][ts_stat_tests.algorithms.seasonality]**: Contains the core mathematical implementations and wrappers for third-party libraries.
-        - **[`src.ts_stat_tests.tests.seasonality`][ts_stat_tests.tests.seasonality]**: Provides the top-level user interface, including the `seasonality` dispatcher and the `is_seasonal` boolean check.
+        - **[`src.ts_stat_tests.seasonality.algorithms`][ts_stat_tests.seasonality.algorithms]**: Contains the core mathematical implementations and wrappers for third-party libraries.
+        - **[`src.ts_stat_tests.seasonality.tests`][ts_stat_tests.seasonality.tests]**: Provides the top-level user interface, including the `seasonality` dispatcher and the `is_seasonal` boolean check.
 
 
 ## Seasonality Tests
 
-::: ts_stat_tests.tests.seasonality
+::: ts_stat_tests.seasonality.tests
     options:
         extra:
             show_root_heading: false
@@ -58,7 +58,7 @@
 
 ## Seasonality Algorithms
 
-::: ts_stat_tests.algorithms.seasonality
+::: ts_stat_tests.seasonality.algorithms
     options:
         extra:
             show_root_heading: false

@@ -49,12 +49,12 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.correlation`][ts_stat_tests.algorithms.correlation].
-        - [`ts_stat_tests.tests.correlation`][ts_stat_tests.tests.correlation].
+        - [`ts_stat_tests.correlation.algorithms`][ts_stat_tests.correlation.algorithms].
+        - [`ts_stat_tests.correlation.tests`][ts_stat_tests.correlation.tests].
 
 ## Correlation Tests
 
-::: ts_stat_tests.tests.correlation
+::: ts_stat_tests.correlation.tests
     options:
         extra:
             show_root_heading: false
@@ -64,7 +64,7 @@
 
 ## Correlation Algorithms
 
-::: ts_stat_tests.algorithms.correlation
+::: ts_stat_tests.correlation.algorithms
     options:
         extra:
             show_root_heading: false

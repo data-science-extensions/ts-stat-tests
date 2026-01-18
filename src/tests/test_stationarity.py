@@ -30,8 +30,17 @@ from statsmodels.tsa.stattools import (
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.stationarity import adf, ers, kpss, pp, rur, vr, za
-from ts_stat_tests.tests.stationarity import is_stationary, stationarity
+from ts_stat_tests.stationarity import (
+    adf,
+    ers,
+    is_stationary,
+    kpss,
+    pp,
+    rur,
+    stationarity,
+    vr,
+    za,
+)
 
 
 # ---------------------------------------------------------------------------- #
@@ -84,17 +93,17 @@ class TestStationarity(BaseTester):
     def test_is_stationary_pvalue_bool_coverage(self) -> None:
         """Test branch coverage for pvalue_or_bool being a boolean."""
 
-        with patch("ts_stat_tests.tests.stationarity.stationarity") as mock_stat:
+        with patch("ts_stat_tests.stationarity.tests.stationarity") as mock_stat:
             # Mock returning (stat, bool)
             mock_stat.return_value = (0.5, True)
             res = is_stationary(np.arange(100), algorithm="adf")
             assert res["result"] is True
-            assert res["pvalue"] is None
+            assert res["statistic"] == 0.5
 
     def test_is_stationary_non_numeric_pvalue(self) -> None:
         """Test coverage where pvalue is neither bool nor numeric."""
 
-        with patch("ts_stat_tests.tests.stationarity.stationarity") as mock_stat:
+        with patch("ts_stat_tests.stationarity.tests.stationarity") as mock_stat:
             # Mock returning (stat, string)
             mock_stat.return_value = (0.5, "invalid")
             res = is_stationary(np.arange(100), algorithm="adf")

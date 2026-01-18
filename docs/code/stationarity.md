@@ -39,12 +39,12 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.stationarity`][ts_stat_tests.algorithms.stationarity].
-        - [`ts_stat_tests.tests.stationarity`][ts_stat_tests.tests.stationarity].
+        - [`ts_stat_tests.stationarity.algorithms`][ts_stat_tests.stationarity.algorithms].
+        - [`ts_stat_tests.stationarity.tests`][ts_stat_tests.stationarity.tests].
 
 ## Stationarity Tests
 
-::: ts_stat_tests.tests.stationarity
+::: ts_stat_tests.stationarity.tests
     options:
         extra:
             show_root_heading: false
@@ -54,7 +54,7 @@
 
 ## Stationarity Algorithms
 
-::: ts_stat_tests.algorithms.stationarity
+::: ts_stat_tests.stationarity.algorithms
     options:
         extra:
             show_root_heading: false

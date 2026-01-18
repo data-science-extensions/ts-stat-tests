@@ -107,14 +107,32 @@ def hc(
             - `pvalue` (float): The p-value associated with the t-statistic.
 
     ???+ example "Examples"
-        ```python
-        import statsmodels.api as sm
-        from ts_stat_tests.algorithms.linearity import hc
 
-        X = sm.add_constant(np.arange(100))
-        y = 3 + 2 * X[:, 1] + np.random.normal(size=100)
-        res = sm.OLS(y, X).fit()
-        hc(res)
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import statsmodels.api as sm
+        >>> from ts_stat_tests.linearity.algorithms import lm
+        >>> from ts_stat_tests.utils.data import data_random, data_line
+        >>> exog = sm.add_constant(data_line.reshape(-1, 1))
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Linear Data"}
+        >>> lm_stat, lm_pval, f_stat, f_pval = lm(data_line, exog)
+        >>> print(f"LM Statistic: {lm_stat:.2f}")
+        LM Statistic: 1000.00
+        >>> print(f"LM p-value: {lm_pval:.4f}")
+        LM p-value: 0.0000
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 2: Random Data"}
+        >>> # resid can be anything for this dummy example
+        >>> lm_stat, lm_pval, f_stat, f_pval = lm(data_random, exog)
+        >>> print(f"LM Statistic: {lm_stat:.2f}")
+        LM Statistic: 0.02
+        >>> print(f"LM p-value: {lm_pval:.4f}")
+        LM p-value: 0.8840
+
         ```
 
     ??? question "References"
@@ -152,13 +170,29 @@ def lm(
             - `fpval` (float): p-value for F-statistic.
 
     ???+ example "Examples"
-        ```python
-        import numpy as np
-        from ts_stat_tests.algorithms.linearity import lm
 
-        resid = np.random.normal(size=100)
-        exog = np.random.normal(size=(100, 2))
-        lm(resid, exog)
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import statsmodels.api as sm
+        >>> from ts_stat_tests.linearity.algorithms import lm
+        >>> from ts_stat_tests.utils.data import data_random, data_line
+        >>> exog = sm.add_constant(data_line.reshape(-1, 1))
+        >>> y = 3 + 2 * data_line + 2 * data_line**2 + data_random
+        >>> res = sm.OLS(y, exog).fit()
+        >>> resid = res.resid
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Basic Usage"}
+        >>> lm_stat, lm_pval, f_stat, f_pval = lm(resid, exog)
+        >>> print(f"LM Statistic: {lm_stat:.2f}")
+        LM Statistic: 1000.00
+        >>> print(f"LM p-value: {lm_pval:.4f}")
+        LM p-value: 0.0000
+        >>> print(f"F Statistic: {f_stat:.2f}")
+        F Statistic: 260850586525460.09
+        >>> print(f"F p-value: {f_pval:.4f}")
+        F p-value: 0.0000
+
         ```
     """
     res_lm = linear_lm(resid=resid, exog=exog, func=func)
@@ -206,14 +240,24 @@ def rb(
             - `pvalue` (float): The p-value associated with the F-statistic.
 
     ???+ example "Examples"
-        ```python
-        import statsmodels.api as sm
-        from ts_stat_tests.algorithms.linearity import rb
 
-        X = sm.add_constant(np.arange(100))
-        y = 3 + 2 * X[:, 1] + 2 * X[:, 1] ** 2 + np.random.normal(size=100)
-        res = sm.OLS(y, X).fit()
-        rb(res)
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import statsmodels.api as sm
+        >>> from ts_stat_tests.linearity.algorithms import rb
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 3 + 2 * data_line + 2 * data_line**2 + data_random
+        >>> res = sm.OLS(y, X).fit()
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Basic Usage"}
+        >>> rb_stat, rb_pval = rb(res)
+        >>> print(f"Rainbow F-Statistic: {rb_stat:.2f}")
+        Rainbow F-Statistic: 30.88
+        >>> print(f"p-value: {rb_pval:.4e}")
+        p-value: 1.8319e-230
+
         ```
 
     ??? question "References"
@@ -264,14 +308,22 @@ def rr(
             The results of the RESET test.
 
     ???+ example "Examples"
-        ```python
-        import statsmodels.api as sm
-        from ts_stat_tests.algorithms.linearity import rr
 
-        X = sm.add_constant(np.arange(100))
-        y = 3 + 2 * X[:, 1] + np.random.normal(size=100)
-        res = sm.OLS(y, X).fit()
-        rr(res)
+        ```pycon {.py .python linenums="1" title="Setup"}
+        >>> import statsmodels.api as sm
+        >>> from ts_stat_tests.linearity.algorithms import rr
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 3 + 2 * data_line + 2 * data_line**2 + data_random
+        >>> res = sm.OLS(y, X).fit()
+
+        ```
+
+        ```pycon {.py .python linenums="1" title="Example 1: Basic Usage"}
+        >>> rr_res = rr(res)
+        >>> print(f"RESET Test Statistic: {rr_res.statistic:.2f}")
+        RESET Test Statistic: 225070.65
+
         ```
 
     ??? question "References"
