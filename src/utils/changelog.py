@@ -221,6 +221,9 @@ def main() -> None:
         ### Prepare the output file ----
         f.write(add_page_styling())
 
+        ### Add title ----
+        f.write(f"# Changelog for {repo.name}{BLANK_LINE}")
+
         ### Fetch the releases for the repository, sorted by reverse creation date ----
         releases: list[GitRelease] = sorted(
             repo.get_releases(),
