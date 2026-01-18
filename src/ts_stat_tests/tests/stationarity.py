@@ -20,8 +20,7 @@
 
 """
 !!! note "Summary"
-    This module contains convenience functions and tests for stationarity measures,
-    allowing for easy access to different unit root and stationarity algorithms.
+    This module contains convenience functions and tests for stationarity measures, allowing for easy access to different unit root and stationarity algorithms.
 """
 
 
