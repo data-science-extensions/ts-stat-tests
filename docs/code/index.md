@@ -153,14 +153,14 @@
 
 This package maintains 100% test coverage with comprehensive tesing against:
 
-1. **Code Style**: All code adheres to [``lack`` [black]formatting, including all code chunks in docstrings using the [`blacken-docs`].[blacken-docs]
-2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`]][codespell.
-3. **Type Safety**: All code is type-checked using [`ty`] [ty]and [`pyright`] [pyright]and guarded during runtype by using the [`typeguard`] [typeguard]library.
-4. **Import Sorting**: All imports are sorted and managed using [`isort`],[isort] and unused imports are removed using [`pycln`]][pycln.
-5. **Code Quality**: All code is checked for quality using [`pylint`],[pylint] maintaining a score of 10/10, and checked for complexity using [`complexipy`]][complexipy.
-6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`]
-[docstring-format-checker].7. **Unit Testing**: All code is unit-tested using [`pytest`],[pytest] achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`]][doctest.
-8. **Build Testing**: The package is built with [`uv`] [uv]and the docs are built with [`mkdocs`] [mkdocs]to ensure there are no build errors.
+1. **Code Style**: All code adheres to [`black`][black]formatting, including all code chunks in docstrings using the [`blacken-docs`][blacken-docs].
+2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`][codespell].
+3. **Type Safety**: All code is type-checked using [`ty`][ty] and [`pyright`][pyright] and guarded during runtype by using the [`typeguard`][typeguard] library.
+4. **Import Sorting**: All imports are sorted and managed using [`isort`][isort] and unused imports are removed using [`pycln`][pycln].
+5. **Code Quality**: All code is checked for quality using [`pylint`][pylint] maintaining a score of 10/10, and checked for complexity using [`complexipy`][complexipy].
+6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`][docstring-format-checker].
+7. **Unit Testing**: All code is unit-tested using [`pytest`][pytest] achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`][doctest].
+8. **Build Testing**: The package is built with [`uv`][uv] and the docs are built with [`mkdocs`][mkdocs] to ensure there are no build errors.
 
 
 [black]: https://black.readthedocs.io
