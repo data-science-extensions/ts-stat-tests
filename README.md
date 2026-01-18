@@ -182,7 +182,7 @@ We take code quality seriously. Every commit is verified against:
 5. **Code Quality**: All code is checked for quality using [`pylint`][pylint] maintaining a score of 10/10, and checked for complexity using [`complexipy`][complexipy].
 6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`][docstring-format-checker].
 7. **Unit Testing**: All code is unit-tested using [`pytest`][pytest] achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`][doctest].
-8. **Build Testing**: The package is built with [`uv`] [uv]and the docs are built with [`mkdocs`][mkdocs]to ensure there are no build errors.
+8. **Build Testing**: The package is built with [`uv`][uv] and the docs are built with [`mkdocs`][mkdocs] to ensure there are no build errors.
 
 
 ## ⚠️ Known limitations
