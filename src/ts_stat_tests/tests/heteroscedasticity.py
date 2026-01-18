@@ -115,27 +115,26 @@ def heteroscedasticity(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.tests.heteroscedasticity import heteroscedasticity
-        >>> x = np.linspace(0, 10, 100)
-        >>> X = sm.add_constant(x)
-        >>> y = 2 * x + np.random.normal(size=100)
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 2 * data_line + data_random
         >>> res = sm.OLS(y, X).fit()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Breusch-Pagan test"}
         >>> result = heteroscedasticity(res, algorithm="bp")
-        >>> print(f"p-value: {result[1]:.4f}")  # doctest: +SKIP
-        p-value: 0.1234
+        >>> print(f"p-value: {result[1]:.4f}")
+        p-value: 0.2461
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: ARCH test"}
         >>> lm, lmp, f, fp = heteroscedasticity(res, algorithm="arch")
-        >>> print(f"ARCH p-value: {lmp:.4f}")  # doctest: +SKIP
-        ARCH p-value: 0.5678
+        >>> print(f"ARCH p-value: {lmp:.4f}")
+        ARCH p-value: 0.9124
 
         ```
     """
@@ -229,19 +228,18 @@ def is_heteroscedastic(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.tests.heteroscedasticity import is_heteroscedastic
-        >>> x = np.linspace(0, 10, 100)
-        >>> X = sm.add_constant(x)
-        >>> y = 2 * x + np.random.normal(size=100)
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 2 * data_line + data_random
         >>> res = sm.OLS(y, X).fit()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Check heteroscedasticity with Breusch-Pagan"}
         >>> res_check = is_heteroscedastic(res, algorithm="bp")
-        >>> print(res_check["result"])  # doctest: +SKIP
+        >>> print(res_check["result"])
         False
 
         ```

@@ -121,26 +121,26 @@ def linearity(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.tests.linearity import linearity
-        >>> x = sm.add_constant(np.linspace(0, 10, 100))
-        >>> y = 3 + 2 * x[:, 1] + np.random.normal(size=100)
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> x = sm.add_constant(data_line)
+        >>> y = 3 + 2 * data_line + data_random
         >>> res = sm.OLS(y, x).fit()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Ramsey RESET test"}
         >>> result = linearity(res, algorithm="rr")
-        >>> print(f"p-value: {result.pvalue:.4f}")  # doctest: +SKIP
-        p-value: 0.1367
+        >>> print(f"p-value: {result.pvalue:.4f}")
+        p-value: 0.9912
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Rainbow test"}
         >>> stat, pval = linearity(res, algorithm="rb")
-        >>> print(f"Rainbow p-value: {pval:.4f}")  # doctest: +SKIP
-        Rainbow p-value: 0.5432
+        >>> print(f"Rainbow p-value: {pval:.4f}")
+        Rainbow p-value: 0.5391
 
         ```
     """
@@ -245,18 +245,18 @@ def is_linear(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
         >>> from ts_stat_tests.tests.linearity import is_linear
-        >>> x = sm.add_constant(np.linspace(0, 10, 100))
-        >>> y = 3 + 2 * x[:, 1] + np.random.normal(size=100)
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> x = sm.add_constant(data_line)
+        >>> y = 3 + 2 * data_line + data_random
         >>> res = sm.OLS(y, x).fit()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Check linearity with RR"}
         >>> result = is_linear(res, algorithm="rr")
-        >>> print(result["result"])  # doctest: +SKIP
+        >>> print(result["result"])
         True
 
         ```
