@@ -41,7 +41,10 @@
         - [`ts_stat_tests.normality.algorithms`][ts_stat_tests.normality.algorithms].
         - [`ts_stat_tests.normality.tests`][ts_stat_tests.normality.tests].
 
-## Normality Tests
+
+
+## Modules
+
 
 ::: ts_stat_tests.normality.tests
     options:
@@ -51,7 +54,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Normality Algorithms
 
 ::: ts_stat_tests.normality.algorithms
     options:

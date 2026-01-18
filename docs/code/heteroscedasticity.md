@@ -38,7 +38,10 @@
         - [`ts_stat_tests.heteroscedasticity.algorithms`][ts_stat_tests.heteroscedasticity.algorithms].
         - [`ts_stat_tests.heteroscedasticity.tests`][ts_stat_tests.heteroscedasticity.tests].
 
-## Heteroscedasticity Tests
+
+
+## Modules
+
 
 ::: ts_stat_tests.heteroscedasticity.tests
     options:
@@ -48,7 +51,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Heteroscedasticity Algorithms
 
 ::: ts_stat_tests.heteroscedasticity.algorithms
     options:

@@ -52,7 +52,10 @@
         - [`ts_stat_tests.correlation.algorithms`][ts_stat_tests.correlation.algorithms].
         - [`ts_stat_tests.correlation.tests`][ts_stat_tests.correlation.tests].
 
-## Correlation Tests
+
+
+## Modules
+
 
 ::: ts_stat_tests.correlation.tests
     options:
@@ -62,7 +65,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Correlation Algorithms
 
 ::: ts_stat_tests.correlation.algorithms
     options:

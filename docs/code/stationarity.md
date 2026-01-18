@@ -42,7 +42,10 @@
         - [`ts_stat_tests.stationarity.algorithms`][ts_stat_tests.stationarity.algorithms].
         - [`ts_stat_tests.stationarity.tests`][ts_stat_tests.stationarity.tests].
 
-## Stationarity Tests
+
+
+## Modules
+
 
 ::: ts_stat_tests.stationarity.tests
     options:
@@ -52,7 +55,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Stationarity Algorithms
 
 ::: ts_stat_tests.stationarity.algorithms
     options:

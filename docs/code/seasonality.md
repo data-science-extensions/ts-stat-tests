@@ -45,7 +45,8 @@
         - **[`src.ts_stat_tests.seasonality.tests`][ts_stat_tests.seasonality.tests]**: Provides the top-level user interface, including the `seasonality` dispatcher and the `is_seasonal` boolean check.
 
 
-## Seasonality Tests
+
+## Modules
 
 ::: ts_stat_tests.seasonality.tests
     options:
@@ -55,8 +56,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-
-## Seasonality Algorithms
 
 ::: ts_stat_tests.seasonality.algorithms
     options:

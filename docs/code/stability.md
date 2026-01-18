@@ -33,7 +33,9 @@
         - [`ts_stat_tests.stability.algorithms`][ts_stat_tests.stability.algorithms].
         - [`ts_stat_tests.stability.tests`][ts_stat_tests.stability.tests].
 
-## Stability Tests
+
+
+## Modules
 
 ::: ts_stat_tests.stability.tests
     options:
@@ -43,7 +45,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Stability Algorithms
 
 ::: ts_stat_tests.stability.algorithms
     options:

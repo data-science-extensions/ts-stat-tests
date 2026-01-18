@@ -49,7 +49,10 @@
         - [`ts_stat_tests.regularity.algorithms`][ts_stat_tests.regularity.algorithms].
         - [`ts_stat_tests.regularity.tests`][ts_stat_tests.regularity.tests].
 
-## Regularity Tests
+
+
+## Modules
+
 
 ::: ts_stat_tests.regularity.tests
     options:
@@ -59,7 +62,6 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Regularity Algorithms
 
 ::: ts_stat_tests.regularity.algorithms
     options:

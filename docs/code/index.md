@@ -33,18 +33,16 @@
 
 ## Modules
 
-| Module             | Description                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------- |
-| Correlation        | Tests to measure autocorrelation and cross-correlation in time series data.            |
-| Regularity         | Tests to measure the complexity and regularity of time series data.                    |
-| Seasonality        | Tests to identify seasonal patterns and measure seasonal strength in time series data. |
-| Stability          | Tests to measure the stability and lumpiness of time series data.                      |
-| Stationarity       | Tests to determine if a time series is stationary or possesses unit roots.             |
-| Normality          | Tests to assess if the residuals of a time series model follow a normal distribution.  |
-| Linearity          | Tests to evaluate linear specifications in time-series models.                         |
-| Heteroscedasticity | Tests to detect heteroscedasticity in the residuals of time series models.             |
-
-<!-- | Covariance | Tests to evaluate covariance structures in multivariate time series data. | -->
+| Module                                   | Description                                                                            |
+| ---------------------------------------- | -------------------------------------------------------------------------------------- |
+| [Correlation](correlation)               | Tests to measure autocorrelation and cross-correlation in time series data.            |
+| [Regularity](regularity)                 | Tests to measure the complexity and regularity of time series data.                    |
+| [Seasonality](seasonality)               | Tests to identify seasonal patterns and measure seasonal strength in time series data. |
+| [Stability](stability)                   | Tests to measure the stability and lumpiness of time series data.                      |
+| [Stationarity](stationarity)             | Tests to determine if a time series is stationary or possesses unit roots.             |
+| [Normality](normality)                   | Tests to assess if the residuals of a time series model follow a normal distribution.  |
+| [Linearity](linearity)                   | Tests to evaluate linear specifications in time-series models.                         |
+| [Heteroscedasticity](heteroscedasticity) | Tests to detect heteroscedasticity in the residuals of time series models.             |
 
 
 ## Tests
@@ -119,6 +117,7 @@
         | Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | ✅[`statsmodels`][statsmodels]:[`het_breuschpagan()`][statsmodels-het_breuschpagan]                                                                                   |
         | Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | ✅[`statsmodels`][statsmodels]:[`het_goldfeldquandt()`][statsmodels-het_goldfeldquandt]                                                                               |
         | Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | ✅[`statsmodels`][statsmodels]:[`het_white()`][statsmodels-het_white]                                                                                                 |
+
         </div>
 
     === "Python Import"
@@ -154,14 +153,30 @@
 
 This package maintains 100% test coverage with comprehensive testing against:
 
-1. **Code Style**: All code adheres to [`black`] formatting, including all code chunks in docstrings using the [`blacken-docs`].
-2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`].
-3. **Type Safety**: All code is type-checked using [`ty`] and [`pyright`] and guarded during runtime by using the [`typeguard`] library.
-4. **Import Sorting**: All imports are sorted and managed using [`isort`], and unused imports are removed using [`pycln`].
-5. **Code Quality**: All code is checked for quality using [`pylint`], maintaining a score of 10/10, and checked for complexity using [`complexipy`].
-6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`]
-7. **Unit Testing**: All code is unit-tested using [`pytest`], achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`].
-8. **Build Testing**: The package is built with [`uv`] and the docs are built with [`mkdocs`] to ensure there are no build errors.
+1. **Code Style**: All code adheres to [`black`][black] formatting, including all code chunks in docstrings using the [`blacken-docs`][blacken-docs].
+2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`][codespell].
+3. **Type Safety**: All code is type-checked using [`ty`][ty] and [`pyright`][pyright] and guarded during runtime by using the [`typeguard`][typeguard] library.
+4. **Import Sorting**: All imports are sorted and managed using [`isort`][isort], and unused imports are removed using [`pycln`][pycln].
+5. **Code Quality**: All code is checked for quality using [`pylint`][pylint], maintaining a score of 10/10, and checked for complexity using [`complexipy`][complexipy].
+6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`][docstring-format-checker].
+7. **Unit Testing**: All code is unit-tested using [`pytest`][pytest], achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`][doctest].
+8. **Build Testing**: The package is built with [`uv`][uv] and the docs are built with [`mkdocs`][mkdocs] to ensure there are no build errors.
+
+[black]: https://black.readthedocs.io
+[blacken-docs]: https://github.com/adamchainz/blacken-docs
+[ty]: https://docs.astral.sh/ty/
+[pyright]: https://microsoft.github.io/pyright/
+[typeguard]: https://typeguard.readthedocs.io
+[isort]: https://pycqa.github.io/isort/
+[pycln]: https://hadialqattan.github.io/pycln/
+[codespell]: https://github.com/codespell-project/codespell
+[pylint]: https://pylint.readthedocs.io/
+[complexipy]: https://rohaquinlop.github.io/complexipy/
+[docstring-format-checker]: https://data-science-extensions.com/toolboxes/docstring-format-checker/
+[pytest]: https://docs.pytest.org/
+[doctest]: https://docs.python.org/3/library/doctest.html
+[uv]: https://docs.astral.sh/uv/
+[mkdocs]: https://www.mkdocs.org/
 
 
 ## Coverage
@@ -223,18 +238,3 @@ This package maintains 100% test coverage with comprehensive testing against:
 [scipy-shapiro]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html
 [scipy-normaltest]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html
 [scipy-anderson]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.anderson.html
-[`black`]: https://black.readthedocs.io
-[`blacken-docs`]: https://github.com/adamchainz/blacken-docs
-[`ty`]: https://docs.astral.sh/ty/
-[`pyright`]: https://microsoft.github.io/pyright/
-[`typeguard`]: https://typeguard.readthedocs.io
-[`isort`]: https://pycqa.github.io/isort/
-[`pycln`]: https://hadialqattan.github.io/pycln/
-[`codespell`]: https://github.com/codespell-project/codespell
-[`pylint`]: https://pylint.readthedocs.io/
-[`complexipy`]: https://rohaquinlop.github.io/complexipy/
-[`docstring-format-checker`]: https://data-science-extensions.com/toolboxes/docstring-format-checker/
-[`pytest`]: https://docs.pytest.org/
-[`doctest`]: https://docs.python.org/3/library/doctest.html
-[`uv`]: https://docs.astral.sh/uv/
-[`mkdocs`]: https://www.mkdocs.org/

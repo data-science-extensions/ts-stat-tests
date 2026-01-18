@@ -33,7 +33,10 @@
         - [`ts_stat_tests.linearity.algorithms`][ts_stat_tests.linearity.algorithms].
         - [`ts_stat_tests.linearity.tests`][ts_stat_tests.linearity.tests].
 
-## Linearity Tests
+
+
+## Modules
+
 
 ::: ts_stat_tests.linearity.tests
     options:
@@ -43,7 +46,6 @@
             show_if_no_docstring: true
             members_order: source
 
-## Linearity Algorithms
 
 ::: ts_stat_tests.linearity.algorithms
     options:
