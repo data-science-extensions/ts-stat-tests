@@ -186,6 +186,7 @@ def add_commit_info(commit: Commit) -> str:
         f"{TAB * 2}* [`{commit.sha[:SHORT_SHA_LENGTH]}`]({commit.html_url}): {commit_message_str}"
         f"{NEW_LINE}"
         f"{TAB * 3}(by {author_info})"
+        f"{NEW_LINE}"
     )
 
 
