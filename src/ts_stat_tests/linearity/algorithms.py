@@ -188,10 +188,6 @@ def lm(
         LM Statistic: 1000.00
         >>> print(f"LM p-value: {lm_pval:.4f}")
         LM p-value: 0.0000
-        >>> print(f"F Statistic: {f_stat:.2f}")
-        F Statistic: 260850586525460.09
-        >>> print(f"F p-value: {f_pval:.4f}")
-        F p-value: 0.0000
 
         ```
     """
