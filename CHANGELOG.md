@@ -9,6 +9,102 @@
 .md-nav--secondary .md-nav__list .md-nav__list { display: none; }
 </style>
 
+!!! info "v0.8.0"
+
+    ## **v0.8.0 - Heteroscedasticity Module**
+
+    <!-- md:tag v0.8.0 --><br>
+    <!-- md:date 2026-01-18 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v0.8.0](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v0.8.0) -->
+
+    ??? note "Release Notes"
+
+        ### 🚀 Overview                        Introduce the `heteroscedasticity` module, completing the seventh analytical pillar of the `ts-stat-tests` library. This release provides a unified interface for detecting Autoregressive Conditional Heteroscedasticity (ARCH) and classic heteroscedasticity using the Breusch-Pagan, Goldfeld-Quandt, and White tests. These tools are critical for identifying volatility clustering and non-constant variance in residuals, ensuring the validity of econometric inferences. This version also represents a significant technical milestone, transitioning the entire test suite to modern `pytest` assertions and standardising documentation across all core algorithms.                        ### 🛠️ Implementation details                        #### Heteroscedasticity module implementation                        * Implement core heteroscedasticity algorithms in `src/ts_stat_tests/algorithms/heteroscedasticity.py`:            * `arch()`: Engle's test for Autoregressive Conditional Heteroscedasticity.            * `bpl()`: Breusch-Pagan Lagrange Multiplier test for heteroscedasticity.            * `gq()`: Goldfeld-Quandt test for homoskedasticity.            * `wlm()`: White's Lagrange Multiplier test for heteroscedasticity and specification error.        * Provide standardised Boolean dispatchers in `src/ts_stat_tests/tests/heteroscedasticity.py`:            * `heteroscedasticity()`: Unified high-level interface for all heteroscedasticity tests.            * `is_heteroscedastic()`: Boolean checker returning a consistent `"result"` key, maintaining API parity across the library.        * Migrate from deprecated `statsmodels.sandbox` imports to the stable `statsmodels.stats.diagnostic` module for long-term compatibility.                        #### Infrastructure and documentation                        * Create comprehensive theoretical documentation in `docs/code/heteroscedasticity.md`, including `KaTeX` mathematical definitions for variance testing.        * Update `README.md` and `docs/code/index.md` to reflect 100% completion status for both the Linearity and Heteroscedasticity modules.        * Extend the library's code overview with detailed feature highlights including unified interfaces, boolean checkers, and strict type safety.        * Optimise navigation in `mkdocs.yml` to include the new diagnostic pages.                        #### Quality assurance and refactoring                        * Refactor the global test suite to transition from `unittest`-style methods to modern `pytest` assertions, improving diagnostic readability.        * Modernise internal QA infrastructure by categorising checks in the `check()` function within `src/utils/scripts.py`.        * Standardise type hints across the library, preferring native `float` over `np.float64` for simplified user consumption.        * Maintain 10-00/10 `Pylint` scores and 100% test coverage through rigorous docstring and type validation.                        ### ✅ Checklist                        - [x] Implement `arch()`, `bpl()`, `gq()`, and `wlm()` algorithms.        - [x] Implement `heteroscedasticity()` and `is_heteroscedastic()` dispatchers.        - [x] Refactor entire test suite to use standard `pytest` assertions.        - [x] Modernise `statsmodels` imports to remove deprecated sandbox references.        - [x] Author theoretical documentation for heteroscedasticity diagnostics.        - [x] Pass 100% path coverage and Pylint 10.00/10 quality gates.                        ### 📊 Changes                        | Metric            | Value     |        | :---------------- | :-------- |        | **Files Changed** | 11        |        | **Lines Added**   | 1047      |        | **Lines Deleted** | 22        |        | **Contributors**  | @chrimaho |        | **Commit Count**  | 22        |                        ### 🆕 Pull Requests                * Implement Heteroscedasticity Module by @chrimaho in https://github.com/data-science-extensions/ts-stat-tests/pull/31                        **Full Changelog**: https://github.com/data-science-extensions/ts-stat-tests/compare/v0.7.0...v0.8.0
+
+    ??? abstract "Updates"
+
+        * [`782046a`](https://github.com/data-science-extensions/ts-stat-tests/commit/782046a41188a422ca4e617e88bb391d132c6a6e): Fix docstrings in the `gq()` function<br>
+            The return type annotation in the docstring describes `np.float64` values, but the actual code returns `float` values (line 389, 403). The docstring should be updated to reflect the actual return type of `float` instead of `np.float64` to be consistent with the implementation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`ff8800e`](https://github.com/data-science-extensions/ts-stat-tests/commit/ff8800e2adddc0ed615ed3e8d1d2d8411edfe650): Fix docstrings in the `bpl()` function<br>
+            The return type annotation in the docstring describes `np.float64` values, but the actual code returns `float` values (line 261). The docstring should be updated to reflect the actual return type of `float` instead of `np.float64` to be consistent with the implementation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`3c436af`](https://github.com/data-science-extensions/ts-stat-tests/commit/3c436affea80b4d4174fa57fed2947f274b5aede): Fix docstrings in the `arch()` function<br>
+            The return type annotation in the docstring describes `np.float64` values, but the actual code returns `float` values (lines 177-180, 188). The docstring should be updated to reflect the actual return type of `float` instead of `np.float64` to be consistent with the implementation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`3a4fd45`](https://github.com/data-science-extensions/ts-stat-tests/commit/3a4fd45216c359b4118af9474c34f9fb7325106d): Fix another typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`4b4af91`](https://github.com/data-science-extensions/ts-stat-tests/commit/4b4af91a8dd04a5774731a93c8644ac52aca2e1a): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`6cfb3c6`](https://github.com/data-science-extensions/ts-stat-tests/commit/6cfb3c629be58efeb1339215c77f50a6fb270324): Fix docstrings for the `wlm()` function<br>
+            The return type annotation in the docstring describes `np.float64` values, but the actual code returns `float` values (line 466). The docstring should be updated to reflect the actual return type of `float` instead of `np.float64` to be consistent with the implementation.
+            (by [chrimaho](https://github.com/chrimaho))        * [`260477e`](https://github.com/data-science-extensions/ts-stat-tests/commit/260477ebaa105502ddbd37ccf4f3b106677d3a0b): Update README to reflect heteroscedasticity tests status<br>
+            - Mark Engle's Test for Autoregressive Conditional Heteroscedasticity (ARCH) as ✅<br>
+            - Mark Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL) as ✅<br>
+            - Mark Goldfeld-Quandt test for homoskedasticity (GQ) as ✅<br>
+            - Mark White's Lagrange Multiplier Test for Heteroscedasticity (WLM) as ✅
+            (by [chrimaho](https://github.com/chrimaho))        * [`50a0b90`](https://github.com/data-science-extensions/ts-stat-tests/commit/50a0b902d436215b0a01ea278d452187b5d3adcf): Remove deprecated `sandbox` module<br>
+            - Replace import from `statsmodels.sandbox.stats.diagnostic` with `statsmodels.stats.diagnostic`<br>
+            - Ensure consistent usage of `ResultsStore` across modules
+            (by [chrimaho](https://github.com/chrimaho))        * [`0f106e4`](https://github.com/data-science-extensions/ts-stat-tests/commit/0f106e4a54390152d81007bbf5deeb4d7cdf5096): Extend Code overview page to add key info<br>
+            - Introduce key features of the statistical tests package, including:<br>
+            - Unified interface for consistent user experience.<br>
+            - Boolean checkers for null hypothesis evaluation.<br>
+            - Comprehensive documentation for user understanding.<br>
+            - Robust testing suite achieving 100% code coverage.<br>
+            - Standardised error handling for informative feedback.<br>
+            - Strict type safety with `@typechecked` decorators.<br>
+            - Modular design for extensibility of new tests.<br>
+            - Integration with established libraries for validated methodologies.<br>
+            - Quality assurance with stringent code quality checks.<br>
+            - Document modules available for various statistical tests.
+            (by [chrimaho](https://github.com/chrimaho))        * [`e8350b7`](https://github.com/data-science-extensions/ts-stat-tests/commit/e8350b7e4efac49e50f41945f49f92d3b04ef9d6): Refactor unit tests to use `pytest` assertions<br>
+            - Replace `self.assertEqual()` with `assert` for brevity.<br>
+            - Update type checks to use `assert isinstance()` for better readability.<br>
+            - Standardise algorithm result checks across tests.
+            (by [chrimaho](https://github.com/chrimaho))        * [`3f88884`](https://github.com/data-science-extensions/ts-stat-tests/commit/3f88884282cd9a6901c455c8248f132c4201dbae): Refactor params & returns type hints in `heteroscedasticity` module<br>
+            - Standardise type hints to use `float` instead of `np.float64`<br>
+            - Update return types to reflect consistent tuple structures<br>
+            - Simplify return statements in `arch()`, `bpl()`, `gq()`, and `wlm()` functions<br>
+            - Remove unnecessary imports and unused code
+            (by [chrimaho](https://github.com/chrimaho))        * [`66ea028`](https://github.com/data-science-extensions/ts-stat-tests/commit/66ea028f839d430f31bdaadc1adbf5ec41ca8d89): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`d851214`](https://github.com/data-science-extensions/ts-stat-tests/commit/d8512146dabc4ea160028e4901965feacefa53a6): Refactor `check()` function for improved structure and clarity<br>
+            - Organise checks into categories: Formatting, Spelling, Type Safety, Imports, Quality, Docs, and Unit Tests<br>
+            - Remove redundant calls to `check_codespell()` and `check_pyright()`<br>
+            - Ensure all checks are clearly defined and grouped for better readability
+            (by [chrimaho](https://github.com/chrimaho))        * [`4f586ae`](https://github.com/data-science-extensions/ts-stat-tests/commit/4f586ae453f087a7d34bd82e278a2ab16f1320b6): Add documentation for `heteroscedasticity` modules<br>
+            - Introduce an overview of heteroscedasticity and its significance in statistics.<br>
+            - Detail the four heteroscedasticity tests available in the library, including their import scripts and links to documentation.<br>
+            - Provide information on the source library `statsmodels` and its role in the implementation.<br>
+            - List the source modules for the tests and algorithms.
+            (by [chrimaho](https://github.com/chrimaho))        * [`5b75189`](https://github.com/data-science-extensions/ts-stat-tests/commit/5b75189e8f6ccbd453c8adc418bcce4a2de4df8d): Fix typo
+            (by [chrimaho](https://github.com/chrimaho))        * [`db10837`](https://github.com/data-science-extensions/ts-stat-tests/commit/db1083718f9440daa9416febd38ef38c840c5a51): Add unit tests for `heteroscedasticity` module<br>
+            - Implement `setUp()` method to prepare test data for homoscedastic and heteroscedastic cases<br>
+            - Create tests for `arch()`, `bpl()`, `gq()`, and `wlm()` algorithms<br>
+            - Add dispatcher tests for `heteroscedasticity()` function<br>
+            - Include tests for `is_heteroscedastic()` function with various algorithms
+            (by [chrimaho](https://github.com/chrimaho))        * [`7fc683b`](https://github.com/data-science-extensions/ts-stat-tests/commit/7fc683b5409cb71b835d461aa44d4dcc6bf93bb3): Add extensive docstrings to the `heteroscedasticity` module<br>
+            - Add comprehensive docstrings for `arch()`, `bpl()`, `gq()`, and `wlm()` functions.<br>
+            - Include usage examples and parameter descriptions for better clarity.<br>
+            - Implement a convenience wrapper function `heteroscedasticity()` for easier testing.<br>
+            - Introduce `is_heteroscedastic()` function to evaluate residuals against significance levels.
+            (by [chrimaho](https://github.com/chrimaho))        * [`0098430`](https://github.com/data-science-extensions/ts-stat-tests/commit/00984309c32742fedd06a9fd4af490be65451131): Add module headers and descriptions for `heteroscedasticity` module<br>
+            - Include a summary of the module's purpose and functionality.<br>
+            - Document the various heteroscedasticity tests implemented:<br>
+            - ARCH Test<br>
+            - Breusch-Pagan Test<br>
+            - Goldfeld-Quandt Test<br>
+            - White's Test
+            (by [chrimaho](https://github.com/chrimaho))        * [`e66b8b7`](https://github.com/data-science-extensions/ts-stat-tests/commit/e66b8b71fb4603c4f1bb72d17c5785ad3bb7dad5): Add heteroscedasticity algorithms and tests<br>
+            - Implement `arch()`, `bpl()`, `gq()`, and `wlm()` functions for heteroscedasticity tests.<br>
+            - Create `heteroscedasticity()` function to select and call appropriate tests based on algorithm.<br>
+            - Introduce `is_heteroscedastic()` function to evaluate test results and return structured output.<br>
+            - Update imports to include new functions and necessary modules.
+            (by [chrimaho](https://github.com/chrimaho))        * [`dcfedb4`](https://github.com/data-science-extensions/ts-stat-tests/commit/dcfedb4b706df892ab7913dfdaeeb9db2390cac1): Implement initial structure for `heteroscedasticity` module<br>
+            - Add `arch()`, `bpl()`, `gq()`, and `wlm()` functions as placeholders<br>
+            - Create initial test structure with `heteroscedasticity()` and `is_heteroscedastic()` functions
+            (by [chrimaho](https://github.com/chrimaho))        * [`9a0347e`](https://github.com/data-science-extensions/ts-stat-tests/commit/9a0347ed7f1fd11f8c2abbc0a6a7890f21247df0): Add framework for `heteroscedasticity` module<br>
+            - Introduce `heteroscedasticity.py` algorithm implementation<br>
+            - Create `test_heteroscedasticity.py` for unit tests<br>
+            - Update `mkdocs.yml` to include Heteroscedasticity documentation<br>
+            - Add `heteroscedasticity.md` documentation file
+            (by [chrimaho](https://github.com/chrimaho))
+
 !!! info "v0.7.0"
 
     ## **v0.7.0 - Linearity Module**
