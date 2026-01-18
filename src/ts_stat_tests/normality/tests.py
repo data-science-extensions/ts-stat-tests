@@ -47,7 +47,7 @@ from scipy.stats._stats_py import NormaltestResult
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.normality import (
+from ts_stat_tests.normality.algorithms import (
     VALID_AD_DIST_OPTIONS,
     VALID_DP_NAN_POLICY_OPTIONS,
     ad as _ad,
@@ -88,11 +88,11 @@ def normality(
 
     ???+ abstract "Details"
         This function is a convenience wrapper around the five underlying algorithms:<br>
-        - [`jb()`][ts_stat_tests.algorithms.normality.jb]<br>
-        - [`ob()`][ts_stat_tests.algorithms.normality.ob]<br>
-        - [`sw()`][ts_stat_tests.algorithms.normality.sw]<br>
-        - [`dp()`][ts_stat_tests.algorithms.normality.dp]<br>
-        - [`ad()`][ts_stat_tests.algorithms.normality.ad]
+        - [`jb()`][ts_stat_tests.normality.algorithms.jb]<br>
+        - [`ob()`][ts_stat_tests.normality.algorithms.ob]<br>
+        - [`sw()`][ts_stat_tests.normality.algorithms.sw]<br>
+        - [`dp()`][ts_stat_tests.normality.algorithms.dp]<br>
+        - [`ad()`][ts_stat_tests.normality.algorithms.ad]
 
     Params:
         x (ArrayLike):
@@ -134,7 +134,7 @@ def normality(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.normality import normality
+        >>> from ts_stat_tests.normality.tests import normality
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -252,7 +252,7 @@ def is_normal(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.normality import is_normal
+        >>> from ts_stat_tests.normality.tests import is_normal
         >>> from ts_stat_tests.utils.data import data_normal, data_random
         >>> normal = data_normal
         >>> random = data_random

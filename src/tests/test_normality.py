@@ -19,8 +19,7 @@ from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.normality import ad, dp, jb, ob, sw
-from ts_stat_tests.tests.normality import is_normal, normality
+from ts_stat_tests.normality import ad, dp, is_normal, jb, normality, ob, sw
 from ts_stat_tests.utils.errors import assert_almost_equal
 
 
@@ -114,7 +113,7 @@ class TestNormality(BaseTester):
 
         mock_result = MockResult(0.5)
 
-        with patch("ts_stat_tests.tests.normality.normality", return_value=mock_result):
+        with patch("ts_stat_tests.normality.tests.normality", return_value=mock_result):
             result = is_normal(self.data_normal, algorithm="dp")
             # When pvalue is None, result should be False
             assert result["result"] is False
@@ -128,7 +127,7 @@ class TestNormality(BaseTester):
                 self.statistic = stat
                 self.pvalue = pval
 
-        with patch("ts_stat_tests.tests.normality.normality") as mock_norm:
+        with patch("ts_stat_tests.normality.tests.normality") as mock_norm:
             mock_norm.return_value = AttrResult(0.5, 0.6)
             res = is_normal(self.data_normal, algorithm="dp")
             assert res["statistic"] == 0.5
@@ -139,7 +138,7 @@ class TestNormality(BaseTester):
         # ## Python StdLib Imports ----
         from unittest.mock import patch
 
-        with patch("ts_stat_tests.tests.normality.normality") as mock_norm:
+        with patch("ts_stat_tests.normality.tests.normality") as mock_norm:
             # Return just a float (non-tuple, non-attr)
             mock_norm.return_value = 0.8
             res = is_normal(self.data_normal, algorithm="dp")
@@ -148,7 +147,7 @@ class TestNormality(BaseTester):
 
     def test_is_normal_ad_fallback(self) -> None:
         """Test fallback branch for Anderson-Darling in is_normal."""
-        with patch("ts_stat_tests.tests.normality.normality") as mock_norm:
+        with patch("ts_stat_tests.normality.tests.normality") as mock_norm:
             # Return something that doesn't meet length requirement
             mock_norm.return_value = [1.0, 2.0]
             res = is_normal(self.data_normal, algorithm="ad")

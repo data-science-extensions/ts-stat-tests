@@ -15,14 +15,15 @@ from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.regularity import (
+from ts_stat_tests.regularity import (
     approx_entropy,
+    entropy,
+    is_regular,
     permutation_entropy,
     sample_entropy,
     spectral_entropy,
     svd_entropy,
 )
-from ts_stat_tests.tests.regularity import entropy, is_regular
 from ts_stat_tests.utils.errors import assert_almost_equal
 
 

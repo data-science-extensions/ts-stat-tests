@@ -30,12 +30,14 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.stability`][ts_stat_tests.algorithms.stability].
-        - [`ts_stat_tests.tests.stability`][ts_stat_tests.tests.stability].
+        - [`ts_stat_tests.stability.algorithms`][ts_stat_tests.stability.algorithms].
+        - [`ts_stat_tests.stability.tests`][ts_stat_tests.stability.tests].
 
-## Stability Tests
 
-::: ts_stat_tests.tests.stability
+
+## Modules
+
+::: ts_stat_tests.stability.tests
     options:
         extra:
             show_root_heading: false
@@ -43,9 +45,8 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Stability Algorithms
 
-::: ts_stat_tests.algorithms.stability
+::: ts_stat_tests.stability.algorithms
     options:
         extra:
             show_root_heading: false

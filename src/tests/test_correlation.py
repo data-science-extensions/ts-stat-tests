@@ -27,8 +27,16 @@ from statsmodels.tsa.stattools import (
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.correlation import acf, bglm, ccf, lb, lm, pacf
-from ts_stat_tests.tests.correlation import correlation, is_correlated
+from ts_stat_tests.correlation import (
+    acf,
+    bglm,
+    ccf,
+    correlation,
+    is_correlated,
+    lb,
+    lm,
+    pacf,
+)
 
 
 # ---------------------------------------------------------------------------- #

@@ -38,12 +38,15 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.normality`][ts_stat_tests.algorithms.normality].
-        - [`ts_stat_tests.tests.normality`][ts_stat_tests.tests.normality].
+        - [`ts_stat_tests.normality.algorithms`][ts_stat_tests.normality.algorithms].
+        - [`ts_stat_tests.normality.tests`][ts_stat_tests.normality.tests].
 
-## Normality Tests
 
-::: ts_stat_tests.tests.normality
+
+## Modules
+
+
+::: ts_stat_tests.normality.tests
     options:
         extra:
             show_root_heading: false
@@ -51,9 +54,8 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Normality Algorithms
 
-::: ts_stat_tests.algorithms.normality
+::: ts_stat_tests.normality.algorithms
     options:
         extra:
             show_root_heading: false

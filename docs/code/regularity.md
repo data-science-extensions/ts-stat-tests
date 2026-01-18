@@ -46,12 +46,15 @@
 
         All of the source code can be found within the modules:
 
-        - [`ts_stat_tests.algorithms.regularity`][ts_stat_tests.algorithms.regularity].
-        - [`ts_stat_tests.tests.regularity`][ts_stat_tests.tests.regularity].
+        - [`ts_stat_tests.regularity.algorithms`][ts_stat_tests.regularity.algorithms].
+        - [`ts_stat_tests.regularity.tests`][ts_stat_tests.regularity.tests].
 
-## Regularity Tests
 
-::: ts_stat_tests.tests.regularity
+
+## Modules
+
+
+::: ts_stat_tests.regularity.tests
     options:
         extra:
             show_root_heading: false
@@ -59,9 +62,8 @@
             show_if_no_docstrings: true
             member_order: source
 
-## Regularity Algorithms
 
-::: ts_stat_tests.algorithms.regularity
+::: ts_stat_tests.regularity.algorithms
     options:
         extra:
             show_root_heading: false

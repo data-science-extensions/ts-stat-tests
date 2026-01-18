@@ -186,6 +186,7 @@ def add_commit_info(commit: Commit) -> str:
         f"{TAB * 2}* [`{commit.sha[:SHORT_SHA_LENGTH]}`]({commit.html_url}): {commit_message_str}"
         f"{NEW_LINE}"
         f"{TAB * 3}(by {author_info})"
+        f"{NEW_LINE}"
     )
 
 
@@ -220,6 +221,9 @@ def main() -> None:
 
         ### Prepare the output file ----
         f.write(add_page_styling())
+
+        ### Add title ----
+        f.write(f"# Changelog for {repo.name}{BLANK_LINE}")
 
         ### Fetch the releases for the repository, sorted by reverse creation date ----
         releases: list[GitRelease] = sorted(

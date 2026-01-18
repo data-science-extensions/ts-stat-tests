@@ -129,12 +129,11 @@ def arch(resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store:
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import arch
-        >>> x = np.linspace(0, 10, 100)
-        >>> X = sm.add_constant(x)
-        >>> y = 2 * x + np.random.normal(size=100)
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import arch
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 2 * data_line + data_random
         >>> res = sm.OLS(y, X).fit()
         >>> resid = res.resid
 
@@ -142,8 +141,8 @@ def arch(resid: ArrayLike, nlags: Optional[int] = None, ddof: int = 0, *, store:
 
         ```pycon {.py .python linenums="1" title="Example 1: Basic ARCH test"}
         >>> lm, lmp, f, fp = arch(resid)
-        >>> print(f"LM p-value: {lmp:.4f}")  # doctest: +SKIP
-        LM p-value: 0.4567
+        >>> print(f"LM p-value: {lmp:.4f}")
+        LM p-value: 0.9124
 
         ```
 
@@ -217,12 +216,11 @@ def bpl(resid: ArrayLike, exog_het: ArrayLike, robust: bool = True) -> tuple[flo
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import bpl
-        >>> x = np.linspace(0, 10, 100)
-        >>> X = sm.add_constant(x)
-        >>> y = 2 * x + np.random.normal(size=100)
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import bpl
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 2 * data_line + data_random
         >>> res = sm.OLS(y, X).fit()
         >>> resid, exog = res.resid, X
 
@@ -230,8 +228,8 @@ def bpl(resid: ArrayLike, exog_het: ArrayLike, robust: bool = True) -> tuple[flo
 
         ```pycon {.py .python linenums="1" title="Example 1: Basic Breusch-Pagan test"}
         >>> lm, lmp, f, fp = bpl(resid, exog)
-        >>> print(f"LM p-value: {lmp:.4f}")  # doctest: +SKIP
-        LM p-value: 0.1234
+        >>> print(f"LM p-value: {lmp:.4f}")
+        LM p-value: 0.2461
 
         ```
 
@@ -336,19 +334,18 @@ def gq(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import gq
-        >>> x = np.linspace(0, 10, 100)
-        >>> X = sm.add_constant(x)
-        >>> y = 2 * x + np.random.normal(size=100)
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import gq
+        >>> X = sm.add_constant(data_line)
+        >>> y = 2 * data_line + data_random
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Basic Goldfeld-Quandt test"}
         >>> f, p, alt = gq(y, X)
-        >>> print(f"F p-value: {p:.4f}")  # doctest: +SKIP
-        F p-value: 0.5678
+        >>> print(f"F p-value: {p:.4f}")
+        F p-value: 0.2269
 
         ```
 
@@ -429,12 +426,11 @@ def wlm(resid: ArrayLike, exog_het: ArrayLike) -> tuple[float, float, float, flo
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.algorithms.heteroscedasticity import wlm
-        >>> x = np.linspace(0, 10, 100)
-        >>> X = sm.add_constant(x)
-        >>> y = 2 * x + np.random.normal(size=100)
+        >>> from ts_stat_tests.heteroscedasticity.algorithms import wlm
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> X = sm.add_constant(data_line)
+        >>> y = 2 * data_line + data_random
         >>> res = sm.OLS(y, X).fit()
         >>> resid, exog = res.resid, X
 
@@ -442,8 +438,8 @@ def wlm(resid: ArrayLike, exog_het: ArrayLike) -> tuple[float, float, float, flo
 
         ```pycon {.py .python linenums="1" title="Example 1: Basic White's test"}
         >>> lm, lmp, f, fp = wlm(resid, exog)
-        >>> print(f"White p-value: {lmp:.4f}")  # doctest: +SKIP
-        White p-value: 0.2345
+        >>> print(f"White p-value: {lmp:.4f}")
+        White p-value: 0.4558
 
         ```
 

@@ -56,7 +56,7 @@ from pmdarima.arima import ARIMA
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.seasonality import (
+from ts_stat_tests.seasonality.algorithms import (
     ch as _ch,
     ocsb as _ocsb,
     qs as _qs,
@@ -125,7 +125,7 @@ def seasonality(
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.tests.seasonality import seasonality
+        >>> from ts_stat_tests.seasonality.tests import seasonality
         >>> data = load_airline().values
         >>> # Using the default QS test
         >>> seasonality(x=data, freq=12)
@@ -240,7 +240,7 @@ def is_seasonal(
 
         ```pycon {.py .python linenums="1" title="Standard check"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.tests.seasonality import is_seasonal
+        >>> from ts_stat_tests.seasonality.tests import is_seasonal
         >>> data = load_airline().values
         >>> res = is_seasonal(x=data, algorithm="qs", freq=12)
         >>> res["result"]

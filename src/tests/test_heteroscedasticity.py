@@ -20,10 +20,13 @@ from pytest import raises
 from statsmodels.stats.diagnostic import ResultsStore
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.heteroscedasticity import arch, bpl, gq, wlm
-from ts_stat_tests.tests.heteroscedasticity import (
+from ts_stat_tests.heteroscedasticity import (
+    arch,
+    bpl,
+    gq,
     heteroscedasticity,
     is_heteroscedastic,
+    wlm,
 )
 
 

@@ -45,7 +45,7 @@ from numpy.typing import ArrayLike, NDArray
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.regularity import (
+from ts_stat_tests.regularity.algorithms import (
     VALID_KDTREE_METRIC_OPTIONS,
     approx_entropy,
     permutation_entropy,
@@ -86,11 +86,11 @@ def entropy(
 
     ???+ abstract "Details"
         This function is a convenience wrapper around the five underlying algorithms:<br>
-        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]<br>
-        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]<br>
-        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]<br>
-        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]<br>
-        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
+        - [`approx_entropy()`][ts_stat_tests.regularity.algorithms.approx_entropy]<br>
+        - [`sample_entropy()`][ts_stat_tests.regularity.algorithms.sample_entropy]<br>
+        - [`spectral_entropy()`][ts_stat_tests.regularity.algorithms.spectral_entropy]<br>
+        - [`permutation_entropy()`][ts_stat_tests.regularity.algorithms.permutation_entropy]<br>
+        - [`svd_entropy()`][ts_stat_tests.regularity.algorithms.svd_entropy]
 
     Params:
         x (ArrayLike):
@@ -134,7 +134,7 @@ def entropy(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.regularity import entropy
+        >>> from ts_stat_tests.regularity.tests import entropy
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -166,12 +166,12 @@ def entropy(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? tip "See Also"
-        - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
-        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
-        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
-        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
+        - [`regularity()`][ts_stat_tests.regularity.tests.regularity]
+        - [`approx_entropy()`][ts_stat_tests.regularity.algorithms.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.regularity.algorithms.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.regularity.algorithms.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.regularity.algorithms.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.regularity.algorithms.svd_entropy]
     """
     options: dict[str, tuple[str, ...]] = {
         "sampl": ("sample", "sampl", "samp"),
@@ -213,7 +213,7 @@ def regularity(
         Test for the regularity of a given data set.
 
     ???+ abstract "Details"
-        This is a pass-through, convenience wrapper around the [`entropy()`][ts_stat_tests.tests.regularity.entropy] function.
+        This is a pass-through, convenience wrapper around the [`entropy()`][ts_stat_tests.regularity.tests.entropy] function.
 
     Params:
         x (ArrayLike):
@@ -253,7 +253,7 @@ def regularity(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.regularity import regularity
+        >>> from ts_stat_tests.regularity.tests import regularity
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -285,12 +285,12 @@ def regularity(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? tip "See Also"
-        - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
-        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
-        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
-        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
+        - [`entropy()`][ts_stat_tests.regularity.tests.entropy]
+        - [`approx_entropy()`][ts_stat_tests.regularity.algorithms.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.regularity.algorithms.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.regularity.algorithms.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.regularity.algorithms.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.regularity.algorithms.svd_entropy]
     """
     return entropy(x=x, algorithm=algorithm, order=order, metric=metric, sf=sf, normalize=normalize)
 
@@ -380,7 +380,7 @@ def is_regular(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.regularity import is_regular
+        >>> from ts_stat_tests.regularity.tests import is_regular
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -406,13 +406,13 @@ def is_regular(
         - https://en.wikipedia.org/wiki/Welch%27s_method
 
     ??? tip "See Also"
-        - [`entropy()`][ts_stat_tests.tests.regularity.entropy]
-        - [`regularity()`][ts_stat_tests.tests.regularity.regularity]
-        - [`approx_entropy()`][ts_stat_tests.algorithms.regularity.approx_entropy]
-        - [`sample_entropy()`][ts_stat_tests.algorithms.regularity.sample_entropy]
-        - [`spectral_entropy()`][ts_stat_tests.algorithms.regularity.spectral_entropy]
-        - [`permutation_entropy()`][ts_stat_tests.algorithms.regularity.permutation_entropy]
-        - [`svd_entropy()`][ts_stat_tests.algorithms.regularity.svd_entropy]
+        - [`entropy()`][ts_stat_tests.regularity.tests.entropy]
+        - [`regularity()`][ts_stat_tests.regularity.tests.regularity]
+        - [`approx_entropy()`][ts_stat_tests.regularity.algorithms.approx_entropy]
+        - [`sample_entropy()`][ts_stat_tests.regularity.algorithms.sample_entropy]
+        - [`spectral_entropy()`][ts_stat_tests.regularity.algorithms.spectral_entropy]
+        - [`permutation_entropy()`][ts_stat_tests.regularity.algorithms.permutation_entropy]
+        - [`svd_entropy()`][ts_stat_tests.regularity.algorithms.svd_entropy]
     """
     if isinstance(tolerance, (float, int)):
         tol = tolerance

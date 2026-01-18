@@ -21,15 +21,16 @@ from pytest import raises
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.seasonality import (
+from ts_stat_tests.seasonality import (
     ch,
+    is_seasonal,
     ocsb,
     qs,
     seasonal_strength,
+    seasonality,
     spikiness,
     trend_strength,
 )
-from ts_stat_tests.tests.seasonality import is_seasonal, seasonality
 from ts_stat_tests.utils.errors import assert_almost_equal
 
 
@@ -178,7 +179,7 @@ class TestSeasonality(BaseTester):
 
     def test_is_seasonal_list_branches(self) -> None:
         """Test the list-based result branches in is_seasonal for coverage."""
-        with patch("ts_stat_tests.tests.seasonality.seasonality") as mock_sea:
+        with patch("ts_stat_tests.seasonality.tests.seasonality") as mock_sea:
             # Test ocsb list branch
             mock_sea.return_value = [1.0]
             res = is_seasonal(self.data_airline, algorithm="ocsb")
@@ -199,7 +200,7 @@ class TestSeasonality(BaseTester):
 
     def test_is_seasonal_invalid_inner_types(self) -> None:
         """Test the fallback for non-numeric types inside the result list."""
-        with patch("ts_stat_tests.tests.seasonality.seasonality") as mock_sea:
+        with patch("ts_stat_tests.seasonality.tests.seasonality") as mock_sea:
             mock_sea.return_value = ["not a number"]
             res = is_seasonal(self.data_airline, algorithm="ocsb")
             assert res["statistic"] == 0.0
@@ -212,7 +213,7 @@ class TestSeasonality(BaseTester):
 
     def test_is_seasonal_invalid_scalar_types(self) -> None:
         """Test the fallback for non-numeric scalar result types."""
-        with patch("ts_stat_tests.tests.seasonality.seasonality") as mock_sea:
+        with patch("ts_stat_tests.seasonality.tests.seasonality") as mock_sea:
             mock_sea.return_value = "not a number"
             res = is_seasonal(self.data_airline, algorithm="ocsb")
             assert res["statistic"] == 0.0

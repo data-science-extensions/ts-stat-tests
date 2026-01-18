@@ -30,12 +30,15 @@
 
         All of the source code can be found within these modules:
 
-        - [`ts_stat_tests.algorithms.linearity`][ts_stat_tests.algorithms.linearity].
-        - [`ts_stat_tests.tests.linearity`][ts_stat_tests.tests.linearity].
+        - [`ts_stat_tests.linearity.algorithms`][ts_stat_tests.linearity.algorithms].
+        - [`ts_stat_tests.linearity.tests`][ts_stat_tests.linearity.tests].
 
-## Linearity Tests
 
-::: ts_stat_tests.tests.linearity
+
+## Modules
+
+
+::: ts_stat_tests.linearity.tests
     options:
         extras:
             show_root_heading: false
@@ -43,9 +46,8 @@
             show_if_no_docstring: true
             members_order: source
 
-## Linearity Algorithms
 
-::: ts_stat_tests.algorithms.linearity
+::: ts_stat_tests.linearity.algorithms
     options:
         extras:
             show_root_heading: false

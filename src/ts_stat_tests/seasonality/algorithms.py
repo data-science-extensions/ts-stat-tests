@@ -56,7 +56,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose  # , STL, DecomposeResul
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.correlation import acf as _acf
+from ts_stat_tests.correlation import acf as _acf
 
 
 # ---------------------------------------------------------------------------- #
@@ -139,7 +139,7 @@ def qs(
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import qs
+        >>> from ts_stat_tests.seasonality.algorithms import qs
         >>> data = load_airline().values
         >>> qs(data, freq=12)
         (194.469289..., 5.909223...)
@@ -148,7 +148,7 @@ def qs(
 
         ```pycon {.py .python linenums="1" title="Advanced usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import qs
+        >>> from ts_stat_tests.seasonality.algorithms import qs
         >>> data = load_airline().values
         >>> qs(data, freq=12, diff=True, residuals=True, autoarima=True)
         The differences of the residuals of a non-seasonal ARIMA model are computed and used. It may be better to either only take the differences or use the residuals.
@@ -296,7 +296,7 @@ def ocsb(x: ArrayLike, m: int, lag_method: str = "aic", max_lag: int = 3) -> int
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import ocsb
+        >>> from ts_stat_tests.seasonality.algorithms import ocsb
         >>> data = load_airline().values
         >>> ocsb(x=data, m=12)
         1
@@ -385,7 +385,7 @@ def ch(x: ArrayLike, m: int) -> int:
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import ch
+        >>> from ts_stat_tests.seasonality.algorithms import ch
         >>> data = load_airline().values
         >>> ch(x=data, m=12)
         0
@@ -463,7 +463,7 @@ def seasonal_strength(x: ArrayLike, m: int) -> float:
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import seasonal_strength
+        >>> from ts_stat_tests.seasonality.algorithms import seasonal_strength
         >>> data = load_airline().values
         >>> seasonal_strength(x=data, m=12)
         0.778721...
@@ -538,7 +538,7 @@ def trend_strength(x: ArrayLike, m: int) -> float:
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import trend_strength
+        >>> from ts_stat_tests.seasonality.algorithms import trend_strength
         >>> data = load_airline().values
         >>> trend_strength(x=data, m=12)
         0.965679...
@@ -610,7 +610,7 @@ def spikiness(x: ArrayLike, m: int) -> float:
 
         ```pycon {.py .python linenums="1" title="Basic usage"}
         >>> from ts_stat_tests.utils.data import load_airline
-        >>> from ts_stat_tests.algorithms.seasonality import spikiness
+        >>> from ts_stat_tests.seasonality.algorithms import spikiness
         >>> data = load_airline().values
         >>> spikiness(x=data, m=12)
         0.484221...

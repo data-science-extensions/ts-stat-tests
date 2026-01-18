@@ -50,7 +50,7 @@ from statsmodels.stats.contrast import ContrastResults
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.linearity import (
+from ts_stat_tests.linearity.algorithms import (
     hc as _hc,
     lm as _lm,
     rb as _rb,
@@ -86,10 +86,10 @@ def linearity(
 
     ???+ abstract "Details"
         This function is a convenience wrapper around four underlying algorithms:<br>
-        - [`hc()`][ts_stat_tests.algorithms.linearity.hc]<br>
-        - [`lm()`][ts_stat_tests.algorithms.linearity.lm]<br>
-        - [`rb()`][ts_stat_tests.algorithms.linearity.rb]<br>
-        - [`rr()`][ts_stat_tests.algorithms.linearity.rr]
+        - [`hc()`][ts_stat_tests.linearity.algorithms.hc]<br>
+        - [`lm()`][ts_stat_tests.linearity.algorithms.lm]<br>
+        - [`rb()`][ts_stat_tests.linearity.algorithms.rb]<br>
+        - [`rr()`][ts_stat_tests.linearity.algorithms.rr]
 
     Params:
         res (Union[RegressionResults, RegressionResultsWrapper]):
@@ -121,26 +121,26 @@ def linearity(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.tests.linearity import linearity
-        >>> x = sm.add_constant(np.linspace(0, 10, 100))
-        >>> y = 3 + 2 * x[:, 1] + np.random.normal(size=100)
+        >>> from ts_stat_tests.linearity.tests import linearity
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> x = sm.add_constant(data_line)
+        >>> y = 3 + 2 * data_line + data_random
         >>> res = sm.OLS(y, x).fit()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Ramsey RESET test"}
         >>> result = linearity(res, algorithm="rr")
-        >>> print(f"p-value: {result.pvalue:.4f}")  # doctest: +SKIP
-        p-value: 0.1367
+        >>> print(f"p-value: {result.pvalue:.4f}")
+        p-value: 0.9912
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 2: Rainbow test"}
         >>> stat, pval = linearity(res, algorithm="rb")
-        >>> print(f"Rainbow p-value: {pval:.4f}")  # doctest: +SKIP
-        Rainbow p-value: 0.5432
+        >>> print(f"Rainbow p-value: {pval:.4f}")
+        Rainbow p-value: 0.5391
 
         ```
     """
@@ -225,7 +225,7 @@ def is_linear(
         res (Union[RegressionResults, RegressionResultsWrapper]):
             The fitted regression model to be checked.
         algorithm (str):
-            Which linearity algorithm to use. See [`linearity()`][ts_stat_tests.tests.linearity.linearity] for options.
+            Which linearity algorithm to use. See [`linearity()`][ts_stat_tests.linearity.tests.linearity] for options.
             Default: `"rr"`
         alpha (float):
             The significance level for the test.
@@ -245,18 +245,18 @@ def is_linear(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> import numpy as np
         >>> import statsmodels.api as sm
-        >>> from ts_stat_tests.tests.linearity import is_linear
-        >>> x = sm.add_constant(np.linspace(0, 10, 100))
-        >>> y = 3 + 2 * x[:, 1] + np.random.normal(size=100)
+        >>> from ts_stat_tests.linearity.tests import is_linear
+        >>> from ts_stat_tests.utils.data import data_line, data_random
+        >>> x = sm.add_constant(data_line)
+        >>> y = 3 + 2 * data_line + data_random
         >>> res = sm.OLS(y, x).fit()
 
         ```
 
         ```pycon {.py .python linenums="1" title="Example 1: Check linearity with RR"}
         >>> result = is_linear(res, algorithm="rr")
-        >>> print(result["result"])  # doctest: +SKIP
+        >>> print(result["result"])
         True
 
         ```

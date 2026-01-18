@@ -15,14 +15,7 @@ from tsfeatures import lumpiness as ts_lumpiness, stability as ts_stability
 
 # ## Local First Party Imports ----
 from tests.setup import BaseTester
-from ts_stat_tests.algorithms.stability import (
-    lumpiness,
-    stability,
-)
-from ts_stat_tests.tests.stability import (
-    is_lumpy,
-    is_stable,
-)
+from ts_stat_tests.stability import is_lumpy, is_stable, lumpiness, stability
 
 
 # ---------------------------------------------------------------------------- #

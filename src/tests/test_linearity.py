@@ -28,8 +28,7 @@ from pytest import raises
 from statsmodels.stats.contrast import ContrastResults
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.linearity import hc, lm, rb, rr
-from ts_stat_tests.tests.linearity import is_linear, linearity
+from ts_stat_tests.linearity import hc, is_linear, linearity, lm, rb, rr
 
 
 # ---------------------------------------------------------------------------- #

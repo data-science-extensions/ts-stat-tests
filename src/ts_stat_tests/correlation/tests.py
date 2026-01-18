@@ -21,7 +21,7 @@
 
 """
 !!! note "Summary"
-    This module contains tests for the correlation functions defined in the `ts_stat_tests.algorithms.correlation` module.
+    This module contains tests for the correlation functions defined in the `ts_stat_tests.correlation.algorithms` module.
 """
 
 
@@ -53,7 +53,7 @@ from statsmodels.tsa.stattools import ArrayLike1D
 from typeguard import typechecked
 
 # ## Local First Party Imports ----
-from ts_stat_tests.algorithms.correlation import (
+from ts_stat_tests.correlation.algorithms import (
     acf as _acf,
     bglm as _bglm,
     ccf as _ccf,
@@ -138,7 +138,7 @@ def correlation(
         A unified interface for various correlation tests.
 
     ???+ abstract "Details"
-        This function acts as a dispatcher for several correlation measures and tests, allowing users to access them through a single, consistent API. Depending on the `algorithm` parameter, it routes the call to the appropriate implementation in `ts_stat_tests.algorithms.correlation`.
+        This function acts as a dispatcher for several correlation measures and tests, allowing users to access them through a single, consistent API. Depending on the `algorithm` parameter, it routes the call to the appropriate implementation in `ts_stat_tests.correlation.algorithms`.
 
         The supported algorithms include:
 
@@ -174,7 +174,7 @@ def correlation(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.correlation import correlation
+        >>> from ts_stat_tests.correlation.tests import correlation
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -196,12 +196,12 @@ def correlation(
         ```
 
     ??? tip "See Also"
-        - [`ts_stat_tests.algorithms.correlation.acf`][ts_stat_tests.algorithms.correlation.acf]: Autocorrelation Function algorithm.
-        - [`ts_stat_tests.algorithms.correlation.pacf`][ts_stat_tests.algorithms.correlation.pacf]: Partial Autocorrelation Function algorithm.
-        - [`ts_stat_tests.algorithms.correlation.ccf`][ts_stat_tests.algorithms.correlation.ccf]: Cross-Correlation Function algorithm.
-        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box Test algorithm.
-        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier Test algorithm.
-        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Test algorithm.
+        - [`ts_stat_tests.correlation.algorithms.acf`][ts_stat_tests.correlation.algorithms.acf]: Autocorrelation Function algorithm.
+        - [`ts_stat_tests.correlation.algorithms.pacf`][ts_stat_tests.correlation.algorithms.pacf]: Partial Autocorrelation Function algorithm.
+        - [`ts_stat_tests.correlation.algorithms.ccf`][ts_stat_tests.correlation.algorithms.ccf]: Cross-Correlation Function algorithm.
+        - [`ts_stat_tests.correlation.algorithms.lb`][ts_stat_tests.correlation.algorithms.lb]: Ljung-Box Test algorithm.
+        - [`ts_stat_tests.correlation.algorithms.lm`][ts_stat_tests.correlation.algorithms.lm]: Lagrange Multiplier Test algorithm.
+        - [`ts_stat_tests.correlation.algorithms.bglm`][ts_stat_tests.correlation.algorithms.bglm]: Breusch-Godfrey Test algorithm.
     """
 
     options: dict[str, tuple[str, ...]] = {
@@ -289,7 +289,7 @@ def is_correlated(
     ???+ example "Examples"
 
         ```pycon {.py .python linenums="1" title="Setup"}
-        >>> from ts_stat_tests.tests.correlation import is_correlated
+        >>> from ts_stat_tests.correlation.tests import is_correlated
         >>> from ts_stat_tests.utils.data import data_normal
         >>> normal = data_normal
 
@@ -312,10 +312,10 @@ def is_correlated(
         ```
 
     ??? tip "See Also"
-        - [`correlation()`][ts_stat_tests.tests.correlation.correlation]: Dispatcher for correlation measures and tests.
-        - [`ts_stat_tests.algorithms.correlation.lb`][ts_stat_tests.algorithms.correlation.lb]: Ljung-Box Test algorithm.
-        - [`ts_stat_tests.algorithms.correlation.lm`][ts_stat_tests.algorithms.correlation.lm]: Lagrange Multiplier Test algorithm.
-        - [`ts_stat_tests.algorithms.correlation.bglm`][ts_stat_tests.algorithms.correlation.bglm]: Breusch-Godfrey Test algorithm.
+        - [`correlation()`][ts_stat_tests.correlation.tests.correlation]: Dispatcher for correlation measures and tests.
+        - [`ts_stat_tests.correlation.algorithms.lb`][ts_stat_tests.correlation.algorithms.lb]: Ljung-Box Test algorithm.
+        - [`ts_stat_tests.correlation.algorithms.lm`][ts_stat_tests.correlation.algorithms.lm]: Lagrange Multiplier Test algorithm.
+        - [`ts_stat_tests.correlation.algorithms.bglm`][ts_stat_tests.correlation.algorithms.bglm]: Breusch-Godfrey Test algorithm.
     """
     options: dict[str, tuple[str, ...]] = {
         "lb": ("alb", "acorr_ljungbox", "acor_lb", "a_lb", "lb", "ljungbox"),

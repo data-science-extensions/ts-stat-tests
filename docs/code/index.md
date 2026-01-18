@@ -33,33 +33,16 @@
 
 ## Modules
 
-| Module             | Description                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------- |
-| Correlation        | Tests to measure autocorrelation and cross-correlation in time series data.            |
-| Regularity         | Tests to measure the complexity and regularity of time series data.                    |
-| Seasonality        | Tests to identify seasonal patterns and measure seasonal strength in time series data. |
-| Stability          | Tests to measure the stability and lumpiness of time series data.                      |
-| Stationarity       | Tests to determine if a time series is stationary or possesses unit roots.             |
-| Normality          | Tests to assess if the residuals of a time series model follow a normal distribution.  |
-| Linearity          | Tests to evaluate linear specifications in time-series models.                         |
-| Heteroscedasticity | Tests to detect heteroscedasticity in the residuals of time series models.             |
-
-<!-- | Covariance | Tests to evaluate covariance structures in multivariate time series data. | -->
-
-
-## Implementation Progress
-
-| module             |        algorithms        |          tests          |         unit-tests          |
-| ------------------ | :----------------------: | :---------------------: | :-------------------------: |
-| Correlation        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=19/19  "19/19    = 100%"] |
-| Regularity         | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=34/34  "34/34    = 100%"] |
-| Seasonality        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=23/23  "23/23    = 100%"] |
-| Stability          | [=2/2   "2/2   =  100%"] | [=2/2   "2/2   = 100%"] | [=4/4    "4/4      = 100%"] |
-| Stationarity       | [=7/7   "7/7   =  100%"] | [=2/2   "2/2   = 100%"] | [=51/51  "51/51    = 100%"] |
-| Normality          | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=15/15  "15/15    = 100%"] |
-| Linearity          | [=4/4   "4/4   =  100%"] | [=2/2   "2/2   = 100%"] | [=11/11  "11/11    = 100%"] |
-| Heteroscedasticity | [=4/4   "4/4   =  100%"] | [=2/2   "2/2   = 100%"] | [=8/8    "8/8      = 100%"] |
-| **Overall**        | [=39/39 "39/39 =  100%"] | [=16/16 "16/16 = 100%"] | [=165/165 "165/165 = 100%"] |
+| Module                                   | Description                                                                            |
+| ---------------------------------------- | -------------------------------------------------------------------------------------- |
+| [Correlation](correlation)               | Tests to measure autocorrelation and cross-correlation in time series data.            |
+| [Regularity](regularity)                 | Tests to measure the complexity and regularity of time series data.                    |
+| [Seasonality](seasonality)               | Tests to identify seasonal patterns and measure seasonal strength in time series data. |
+| [Stability](stability)                   | Tests to measure the stability and lumpiness of time series data.                      |
+| [Stationarity](stationarity)             | Tests to determine if a time series is stationary or possesses unit roots.             |
+| [Normality](normality)                   | Tests to assess if the residuals of a time series model follow a normal distribution.  |
+| [Linearity](linearity)                   | Tests to evaluate linear specifications in time-series models.                         |
+| [Heteroscedasticity](heteroscedasticity) | Tests to detect heteroscedasticity in the residuals of time series models.             |
 
 
 ## Tests
@@ -135,8 +118,6 @@
         | Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | ✅[`statsmodels`][statsmodels]:[`het_goldfeldquandt()`][statsmodels-het_goldfeldquandt]                                                                               |
         | Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | ✅[`statsmodels`][statsmodels]:[`het_white()`][statsmodels-het_white]                                                                                                 |
 
-<!--        | Covariance         | ...                                                                           | -->
-
         </div>
 
     === "Python Import"
@@ -168,31 +149,35 @@
         | WLM  | statsmodels: `from statsmodels.stats.diagnostic import het_white`                                                                                        |
 
 
-<!--
-| category     | algorithm                         | import script                         | url                                                                                                          |
-| ------------ | --------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Stationarity | Augmented Dickey-Fuller           | `from pmdarima.arima import ADFTest`  | [ADF](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ADFTest.html#pmdarima.arima.ADFTest) |
-| Stationarity | Kwiatkowski-Phillips-Schmidt-Shin | `from pmdarima.arima import KPSSTest` | [KPSS](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.KPSSTest.html)                      |
-| Stationarity | Phillips-Peron                    | `from pmdarima.arima import PPTest`   | [PP](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html)                          |
-| Seasonality  | Osborn-Chui-Smith-Birchenhall     | `from pmdarima.arima import OCSBTest` | [OCSB](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.OCSBTest.html)                      |
-| Seasonality  | Canova-Hansen                     | `from pmdarima.arima import CHTest`   | [CH](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.CHTest.html)                          |
-| Correlation  | Auto-Correlation                  | `from pmdarima.utils import acf`      | [ACF](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.utils.acf.html#pmdarima.utils.acf)         |
-| Correlation  | Partial Auto-Ccorrelation         | `from pmdarima.utils import pacf`     | [PACF](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.utils.pacf.html)                          |
--->
-
-
 ## Testing
 
 This package maintains 100% test coverage with comprehensive testing against:
 
-1. **Code Style**: All code adheres to [`black`] formatting, including all code chunks in docstrings using the [`blacken-docs`].
-2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`].
-3. **Type Safety**: All code is type-checked using [`ty`] and [`pyright`] and guarded during runtime by using the [`typeguard`] library.
-4. **Import Sorting**: All imports are sorted and managed using [`isort`], and unused imports are removed using [`pycln`].
-5. **Code Quality**: All code is checked for quality using [`pylint`], maintaining a score of 10/10, and checked for complexity using [`complexipy`].
-6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`]
-7. **Unit Testing**: All code is unit-tested using [`pytest`], achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`].
-8. **Build Testing**: The package is built with [`uv`] and the docs are built with [`mkdocs`] to ensure there are no build errors.
+1. **Code Style**: All code adheres to [`black`][black]formatting, including all code chunks in docstrings using the [`blacken-docs`][blacken-docs].
+2. **Spell Checking**: All documentation and code comments are spell-checked using [`codespell`][codespell].
+3. **Type Safety**: All code is type-checked using [`ty`][ty] and [`pyright`][pyright] and guarded during runtype by using the [`typeguard`][typeguard] library.
+4. **Import Sorting**: All imports are sorted and managed using [`isort`][isort] and unused imports are removed using [`pycln`][pycln].
+5. **Code Quality**: All code is checked for quality using [`pylint`][pylint] maintaining a score of 10/10, and checked for complexity using [`complexipy`][complexipy].
+6. **Docstring Quality**: All docstrings are checked for style and completeness using [`docstring-format-checker`][docstring-format-checker].
+7. **Unit Testing**: All code is unit-tested using [`pytest`][pytest] achieving 100% code coverage across the entire codebase, and including all examples in all docstrings tested using [`doctest`][doctest].
+8. **Build Testing**: The package is built with [`uv`][uv] and the docs are built with [`mkdocs`][mkdocs] to ensure there are no build errors.
+
+
+[black]: https://black.readthedocs.io
+[blacken-docs]: https://github.com/adamchainz/blacken-docs
+[ty]: https://docs.astral.sh/ty/
+[pyright]: https://microsoft.github.io/pyright/
+[typeguard]: https://typeguard.readthedocs.io
+[isort]: https://pycqa.github.io/isort/
+[pycln]: https://hadialqattan.github.io/pycln/
+[codespell]: https://github.com/codespell-project/codespell
+[pylint]: https://pylint.readthedocs.io/
+[complexipy]: https://rohaquinlop.github.io/complexipy/
+[docstring-format-checker]: https://data-science-extensions.com/toolboxes/docstring-format-checker/
+[pytest]: https://docs.pytest.org/
+[doctest]: https://docs.python.org/3/library/doctest.html
+[uv]: https://docs.astral.sh/uv/
+[mkdocs]: https://www.mkdocs.org/
 
 
 ## Coverage
@@ -254,18 +239,3 @@ This package maintains 100% test coverage with comprehensive testing against:
 [scipy-shapiro]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html
 [scipy-normaltest]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html
 [scipy-anderson]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.anderson.html
-[`black`]: https://black.readthedocs.io
-[`blacken-docs`]: https://github.com/adamchainz/blacken-docs
-[`ty`]: https://docs.astral.sh/ty/
-[`pyright`]: https://microsoft.github.io/pyright/
-[`typeguard`]: https://typeguard.readthedocs.io
-[`isort`]: https://pycqa.github.io/isort/
-[`pycln`]: https://hadialqattan.github.io/pycln/
-[`codespell`]: https://github.com/codespell-project/codespell
-[`pylint`]: https://pylint.readthedocs.io/
-[`complexipy`]: https://rohaquinlop.github.io/complexipy/
-[`docstring-format-checker`]: https://data-science-extensions.com/toolboxes/docstring-format-checker/
-[`pytest`]: https://docs.pytest.org/
-[`doctest`]: https://docs.python.org/3/library/doctest.html
-[`uv`]: https://docs.astral.sh/uv/
-[`mkdocs`]: https://www.mkdocs.org/
