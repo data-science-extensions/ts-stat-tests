@@ -47,21 +47,6 @@
 <!-- | Covariance | Tests to evaluate covariance structures in multivariate time series data. | -->
 
 
-## Implementation Progress
-
-| module             |        algorithms        |          tests          |         unit-tests          |
-| ------------------ | :----------------------: | :---------------------: | :-------------------------: |
-| Correlation        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=19/19  "19/19    = 100%"] |
-| Regularity         | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=34/34  "34/34    = 100%"] |
-| Seasonality        | [=6/6   "6/6   =  100%"] | [=2/2   "2/2   = 100%"] | [=23/23  "23/23    = 100%"] |
-| Stability          | [=2/2   "2/2   =  100%"] | [=2/2   "2/2   = 100%"] | [=4/4    "4/4      = 100%"] |
-| Stationarity       | [=7/7   "7/7   =  100%"] | [=2/2   "2/2   = 100%"] | [=51/51  "51/51    = 100%"] |
-| Normality          | [=5/5   "5/5   =  100%"] | [=2/2   "2/2   = 100%"] | [=15/15  "15/15    = 100%"] |
-| Linearity          | [=4/4   "4/4   =  100%"] | [=2/2   "2/2   = 100%"] | [=11/11  "11/11    = 100%"] |
-| Heteroscedasticity | [=4/4   "4/4   =  100%"] | [=2/2   "2/2   = 100%"] | [=8/8    "8/8      = 100%"] |
-| **Overall**        | [=39/39 "39/39 =  100%"] | [=16/16 "16/16 = 100%"] | [=165/165 "165/165 = 100%"] |
-
-
 ## Tests
 
 <style>
@@ -134,9 +119,6 @@
         | Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | ✅[`statsmodels`][statsmodels]:[`het_breuschpagan()`][statsmodels-het_breuschpagan]                                                                                   |
         | Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | ✅[`statsmodels`][statsmodels]:[`het_goldfeldquandt()`][statsmodels-het_goldfeldquandt]                                                                               |
         | Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | ✅[`statsmodels`][statsmodels]:[`het_white()`][statsmodels-het_white]                                                                                                 |
-
-<!--        | Covariance         | ...                                                                           | -->
-
         </div>
 
     === "Python Import"
@@ -166,19 +148,6 @@
         | BPL  | statsmodels: `from statsmodels.stats.diagnostic import het_breuschpagan`                                                                                 |
         | GQ   | statsmodels: `from statsmodels.stats.diagnostic import het_goldfeldquandt`                                                                               |
         | WLM  | statsmodels: `from statsmodels.stats.diagnostic import het_white`                                                                                        |
-
-
-<!--
-| category     | algorithm                         | import script                         | url                                                                                                          |
-| ------------ | --------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Stationarity | Augmented Dickey-Fuller           | `from pmdarima.arima import ADFTest`  | [ADF](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.ADFTest.html#pmdarima.arima.ADFTest) |
-| Stationarity | Kwiatkowski-Phillips-Schmidt-Shin | `from pmdarima.arima import KPSSTest` | [KPSS](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.KPSSTest.html)                      |
-| Stationarity | Phillips-Peron                    | `from pmdarima.arima import PPTest`   | [PP](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.PPTest.html)                          |
-| Seasonality  | Osborn-Chui-Smith-Birchenhall     | `from pmdarima.arima import OCSBTest` | [OCSB](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.OCSBTest.html)                      |
-| Seasonality  | Canova-Hansen                     | `from pmdarima.arima import CHTest`   | [CH](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.CHTest.html)                          |
-| Correlation  | Auto-Correlation                  | `from pmdarima.utils import acf`      | [ACF](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.utils.acf.html#pmdarima.utils.acf)         |
-| Correlation  | Partial Auto-Ccorrelation         | `from pmdarima.utils import pacf`     | [PACF](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.utils.pacf.html)                          |
--->
 
 
 ## Testing

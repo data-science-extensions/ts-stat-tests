@@ -52,47 +52,52 @@ A single package for doing all the standard time-series statistical tests.
 
 Full credit goes to the packages listed in this table.
 
-| Type               | Name                                                                          | Source Package | Source Language | Implemented |
-| ------------------ | ----------------------------------------------------------------------------- | -------------- | --------------- | ----------- |
-| Correlation        | Auto-Correlation function (ACF)                                               | `statsmodels`  | Python          | ✅           |
-| Correlation        | Partial Auto-Correlation function (PACF)                                      | `statsmodels`  | Python          | ✅           |
-| Correlation        | Cross-Correlation function (CCF)                                              | `statsmodels`  | Python          | ✅           |
-| Correlation        | Ljung-Box test of autocorrelation in residuals (LB)                           | `statsmodels`  | Python          | ✅           |
-| Correlation        | Lagrange Multiplier tests for autocorrelation (LM)                            | `statsmodels`  | Python          | ✅           |
-| Correlation        | Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation (BGLM) | `statsmodels`  | Python          | ✅           |
-| Regularity         | Approximate Entropy                                                           | `antropy`      | python          | ✅           |
-| Regularity         | Sample Entropy                                                                | `antropy`      | python          | ✅           |
-| Regularity         | Permutation Entropy                                                           | `antropy`      | python          | ✅           |
-| Regularity         | Spectral Entropy                                                              | `antropy`      | python          | ✅           |
-| Regularity         | SVD Entropy                                                                   | `antropy`      | python          | ✅           |
-| Seasonality        | QS                                                                            | `seastests`    | R               | ✅           |
-| Seasonality        | Osborn-Chui-Smith-Birchenhall test of seasonality (OCSB)                      | `pmdarima`     | Python          | ✅           |
-| Seasonality        | Canova-Hansen test for seasonal differences (CH)                              | `pmdarima`     | Python          | ✅           |
-| Seasonality        | Seasonal Strength                                                             | `tsfeatures`   | Python          | ✅           |
-| Seasonality        | Trend Strength                                                                | `tsfeatures`   | Python          | ✅           |
-| Seasonality        | Spikiness                                                                     | `tsfeatures`   | Python          | ✅           |
-| Stability          | Stability                                                                     | `tsfeatures`   | Python          | ✅           |
-| Stability          | Lumpiness                                                                     | `tsfeatures`   | Python          | ✅           |
-| Stationarity       | Augmented Dickey-Fuller test for stationarity (ADF)                           | `statsmodels`  | Python          | ✅           |
-| Stationarity       | Kwiatkowski-Phillips-Schmidt-Shin test for stationarity (KPSS)                | `statsmodels`  | Python          | ✅           |
-| Stationarity       | Range unit-root test for stationarity (RUR)                                   | `statsmodels`  | Python          | ✅           |
-| Stationarity       | Zivot-Andrews structural-break unit-root test (ZA)                            | `statsmodels`  | Python          | ✅           |
-| Stationarity       | Phillips-Peron test for stationarity (PP)                                     | `arch`         | Python          | ✅           |
-| Stationarity       | Elliott-Rothenberg-Stock (ERS) de-trended Dickey-Fuller test                  | `arch`         | Python          | ✅           |
-| Stationarity       | Variance Ratio (VR) test for a random walk                                    | `arch`         | Python          | ✅           |
-| Normality          | Jarque-Bera test of normality (JB)                                            | `statsmodels`  | Python          | ✅           |
-| Normality          | Omnibus test for normality (OB)                                               | `statsmodels`  | Python          | ✅           |
-| Normality          | Shapiro-Wilk test for normality (SW)                                          | `scipy`        | Python          | ✅           |
-| Normality          | D'Agostino & Pearson's test for normality                                     | `scipy`        | Python          | ✅           |
-| Normality          | Anderson-Darling test for normality                                           | `scipy`        | Python          | ✅           |
-| Linearity          | Harvey Collier test for linearity (HC)                                        | `statsmodels`  | Python          | ✅           |
-| Linearity          | Lagrange Multiplier test for linearity (LM)                                   | `statsmodels`  | Python          | ✅           |
-| Linearity          | Rainbow test for linearity (RB)                                               | `statsmodels`  | Python          | ✅           |
-| Linearity          | Ramsey's RESET test for neglected nonlinearity (RR)                           | `statsmodels`  | Python          | ✅           |
-| Heteroscedasticity | Engle's Test for Autoregressive Conditional Heteroscedasticity (ARCH)         | `statsmodels`  | Python          | ✅           |
-| Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | `statsmodels`  | Python          | ✅           |
-| Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | `statsmodels`  | Python          | ✅           |
-| Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | `statsmodels`  | Python          | ✅           |
+| Type               | Name                                                                          | Source Package | Source Language |
+| ------------------ | ----------------------------------------------------------------------------- | -------------- | --------------- |
+|                    |                                                                               |                |                 |
+| Correlation        | Auto-Correlation function (ACF)                                               | `statsmodels`  | Python          |
+| Correlation        | Partial Auto-Correlation function (PACF)                                      | `statsmodels`  | Python          |
+| Correlation        | Cross-Correlation function (CCF)                                              | `statsmodels`  | Python          |
+| Correlation        | Ljung-Box test of autocorrelation in residuals (LB)                           | `statsmodels`  | Python          |
+| Correlation        | Lagrange Multiplier tests for autocorrelation (LM)                            | `statsmodels`  | Python          |
+| Correlation        | Breusch-Godfrey Lagrange Multiplier tests for residual autocorrelation (BGLM) | `statsmodels`  | Python          |
+|                    |                                                                               |                |                 |
+| Regularity         | Approximate Entropy                                                           | `antropy`      | python          |
+| Regularity         | Sample Entropy                                                                | `antropy`      | python          |
+| Regularity         | Permutation Entropy                                                           | `antropy`      | python          |
+| Regularity         | Spectral Entropy                                                              | `antropy`      | python          |
+| Regularity         | SVD Entropy                                                                   | `antropy`      | python          |
+| Seasonality        | QS                                                                            | `seastests`    | R               |
+| Seasonality        | Osborn-Chui-Smith-Birchenhall test of seasonality (OCSB)                      | `pmdarima`     | Python          |
+| Seasonality        | Canova-Hansen test for seasonal differences (CH)                              | `pmdarima`     | Python          |
+| Seasonality        | Seasonal Strength                                                             | `tsfeatures`   | Python          |
+| Seasonality        | Trend Strength                                                                | `tsfeatures`   | Python          |
+| Seasonality        | Spikiness                                                                     | `tsfeatures`   | Python          |
+|                    |                                                                               |                |                 |
+| Stability          | Stability                                                                     | `tsfeatures`   | Python          |
+| Stability          | Lumpiness                                                                     | `tsfeatures`   | Python          |
+| Stationarity       | Augmented Dickey-Fuller test for stationarity (ADF)                           | `statsmodels`  | Python          |
+| Stationarity       | Kwiatkowski-Phillips-Schmidt-Shin test for stationarity (KPSS)                | `statsmodels`  | Python          |
+| Stationarity       | Range unit-root test for stationarity (RUR)                                   | `statsmodels`  | Python          |
+| Stationarity       | Zivot-Andrews structural-break unit-root test (ZA)                            | `statsmodels`  | Python          |
+| Stationarity       | Phillips-Peron test for stationarity (PP)                                     | `arch`         | Python          |
+| Stationarity       | Elliott-Rothenberg-Stock (ERS) de-trended Dickey-Fuller test                  | `arch`         | Python          |
+| Stationarity       | Variance Ratio (VR) test for a random walk                                    | `arch`         | Python          |
+|                    |                                                                               |                |                 |
+| Normality          | Jarque-Bera test of normality (JB)                                            | `statsmodels`  | Python          |
+| Normality          | Omnibus test for normality (OB)                                               | `statsmodels`  | Python          |
+| Normality          | Shapiro-Wilk test for normality (SW)                                          | `scipy`        | Python          |
+| Normality          | D'Agostino & Pearson's test for normality                                     | `scipy`        | Python          |
+| Normality          | Anderson-Darling test for normality                                           | `scipy`        | Python          |
+| Linearity          | Harvey Collier test for linearity (HC)                                        | `statsmodels`  | Python          |
+| Linearity          | Lagrange Multiplier test for linearity (LM)                                   | `statsmodels`  | Python          |
+| Linearity          | Rainbow test for linearity (RB)                                               | `statsmodels`  | Python          |
+| Linearity          | Ramsey's RESET test for neglected nonlinearity (RR)                           | `statsmodels`  | Python          |
+|                    |                                                                               |                |                 |
+| Heteroscedasticity | Engle's Test for Autoregressive Conditional Heteroscedasticity (ARCH)         | `statsmodels`  | Python          |
+| Heteroscedasticity | Breusch-Pagan Lagrange Multiplier test for heteroscedasticity (BPL)           | `statsmodels`  | Python          |
+| Heteroscedasticity | Goldfeld-Quandt test for homoskedasticity (GQ)                                | `statsmodels`  | Python          |
+| Heteroscedasticity | White's Lagrange Multiplier Test for Heteroscedasticity (WLM)                 | `statsmodels`  | Python          |
 
 
 ## Known limitations
