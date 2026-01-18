@@ -1,7 +1,8 @@
 # ============================================================================ #
 #                                                                              #
-#     Title:
-#     Purpose:
+#     Title: Heteroscedasticity Module                                         #
+#     Purpose: Initialize the heteroscedasticity module by importing           #
+#         algorithms and tests, and defining exports.                          #
 #                                                                              #
 # ============================================================================ #
 
@@ -20,6 +21,7 @@
 
 """
 !!! note "Summary"
+    This module provides tools to assess heteroscedasticity in time series data. It includes various algorithms and tests to evaluate the presence of heteroscedasticity, which is the condition where the variance of errors differs across observations in a dataset.
 """
 
 

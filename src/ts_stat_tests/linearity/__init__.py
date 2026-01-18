@@ -1,7 +1,8 @@
 # ============================================================================ #
 #                                                                              #
-#     Title:
-#     Purpose:
+#     Title: Linearity Module                                                  #
+#     Purpose: Initialize the linearity module by importing algorithms and     #
+#         tests, and defining exports.                                         #
 #                                                                              #
 # ============================================================================ #
 
@@ -20,6 +21,7 @@
 
 """
 !!! note "Summary"
+    This module provides tools to assess the linearity of time series data. It includes various algorithms and tests to evaluate whether a time series exhibits linear behavior, helping to identify relationships and trends within the data.
 """
 
 

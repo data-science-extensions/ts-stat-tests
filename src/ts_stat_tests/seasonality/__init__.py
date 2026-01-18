@@ -1,7 +1,8 @@
 # ============================================================================ #
 #                                                                              #
-#     Title:
-#     Purpose:
+#     Title: Seasonality Module                                                #
+#     Purpose: Initialize the seasonality module by importing algorithms and   #
+#         tests, and defining exports.                                         #
 #                                                                              #
 # ============================================================================ #
 
@@ -20,6 +21,7 @@
 
 """
 !!! note "Summary"
+    This module provides tools to assess seasonality in time series data. It includes various algorithms and tests to evaluate the presence and strength of seasonal patterns, helping to identify recurring trends and cycles within the data.
 """
 
 

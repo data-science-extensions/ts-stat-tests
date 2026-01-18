@@ -1,7 +1,8 @@
 # ============================================================================ #
 #                                                                              #
-#     Title:
-#     Purpose:
+#     Title: Stationarity Module                                               #
+#     Purpose: Initialize the stationarity module by importing algorithms and  #
+#         tests, and defining exports.                                         #
 #                                                                              #
 # ============================================================================ #
 
@@ -20,6 +21,7 @@
 
 """
 !!! note "Summary"
+    This module provides tools to assess stationarity in time series data. It includes various algorithms and tests to evaluate whether a time series is stationary, meaning its statistical properties do not change over time.
 """
 
 

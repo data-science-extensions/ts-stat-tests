@@ -1,7 +1,8 @@
 # ============================================================================ #
 #                                                                              #
-#     Title:
-#     Purpose:
+#     Title: Normality Module                                                  #
+#     Purpose: Initialize the normality module by importing algorithms and     #
+#         tests, and defining exports.                                         #
 #                                                                              #
 # ============================================================================ #
 
@@ -20,6 +21,7 @@
 
 """
 !!! note "Summary"
+    This module provides tools to assess the normality of time series data. It includes various algorithms and tests to evaluate whether a time series follows a normal distribution, which is important for many statistical analyses and modeling techniques.
 """
 
 
