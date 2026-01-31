@@ -53,7 +53,8 @@ nav:
   - Usage:
       - Overview: usage/overview.md
       - Basic:
-        - Getting Started: usage/basic/getting_started.md
+        - Getting Started: usage/getting_started.md
+        - FAQ: usage/faq.md
       - General:
         - Contributing: usage/contributing.md
         - Change Log: usage/changelog.md
