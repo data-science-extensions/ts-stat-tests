@@ -52,9 +52,11 @@ nav:
   - Home: index.md
   - Usage:
       - Overview: usage/overview.md
-      - Getting Started: usage/basic/getting_started.md
-      - Contributing: usage/contributing.md
-      - Change Log: usage/changelog.md
+      - Basic:
+        - Getting Started: usage/basic/getting_started.md
+      - General:
+        - Contributing: usage/contributing.md
+        - Change Log: usage/changelog.md
   - Code:
       - code/index.md
       - Modules:
