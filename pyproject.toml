@@ -62,35 +62,46 @@ Issues = "https://github.com/data-science-extensions/ts-stat-tests/issues"
 [dependency-groups]
 dev = [
     "black==25.*",
+    # "black==25.*; python_version<'3.10'",
+    # "black==26.*; python_version>='3.10'",
     "blacken-docs==1.*",
     "codespell==2.*",
-    "ipykernel==6.*",
-    "isort==6.*",
-    "pre-commit==4.*",
+    "ipykernel==6.*; python_version<'3.10'",
+    "ipykernel==7.*; python_version>='3.10'",
+    "isort==6.*; python_version<'3.10'",
+    "isort==7.*; python_version>='3.10'",
+    "prek==0.*",
     "pycln==2.*",
-    "pylint==3.*",
+    "pylint==3.*; python_version<'3.10'",
+    "pylint==4.*; python_version>='3.10'",
     "pyright==1.*",
     "pyupgrade==3.*",
     "uv==0.*",
 ]
 docs = [
     "black==25.*",
-    "docstring-inheritance==2.*",
+    # "black==25.*; python_version<'3.10'",
+    # "black==26.*; python_version>='3.10'",
+    "docstring-inheritance==2.*; python_version<'3.10'",
+    "docstring-inheritance==3.*; python_version>='3.10'",
     "livereload==2.*",
     "mike==2.*",
     "mkdocs==1.*",
     "mkdocs-autorefs==1.*",
     "mkdocs-coverage==2.*",
     "mkdocs-material==9.*",
-    "mkdocstrings==0.*",
-    "mkdocstrings-python==1.*",
+    "mkdocstrings==0.*; python_version<'3.10'",
+    "mkdocstrings==1.*; python_version>='3.10'",
+    "mkdocstrings-python==1.*; python_version<'3.10'",
+    "mkdocstrings-python==2.*; python_version>='3.10'",
     "pygithub==2.*",
     "docstring-format-checker==1.*",
 ]
 test = [
     "ty==0.*",
     "parameterized==0.*",
-    "pytest==8.*",
+    "pytest==8.*; python_version<'3.10'",
+    "pytest==9.*; python_version>='3.10'",
     "pytest-clarity==1.*",
     "pytest-cov==7.*",
     "pytest-icdiff==0.*",
@@ -99,7 +110,7 @@ test = [
     "requests==2.*",
     # "radon==6.*",
     # "types-protobuf==6.*",
-    "complexipy==4.*",
+    "complexipy==5.*",
     "stochastic>=0.7",
 ]
 
@@ -205,5 +216,5 @@ sections = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.8.17,<0.9.0"]
+requires = ["uv_build>=0.9.28,<0.10.0"]
 build-backend = "uv_build"
