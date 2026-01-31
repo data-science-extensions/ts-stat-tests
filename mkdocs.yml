@@ -55,6 +55,8 @@ nav:
       - Basic:
         - Getting Started: usage/getting_started.md
         - FAQ: usage/faq.md
+      - Advanced:
+        - Algorithms: usage/algorithms.md
       - General:
         - Contributing: usage/contributing.md
         - Change Log: usage/changelog.md
