@@ -40,7 +40,7 @@
 
 ::: ts_stat_tests.linearity.tests
     options:
-        extras:
+        extra:
             show_root_heading: false
             heading_level: 3
             show_if_no_docstring: true
@@ -49,7 +49,7 @@
 
 ::: ts_stat_tests.linearity.algorithms
     options:
-        extras:
+        extra:
             show_root_heading: false
             heading_level: 3
             show_if_no_docstring: true
