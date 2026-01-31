@@ -33,16 +33,16 @@
 
 ## Modules
 
-| Module                                   | Description                                                                            |
-| ---------------------------------------- | -------------------------------------------------------------------------------------- |
-| [Correlation](correlation)               | Tests to measure autocorrelation and cross-correlation in time series data.            |
-| [Regularity](regularity)                 | Tests to measure the complexity and regularity of time series data.                    |
-| [Seasonality](seasonality)               | Tests to identify seasonal patterns and measure seasonal strength in time series data. |
-| [Stability](stability)                   | Tests to measure the stability and lumpiness of time series data.                      |
-| [Stationarity](stationarity)             | Tests to determine if a time series is stationary or possesses unit roots.             |
-| [Normality](normality)                   | Tests to assess if the residuals of a time series model follow a normal distribution.  |
-| [Linearity](linearity)                   | Tests to evaluate linear specifications in time-series models.                         |
-| [Heteroscedasticity](heteroscedasticity) | Tests to detect heteroscedasticity in the residuals of time series models.             |
+| Module                                      | Description                                                                            |
+| ------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [Correlation](correlation.md)               | Tests to measure autocorrelation and cross-correlation in time series data.            |
+| [Regularity](regularity.md)                 | Tests to measure the complexity and regularity of time series data.                    |
+| [Seasonality](seasonality.md)               | Tests to identify seasonal patterns and measure seasonal strength in time series data. |
+| [Stability](stability.md)                   | Tests to measure the stability and lumpiness of time series data.                      |
+| [Stationarity](stationarity.md)             | Tests to determine if a time series is stationary or possesses unit roots.             |
+| [Normality](normality.md)                   | Tests to assess if the residuals of a time series model follow a normal distribution.  |
+| [Linearity](linearity.md)                   | Tests to evaluate linear specifications in time-series models.                         |
+| [Heteroscedasticity](heteroscedasticity.md) | Tests to detect heteroscedasticity in the residuals of time series models.             |
 
 
 ## Tests
