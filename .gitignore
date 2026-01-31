@@ -1,8 +1,11 @@
 ### User Defined ###
 uv.lock
 .vscode/
-git_output/
 .complexipy_cache/*
+git_output/
+.github/copilot-instructions.md
+.github/instructions/*
+.github/prompts/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
