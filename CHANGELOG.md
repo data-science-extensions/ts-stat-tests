@@ -11,6 +11,241 @@
 
 # Changelog for ts-stat-tests
 
+!!! info "v1.0.1"
+
+    ## **v1.0.1 - Refresh documentation structure, add new pages, update package infrastructure and enhance repo security**
+
+    <!-- md:tag v1.0.1 --><br>
+    <!-- md:date 2026-02-01 --><br>
+    <!-- md:link [data-science-extensions/ts-stat-tests/releases/v1.0.1](https://github.com/data-science-extensions/ts-stat-tests/releases/tag/v1.0.1) -->
+
+    ??? note "Release Notes"
+
+        This release marks a significant milestone in the `ts-stat-tests` library, transitioning the project to **Production/Stable** status. The focus of this update is a comprehensive overhaul of the documentation architecture, the integration of mathematical rendering capabilities, and the hardening of the repository's security and CI/CD workflows.
+        
+        
+        ### 🚀 Key Highlights
+        
+        
+        #### Core Infrastructure & Security
+        
+        *   **Production Status**: Elevated the `development_status` to "5 - Production/Stable" in `pyproject.toml`, reflecting the library's maturity and stability.
+        *   **CodeQL Analysis**: Introduced a new [CodeQL workflow](.github/workflows/codeql.yml) to perform advanced static analysis for both Python and GitHub Actions, ensuring high code quality and security standards.
+        *   **Automated Dependency Management**: Configured [Dependabot](.github/dependabot.yml) to monitor and update `pip` and GitHub Actions dependencies weekly.
+        *   **Metadata Refinement**: Updated project classifiers to better represent the library's focus on Mathematical Engineering and Scientific Research.
+        
+        
+        #### Documentation Overhaul
+        
+        *   **Restructured Navigation**: Organised the documentation into a clearer "Basic" vs "Advanced" hierarchy in `mkdocs.yml` to improve the onboarding experience for new users while maintaining deep references for experts.
+        *   **New "Getting Started" Guide**: Added a [Getting Started](docs/usage/getting_started.md) page that explains the library's tiered API structure (Dispatchers, Boolean Checks, and Algorithms) and provides usage examples for data loaders.
+        *   **Exhaustive Algorithm Catalog**: Created the [Algorithms Guide](docs/usage/algorithms.md), documenting the rationale for library selections and providing a detailed catalog of all implemented statistical tests.
+        *   **Comprehensive FAQ**: Launched a [FAQ](docs/usage/faq.md) section to address common conceptual questions, such as the handling of the Null Hypothesis ($H_0$) and the benefits of the library's unified interface.
+        
+        
+        #### Mathematical & Visual Enhancements
+        
+        *   **KaTeX Integration**: Integrated KaTeX for browser-side rendering of mathematical expressions, ensuring that statistical hypotheses and formulas are displayed precisely throughout the documentation.
+        *   **Visual Iconography**: Enhanced all primary documentation headers with relevant emoji icons (e.g., `💡`, `📚`, `🚀`) to facilitate quicker visual scanning and brand consistency.
+        
+        
+        #### Bug Fixes & Refinements
+        
+        *   **ADF Parameter Unpacking**: Fixed an issue in the documentation for the `adf()` algorithm where return values were incorrectly unpacked when `store=True`.
+        *   **Linearity Options**: Standardised the naming of `extra:` parameters across the linearity module's tests and algorithms.
+        *   **Spelling Standardisation**: Synchronised all documentation and comments to adhere to Australian English standards (e.g., prioritising `-ise` over `-ize`).
+        
+        
+        ### 📊 Change Metrics
+        
+        | Metric                | Value              |
+        | :-------------------- | :----------------- |
+        | **Files Changed**     | 13                 |
+        | **Lines Added**       | +672               |
+        | **Lines Deleted**     | -201               |
+        | **Project Status**    | Production/Stable  |
+        | **Spelling Standard** | Australian English |
+        
+        
+        ### 🛠️ Internal Changes
+        
+        *   Update `.gitignore` to exclude AI instruction sets and local output directories.
+        *   Bump `uv-pre-commit` version to `0.9.28`.
+        *   Refine docstring formats to comply with strict DFC (Docstring Format Checker) rules.
+        
+        ### 💪 Pull Requests
+        
+        * Refresh documentation structure, add new pages, update package infrastructure and enhance repo security by @chrimaho in https://github.com/data-science-extensions/ts-stat-tests/pull/34
+        
+        
+        **Full Changelog**: https://github.com/data-science-extensions/ts-stat-tests/compare/v1.0.0...v1.0.1
+        
+
+    ??? abstract "Updates"
+
+        * [`f796a00`](https://github.com/data-science-extensions/ts-stat-tests/commit/f796a00696548a46200e63942d02cb59a25686a1): Fix argument unpacking in ADF function call<br>
+            - Remove the `usedlag` and `nobs` arguments from the unpacking of the `adf()` function.<br>
+            - Ensure the call to `adf()` remains functional with the updated argument list.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`b2fbf08`](https://github.com/data-science-extensions/ts-stat-tests/commit/b2fbf086a6795206a3cf6265772dd221666b694a): Properly indent `steps:` in `codeql` workflow<br>
+            - Standardise indentation and formatting in the `.github/workflows/codeql.yml` file.<br>
+            - Ensure consistent use of comments to describe each step in the workflow.<br>
+            - Maintain clarity in the `Checkout repository` and `Initialize CodeQL` steps.<br>
+            - Improve readability of the `Run manual build steps` section with clearer comments.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`466984f`](https://github.com/data-science-extensions/ts-stat-tests/commit/466984f02355b32a17fec72639c1ee14fe4e215c): Fix yaml syntax error<br>
+            The matrix `include:` list items are not indented under include: (the `- language: ...` entries are aligned with `include:`). This is invalid YAML and will prevent the workflow from loading. Indent the list so `include:` maps to a sequence.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`59b2173`](https://github.com/data-science-extensions/ts-stat-tests/commit/59b2173678acded4d9318011549afc36db8ae2f8): Update JavaScript assets in MkDocs configuration<br>
+            - Replace the `assets/js/katex.js` entry with the CDN link for KaTeX.<br>
+            - Add the `https://unpkg.com/katex@0/dist/katex.min.js` and `https://unpkg.com/katex@0/dist/contrib/auto-render.min.js` entries.<br>
+            - Ensure proper loading of KaTeX for rendering mathematical expressions.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7611234`](https://github.com/data-science-extensions/ts-stat-tests/commit/76112349aaea615b704c83434f91f74826bb25b0): Fix typo<br>
+            `numpy` is imported in the example but never used. Dropping the unused import will keep the quickstart snippet minimal and avoids lint warnings for readers who copy/paste it.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`19c9583`](https://github.com/data-science-extensions/ts-stat-tests/commit/19c95835edcc387b5312810a82cb290e3fa1ede4): Fix typos<br>
+            `get_sine_wave()` is shown being called with `n`/`periods` arguments, but the actual function signature takes no parameters. As written, this example will raise `TypeError`. Either update the example to call `get_sine_wave()` as implemented, or extend the API to support the documented parameters.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`1817f46`](https://github.com/data-science-extensions/ts-stat-tests/commit/1817f46da320311c60f1008f56ebabd5109f68fb): Fix typo<br>
+            The snippets include syntax is inconsistent with the other pages (e.g., `--8<-- "README.md"`) and may not be parsed correctly without quotes. Use the quoted form for the LICENSE include to match the existing working pattern.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`7ad2618`](https://github.com/data-science-extensions/ts-stat-tests/commit/7ad261868d7d12d4511bcddfe23710f6557a2985): Fix typo<br>
+            Grammar: “libraries which implements these tests” should be “libraries which implement these tests”.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`24c85c7`](https://github.com/data-science-extensions/ts-stat-tests/commit/24c85c7b095e3e680fba1721163d35cf2ed65b76): Correct import paths<br>
+            In the “Python Import” table, the RUR and ZA rows label the import source as `pmdarima`, but the imports shown are from `statsmodels`. This is misleading when readers try to map tests to upstream libraries—please correct the library labels for those rows.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0d7e3d7`](https://github.com/data-science-extensions/ts-stat-tests/commit/0d7e3d74144641c67203fb69d31043a7536e6d7c): Refresh docs comment<br>
+            The sample `ValueError` message here doesn't match what the library actually raises. `generate_error_message()` produces messages like `Invalid 'algorithm': <value>. Options: <options>`, not the multi-line `Invalid value for parameter... Parsed...` format shown. Updating the example to match the real output will prevent confusion when troubleshooting.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`2c0a6d5`](https://github.com/data-science-extensions/ts-stat-tests/commit/2c0a6d5215f70d6fabeb8f17484e6e202e7fa6f3): Reword docs<br>
+            This section states that the project “strictly forbid[s] the use of `Any`”, but the current codebase does use `Any` (e.g., `ts_stat_tests.stationarity.algorithms.adf` assigns `res: Any = _adfuller(...)`). Either relax/reword this requirement (e.g., “avoid `Any` where possible”) or align the implementation to match the stated policy.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`6b8ee18`](https://github.com/data-science-extensions/ts-stat-tests/commit/6b8ee1857d8e731e89a07179f22096b5fd631ca4): Update getting started documentation for clarity and detail<br>
+            - Enhance descriptions of data loading functions in the `ts_stat_tests.utils.data` module.<br>
+            - Include links for `load_airline()`, `load_macrodata()`, `get_sine_wave()`, `get_noise_data()`, and `get_random_generator()`.<br>
+            - Revise the available test categories table to include links for each category and its corresponding algorithms.<br>
+            - Improve formatting for better readability and navigation within the documentation.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`0743f40`](https://github.com/data-science-extensions/ts-stat-tests/commit/0743f40923d1f302f5251c475a07753c0210655a): Add FAQ section to documentation<br>
+            - Introduce a new FAQ section in the documentation for `ts-stat-tests`.<br>
+            - Explain the differences between "Dispatcher", "Boolean", and "Algorithm" functions.<br>
+            - Describe the advantages of using `ts-stat-tests` over direct calls to underlying packages.<br>
+            - Clarify the handling of the Null Hypothesis ($H_0$) in statistical tests.<br>
+            - Provide troubleshooting tips for common errors and usage questions.<br>
+            - Include installation details and rationale for dependencies like `numpy`.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9de5928`](https://github.com/data-science-extensions/ts-stat-tests/commit/9de5928e466983f0b953bc2726cb0e422b3cee61): Update documentation for algorithms and getting started pages<br>
+            - Enhance section headings with relevant emojis for better visual appeal.<br>
+            - Change heading for selection rationale to `💡 Selection Rationale`.<br>
+            - Change heading for exhaustive test catalog to `📚 Exhaustive Test Catalog`.<br>
+            - Change heading for advanced usage patterns to `🚀 Advanced Usage Patterns`.<br>
+            - Change heading for developer information to `🛠️ Developer Information`.<br>
+            - Change heading for available test categories to `📚 Available Test Categories`.<br>
+            - Ensure consistent use of Australian English spelling, changing `prioritized` to `prioritised`.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`12a3976`](https://github.com/data-science-extensions/ts-stat-tests/commit/12a397630453e96e3c386e999ed868b2fcf25df3): Add KaTeX support for rendering mathematical expressions<br>
+            - Introduce the `katex.js` file to handle rendering of mathematical expressions.<br>
+            - Subscribe to `document$` to render math in the document body.<br>
+            - Define delimiters for inline and block math rendering.<br>
+            - Update `mkdocs.yml` to include the new `katex.js` file in extra JavaScript.<br>
+            - Add KaTeX CSS and JavaScript files for proper rendering.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ef0174b`](https://github.com/data-science-extensions/ts-stat-tests/commit/ef0174be4e5518fc29fc4ef7f9e77ea906716a34): Update documentation for algorithms and tests<br>
+            - Add detailed analysis of algorithms in `algorithms.md`.<br>
+            - Include rationale for library selection and coverage in the documentation.<br>
+            - Introduce an exhaustive test catalog with implementation status and library references.<br>
+            - Enhance the `index.md` file by consolidating content and improving clarity.<br>
+            - Remove outdated sections and streamline the overall structure of the documentation.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5f40a50`](https://github.com/data-science-extensions/ts-stat-tests/commit/5f40a5074dba73ece4e401c8fc2f50d7eba6a4de): Add algorithms page to docs<br>
+            - Create a new `algorithms.md` file for algorithm usage documentation.<br>
+            - Update `mkdocs.yml` to include the new Algorithms section in the navigation.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`5515331`](https://github.com/data-science-extensions/ts-stat-tests/commit/55153318a0c40891e97e4f9da283b09098c47a4d): Fix typo in options for linearity modules<br>
+            - Correct `extras:` to `extra:` in the options for `ts_stat_tests.linearity.tests`.<br>
+            - Correct `extras:` to `extra:` in the options for `ts_stat_tests.linearity.algorithms`.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`952a9ad`](https://github.com/data-science-extensions/ts-stat-tests/commit/952a9adc8ff56da4fbc0c1190edf21ee6be9403e): Update module links in documentation<br>
+            - Change links for modules in the documentation to include `.md` file extensions.<br>
+            - Ensure consistency in linking to module descriptions for better navigation.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`bc32692`](https://github.com/data-science-extensions/ts-stat-tests/commit/bc3269295129b657a80a7d0c666adbb3019f5fdb): Add Getting Started documentation for `ts-stat-tests`<br>
+            - Introduce the `Getting Started` section to provide an overview of the library.<br>
+            - Outline installation instructions using `uv` and `pip`.<br>
+            - Explain core concepts and structure of the library's modules.<br>
+            - Provide a quickstart example for performing a stationarity test.<br>
+            - List utility data loaders available in the `ts_stat_tests.utils.data` module.<br>
+            - Detail available test categories and their corresponding dispatchers and checks.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`cb50c1b`](https://github.com/data-science-extensions/ts-stat-tests/commit/cb50c1bc45c536ef6f530f856613c4ed1e5d500c): Add FAQ section to documentation<br>
+            - Create a new `faq.md` file to address common questions.<br>
+            - Update `mkdocs.yml` to include the FAQ section in the navigation.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`42d5b60`](https://github.com/data-science-extensions/ts-stat-tests/commit/42d5b60179958b75f986e8ca6db42fd2ed5def30): Add license documentation to project<br>
+            - Create a new file `license.md` to include licensing information.<br>
+            - Update `mkdocs.yml` to add a navigation entry for the License section.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ae98c84`](https://github.com/data-science-extensions/ts-stat-tests/commit/ae98c84d5084b8965df9ecab8b717f18230ff01b): Refactor navigation structure in documentation<br>
+            - Organise the navigation menu in `mkdocs.yml` for better clarity.<br>
+            - Group related items under `Basic` and `General` categories.<br>
+            - Ensure all links remain functional after restructuring.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`ee6f791`](https://github.com/data-science-extensions/ts-stat-tests/commit/ee6f7911915bb48a4811c7dc8542ea45879d80dd): Add Getting Started section to documentation<br>
+            - Create a new `getting_started.md` file for user onboarding.<br>
+            - Include the `Getting Started` entry in the navigation of `mkdocs.yml`.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`eeaa0d0`](https://github.com/data-science-extensions/ts-stat-tests/commit/eeaa0d066abfdbb3d2b567a94cf23af07c29a1cd): Add CodeQL workflow for advanced code analysis<br>
+            - Introduce the `.github/workflows/codeql.yml` file for CodeQL analysis.<br>
+            - Configure triggers for `push` and `pull_request` events on the `main` branch.<br>
+            - Schedule weekly analysis using a cron job.<br>
+            - Define job matrix for multiple languages including `actions` and `python`.<br>
+            - Set up permissions for security events and package access.<br>
+            - Include steps for checking out the repository and initializing CodeQL tools.<br>
+            - Add a manual build step for languages requiring custom build commands.<br>
+            - Implement the `Perform CodeQL Analysis` step for code scanning.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`58e78c9`](https://github.com/data-science-extensions/ts-stat-tests/commit/58e78c9a1d52591f01d78b94999fe1029ac719e9): Update dependency versions in `pyproject.toml`<br>
+            - Adjust `black` version for compatibility with Python versions.<br>
+            - Specify conditional dependencies for `ipykernel`, `isort`, and `pylint` based on Python version.<br>
+            - Update `docstring-inheritance` and `mkdocstrings` versions for Python compatibility.<br>
+            - Modify `pytest` version to align with Python version requirements.<br>
+            - Change `complexipy` version to `5.*`.<br>
+            - Update `uv_build` version to `0.9.28` in the build system.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`71cb5a1`](https://github.com/data-science-extensions/ts-stat-tests/commit/71cb5a1e708a218e97cd3bd0e8e04c388e4d9c5a): Update project classifiers in `pyproject.toml`<br>
+            - Change the development status to "5 - Production/Stable".<br>
+            - Add new topics for utilities, scientific engineering, and information analysis.<br>
+            - Update intended audience to "Science/Research".<br>
+            - Include operating systems support for Unix, MacOS, and Windows.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`9e1fe97`](https://github.com/data-science-extensions/ts-stat-tests/commit/9e1fe97adbf8a5c3c1b2a6e9b83129cb2bb18311): Update `.gitignore` to include additional files and directories<br>
+            - Add `git_output/` directory to be ignored.<br>
+            - Include `.github/copilot-instructions.md` file in the ignore list.<br>
+            - Add `.github/instructions/*` and `.github/prompts/*` directories to be ignored.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`398acb6`](https://github.com/data-science-extensions/ts-stat-tests/commit/398acb6196577fe55ca71d4b0c980b5bc70cfedd): Update `uv-pre-commit` dependency version<br>
+            - Update the `rev` for the `uv-pre-commit` repository to `0.9.28`
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`aee5492`](https://github.com/data-science-extensions/ts-stat-tests/commit/aee54920127b4051cd9e5046416d333fb5e3c798): Update Dependabot configuration for Python dependencies<br>
+            - Add configuration for updating Python dependencies using Dependabot.<br>
+            - Set target branch to `main` and schedule updates weekly.<br>
+            - Include labels, reviewers, and assignees for the updates.<br>
+            - Specify commit message prefix as "🤖 deps(pip): ".
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`51ec99c`](https://github.com/data-science-extensions/ts-stat-tests/commit/51ec99c91e6eece05303a28d5b2ff11c4fc86539): Update Dependabot configuration for GitHub Actions<br>
+            - Add target branch for GitHub Actions updates.<br>
+            - Include assignees and commit message prefix for clarity.
+            (by [chrimaho](https://github.com/chrimaho))
+        * [`86d76b1`](https://github.com/data-science-extensions/ts-stat-tests/commit/86d76b135e73f330ae8b8dc6e1f19b4f898924b9): Update pre-commit configuration for improved linting and checks<br>
+            - Upgrade `black` to version `26.1.0`<br>
+            - Upgrade `uv-pre-commit` to version `0.9.26`<br>
+            - Add `docstring-format-checker` with entry `dfc --check`<br>
+            - Modify `ty` entry to run without specifying filenames
+            (by [chrimaho](https://github.com/chrimaho))
+
+
 !!! info "v1.0.0"
 
     ## **v1.0.0 - The First Major Release: A Unified Foundation for Time Series Analysis**
