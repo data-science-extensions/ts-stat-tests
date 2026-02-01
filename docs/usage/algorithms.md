@@ -156,7 +156,7 @@ data = load_airline().values
 # - No constant/trend ('n')
 # - Fixed lag length of 12
 # - Return the full ResultsStore object
-stat, pval, usedlag, nobs, crit, resstore = adf(
+stat, pval, crit, resstore = adf(
     data, regression="n", autolag=None, maxlag=12, store=True
 )
 
