@@ -40,7 +40,6 @@ The library is structured into functional modules (e.g., `stationarity`, `normal
 Let's perform a stationarity test on some sample airline data.
 
 ```py {.py .python linenums="1" title="Stationarity Example"}
-import numpy as np
 from ts_stat_tests.stationarity import stationarity, is_stationary
 from ts_stat_tests.utils.data import load_airline
 
