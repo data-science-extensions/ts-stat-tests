@@ -5,7 +5,7 @@ This page provides a comprehensive overview of the statistical algorithms integr
 
 !!! note "TL;DR"
 
-    There are a number of other really good libraries which implements these tests individually:
+    There are a number of other really good libraries which implement these tests individually:
 
     - [`pmdarima`][pmdarima]
     - [`statsmodels`][statsmodels]
