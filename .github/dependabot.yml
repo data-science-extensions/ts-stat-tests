@@ -9,6 +9,7 @@ updates:
 
   # Update GitHub Actions workflow versions
   - package-ecosystem: "github-actions"
+    target-branch: "main"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -16,3 +17,22 @@ updates:
       - "dependabot-actions"
     reviewers:
       - "chrimaho"
+    assignees:
+      - "dependabot"
+    commit-message:
+      prefix: "🤖 deps(actions): "
+
+  # Update Python dependencies
+  - package-ecosystem: "pip"
+    target-branch: "main"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependabot-python"
+    reviewers:
+      - "chrimaho"
+    assignees:
+      - "dependabot"
+    commit-message:
+      prefix: "🤖 deps(pip): "
