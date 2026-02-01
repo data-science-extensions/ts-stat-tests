@@ -196,7 +196,7 @@ All algorithm docstrings must adhere to the **Docstring Format Checker (DFC)** s
 
 ### Type Hinting and Overloads
 
-We strictly forbid the use of `Any`. All parameters and return values must be explicitly typed. Because many statistical functions have conditional return types based on Boolean flags (like `store`), you must use `@overload` to define every possible return signature.
+We aim to avoid the use of `Any` wherever possible. All parameters and return values must be explicitly typed. Because many statistical functions have conditional return types based on Boolean flags (like `store`), you must use `@overload` to define every possible return signature.
 
 
 ## 📖 References and External Documentation
