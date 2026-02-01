@@ -61,8 +61,8 @@ Issues = "https://github.com/data-science-extensions/ts-stat-tests/issues"
 
 [dependency-groups]
 dev = [
-    "black==25.*",
-    # "black==25.*; python_version<'3.10'",
+    "black>=25,<27",
+    # "black>=25,<27; python_version<'3.10'",
     # "black==26.*; python_version>='3.10'",
     "blacken-docs==1.*",
     "codespell==2.*",
@@ -79,8 +79,8 @@ dev = [
     "uv==0.*",
 ]
 docs = [
-    "black==25.*",
-    # "black==25.*; python_version<'3.10'",
+    "black>=25,<27",
+    # "black>=25,<27; python_version<'3.10'",
     # "black==26.*; python_version>='3.10'",
     "docstring-inheritance==2.*; python_version<'3.10'",
     "docstring-inheritance==3.*; python_version>='3.10'",
