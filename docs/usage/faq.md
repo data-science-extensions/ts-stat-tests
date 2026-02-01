@@ -99,5 +99,5 @@ from ts_stat_tests.utils.data import data_airline, get_sine_wave
 df = data_airline
 
 # Generate synthetic data
-x = get_sine_wave(n=100, periods=5)
+x = get_sine_wave()
 ```
