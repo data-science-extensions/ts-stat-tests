@@ -77,14 +77,12 @@ The maintainers of this project use Australian English as the primary language f
 ## 🛠️ Troubleshooting
 
 
-### 9. I'm getting a `ValueError: Invalid value for parameter...`. What should I do?
+### 9. I'm getting a `ValueError: Invalid 'algorithm': ...`. What should I do?
 
 Our dispatchers use a standardised error generator. The error message will typically list all valid options for the parameter you provided. For example:
 
 ```txt {.txt .text linenums="1" title="Example Error Message"}
-ValueError: Invalid value for parameter 'algorithm'.
-Parsed: 'invalid_name'.
-Options: ['adf', 'kpss', 'pp', 'za', ...]
+ValueError: Invalid 'algorithm': 'invalid_name'. Options: ['adf', 'kpss', 'pp', 'za', ...]
 ```
 
 Check the [Algorithms Guide](algorithms.md) for a full list of supported tests and their aliases.
