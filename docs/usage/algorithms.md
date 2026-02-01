@@ -115,8 +115,8 @@ The following tables detail every test currently implemented or planned for the 
         | ADF  | pmdarima: `from pmdarima.arima import ADFTest`<br>statsmodels: `from statsmodels.tsa.stattools import adfuller`<br>arch: `from arch.unitroot import ADF` |
         | KPSS | pmdarima: `from pmdarima.arima import KPSSTest`<br>statsmodels: `from statsmodels.tsa.stattools import kpss`<br>arch: `from arch.unitroot import KPSS`   |
         | PP   | pmdarima: `from pmdarima.arima import PPTest`<br>arch: `from arch.unitroot import PhillipsPerron`                                                        |
-        | RUR  | pmdarima: `from statsmodels.tsa.stattools import range_unit_root_test`                                                                                   |
-        | ZA   | pmdarima: `from statsmodels.tsa.stattools import zivot_andrews`<br> arch: `from arch.unitroot import ZivotAndrews`                                       |
+        | RUR  | statsmodels: `from statsmodels.tsa.stattools import range_unit_root_test`                                                                                |
+        | ZA   | statsmodels: `from statsmodels.tsa.stattools import zivot_andrews`<br> arch: `from arch.unitroot import ZivotAndrews`                                    |
         | OCSB | pmdarima: `from pmdarima.arima import OCSBTest`                                                                                                          |
         | CH   | pmdarima: `from pmdarima.arima import CHTest`                                                                                                            |
         | ACF  | pmdarima: `from pmdarima.utils import acf`<br>statsmodels: `from statsmodels.tsa.stattools import acf`                                                   |
