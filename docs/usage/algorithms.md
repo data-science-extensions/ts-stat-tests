@@ -19,18 +19,18 @@ This page provides a comprehensive overview of the statistical algorithms integr
     That's precisely why we created `ts-stat-tests` - to provide a unified interface to all of these great libraries, wrapped in a consistent and easy-to-use API.
 
 
-## 1. Selection Rationale
+## 💡 Selection Rationale
 
 The primary goal of `ts-stat-tests` is to provide a single, unified interface to the vast landscape of Python's time-series statistical tools. We have selected specific underlying libraries based on several key criteria:
 
 -   **Reliability**: Using industry-standard libraries like `statsmodels` and `scipy` ensures the mathematical correctness of the implementations.
--   **Popularity**: Libraries with strong community support and active maintenance were prioritized to ensure longevity and compatibility.
+-   **Popularity**: Libraries with strong community support and active maintenance were prioritised to ensure longevity and compatibility.
 -   **Performance**: Where possible, we leverage libraries that utilise Numba or Cython for high-speed computation (e.g., `antropy`, `arch`).
 -   **API Consistency**: We wrap diverse APIs (which often vary in return types and parameter naming) into a consistent, predictable structure.
 -   **Coverage**: We fill gaps where no single library provides a complete suite of tests for a specific domain (e.g., combining `statsmodels` for stationarity with `arch` for variance ratios).
 
 
-## 2. Exhaustive Test Catalog
+## 📚 Exhaustive Test Catalog
 
 The following tables detail every test currently implemented or planned for the library.
 
@@ -137,12 +137,12 @@ The following tables detail every test currently implemented or planned for the 
         | WLM  | statsmodels: `from statsmodels.stats.diagnostic import het_white`                                                                                        |
 
 
-## 3. Advanced Usage Patterns
+## 🚀 Advanced Usage Patterns
 
 While the high-level dispatchers are convenient, direct access to the underlying `algorithms` allows for fine-grained control over the statistical testing process.
 
 
-### 3.1 Direct Algorithm Access
+### Direct Algorithm Access
 
 Importing directly from the `.algorithms` submodule grants access to full parameter sets and raw results stores from the underlying libraries.
 
@@ -165,7 +165,7 @@ print(f"Regression Summary: \n{resstore.resols.summary()}")
 ```
 
 
-### 3.2 Handling Complex Returns
+### Handling Complex Returns
 
 Many underlying algorithms return different shapes depending on their parameters. We use Python's `@overload` functionality to ensure type safety even with these dynamic returns.
 
@@ -173,17 +173,17 @@ Many underlying algorithms return different shapes depending on their parameters
 -   **Stored Results**: Setting `store=True` often appends a library-specific result object (like `ResultsStore`) to the return tuple.
 
 
-## 4. Developer Information
+## 🛠️ Developer Information
 
 For those contributing to `ts-stat-tests`, maintaining the quality and consistency of the internal algorithms is paramount.
 
 
-### 4.1 Strict Normalisation
+### Strict Normalisation
 
 Every internal algorithm wrapper MUST normalise its output. We do not expose raw type inconsistencies from third-party libraries to the user. All outputs should be cast to standard `numpy` or `float`/`int` types before being returned.
 
 
-### 4.2 Documentation Requirements (DFC)
+### Documentation Requirements (DFC)
 
 All algorithm docstrings must adhere to the **Docstring Format Checker (DFC)** standards using Google style. Specifically, they must include:
 
@@ -194,12 +194,12 @@ All algorithm docstrings must adhere to the **Docstring Format Checker (DFC)** s
 5.  `??? question "References"`: Academic sources.
 
 
-### 4.3 Type Hinting and Overloads
+### Type Hinting and Overloads
 
 We strictly forbid the use of `Any`. All parameters and return values must be explicitly typed. Because many statistical functions have conditional return types based on Boolean flags (like `store`), you must use `@overload` to define every possible return signature.
 
 
-## 5. References and External Documentation
+## 📖 References and External Documentation
 
 For deeper dives into the underlying implementations, we recommend consulting the official documentation of our core dependencies:
 

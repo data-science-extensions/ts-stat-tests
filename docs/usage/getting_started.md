@@ -3,7 +3,7 @@
 Welcome to `ts-stat-tests`, a comprehensive Python library designed for rigorous time-series statistical testing. This guide provides an overview of the library's core architecture and demonstrates how to perform your first statistical tests.
 
 
-## 1. Installation
+## 📦 1. Installation
 
 The recommended way to install [`ts-stat-tests`][ts-stat-tests] is via [`uv`][uv], a high-performance Python package installer.
 
@@ -26,7 +26,7 @@ pip install ts-stat-tests
 ```
 
 
-## 2. Core Concepts
+## 💡 2. Core Concepts
 
 The library is structured into functional modules (e.g., `stationarity`, `normality`, `correlation`), each offering three levels of interaction:
 
@@ -35,7 +35,7 @@ The library is structured into functional modules (e.g., `stationarity`, `normal
 3.  **Specific Algorithms**: Direct access to underlying implementations (e.g., `adf()`, `kpss()`) for advanced configuration.
 
 
-## 3. Quickstart Example
+## 🚀 3. Quickstart Example
 
 Let's perform a stationarity test on some sample airline data.
 
@@ -63,7 +63,7 @@ else:
 ```
 
 
-## 4. Utility Data Loaders
+## 🛠️ 4. Utility Data Loaders
 
 The `ts_stat_tests.utils.data` module provides several functions to generate or load time-series data for testing and benchmarking:
 
@@ -74,7 +74,7 @@ The `ts_stat_tests.utils.data` module provides several functions to generate or 
 -   `get_random_generator()`: Returns a configured NumPy random generator.
 
 
-## 5. Available Test Categories
+## 📚 5. Available Test Categories
 
 The library covers a wide range of statistical properties essential for time-series analysis:
 
